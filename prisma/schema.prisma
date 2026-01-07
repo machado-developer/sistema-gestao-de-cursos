@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Aluno {
+  id              String      @id @default(uuid())
+  nome_completo   String
+  bi_documento    String      @unique
+  email           String      @unique
+  data_nascimento DateTime
+  matriculas      Matricula[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Curso {
+  id                     String    @id @default(uuid())
+  nome                   String
+  carga_horaria          Int
+  descricao              String?
+  media_minima_aprovacao Float     @default(10.0)
+  preco_base             Decimal
+  modelo_certificado     String?
+  turmas                 Turma[]
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+}
+
+model Instrutor {
+  id        String   @id @default(uuid())
+  nome      String
+  email     String   @unique
+  turmas    Turma[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Turma {
+  id           String      @id @default(uuid())
+  cursoId      String
+  curso        Curso       @relation(fields: [cursoId], references: [id])
+  codigo_turma String      @unique
+  data_inicio  DateTime
+  data_fim     DateTime
+  instrutorId  String?
+  instrutor    Instrutor?  @relation(fields: [instrutorId], references: [id])
+  status       String      @default("Em Andamento") // "Em Andamento", "Concluída"
+  matriculas   Matricula[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Matricula {
+  id               String      @id @default(uuid())
+  alunoId          String
+  aluno            Aluno       @relation(fields: [alunoId], references: [id])
+  turmaId          String
+  turma            Turma       @relation(fields: [turmaId], references: [id])
+  notas            String      @default("[]") // JSON array of numbers
+  media_final      Float?
+  status_academico String      @default("Cursando") // "Cursando", "Aprovado", "Reprovado"
+  valor_total      Decimal
+  valor_pago       Decimal     @default(0)
+  estado_pagamento String      @default("Pendente") // "Pendente", "Parcial", "Pago"
+  pagamentos       Pagamento[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model Pagamento {
+  id               String    @id @default(uuid())
+  matriculaId      String
+  matricula        Matricula @relation(fields: [matriculaId], references: [id])
+  valor            Decimal
+  data             DateTime  @default(now())
+  metodo_pagamento String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
