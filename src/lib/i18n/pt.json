@@ -1,0 +1,268 @@
+{
+    "common": {
+        "loading": "A carregar...",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "edit": "Editar",
+        "back": "Voltar",
+        "search": "Pesquisar...",
+        "no_data": "Nenhum dado encontrado.",
+        "actions": "Ações",
+        "view": "Ver",
+        "add": "Adicionar",
+        "create": "Criar",
+        "update": "Atualizar",
+        "close": "Fechar",
+        "confirm": "Confirmar",
+        "yes": "Sim",
+        "no": "Não",
+        "total": "Total",
+        "status": "Estado",
+        "date": "Data",
+        "name": "Nome",
+        "email": "Email",
+        "phone": "Telefone",
+        "address": "Morada",
+        "clear_filters": "Limpar Filtros",
+        "apply": "Aplicar",
+        "export": "Exportar",
+        "import": "Importar",
+        "download": "Descarregar",
+        "upload": "Carregar",
+        "profile": "Perfil",
+        "logout": "Sair",
+        "sign_out": "Sair do Sistema"
+    },
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "students": "Alunos",
+        "classes": "Turmas",
+        "courses": "Cursos",
+        "enrollments": "Matrículas",
+        "finance": "Financeiro",
+        "certificates": "Certificados",
+        "instructors": "Instrutores",
+        "audit": "Logs de Auditoria",
+        "settings": "Configurações",
+        "language": "Idioma",
+        "theme": "Tema"
+    },
+    "header": {
+        "menu": "Menu",
+        "toggle_menu": "Alternar Menu",
+        "toggle_theme": "Alternar Tema",
+        "user_menu": "Menu do Utilizador",
+        "administrator": "Administrador"
+    },
+    "pages": {
+        "students": {
+            "title": "Gerir Alunos",
+            "subtitle": "alunos registados",
+            "new": "Novo Aluno",
+            "view_profile": "Ver Perfil",
+            "no_students": "Nenhum aluno encontrado com os filtros aplicados.",
+            "create_first": "Cadastrar primeiro aluno",
+            "filters": {
+                "search": "Nome, email ou BI...",
+                "status": "Estado",
+                "status_active": "Ativo",
+                "status_no_enrollment": "Sem Matrícula",
+                "financial_status": "Situação Financeira",
+                "financial_paid": "Pago",
+                "financial_partial": "Parcial",
+                "financial_pending": "Pendente",
+                "course": "Curso",
+                "class": "Turma",
+                "enrollment_date_from": "Data Inscrição (De)",
+                "enrollment_date_to": "Data Inscrição (Até)"
+            },
+            "table": {
+                "student": "Aluno",
+                "bi": "BI",
+                "enrollments": "Matrículas",
+                "financial": "Financeiro",
+                "status": "Estado"
+            }
+        },
+        "courses": {
+            "title": "Cursos",
+            "subtitle": "Gerenciamento de catálogo de cursos",
+            "new": "Novo Curso",
+            "view_details": "Ver Detalhes",
+            "no_courses": "Nenhum curso encontrado com os filtros aplicados.",
+            "create_first": "Criar o primeiro curso",
+            "filters": {
+                "search": "Nome ou descrição do curso...",
+                "workload": "Carga Horária",
+                "workload_0_50": "0-50 horas",
+                "workload_50_100": "50-100 horas",
+                "workload_100_plus": "100+ horas"
+            },
+            "table": {
+                "course": "Curso",
+                "price": "Preço Base",
+                "workload": "Carga Horária",
+                "classes": "Turmas",
+                "no_description": "Sem descrição definida."
+            }
+        },
+        "classes": {
+            "title": "Turmas",
+            "subtitle": "Gestão de turmas e calendários",
+            "new": "Nova Turma",
+            "manage_grades": "Gerir Pauta",
+            "no_classes": "Nenhuma turma encontrada com os filtros aplicados.",
+            "create_first": "Abrir nova turma",
+            "filters": {
+                "search": "Código da turma ou curso...",
+                "status": "Estado",
+                "status_ongoing": "Em Andamento",
+                "status_completed": "Concluída",
+                "status_planned": "Planejada",
+                "start_date": "Data Início (a partir de)"
+            },
+            "table": {
+                "code": "Código",
+                "course": "Curso",
+                "instructor": "Instrutor",
+                "start_date": "Data Início",
+                "status": "Estado",
+                "students": "Alunos"
+            }
+        },
+        "instructors": {
+            "title": "Instrutores",
+            "subtitle": "Gestão do corpo docente e atribuições",
+            "new": "Novo Instrutor",
+            "no_instructors": "Nenhum instrutor encontrado",
+            "no_instructors_desc": "Tente ajustar os filtros de pesquisa.",
+            "create_first": "Registar Primeiro Instrutor",
+            "filters": {
+                "search": "Nome ou email do instrutor..."
+            },
+            "table": {
+                "instructor": "Instrutor",
+                "phone": "Telefone",
+                "specialty": "Especialidade",
+                "classes": "Turmas",
+                "faculty": "Corpo Docente"
+            }
+        },
+        "enrollments": {
+            "title": "Matrículas",
+            "subtitle": "Gestão de inscrições e pagamentos"
+        },
+        "finance": {
+            "title": "Financeiro",
+            "subtitle": "Controlo de receitas e pagamentos"
+        },
+        "certificates": {
+            "title": "Certificados",
+            "subtitle": "Emissão de diplomas e certificados"
+        }
+    },
+    "dashboard": {
+        "title": "Dashboard Central",
+        "subtitle": "Visão geral do desempenho académico e financeiro.",
+        "stats": {
+            "students": "Alunos Registados",
+            "active_classes": "Turmas em Andamento",
+            "revenue": "Receita Total",
+            "certificates": "Diplomas Disponíveis"
+        },
+        "recent_matriculas": "Matrículas Recentes",
+        "finance_flow": "Fluxo Financeiro"
+    },
+    "profile": {
+        "title": "Perfil do Aluno",
+        "tabs": {
+            "overview": "Visão Geral",
+            "matriculas": "Matrículas",
+            "documents": "Documentos"
+        },
+        "upload": "Carregar Ficheiro",
+        "photo": "Foto de Perfil",
+        "bi": "Bilhete de Identidade",
+        "other": "Outros Anexos"
+    },
+    "instructor": {
+        "title": "Perfil do Instrutor",
+        "tabs": {
+            "overview": "Visão Geral",
+            "details": "Dados Pessoais"
+        },
+        "info": {
+            "specialty": "Especialidade",
+            "students": "Alunos Formados",
+            "active_classes": "Turmas Ativas"
+        }
+    },
+    "status": {
+        "active": "Ativo",
+        "inactive": "Inativo",
+        "pending": "Pendente",
+        "completed": "Concluído",
+        "ongoing": "Em Andamento",
+        "planned": "Planejado",
+        "paid": "Pago",
+        "partial": "Parcial",
+        "no_enrollment": "Sem Matrícula"
+    },
+    "settings": {
+        "title": "Configurações",
+        "menu": {
+            "company": "Dados da Empresa",
+            "administrator": "Administrador",
+            "appearance": "Aparência"
+        },
+        "company": {
+            "title": "Dados da Empresa",
+            "subtitle": "Gerir informações da empresa e identidade visual",
+            "logo": "Logotipo",
+            "upload_logo": "Carregar Logotipo",
+            "logo_hint": "PNG, JPG ou SVG. Tamanho máximo: 2MB",
+            "information": "Informações da Empresa",
+            "name": "Nome da Empresa",
+            "address": "Morada",
+            "city": "Cidade",
+            "country": "País",
+            "website": "Website",
+            "tax_id": "NIF/CNPJ",
+            "saved": "Dados da empresa guardados com sucesso!"
+        },
+        "admin": {
+            "title": "Administrador Principal",
+            "subtitle": "Gerir perfil e credenciais do administrador",
+            "profile_photo": "Foto de Perfil",
+            "upload_photo": "Carregar Foto",
+            "photo_hint": "PNG ou JPG. Tamanho máximo: 1MB",
+            "information": "Informações Pessoais",
+            "full_name": "Nome Completo",
+            "role": "Cargo",
+            "change_password": "Alterar Palavra-passe",
+            "password_hint": "Atualize a sua palavra-passe para manter a conta segura",
+            "current_password": "Palavra-passe Atual",
+            "new_password": "Nova Palavra-passe",
+            "confirm_password": "Confirmar Palavra-passe",
+            "update_password": "Atualizar Palavra-passe",
+            "password_mismatch": "As palavras-passe não coincidem",
+            "password_changed": "Palavra-passe alterada com sucesso!",
+            "saved": "Dados do administrador guardados com sucesso!"
+        },
+        "appearance": {
+            "title": "Aparência",
+            "subtitle": "Personalizar cores e tema do sistema",
+            "dark_mode": "Modo Escuro",
+            "light_mode": "Modo Claro",
+            "primary_color": "Cor Primária",
+            "secondary_color": "Cor Secundária",
+            "accent_color": "Cor de Destaque",
+            "background": "Fundo",
+            "surface": "Superfície",
+            "preview": "Pré-visualização",
+            "reset": "Restaurar Padrão",
+            "saved": "Cores guardadas com sucesso!"
+        }
+    }
+}

@@ -1,0 +1,268 @@
+{
+    "common": {
+        "loading": "Loading...",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "back": "Back",
+        "search": "Search...",
+        "no_data": "No data found.",
+        "actions": "Actions",
+        "view": "View",
+        "add": "Add",
+        "create": "Create",
+        "update": "Update",
+        "close": "Close",
+        "confirm": "Confirm",
+        "yes": "Yes",
+        "no": "No",
+        "total": "Total",
+        "status": "Status",
+        "date": "Date",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "clear_filters": "Clear Filters",
+        "apply": "Apply",
+        "export": "Export",
+        "import": "Import",
+        "download": "Download",
+        "upload": "Upload",
+        "profile": "Profile",
+        "logout": "Logout",
+        "sign_out": "Sign Out"
+    },
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "students": "Students",
+        "classes": "Classes",
+        "courses": "Courses",
+        "enrollments": "Enrollments",
+        "finance": "Finance",
+        "certificates": "Certificates",
+        "instructors": "Instructors",
+        "audit": "Audit Logs",
+        "settings": "Settings",
+        "language": "Language",
+        "theme": "Theme"
+    },
+    "header": {
+        "menu": "Menu",
+        "toggle_menu": "Toggle Menu",
+        "toggle_theme": "Toggle Theme",
+        "user_menu": "User Menu",
+        "administrator": "Administrator"
+    },
+    "pages": {
+        "students": {
+            "title": "Manage Students",
+            "subtitle": "registered students",
+            "new": "New Student",
+            "view_profile": "View Profile",
+            "no_students": "No students found with the applied filters.",
+            "create_first": "Register first student",
+            "filters": {
+                "search": "Name, email or ID...",
+                "status": "Status",
+                "status_active": "Active",
+                "status_no_enrollment": "No Enrollment",
+                "financial_status": "Financial Status",
+                "financial_paid": "Paid",
+                "financial_partial": "Partial",
+                "financial_pending": "Pending",
+                "course": "Course",
+                "class": "Class",
+                "enrollment_date_from": "Enrollment Date (From)",
+                "enrollment_date_to": "Enrollment Date (To)"
+            },
+            "table": {
+                "student": "Student",
+                "bi": "ID",
+                "enrollments": "Enrollments",
+                "financial": "Financial",
+                "status": "Status"
+            }
+        },
+        "courses": {
+            "title": "Courses",
+            "subtitle": "Course catalog management",
+            "new": "New Course",
+            "view_details": "View Details",
+            "no_courses": "No courses found with the applied filters.",
+            "create_first": "Create first course",
+            "filters": {
+                "search": "Course name or description...",
+                "workload": "Workload",
+                "workload_0_50": "0-50 hours",
+                "workload_50_100": "50-100 hours",
+                "workload_100_plus": "100+ hours"
+            },
+            "table": {
+                "course": "Course",
+                "price": "Base Price",
+                "workload": "Workload",
+                "classes": "Classes",
+                "no_description": "No description defined."
+            }
+        },
+        "classes": {
+            "title": "Classes",
+            "subtitle": "Class and schedule management",
+            "new": "New Class",
+            "manage_grades": "Manage Grades",
+            "no_classes": "No classes found with the applied filters.",
+            "create_first": "Open new class",
+            "filters": {
+                "search": "Class code or course...",
+                "status": "Status",
+                "status_ongoing": "Ongoing",
+                "status_completed": "Completed",
+                "status_planned": "Planned",
+                "start_date": "Start Date (from)"
+            },
+            "table": {
+                "code": "Code",
+                "course": "Course",
+                "instructor": "Instructor",
+                "start_date": "Start Date",
+                "status": "Status",
+                "students": "Students"
+            }
+        },
+        "instructors": {
+            "title": "Instructors",
+            "subtitle": "Faculty management and assignments",
+            "new": "New Instructor",
+            "no_instructors": "No instructors found",
+            "no_instructors_desc": "Try adjusting the search filters.",
+            "create_first": "Register First Instructor",
+            "filters": {
+                "search": "Instructor name or email..."
+            },
+            "table": {
+                "instructor": "Instructor",
+                "phone": "Phone",
+                "specialty": "Specialty",
+                "classes": "Classes",
+                "faculty": "Faculty"
+            }
+        },
+        "enrollments": {
+            "title": "Enrollments",
+            "subtitle": "Registration and payment management"
+        },
+        "finance": {
+            "title": "Finance",
+            "subtitle": "Revenue and payment control"
+        },
+        "certificates": {
+            "title": "Certificates",
+            "subtitle": "Diploma and certificate issuance"
+        }
+    },
+    "dashboard": {
+        "title": "Central Dashboard",
+        "subtitle": "Overview of academic and financial performance.",
+        "stats": {
+            "students": "Registered Students",
+            "active_classes": "Ongoing Classes",
+            "revenue": "Total Revenue",
+            "certificates": "Available Diplomas"
+        },
+        "recent_matriculas": "Recent Enrollments",
+        "finance_flow": "Financial Flow"
+    },
+    "profile": {
+        "title": "Student Profile",
+        "tabs": {
+            "overview": "Overview",
+            "matriculas": "Enrollments",
+            "documents": "Documents"
+        },
+        "upload": "Upload File",
+        "photo": "Profile Photo",
+        "bi": "ID Card",
+        "other": "Other Attachments"
+    },
+    "instructor": {
+        "title": "Instructor Profile",
+        "tabs": {
+            "overview": "Overview",
+            "details": "Personal Details"
+        },
+        "info": {
+            "specialty": "Specialty",
+            "students": "Graduated Students",
+            "active_classes": "Active Classes"
+        }
+    },
+    "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "pending": "Pending",
+        "completed": "Completed",
+        "ongoing": "Ongoing",
+        "planned": "Planned",
+        "paid": "Paid",
+        "partial": "Partial",
+        "no_enrollment": "No Enrollment"
+    },
+    "settings": {
+        "title": "Settings",
+        "menu": {
+            "company": "Company Data",
+            "administrator": "Administrator",
+            "appearance": "Appearance"
+        },
+        "company": {
+            "title": "Company Data",
+            "subtitle": "Manage company information and visual identity",
+            "logo": "Logo",
+            "upload_logo": "Upload Logo",
+            "logo_hint": "PNG, JPG or SVG. Max size: 2MB",
+            "information": "Company Information",
+            "name": "Company Name",
+            "address": "Address",
+            "city": "City",
+            "country": "Country",
+            "website": "Website",
+            "tax_id": "Tax ID",
+            "saved": "Company data saved successfully!"
+        },
+        "admin": {
+            "title": "Main Administrator",
+            "subtitle": "Manage administrator profile and credentials",
+            "profile_photo": "Profile Photo",
+            "upload_photo": "Upload Photo",
+            "photo_hint": "PNG or JPG. Max size: 1MB",
+            "information": "Personal Information",
+            "full_name": "Full Name",
+            "role": "Role",
+            "change_password": "Change Password",
+            "password_hint": "Update your password to keep your account secure",
+            "current_password": "Current Password",
+            "new_password": "New Password",
+            "confirm_password": "Confirm Password",
+            "update_password": "Update Password",
+            "password_mismatch": "Passwords do not match",
+            "password_changed": "Password changed successfully!",
+            "saved": "Administrator data saved successfully!"
+        },
+        "appearance": {
+            "title": "Appearance",
+            "subtitle": "Customize system colors and theme",
+            "dark_mode": "Dark Mode",
+            "light_mode": "Light Mode",
+            "primary_color": "Primary Color",
+            "secondary_color": "Secondary Color",
+            "accent_color": "Accent Color",
+            "background": "Background",
+            "surface": "Surface",
+            "preview": "Preview",
+            "reset": "Reset to Default",
+            "saved": "Colors saved successfully!"
+        }
+    }
+}

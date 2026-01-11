@@ -1,84 +1,227 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model Aluno {
-  id              String      @id @default(uuid())
-  nome_completo   String
-  bi_documento    String      @unique
-  email           String      @unique
-  data_nascimento DateTime
-  matriculas      Matricula[]
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+    id              String      @id @default(uuid())
+    nome_completo   String
+    bi_documento    String      @unique
+    email           String?     @unique
+    data_nascimento DateTime
+    matriculas      Matricula[]
+    documentos      Documento[]
+    presencas       Presenca[]
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    telefone        String?
+    genero          String?
+    escolaAcademica String?
+    escolaridade    String?
+    Endereco        String?
+    bolseiro        Boolean     @default(false)
+
+    @@map("alunos")
+}
+
+model Documento {
+    id        String   @id @default(uuid())
+    alunoId   String
+    aluno     Aluno    @relation(fields: [alunoId], references: [id])
+    tipo      String // "Foto", "BI", "Outro"
+    url       String
+    nome      String
+    createdAt DateTime @default(now())
+
+    @@map("documentos")
 }
 
 model Curso {
-  id                     String    @id @default(uuid())
-  nome                   String
-  carga_horaria          Int
-  descricao              String?
-  media_minima_aprovacao Float     @default(10.0)
-  preco_base             Decimal
-  modelo_certificado     String?
-  turmas                 Turma[]
-  createdAt              DateTime  @default(now())
-  updatedAt              DateTime  @updatedAt
+    id                     String               @id @default(uuid())
+    nome                   String
+    carga_horaria          Int
+    descricao              String?
+    media_minima_aprovacao Float                @default(10.0)
+    frequencia_minima      Float                @default(75.0)
+    preco_base             Decimal
+    certificateTemplateId  String?
+    certificateTemplate    CertificateTemplate? @relation(fields: [certificateTemplateId], references: [id])
+    turmas                 Turma[]
+    createdAt              DateTime             @default(now())
+    updatedAt              DateTime             @updatedAt
+
+    @@map("cursos")
 }
 
 model Instrutor {
-  id        String   @id @default(uuid())
-  nome      String
-  email     String   @unique
-  turmas    Turma[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    id            String      @id @default(uuid())
+    nome          String
+    email         String      @unique
+    telefone      String?
+    especialidade String?
+    bi_documento  String?     @unique
+    genero        String?
+    bio           String?     @db.Text
+    turmas        Turma[]
+    avaliacoes    Avaliacao[]
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
+
+    @@map("instrutores")
 }
 
 model Turma {
-  id           String      @id @default(uuid())
-  cursoId      String
-  curso        Curso       @relation(fields: [cursoId], references: [id])
-  codigo_turma String      @unique
-  data_inicio  DateTime
-  data_fim     DateTime
-  instrutorId  String?
-  instrutor    Instrutor?  @relation(fields: [instrutorId], references: [id])
-  status       String      @default("Em Andamento") // "Em Andamento", "Concluída"
-  matriculas   Matricula[]
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+    id           String      @id @default(uuid())
+    cursoId      String
+    curso        Curso       @relation(fields: [cursoId], references: [id])
+    codigo_turma String      @unique
+    data_inicio  DateTime
+    data_fim     DateTime
+    instrutorId  String?
+    instrutor    Instrutor?  @relation(fields: [instrutorId], references: [id])
+    status       String      @default("Em Andamento") // "Em Andamento", "Concluída"
+    vagas        Int         @default(20)
+    matriculas   Matricula[]
+    aulas        Aula[]
+    createdAt    DateTime    @default(now())
+    updatedAt    DateTime    @updatedAt
+
+    @@map("turmas")
 }
 
 model Matricula {
-  id               String      @id @default(uuid())
-  alunoId          String
-  aluno            Aluno       @relation(fields: [alunoId], references: [id])
-  turmaId          String
-  turma            Turma       @relation(fields: [turmaId], references: [id])
-  notas            String      @default("[]") // JSON array of numbers
-  media_final      Float?
-  status_academico String      @default("Cursando") // "Cursando", "Aprovado", "Reprovado"
-  valor_total      Decimal
-  valor_pago       Decimal     @default(0)
-  estado_pagamento String      @default("Pendente") // "Pendente", "Parcial", "Pago"
-  pagamentos       Pagamento[]
-  createdAt        DateTime    @default(now())
-  updatedAt        DateTime    @updatedAt
+    id                    String       @id @default(uuid())
+    alunoId               String
+    aluno                 Aluno        @relation(fields: [alunoId], references: [id])
+    turmaId               String
+    turma                 Turma        @relation(fields: [turmaId], references: [id])
+    avaliacoes            Avaliacao[]
+    media_final           Float?
+    percentual_frequencia Float?
+    status_academico      String       @default("Cursando") // "Cursando", "Aprovado", "Reprovado"
+    valor_total           Decimal
+    valor_pago            Decimal      @default(0)
+    estado_pagamento      String       @default("Pendente") // "Pendente", "Parcial", "Pago", "Isento"
+    pagamentos            Pagamento[]
+    createdAt             DateTime     @default(now())
+    updatedAt             DateTime     @updatedAt
+    certificate           Certificate?
+
+    @@map("matriculas")
 }
 
 model Pagamento {
-  id               String    @id @default(uuid())
-  matriculaId      String
-  matricula        Matricula @relation(fields: [matriculaId], references: [id])
-  valor            Decimal
-  data             DateTime  @default(now())
-  metodo_pagamento String
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+    id               String    @id @default(uuid())
+    matriculaId      String
+    matricula        Matricula @relation(fields: [matriculaId], references: [id])
+    valor            Decimal
+    data             DateTime  @default(now())
+    metodo_pagamento String
+    createdAt        DateTime  @default(now())
+    updatedAt        DateTime  @updatedAt
+
+    @@map("pagamentos")
+}
+
+model User {
+    id        String   @id @default(uuid())
+    name      String
+    email     String   @unique
+    password  String
+    role      String   @default("USER")
+    language  String   @default("pt") // "pt", "en"
+    theme     String   @default("dark") // "dark", "light"
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("users")
+}
+
+model AuditLog {
+    id        String   @id @default(uuid())
+    userId    String?
+    usuario   String? // Name or email of the actor
+    acao      String // e.g., "CREATE_ALUNO", "UPDATE_FINANCEIRO"
+    entidade  String? // e.g., "ALUNO", "MATRICULA"
+    detalhes  String?  @db.Text // JSON with changed data
+    createdAt DateTime @default(now())
+
+    @@map("audit_logs")
+}
+
+model CertificateTemplate {
+    id        String   @id @default(uuid())
+    nome      String
+    imageUrl  String // Image of the certificate template
+    mapping   String   @db.Text // JSON with field positions
+    isDefault Boolean  @default(false)
+    cursos    Curso[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("certificate_templates")
+}
+
+model Certificate {
+    id             String    @id @default(uuid())
+    matriculaId    String    @unique
+    matricula      Matricula @relation(fields: [matriculaId], references: [id])
+    templateId     String?
+    codigo_unico   String    @unique // Verification code
+    hash_validacao String    @unique // Verification hash
+    data_emissao   DateTime  @default(now())
+    createdAt      DateTime  @default(now())
+
+    @@map("certificates")
+}
+
+model Aula {
+    id         String      @id @default(uuid())
+    turmaId    String
+    turma      Turma       @relation(fields: [turmaId], references: [id], onDelete: Cascade)
+    data       DateTime
+    tema       String
+    tipo       String      @default("normal") // "normal", "prova", "trabalho"
+    presencas  Presenca[]
+    avaliacoes Avaliacao[]
+    createdAt  DateTime    @default(now())
+    updatedAt  DateTime    @updatedAt
+
+    @@map("aulas")
+}
+
+model Presenca {
+    id        String   @id @default(uuid())
+    aulaId    String
+    aula      Aula     @relation(fields: [aulaId], references: [id], onDelete: Cascade)
+    alunoId   String
+    aluno     Aluno    @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+    status    String // "Presente", "Ausente"
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([aulaId, alunoId])
+    @@map("presencas")
+}
+
+model Avaliacao {
+    id          String     @id @default(uuid())
+    aulaId      String?
+    aula        Aula?      @relation(fields: [aulaId], references: [id], onDelete: SetNull)
+    matriculaId String
+    matricula   Matricula  @relation(fields: [matriculaId], references: [id], onDelete: Cascade)
+    tipo        String // "prova", "trabalho", "participacao"
+    nota        Float
+    peso        Float      @default(1.0)
+    instrutorId String?
+    instrutor   Instrutor? @relation(fields: [instrutorId], references: [id], onDelete: SetNull)
+    observacao  String?    @db.Text
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @updatedAt
+
+    @@map("avaliacoes")
 }
