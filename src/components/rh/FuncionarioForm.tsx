@@ -174,7 +174,7 @@ export default function FuncionarioForm({ initialData }: { initialData?: any }) 
                     <div className="space-y-1.5">
                         <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Nome Completo do Candidato</label>
                         <div className="relative group">
-                            <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={16} />
+                            <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors pointer-events-none" size={16} />
                             <Input
                                 {...register("nome")}
                                 placeholder="Insira o nome conforme documento..."
@@ -208,7 +208,7 @@ export default function FuncionarioForm({ initialData }: { initialData?: any }) 
                         <div className="space-y-1.5">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Email Profissional</label>
                             <div className="relative group">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={14} />
+                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors pointer-events-none" size={14} />
                                 <Input
                                     {...register("email")}
                                     type="email"
@@ -220,7 +220,7 @@ export default function FuncionarioForm({ initialData }: { initialData?: any }) 
                         <div className="space-y-1.5">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Telemóvel</label>
                             <div className="relative group">
-                                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={14} />
+                                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors pointer-events-none" size={14} />
                                 <Input
                                     {...register("telefone")}
                                     placeholder="+244 9..."
@@ -246,10 +246,10 @@ export default function FuncionarioForm({ initialData }: { initialData?: any }) 
                         <div className="space-y-1.5">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Unidade / Departamento</label>
                             <div className="relative group">
-                                <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
                                 <select
                                     {...register("departamentoId")}
-                                    className={`w-full h-11 pl-9 pr-3 rounded-md border-2 bg-slate-50 dark:bg-zinc-800/30 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer ${errors.departamentoId ? 'border-red-500 ring-red-500' : 'border-slate-100 dark:border-zinc-800'}`}
+                                    className={`w-full h-11 pl-9 pr-3 rounded-md border-2 bg-slate-50 dark:bg-zinc-800/30 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer ${errors.departamentoId ? 'border-red-500 ring-red-500' : 'border-slate-100 dark:border-zinc-800'}`}
                                 >
                                     <option value="">FILTRAR POR UNIDADE...</option>
                                     {departamentos.map(d => <option key={d.id} value={d.id}>{d.nome.toUpperCase()}</option>)}
@@ -260,10 +260,10 @@ export default function FuncionarioForm({ initialData }: { initialData?: any }) 
                         <div className="space-y-1.5">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Cargo e Especialidade</label>
                             <div className="relative group">
-                                <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
                                 <select
                                     {...register("cargoId")}
-                                    className={`w-full h-11 pl-9 pr-3 rounded-md border-2 bg-slate-50 dark:bg-zinc-800/30 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer ${errors.cargoId ? 'border-red-500 ring-red-500' : 'border-slate-100 dark:border-zinc-800'}`}
+                                    className={`w-full h-11 pl-9 pr-3 rounded-md border-2 bg-slate-50 dark:bg-zinc-800/30 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer ${errors.cargoId ? 'border-red-500 ring-red-500' : 'border-slate-100 dark:border-zinc-800'}`}
                                 >
                                     <option value="">SELECCIONE A FUNÇÃO...</option>
                                     {filteredCargos.map(c => <option key={c.id} value={c.id}>{c.nome.toUpperCase()}</option>)}
@@ -277,7 +277,7 @@ export default function FuncionarioForm({ initialData }: { initialData?: any }) 
                         <div className="space-y-1.5">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Data Efetiva de Admissão</label>
                             <div className="relative group">
-                                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
                                 <Input
                                     {...register("data_admissao")}
                                     type="date"
@@ -288,7 +288,7 @@ export default function FuncionarioForm({ initialData }: { initialData?: any }) 
                         <div className="space-y-1.5">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Segurança Social (INSS)</label>
                             <div className="relative group">
-                                <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
                                 <Input
                                     {...register("numero_inss")}
                                     placeholder="Nº de Beneficiário"
