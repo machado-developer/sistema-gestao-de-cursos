@@ -34,3 +34,8 @@ export const feriasSchema = z.object({
     tipo: z.string().min(1, "Seleccione o tipo"),
     observacao: z.string().optional(),
 });
+
+export const loginSchema = z.object({
+    email: z.string().email("Endereço de email inválido"),
+    password: z.string().min(4, "A senha deve ter pelo menos 4 caracteres"),
+});

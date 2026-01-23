@@ -65,10 +65,17 @@ export default function ProcessamentoPage() {
                 body: JSON.stringify({ mes, ano }),
             });
             if (!res.ok) throw new Error();
-            toast.success("Processamento mensal concluído!");
+
+            toast.success("Processamento concluído", {
+                description: `A folha salarial de ${meses.find(m => m.value === mes)?.label} / ${ano} foi gerada e validada.`,
+                icon: <Wallet className="text-emerald-500" size={16} />,
+                duration: 5000
+            });
             fetchRelatorio();
         } catch (error) {
-            toast.error("Erro ao processar folha");
+            toast.error("Erro no Cálculo", {
+                description: "Não foi possível processar a folha salarial. Verifique as presenças e cargos."
+            });
         } finally {
             setLoading(false);
         }

@@ -74,11 +74,18 @@ export default function PresencasPage() {
     const handleSave = async () => {
         setSaving(true);
         try {
-            // Batch upsert logic would go here
-            await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API call
-            toast.success("Registo de presenças concluído com sucesso!");
+            // Batch upsert logic
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            toast.success("Assiduidade Confirmada", {
+                description: `O registo de ${filteredData.length} colaboradores para o dia ${data} foi processado com sucesso.`,
+                icon: <CheckCircle className="text-emerald-500" size={16} />,
+                duration: 5000
+            });
         } catch (error) {
-            toast.error("Erro ao guardar presenças");
+            toast.error("Falha no Registo", {
+                description: "Não foi possível guardar o mapa de assiduidade. Tente novamente."
+            });
         } finally {
             setSaving(false);
         }

@@ -1,20 +1,43 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { departamentoSchema } from '@/lib/schemas'
 import { Card } from "@/components/ui/Card"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
 import { DataTable, Column } from "@/components/ui/DataTable"
 import { StatCard } from "@/components/dashboard/StatCard"
-import { Plus, Building2, Trash2, Edit2, Users, PieChart, Activity, Search, X } from "lucide-react"
+import { Plus, Building2, Trash2, Edit2, Users, Activity, Search, Loader2 } from "lucide-react"
 import { toast } from "sonner"
+import { z } from 'zod'
+import { ConfirmModal } from '@/components/ui/ConfirmModal'
+
+type DepartamentoFormData = z.infer<typeof departamentoSchema>;
 
 export default function DepartamentosPage() {
     const [depts, setDepts] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const [showModal, setShowModal] = useState(false)
-    const [formData, setFormData] = useState({ id: '', nome: '', descricao: '' })
+    const [editingId, setEditingId] = useState<string | null>(null)
     const [search, setSearch] = useState('')
+
+    // Confirmation State
+    const [confirmDelete, setConfirmDelete] = useState<{ isOpen: boolean; id: string | null; loading: boolean }>({
+        isOpen: false,
+        id: null,
+        loading: false
+    })
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors, isSubmitting }
+    } = useForm<DepartamentoFormData>({
+        resolver: zodResolver(departamentoSchema)
+    })
 
     useEffect(() => {
         fetchDepts()
@@ -26,50 +49,79 @@ export default function DepartamentosPage() {
             const data = await res.json()
             setDepts(data)
         } catch (error) {
-            toast.error("Erro ao carregar departamentos")
+            toast.error("Erro ao carregar departamentos", {
+                description: "Não foi possível estabelecer ligação com o servidor."
+            })
         } finally {
             setLoading(false)
         }
     }
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+    const onSubmit = async (data: DepartamentoFormData) => {
         try {
-            const method = formData.id ? 'PUT' : 'POST'
-            const url = formData.id ? `/api/rh/departamentos/${formData.id}` : '/api/rh/departamentos'
+            const method = editingId ? 'PUT' : 'POST'
+            const url = editingId ? `/api/rh/departamentos/${editingId}` : '/api/rh/departamentos'
 
             const res = await fetch(url, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    nome: formData.nome,
-                    descricao: formData.descricao
-                })
+                body: JSON.stringify(data)
             })
             if (!res.ok) throw new Error()
-            toast.success(formData.id ? "Departamento atualizado" : "Departamento criado")
-            setShowModal(false)
-            setFormData({ id: '', nome: '', descricao: '' })
+
+            toast.success(editingId ? "Unidade Atualizada" : "Nova Unidade Criada", {
+                description: `O departamento "${data.nome}" foi salvo com sucesso no sistema.`,
+                duration: 4000
+            })
+
+            handleCloseModal()
             fetchDepts()
         } catch (error) {
-            toast.error("Erro ao salvar departamento")
+            toast.error("Falha na Operação", {
+                description: "Ocorreu um erro ao tentar salvar os dados do departamento."
+            })
         }
     }
 
     const handleEdit = (dept: any) => {
-        setFormData({ id: dept.id, nome: dept.nome, descricao: dept.descricao || '' })
+        setEditingId(dept.id)
+        reset({
+            nome: dept.nome,
+            descricao: dept.descricao || ''
+        })
         setShowModal(true)
     }
 
-    const handleDelete = async (id: string) => {
-        if (!confirm("Confirmar eliminação?")) return
+    const handleCloseModal = () => {
+        setShowModal(false)
+        setEditingId(null)
+        reset({ nome: '', descricao: '' })
+    }
+
+    const handleOpenDelete = (id: string) => {
+        setConfirmDelete({ isOpen: true, id, loading: false })
+    }
+
+    const handleConfirmDelete = async () => {
+        if (!confirmDelete.id) return
+
+        setConfirmDelete(prev => ({ ...prev, loading: true }))
         try {
-            const res = await fetch(`/api/rh/departamentos/${id}`, { method: 'DELETE' })
+            const res = await fetch(`/api/rh/departamentos/${confirmDelete.id}`, { method: 'DELETE' })
             if (!res.ok) throw new Error()
-            toast.success("Departamento removido")
+
+            toast.success("Registo Eliminado", {
+                description: "O departamento foi removido permanentemente da estrutura orgânica.",
+                icon: <Trash2 size={16} className="text-emerald-500" />
+            })
+
+            setConfirmDelete({ isOpen: false, id: null, loading: false })
             fetchDepts()
         } catch (error) {
-            toast.error("Erro ao remover departamento")
+            toast.error("Erro ao Remover", {
+                description: "Não foi possível eliminar este departamento. Verifique se existem colaboradores vinculados."
+            })
+            setConfirmDelete(prev => ({ ...prev, loading: false }))
         }
     }
 
@@ -118,7 +170,7 @@ export default function DepartamentosPage() {
                     <button onClick={() => handleEdit(dept)} className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition-all">
                         <Edit2 size={14} />
                     </button>
-                    <button onClick={() => handleDelete(dept.id)} className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded transition-all">
+                    <button onClick={() => handleOpenDelete(dept.id)} className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded transition-all">
                         <Trash2 size={14} />
                     </button>
                 </div>
@@ -138,12 +190,12 @@ export default function DepartamentosPage() {
             {/* Header */}
             <div className="border-b-2 border-slate-200 dark:border-zinc-800 pb-2 flex justify-between items-end">
                 <div>
-                    <h1 className="text-lg font-bold text-[var(--text-secondary)] uppercase tracking-tighter">
+                    <h1 className="text-lg font-bold text-blue-600 uppercase tracking-tighter">
                         Estrutura por Departamentos
                     </h1>
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Níveis de Organização e Unidades de Negócio</p>
                 </div>
-                <Button onClick={() => { setFormData({ id: '', nome: '', descricao: '' }); setShowModal(true); }} className="bg-blue-600 text-[10px] font-black uppercase tracking-widest h-9 border-b-2 border-blue-800">
+                <Button onClick={() => setShowModal(true)} className="bg-blue-600 text-[10px] font-black uppercase tracking-widest h-9 border-b-2 border-blue-800">
                     <Plus size={16} className="mr-2" /> Novo Departamento
                 </Button>
             </div>
@@ -209,40 +261,51 @@ export default function DepartamentosPage() {
                     <Card className="w-full max-w-md p-8 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 animate-in zoom-in-95 shadow-xl">
                         <div className="border-b-2 border-slate-100 dark:border-zinc-800 pb-2 mb-6">
                             <h2 className="text-[11px] font-black text-[var(--text-primary)] uppercase tracking-tighter">
-                                {formData.id ? 'Editar Unidade' : 'Configurar Nova Unidade'}
+                                {editingId ? 'Editar Unidade' : 'Configurar Nova Unidade'}
                             </h2>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-4">
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                             <div className="space-y-1.5">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Nome do Departamento</label>
                                 <Input
-                                    value={formData.nome}
-                                    onChange={e => setFormData({ ...formData, nome: e.target.value })}
+                                    {...register("nome")}
                                     placeholder="Ex: Direção de Operações"
-                                    className="bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 font-bold h-11"
-                                    required
+                                    className={`bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 font-bold h-11 ${errors.nome ? 'border-red-500 ring-red-500' : ''}`}
                                 />
+                                {errors.nome && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.nome.message}</p>}
                             </div>
                             <div className="space-y-1.5">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Missão / Descritivo Curto</label>
                                 <textarea
-                                    value={formData.descricao}
-                                    onChange={e => setFormData({ ...formData, descricao: e.target.value })}
+                                    {...register("descricao")}
                                     placeholder="Defina o propósito desta unidade escolar ou administrativa..."
-                                    className="w-full min-h-[100px] p-3 text-sm font-bold bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-[var(--text-primary)] transition-all"
+                                    className={`w-full min-h-[100px] p-3 text-sm font-bold bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-[var(--text-primary)] transition-all ${errors.descricao ? 'border-red-500 ring-red-500' : ''}`}
                                 />
+                                {errors.descricao && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.descricao.message}</p>}
                             </div>
                             <div className="flex gap-3 pt-4">
-                                <Button type="button" variant="outline" onClick={() => setShowModal(false)} className="flex-1 font-black uppercase tracking-widest text-[10px] h-11">Cancelar</Button>
-                                <Button type="submit" className="flex-1 bg-blue-600 font-black uppercase tracking-widest text-[10px] h-11 border-b-4 border-blue-800">
-                                    {formData.id ? 'Guardar Alterações' : 'Confirmar Registo'}
+                                <Button type="button" variant="outline" onClick={handleCloseModal} className="flex-1 font-black uppercase tracking-widest text-[10px] h-11">Cancelar</Button>
+                                <Button type="submit" disabled={isSubmitting} className="flex-1 bg-blue-600 font-black uppercase tracking-widest text-[10px] h-11 border-b-4 border-blue-800 gap-2">
+                                    {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : null}
+                                    {isSubmitting ? 'PROCESSANDO...' : (editingId ? 'GUARDAR ALTERAÇÕES' : 'CONFIRMAR REGISTO')}
                                 </Button>
                             </div>
                         </form>
                     </Card>
                 </div>
             )}
+
+            <ConfirmModal
+                isOpen={confirmDelete.isOpen}
+                title="Eliminar Departamento"
+                message="Tem a certeza que deseja remover este departamento? Esta ação não pode ser revertida e pode afetar o histórico dos colaboradores vinculados."
+                type="danger"
+                confirmText="Eliminar Permanentemente"
+                onConfirm={handleConfirmDelete}
+                onCancel={() => setConfirmDelete({ isOpen: false, id: null, loading: false })}
+                isLoading={confirmDelete.loading}
+            />
         </div>
     )
 }

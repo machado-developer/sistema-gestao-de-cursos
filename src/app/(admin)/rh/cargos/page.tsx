@@ -1,22 +1,45 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { cargoSchema } from '@/lib/schemas'
 import { Card } from "@/components/ui/Card"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
 import { DataTable, Column } from "@/components/ui/DataTable"
 import { StatCard } from "@/components/dashboard/StatCard"
-import { Plus, Briefcase, Trash2, Edit2, Wallet, TrendingUp, ShieldCheck, Search, X } from "lucide-react"
+import { Plus, Briefcase, Trash2, Edit2, Wallet, TrendingUp, ShieldCheck, Search, Loader2, CheckCircle2 } from "lucide-react"
 import { toast } from "sonner"
 import { formatCurrency } from "@/lib/utils"
+import { z } from 'zod'
+import { ConfirmModal } from '@/components/ui/ConfirmModal'
+
+type CargoFormData = z.infer<typeof cargoSchema>;
 
 export default function CargosPage() {
     const [cargos, setCargos] = useState<any[]>([])
     const [depts, setDepts] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const [showModal, setShowModal] = useState(false)
-    const [formData, setFormData] = useState({ id: '', nome: '', descricao: '', salario_base: '', departamentoId: '' })
+    const [editingId, setEditingId] = useState<string | null>(null)
     const [search, setSearch] = useState('')
+
+    // Confirmation State
+    const [confirmDelete, setConfirmDelete] = useState<{ isOpen: boolean; id: string | null; loading: boolean }>({
+        isOpen: false,
+        id: null,
+        loading: false
+    })
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors, isSubmitting }
+    } = useForm<CargoFormData>({
+        resolver: zodResolver(cargoSchema)
+    })
 
     useEffect(() => {
         fetchCargos()
@@ -29,7 +52,9 @@ export default function CargosPage() {
             const data = await res.json()
             setCargos(data)
         } catch (error) {
-            toast.error("Erro ao carregar cargos")
+            toast.error("Erro de Ligação", {
+                description: "Não foi possível carregar a lista de cargos profissionais."
+            })
         } finally {
             setLoading(false)
         }
@@ -45,53 +70,73 @@ export default function CargosPage() {
         }
     }
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+    const onSubmit = async (data: CargoFormData) => {
         try {
-            const method = formData.id ? 'PUT' : 'POST'
-            const url = formData.id ? `/api/rh/cargos/${formData.id}` : '/api/rh/cargos'
+            const method = editingId ? 'PUT' : 'POST'
+            const url = editingId ? `/api/rh/cargos/${editingId}` : '/api/rh/cargos'
 
             const res = await fetch(url, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    nome: formData.nome,
-                    descricao: formData.descricao,
-                    salario_base: formData.salario_base ? Number(formData.salario_base) : null,
-                    departamentoId: formData.departamentoId || null
-                })
+                body: JSON.stringify(data)
             })
 
             if (!res.ok) throw new Error()
-            toast.success(formData.id ? "Cargo atualizado" : "Cargo registado")
-            setShowModal(false)
-            setFormData({ id: '', nome: '', descricao: '', salario_base: '', departamentoId: '' })
+
+            toast.success(editingId ? "Cargo Atualizado" : "Cargo Registado", {
+                description: `A função "${data.nome}" está agora disponível no sistema.`,
+                duration: 4000
+            })
+
+            handleCloseModal()
             fetchCargos()
         } catch (error) {
-            toast.error("Erro ao salvar cargo")
+            toast.error("Falha ao Salvar", {
+                description: "Ocorreu um problema ao processar o registo do cargo."
+            })
         }
     }
 
     const handleEdit = (cargo: any) => {
-        setFormData({
-            id: cargo.id,
+        setEditingId(cargo.id)
+        reset({
             nome: cargo.nome,
-            descricao: cargo.descricao || '',
-            salario_base: cargo.salario_base?.toString() || '',
-            departamentoId: cargo.departamentoId || ''
+            departamentoId: cargo.departamentoId || '',
+            salario_base_sugerido: cargo.salario_base || 0
         })
         setShowModal(true)
     }
 
-    const handleDelete = async (id: string) => {
-        if (!confirm("Confirmar eliminação deste cargo?")) return
+    const handleCloseModal = () => {
+        setShowModal(false)
+        setEditingId(null)
+        reset({ nome: '', departamentoId: '', salario_base_sugerido: 0 })
+    }
+
+    const handleOpenDelete = (id: string) => {
+        setConfirmDelete({ isOpen: true, id, loading: false })
+    }
+
+    const handleConfirmDelete = async () => {
+        if (!confirmDelete.id) return
+
+        setConfirmDelete(prev => ({ ...prev, loading: true }))
         try {
-            const res = await fetch(`/api/rh/cargos/${id}`, { method: 'DELETE' })
+            const res = await fetch(`/api/rh/cargos/${confirmDelete.id}`, { method: 'DELETE' })
             if (!res.ok) throw new Error()
-            toast.success("Cargo removido")
+
+            toast.success("Registo Removido", {
+                description: "O cargo profissional foi eliminado com sucesso.",
+                icon: <CheckCircle2 size={16} className="text-emerald-500" />
+            })
+
+            setConfirmDelete({ isOpen: false, id: null, loading: false })
             fetchCargos()
         } catch (error) {
-            toast.error("Erro ao remover cargo")
+            toast.error("Impossível Eliminar", {
+                description: "Este cargo pode estar vinculado a colaboradores ativos."
+            })
+            setConfirmDelete(prev => ({ ...prev, loading: false }))
         }
     }
 
@@ -147,7 +192,7 @@ export default function CargosPage() {
                     <button onClick={() => handleEdit(cargo)} className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded transition-all">
                         <Edit2 size={14} />
                     </button>
-                    <button onClick={() => handleDelete(cargo.id)} className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded transition-all">
+                    <button onClick={() => handleOpenDelete(cargo.id)} className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded transition-all">
                         <Trash2 size={14} />
                     </button>
                 </div>
@@ -168,12 +213,12 @@ export default function CargosPage() {
             {/* Header */}
             <div className="border-b-2 border-slate-200 dark:border-zinc-800 pb-2 flex justify-between items-end">
                 <div>
-                    <h1 className="text-lg font-bold text-[var(--text-secondary)] uppercase tracking-tighter">
+                    <h1 className="text-lg font-bold text-emerald-600 uppercase tracking-tighter">
                         Cargos e Níveis Ocupacionais
                     </h1>
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Definição de Funções e Grelhas Salariais</p>
                 </div>
-                <Button onClick={() => { setFormData({ id: '', nome: '', descricao: '', salario_base: '', departamentoId: '' }); setShowModal(true); }} className="bg-emerald-600 text-[10px] font-black uppercase tracking-widest h-9 border-b-2 border-emerald-800">
+                <Button onClick={() => setShowModal(true)} className="bg-emerald-600 text-[10px] font-black uppercase tracking-widest h-9 border-b-2 border-emerald-800">
                     <Plus size={16} className="mr-2" /> Novo Cargo
                 </Button>
             </div>
@@ -239,34 +284,33 @@ export default function CargosPage() {
                     <Card className="w-full max-w-md p-8 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 animate-in zoom-in-95 shadow-xl">
                         <div className="border-b-2 border-slate-100 dark:border-zinc-800 pb-2 mb-6">
                             <h2 className="text-[11px] font-black text-[var(--text-primary)] uppercase tracking-tighter">
-                                {formData.id ? 'Configurar Função' : 'Nova Função Ocupacional'}
+                                {editingId ? 'Configurar Função' : 'Nova Função Ocupacional'}
                             </h2>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-4">
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                             <div className="space-y-1.5">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Designação do Cargo</label>
                                 <Input
-                                    value={formData.nome}
-                                    onChange={e => setFormData({ ...formData, nome: e.target.value })}
+                                    {...register("nome")}
                                     placeholder="Ex: Consultor de Tecnologia"
-                                    className="bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 font-bold h-11"
-                                    required
+                                    className={`bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 font-bold h-11 ${errors.nome ? 'border-red-500 ring-red-500' : ''}`}
                                 />
+                                {errors.nome && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.nome.message}</p>}
                             </div>
 
                             <div className="space-y-1.5">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Departamento Relacionado</label>
                                 <select
-                                    className="w-full h-11 px-3 bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-800 rounded-md text-sm font-bold text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                                    value={formData.departamentoId}
-                                    onChange={e => setFormData({ ...formData, departamentoId: e.target.value })}
+                                    {...register("departamentoId")}
+                                    className={`w-full h-11 px-3 bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-800 rounded-md text-sm font-bold text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-emerald-500 ${errors.departamentoId ? 'border-red-500 ring-red-500' : ''}`}
                                 >
                                     <option value="">Selecione o Departamento...</option>
                                     {depts.map(d => (
                                         <option key={d.id} value={d.id}>{d.nome}</option>
                                     ))}
                                 </select>
+                                {errors.departamentoId && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.departamentoId.message}</p>}
                             </div>
 
                             <div className="space-y-1.5">
@@ -275,32 +319,36 @@ export default function CargosPage() {
                                     <Wallet className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <Input
                                         type="number"
-                                        value={formData.salario_base}
-                                        onChange={e => setFormData({ ...formData, salario_base: e.target.value })}
+                                        {...register("salario_base_sugerido")}
                                         placeholder="0.00"
-                                        className="pl-10 bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 font-bold h-11 text-emerald-600"
+                                        className={`pl-10 bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 font-bold h-11 text-emerald-600 ${errors.salario_base_sugerido ? 'border-red-500 ring-red-500' : ''}`}
                                     />
                                 </div>
+                                {errors.salario_base_sugerido && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.salario_base_sugerido.message}</p>}
                             </div>
-                            <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Descrição das Responsabilidades</label>
-                                <textarea
-                                    value={formData.descricao}
-                                    onChange={e => setFormData({ ...formData, descricao: e.target.value })}
-                                    placeholder="Descreva as principais funções e responsabilidades deste cargo..."
-                                    className="w-full min-h-[100px] p-3 text-sm font-bold bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-800 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-[var(--text-primary)] transition-all"
-                                />
-                            </div>
+
                             <div className="flex gap-3 pt-4">
-                                <Button type="button" variant="outline" onClick={() => setShowModal(false)} className="flex-1 font-black uppercase tracking-widest text-[10px] h-11">Cancelar</Button>
-                                <Button type="submit" className="flex-1 bg-emerald-600 font-black uppercase tracking-widest text-[10px] h-11 border-b-4 border-emerald-800 text-white">
-                                    {formData.id ? 'Guardar Alterações' : 'Confirmar Cargo'}
+                                <Button type="button" variant="outline" onClick={handleCloseModal} className="flex-1 font-black uppercase tracking-widest text-[10px] h-11">Cancelar</Button>
+                                <Button type="submit" disabled={isSubmitting} className="flex-1 bg-emerald-600 font-black uppercase tracking-widest text-[10px] h-11 border-b-4 border-emerald-800 text-white gap-2">
+                                    {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : null}
+                                    {isSubmitting ? 'PROCESSANDO...' : (editingId ? 'GUARDAR ALTERAÇÕES' : 'CONFIRMAR CARGO')}
                                 </Button>
                             </div>
                         </form>
                     </Card>
                 </div>
             )}
+
+            <ConfirmModal
+                isOpen={confirmDelete.isOpen}
+                title="Remover Função Profissional"
+                message="Tem a certeza que deseja eliminar este cargo? Esta ação removerá a definição de salário e categoria da estrutura da empresa."
+                type="danger"
+                confirmText="Confirmar Eliminação"
+                onConfirm={handleConfirmDelete}
+                onCancel={() => setConfirmDelete({ isOpen: false, id: null, loading: false })}
+                isLoading={confirmDelete.loading}
+            />
         </div>
     )
 }

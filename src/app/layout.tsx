@@ -23,7 +23,7 @@ export default function RootLayout({
         <NextAuthSessionProvider>
           <LanguageProvider>
             <ThemeProvider>
-              <Toaster position="top-right" />
+              <Toaster position="top-right" richColors expand={true} closeButton />
               <Suspense fallback={null}>
                 {children}
               </Suspense>

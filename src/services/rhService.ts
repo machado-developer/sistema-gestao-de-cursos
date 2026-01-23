@@ -432,6 +432,6 @@ export class RHService {
             orderBy: { data: 'asc' }
         });
 
-        return faltas;
+        return { faltas };
     }
 }

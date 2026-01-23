@@ -68,6 +68,16 @@ export default function RelatoriosPage() {
             data.linhas.forEach((l: any) => {
                 csvContent += `${l.funcionario.nome},${l.funcionario.nif || ''},${l.rendimento_bruto},${l.materia_colectavel},${l.irt_retido}\n`;
             });
+        } else if (activeTab === 'ferias') {
+            csvContent += "NOME,CARGO,INICIO,FIM,DIAS UTEIS\n";
+            data.emFerias?.forEach((f: any) => {
+                csvContent += `${f.funcionario.nome},${f.funcionario.cargo?.nome},${f.data_inicio},${f.data_fim},${f.dias_uteis}\n`;
+            });
+        } else if (activeTab === 'faltas') {
+            csvContent += "DATA,NOME,STATUS,OBSERVACAO\n";
+            data.faltas?.forEach((f: any) => {
+                csvContent += `${f.data},${f.funcionario.nome},${f.status},${f.observacao || ''}\n`;
+            });
         }
 
         const encodedUri = encodeURI(csvContent);
@@ -227,8 +237,8 @@ function ReportTab({ id, label, icon: Icon, active, onClick, desc }: any) {
         <button
             onClick={() => onClick(id)}
             className={`w-full group relative text-left p-4 rounded-md transition-all border-l-4 ${isActive
-                    ? "bg-white dark:bg-zinc-900 border-blue-600 shadow-sm ring-1 ring-slate-200 dark:ring-zinc-800"
-                    : "bg-transparent border-transparent hover:bg-slate-50 dark:hover:bg-zinc-900/50"
+                ? "bg-white dark:bg-zinc-900 border-blue-600 shadow-sm ring-1 ring-slate-200 dark:ring-zinc-800"
+                : "bg-transparent border-transparent hover:bg-slate-50 dark:hover:bg-zinc-900/50"
                 }`}
         >
             <div className="flex items-center gap-3">
@@ -372,10 +382,12 @@ function FeriasView({ data }: { data: any }) {
 }
 
 function FaltasView({ data }: { data: any }) {
+    const faltas = data?.faltas || [];
+
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
             <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600">Histórico de Incidências e Absenteísmo</h3>
-            {data.length === 0 ? (
+            {faltas.length === 0 ? (
                 <div className="py-12 text-center bg-emerald-50/20 dark:bg-emerald-900/10 rounded-sm italic text-emerald-600 text-[10px] uppercase font-bold tracking-widest">
                     Assiduidade perfeita para este período.
                 </div>
@@ -391,7 +403,7 @@ function FaltasView({ data }: { data: any }) {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 dark:divide-zinc-800">
-                            {data.map((f: any, i: number) => (
+                            {faltas.map((f: any, i: number) => (
                                 <tr key={i}>
                                     <td className="py-3 px-4 font-bold text-slate-500">{new Date(f.data).toLocaleDateString()}</td>
                                     <td className="py-3 px-4 font-black uppercase text-[var(--text-primary)]">{f.funcionario.nome}</td>
