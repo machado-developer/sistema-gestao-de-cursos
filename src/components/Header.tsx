@@ -66,7 +66,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
                 {/* Menu Toggle - Always visible */}
                 <button
                     onClick={onMenuToggle}
-                    className="p-2 hover:bg-white/5 transition-colors text-zinc-400 hover:text-white"
+                    className="p-2 hover:bg-white/5 transition-colors text-zinc-400 dark:text-zinc-300 hover:text-white"
                     aria-label={mounted ? t('header.toggle_menu') : 'Toggle Menu'}
                 >
                     {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -80,7 +80,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
                     {/* Theme Toggle */}
                     <button
                         onClick={toggleTheme}
-                        className="p-2 hover:bg-white/5 transition-colors text-zinc-400 hover:text-white"
+                        className="p-2 hover:bg-white/5 transition-colors text-zinc-400 dark:text-zinc-300 hover:text-white"
                         aria-label={mounted ? t('header.toggle_theme') : 'Toggle Theme'}
                     >
                         {mounted && theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
@@ -119,7 +119,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
                                 </div>
                                 <div className="hidden md:block text-left">
                                     <p className="text-sm font-bold text-white">{session.user.name}</p>
-                                    <p className="text-[10px] text-zinc-500 uppercase font-bold">{mounted ? t('header.administrator') : 'Admin'}</p>
+                                    <p className="text-[10px] text-zinc-500 dark:text-zinc-400 uppercase font-bold">{mounted ? t('header.administrator') : 'Admin'}</p>
                                 </div>
                                 <ChevronDown size={16} className={`text-zinc-400 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} />
                             </button>

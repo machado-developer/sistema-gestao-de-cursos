@@ -3,7 +3,7 @@
 import { Sidebar } from '@/components/Sidebar'
 import { Header } from '@/components/Header'
 import { FloatingClock } from '@/components/FloatingClock'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function AdminLayout({
     children,
@@ -11,7 +11,7 @@ export default function AdminLayout({
     children: React.ReactNode
 }) {
     const [isMenuOpen, setIsMenuOpen] = useState(true)
-
+    useEffect
     return (
         <div className="flex min-h-screen">
             <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />

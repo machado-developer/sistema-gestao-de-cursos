@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider"
 
 export const metadata: Metadata = {
   title: 'Gestão Académica PRO',
-  description: 'Sistema Profissional de Gestão',
+  description: 'Sistema Profissional de Gestão De cursos',
 }
 
 import { Suspense } from 'react'

@@ -5,59 +5,80 @@
 @tailwind utilities;
 
 :root {
-  /* Rocketseat Dark Mode Colors */
+  /* Dark Mode - Premium Dark (Standard) */
   --bg-color: #09090B;
-  --surface-color: #18181B;
+  /* Zinc-950 */
+  --surface-color: #121214;
+  /* Refined surface */
+  --surface-secondary: #18181B;
+  /* Zinc-900 */
   --surface-hover: #27272A;
-  --text-color: #FAFAFA;
-  --text-secondary: #A1A1AA;
-  --text-muted: #71717A;
-  --card-bg: rgba(24, 24, 27, 0.5);
-  --border-color: rgba(39, 39, 42, 0.8);
-  --sidebar-bg: #09090B;
+  /* Zinc-800 */
 
-  /* Accent Colors - Blue */
-  --accent-primary: #3B82F6;
-  --accent-secondary: #2563EB;
+  --text-primary: #FFFFFF;
+  /* Pure White */
+  --text-secondary: #E4E4E7;
+  /* Zinc-200 for higher contrast */
+  --text-muted: #A1A1AA;
+  /* Zinc-400 */
+
+  --border-color: #27272A;
+  /* Zinc-800 */
+  --border-hover: #3F3F46;
+  /* Zinc-700 */
+
+  --sidebar-bg: #020202;
+  --card-bg: rgba(24, 24, 27, 0.4);
+
+  /* Vibrant High-Fidelity Colors */
+  --dashboard-blue: #2962FF;
+  --dashboard-green: #00C853;
+  --dashboard-orange: #FF8A00;
+  --dashboard-red: #D50000;
+  --dashboard-purple: #AA00FF;
+  --dashboard-cyan: #00B8D4;
+
+  /* Accent Colors */
+  --accent-primary: var(--dashboard-blue);
+  --accent-secondary: #1E4BDD;
   --accent-light: #60A5FA;
 
   /* Status Colors */
-  --success: #10B981;
-  --warning: #F59E0B;
-  --error: #EF4444;
-  --info: #3B82F6;
+  --success: var(--dashboard-green);
+  --warning: var(--dashboard-orange);
+  --error: var(--dashboard-red);
+  --info: var(--dashboard-blue);
 }
 
 .light {
-  /* Light Mode - Enterprise Design System (Clean, High Precision) */
-  --bg-color: #F8FAFC;
-  /* Very subtle off-white (Slate-50) for depth */
+  /* Light Mode - Enterprise Polish */
+  --bg-color: #FFFFFF;
   --surface-color: #F8FAFC;
-  /* Very subtle gray for cards/surfaces */
-  --surface-hover: #F1F5F9;
-  /* Slightly darker on hover */
+  /* Slate-50 */
+  --surface-secondary: #F1F5F9;
+  /* Slate-100 */
+  --surface-hover: #E2E8F0;
+  /* Slate-200 */
 
-  /* Typography - Optimized for Readability (Inter) */
-  --text-color: #0F172A;
+  --text-primary: #0F172A;
   /* Slate-900 - Deep, sharp black */
   --text-secondary: #334155;
-  /* Slate-700 - High legibility for labels/secondary info */
+  /* Slate-700 - High legibility */
   --text-muted: #64748B;
-  /* Slate-500 - Much darker than previous Gray-400 for better readability */
+  /* Slate-500 */
 
-  /* Components */
-  --card-bg: #FFFFFF;
   --border-color: #E2E8F0;
-  /* Slate-200 for crisp, subtle borders */
-  --sidebar-bg: #FFFFFF;
+  /* Slate-200 */
+  --border-hover: #CBD5E1;
+  /* Slate-300 */
 
-  /* Accent Colors - Tuned for Light Mode */
+  --sidebar-bg: #FFFFFF;
+  --card-bg: #FFFFFF;
+
+  /* Accent Colors - Optimized for white background */
   --accent-primary: #2563EB;
-  /* Blue-600 */
   --accent-secondary: #1D4ED8;
-  /* Blue-700 */
   --accent-light: #3B82F6;
-  /* Blue-500 */
 }
 
 .light body {
@@ -67,10 +88,10 @@
 
 @layer base {
   body {
-    @apply font-sans;
+    @apply font-sans antialiased;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
     line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
 

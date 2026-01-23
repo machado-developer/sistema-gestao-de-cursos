@@ -41,7 +41,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-black p-4">
+        <div className="min-h-screen flex items-center justify-center bg-blue-600 p-4">
             {/* Background ambient light */}
             <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-[-1] overflow-hidden">
                 <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]" />
@@ -66,7 +66,7 @@ export default function LoginPage() {
                         type="email"
                         placeholder="admin@gestao.com"
                         required
-                        className="bg-black/50"
+                        className="bg-gray-100/50"
                     />
 
                     <div className="flex flex-col gap-1.5 w-full">
@@ -74,11 +74,11 @@ export default function LoginPage() {
                             <label className="text-sm font-medium text-zinc-400">Senha</label>
                             <span className="text-xs text-blue-400 cursor-pointer hover:text-blue-300">Esqueci a senha</span>
                         </div>
-                        <input
+                        <Input
                             name="password"
                             type="password"
                             required
-                            className="bg-black/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
+                            className="bg-gray-100/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
                         />
                     </div>
 

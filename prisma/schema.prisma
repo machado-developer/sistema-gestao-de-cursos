@@ -128,15 +128,16 @@ model Pagamento {
 }
 
 model User {
-    id        String   @id @default(uuid())
-    name      String
-    email     String   @unique
-    password  String
-    role      String   @default("USER")
-    language  String   @default("pt") // "pt", "en"
-    theme     String   @default("dark") // "dark", "light"
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id          String       @id @default(uuid())
+    name        String
+    email       String       @unique
+    password    String
+    role        String       @default("USER")
+    language    String       @default("pt") // "pt", "en"
+    theme       String       @default("dark") // "dark", "light"
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
+    funcionario Funcionario?
 
     @@map("users")
 }
@@ -224,4 +225,184 @@ model Avaliacao {
     updatedAt   DateTime   @updatedAt
 
     @@map("avaliacoes")
+}
+
+// ==========================================
+// MÓDULO DE RECURSOS HUMANOS (RH)
+// ==========================================
+
+model Departamento {
+    id           String        @id @default(uuid())
+    nome         String        @unique
+    descricao    String?       @db.Text
+    funcionarios Funcionario[]
+    cargos       Cargo[]
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+
+    @@map("rh_departamentos")
+}
+
+model Cargo {
+    id           String        @id @default(uuid())
+    nome         String        @unique
+    descricao    String?       @db.Text
+    salario_base Decimal?      @db.Decimal(18, 2)
+    funcionarios Funcionario[]
+
+    departamentoId String?
+    departamento   Departamento? @relation(fields: [departamentoId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("rh_cargos")
+}
+
+model Funcionario {
+    id              String    @id @default(uuid())
+    nome            String
+    bi_documento    String    @unique
+    email           String?   @unique
+    telefone        String?
+    data_nascimento DateTime?
+    genero          String?
+    nif             String?   @unique
+    iban            String? // IBAN Angolano
+    numero_inss     String?   @unique
+
+    cargoId String?
+    cargo   Cargo?  @relation(fields: [cargoId], references: [id])
+
+    departamentoId String?
+    departamento   Departamento? @relation(fields: [departamentoId], references: [id])
+
+    data_admissao DateTime
+    status        String   @default("ATIVO") // ATIVO, FERIAS, LICENCA, DESLIGADO
+
+    userId String? @unique
+    user   User?   @relation(fields: [userId], references: [id])
+
+    contratos Contrato[]
+    presencas PresencaHR[]
+    folhas    FolhaPagamento[]
+    ferias    FeriasSolicitacao[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("rh_funcionarios")
+}
+
+model Contrato {
+    id            String      @id @default(uuid())
+    funcionarioId String
+    funcionario   Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+
+    tipo        String // DETERMINADO, INDETERMINADO, ESTAGIO
+    data_inicio DateTime
+    data_fim    DateTime?
+    status      String    @default("VIGENTE") // VIGENTE, ENCERRADO
+
+    salario_base         Decimal @db.Decimal(18, 2)
+    subsidio_alimentacao Decimal @default(0) @db.Decimal(18, 2)
+    subsidio_transporte  Decimal @default(0) @db.Decimal(18, 2)
+    subsidio_residencia  Decimal @default(0) @db.Decimal(18, 2)
+    outros_subsidios     Decimal @default(0) @db.Decimal(18, 2)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("rh_contratos")
+}
+
+model PresencaHR {
+    id            String      @id @default(uuid())
+    funcionarioId String
+    funcionario   Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+
+    data    DateTime
+    entrada DateTime?
+    saida   DateTime?
+    status  String // PRESENTE, FALTA_J, FALTA_I, FERIAS, FERIADO, LICENCA, FOLGA
+
+    horas_normais    Float @default(8)
+    horas_extras_50  Float @default(0)
+    horas_extras_100 Float @default(0)
+    horas_noturnas   Float @default(0)
+
+    observacao String?  @db.Text
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    @@unique([funcionarioId, data])
+    @@map("rh_presencas")
+}
+
+model FolhaPagamento {
+    id            String      @id @default(uuid())
+    funcionarioId String
+    funcionario   Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+
+    mes                Int
+    ano                Int
+    data_processamento DateTime @default(now())
+
+    salario_base                Decimal @db.Decimal(18, 2)
+    total_subsidios_tributaveis Decimal @default(0) @db.Decimal(18, 2)
+    total_subsidios_isentos     Decimal @default(0) @db.Decimal(18, 2)
+    total_horas_extras          Decimal @default(0) @db.Decimal(18, 2)
+    total_faltas                Decimal @default(0) @db.Decimal(18, 2)
+
+    base_inss        Decimal @db.Decimal(18, 2)
+    inss_trabalhador Decimal @db.Decimal(18, 2) // 3%
+    inss_empresa     Decimal @db.Decimal(18, 2) // 8%
+
+    base_irt   Decimal @db.Decimal(18, 2)
+    irt_devido Decimal @db.Decimal(18, 2)
+
+    outros_descontos Decimal @default(0) @db.Decimal(18, 2)
+    liquido_receber  Decimal @db.Decimal(18, 2)
+
+    status    String   @default("RASCUNHO") // RASCUNHO, PROCESSADO, PAGO
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([funcionarioId, mes, ano])
+    @@map("rh_folhas_pagamento")
+}
+
+model FeriasSolicitacao {
+    id            String      @id @default(uuid())
+    funcionarioId String
+    funcionario   Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+
+    data_inicio    DateTime
+    data_fim       DateTime
+    dias_uteis     Int
+    ano_referencia Int
+    tipo           String   @default("GOZO_FERIAS") // GOZO_FERIAS, LICENCA_M, LICENCA_P, DOENCA
+    status         String   @default("PENDENTE") // PENDENTE, APROVADO, REPROVADO, CONCLUIDO
+
+    observacao String?  @db.Text
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    @@map("rh_ferias_solicitacoes")
+}
+
+model ConfigRH {
+    id             String  @id @default(uuid())
+    mes_referencia Int?
+    ano_referencia Int?
+    salario_minimo Decimal @default(70000) @db.Decimal(18, 2)
+
+    // Percentagens Legais (Angola)
+    inss_trabalhador_pct Decimal @default(0.03) @db.Decimal(5, 4)
+    inss_empresa_pct     Decimal @default(0.08) @db.Decimal(5, 4)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("rh_configs")
 }

@@ -2,7 +2,19 @@
 
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { Card } from '@/components/ui/Card'
-import { Users, School, Wallet, Award, Activity, TrendingUp } from 'lucide-react'
+import { StatCard } from '@/components/dashboard/StatCard'
+import {
+    Users,
+    School,
+    Wallet,
+    Award,
+    TrendingUp,
+    Clock,
+    CheckCircle2,
+    Briefcase,
+    CalendarCheck,
+    AlertCircle
+} from 'lucide-react'
 import { formatCurrency } from '@/lib/utils'
 
 interface DashboardClientProps {
@@ -12,117 +24,150 @@ interface DashboardClientProps {
         totalRevenue: number
         totalCertificados: number
         recentMatriculas: any[]
+        totalFuncionarios: number
+        presencasHoje: number
+        pagamentosPendentes: number
+        recentActivity: any[]
     }
 }
 
 export function DashboardClient({ data }: DashboardClientProps) {
     const { t } = useLanguage()
 
-    const stats = [
-        {
-            name: t('dashboard.stats.students'),
-            value: data.totalAlunos.toString(),
-            icon: Users,
-            color: 'text-blue-500',
-            bg: 'bg-blue-500/10'
-        },
-        {
-            name: t('dashboard.stats.active_classes'),
-            value: data.turmasAtivas.toString(),
-            icon: School,
-            color: 'text-blue-400',
-            bg: 'bg-blue-400/10'
-        },
-        {
-            name: t('dashboard.stats.revenue'),
-            value: formatCurrency(data.totalRevenue),
-            icon: Wallet,
-            color: 'text-green-500',
-            bg: 'bg-green-500/10'
-        },
-        {
-            name: t('dashboard.stats.certificates'),
-            value: data.totalCertificados.toString(),
-            icon: Award,
-            color: 'text-orange-500',
-            bg: 'bg-orange-500/10'
-        },
-    ]
-
     return (
-        <div className="space-y-8 animate-in fade-in duration-700">
-            <div>
-                <h1 className="text-4xl font-black text-app-text tracking-tighter uppercase transition-colors">
-                    {t('dashboard.title')}
+        <div className="p-1 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+            {/* Header / Module Title */}
+            <div className="border-b-2 border-slate-200 dark:border-zinc-800 pb-2">
+                <h1 className="text-lg font-bold text-[var(--text-secondary)] uppercase tracking-tighter">
+                    Estado do sistema de gestão
                 </h1>
-                <p className="text-app-muted font-bold uppercase text-[10px] tracking-widest mt-1">
-                    {t('dashboard.subtitle')}
-                </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {stats.map((stat) => (
-                    <Card key={stat.name} className="p-6 group hover:border-blue-500/20 transition-all bg-card-bg border-border">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className={`p-3 rounded-2xl ${stat.bg} ${stat.color} group-hover:scale-110 transition-transform`}>
-                                <stat.icon size={24} />
-                            </div>
-                            <Activity size={16} className="text-app-muted" />
+            {/* Top Stats Row - Vibrant Reference Style */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <StatCard
+                    title="Alunos Matriculados"
+                    value={data.totalAlunos}
+                    icon={Users}
+                    variant="orange"
+                />
+                <StatCard
+                    title="Contratos Ativos"
+                    value={data.totalFuncionarios}
+                    icon={Briefcase}
+                    variant="green"
+                    subStats={[
+                        { label: 'Presentes', value: data.presencasHoje }
+                    ]}
+                />
+                <StatCard
+                    title="Certificados Emitidos"
+                    value={data.totalCertificados}
+                    icon={Award}
+                    variant="purple"
+                />
+                <StatCard
+                    title="Matrículas Pagas"
+                    value={formatCurrency(data.totalRevenue)}
+                    icon={Wallet}
+                    variant="cyan"
+                    subStats={[
+                        { label: 'Volume Total', value: '100%' }
+                    ]}
+                />
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Main Content: Table Activity */}
+                <div className="lg:col-span-2">
+                    <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-sm shadow-sm overflow-hidden">
+                        <div className="p-4 border-b border-slate-100 dark:border-zinc-800/50 bg-slate-50/50 dark:bg-zinc-800/20">
+                            <h3 className="text-sm font-bold text-[var(--text-primary)] tracking-tight">
+                                Transações em processo
+                            </h3>
                         </div>
-                        <h3 className="text-[10px] font-black uppercase text-app-muted tracking-widest mb-1">{stat.name}</h3>
-                        <p className="text-3xl font-black text-app-text tracking-tight">{stat.value}</p>
-                    </Card>
-                ))}
-            </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <Card className="lg:col-span-2 p-8 bg-card-bg border-border space-y-6">
-                    <div className="flex items-center justify-between border-b border-border pb-4">
-                        <h3 className="text-xs font-black text-app-text uppercase tracking-widest flex items-center gap-2">
-                            <TrendingUp size={16} className="text-green-500" />
-                            {t('dashboard.recent_matriculas')}
-                        </h3>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left">
+                                <thead>
+                                    <tr className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-widest border-b border-slate-100 dark:border-zinc-800">
+                                        <th className="px-6 py-3 font-semibold">Aluno</th>
+                                        <th className="px-6 py-3 font-semibold">No. Matrícula</th>
+                                        <th className="px-6 py-3 font-semibold">Estado</th>
+                                        <th className="px-6 py-3 font-semibold">Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-50 dark:divide-zinc-800/50">
+                                    {data.recentMatriculas.map((m) => (
+                                        <tr key={m.id} className="hover:bg-slate-50 dark:hover:bg-zinc-800/30 transition-colors">
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-blue-600 text-xs font-bold">
+                                                        {m.aluno.nome_completo[0]}
+                                                    </div>
+                                                    <span className="text-xs font-bold text-[var(--text-primary)]">{m.aluno.nome_completo}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded font-black">
+                                                    #{m.id.split('-')[0].toUpperCase()}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center gap-2">
+                                                    <div className={`w-2 h-2 rounded-full ${m.estado_pagamento === 'Pago' ? 'bg-green-500' : 'bg-orange-400'}`} />
+                                                    <span className="text-xs font-medium text-[var(--text-secondary)]">{m.estado_pagamento}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 text-xs font-bold text-[var(--text-primary)]">
+                                                {formatCurrency(Number(m.valor_total))}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Right Sidebar: Quick Status Vertical */}
+                <div className="space-y-4">
+                    <div className="border-b-2 border-slate-200 dark:border-zinc-800 pb-2">
+                        <h3 className="text-xs font-bold text-[var(--text-secondary)] uppercase">Estado geral</h3>
                     </div>
 
-                    <div className="space-y-4">
-                        {data.recentMatriculas.map((m) => (
-                            <div key={m.id} className="flex items-center justify-between p-4 rounded-2xl bg-surface-hover/50 border border-border group hover:border-blue-500/30 transition-all">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-500 font-black">
-                                        {m.aluno.nome_completo[0]}
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-black text-app-text">{m.aluno.nome_completo}</p>
-                                        <p className="text-xs text-app-muted font-bold uppercase tracking-tight">{m.turma.curso.nome}</p>
-                                    </div>
+                    <div className="grid grid-cols-1 gap-3">
+                        {data.recentActivity.map((log) => (
+                            <div key={log.id} className="bg-white dark:bg-zinc-900 border-b border-t border-r border-slate-200 dark:border-zinc-800 p-4 rounded-sm flex items-center gap-4 shadow-sm border-l-4 border-blue-600 transition-all hover:translate-x-1">
+                                <div className="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded">
+                                    <Clock size={20} />
                                 </div>
-                                <div className="text-right">
-                                    <p className="text-xs font-black text-app-text mb-1">{formatCurrency(Number(m.valor_total))}</p>
-                                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-lg bg-green-500/10 text-green-500 border border-green-500/20">
-                                        {m.estado_pagamento === 'Pago' ? t('common.save') && 'Liquidado' : m.estado_pagamento}
-                                    </span>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-widest leading-none mb-1">
+                                        {log.acao.replace(/_/g, ' ')}
+                                    </p>
+                                    <p className="text-xs font-bold text-[var(--text-primary)] truncate">
+                                        {log.usuario || 'Sistema'}
+                                    </p>
+                                    <p className="text-[10px] text-slate-400 dark:text-zinc-500 font-medium">
+                                        {new Date(log.createdAt).toLocaleTimeString()}
+                                    </p>
                                 </div>
                             </div>
                         ))}
+                        {data.recentActivity.length === 0 && (
+                            <div className="py-8 text-center border-2 border-dashed border-slate-100 dark:border-zinc-800 rounded-sm">
+                                <p className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-widest">
+                                    Sem atividade recente
+                                </p>
+                            </div>
+                        )}
                     </div>
-                </Card>
 
-                <Card className="p-8 bg-blue-600 shadow-2xl shadow-blue-600/20 border-blue-500 relative overflow-hidden group">
-                    <div className="absolute -top-10 -right-10 opacity-10 group-hover:scale-110 transition-transform">
-                        <TrendingUp size={200} />
-                    </div>
-                    <div className="relative z-10 space-y-6">
-                        <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest">{t('dashboard.finance_flow')}</h3>
-                        <div className="space-y-2">
-                            <p className="text-4xl font-black text-gray-900">{formatCurrency(data.totalRevenue)}</p>
-                            <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest opacity-70">Volume total acumulado</p>
-                        </div>
-                        <div className="h-[2px] w-full bg-white/20" />
-                        <p className="text-xs text-blue-900/75 font-medium leading-relaxed">
-                            O sistema registou um crescimento de 12% em relação ao mês anterior. Continue monitorando as inadimplências.
-                        </p>
-                    </div>
-                </Card>
+                    <button className="w-full py-3 bg-slate-100 dark:bg-zinc-800 text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-zinc-400 rounded-sm hover:bg-slate-200 dark:hover:bg-zinc-700 transition-colors">
+                        Ver relatório detalhado
+                    </button>
+                </div>
             </div>
         </div>
     )

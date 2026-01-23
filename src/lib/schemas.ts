@@ -1,58 +1,36 @@
-import { z } from 'zod'
+import { z } from "zod";
 
-// Aluno Schema
-export const alunoSchema = z.object({
-    nome_completo: z.string().min(3, 'Nome deve ter pelo menos 3 caracteres'),
-    bi_documento: z.string().min(5, 'BI inválido'),
-    data_nascimento: z.string().min(1, 'Data de nascimento é obrigatória'),
-    genero: z.string().optional().or(z.literal('')),
-    telefone: z.string().optional().or(z.literal('')),
-    email: z.string().email('Email inválido').optional().or(z.literal('')),
-    Endereco: z.string().optional().or(z.literal('')),
-    escolaAcademica: z.string().optional().or(z.literal('')),
-    escolaridade: z.string().optional().or(z.literal('')),
-})
+export const funcionarioSchema = z.object({
+    nome: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
+    bi_documento: z.string().min(10, "Documento de identificação inválido").max(15, "Documento de identificação muito longo"),
+    nif: z.string().min(9, "NIF inválido").max(14, "NIF inválido").optional().or(z.literal("")),
+    email: z.string().email("Email inválido").optional().or(z.literal("")),
+    telefone: z.string().min(9, "Telefone deve ter pelo menos 9 dígitos").optional().or(z.literal("")),
+    cargoId: z.string().min(1, "Seleccione um cargo"),
+    departamentoId: z.string().min(1, "Seleccione um departamento"),
+    data_admissao: z.string().min(1, "Data de admissão é obrigatória"),
+    numero_inss: z.string().optional().or(z.literal("")),
+    salario_base: z.coerce.number().min(32120, "O salário mínimo nacional é 32,120 Kz"),
+    subsidio_alimentacao: z.coerce.number().min(0),
+    subsidio_transporte: z.coerce.number().min(0),
+});
 
-// Curso Schema
-export const cursoSchema = z.object({
-    nome: z.string().min(3, 'Nome do curso é obrigatório'),
-    descricao: z.string().min(10, 'Descrição deve ter pelo menos 10 caracteres'),
-    carga_horaria: z.number().positive('Carga horária deve ser positiva'),
-    preco: z.number().nonnegative('Preço não pode ser negativo'),
-})
+export const departamentoSchema = z.object({
+    nome: z.string().min(2, "O nome do departamento deve ter pelo menos 2 caracteres"),
+    descricao: z.string().optional(),
+});
 
-// Turma Schema
-export const turmaSchema = z.object({
-    cursoId: z.string().min(1, 'Selecione um curso'),
-    codigo_turma: z.string().min(3, 'Código da turma é obrigatório'),
-    data_inicio: z.string().or(z.date()),
-    data_fim: z.string().or(z.date()),
-    status: z.enum(['Inscrições Abertas', 'Em Andamento', 'Concluída', 'Cancelada']),
-})
+export const cargoSchema = z.object({
+    nome: z.string().min(2, "O nome do cargo deve ter pelo menos 2 caracteres"),
+    departamentoId: z.string().min(1, "Seleccione um departamento"),
+    salario_base_sugerido: z.coerce.number().min(0).optional(),
+});
 
-// Pagamento Schema
-export const pagamentoSchema = z.object({
-    matriculaId: z.string().min(1, 'ID da matrícula é obrigatório'),
-    valor: z.number().positive('O valor deve ser superior a zero'),
-    metodo_pagamento: z.enum(['Dinheiro', 'Transferência', 'Multicaixa', 'TPA']),
-})
-
-// Matricula (Novo) Schema - Complex validation
-export const matriculaSchema = z.object({
-    alunoId: z.string().min(1, 'Selecione um aluno'),
-    turmaId: z.string().min(1, 'Selecione uma turma'),
-    valor_total: z.number().nonnegative(),
-    desconto: z.number().nonnegative().default(0),
-})
-
-// Instrutor Schema
-export const instrutorSchema = z.object({
-    nome: z.string().min(3, 'Nome deve ter pelo menos 3 caracteres'),
-    email: z.string().email('Email inválido'),
-    telefone: z.string().optional().or(z.literal('')),
-    especialidade: z.string().optional().or(z.literal('')),
-    bi_documento: z.string().optional().or(z.literal('')),
-    genero: z.string().optional().or(z.literal('')),
-    bio: z.string().optional().or(z.literal('')),
-})
-
+export const feriasSchema = z.object({
+    funcionarioId: z.string().min(1, "Seleccione um funcionário"),
+    data_inicio: z.string().min(1, "Data de início é obrigatória"),
+    data_fim: z.string().min(1, "Data de fim é obrigatória"),
+    dias_uteis: z.coerce.number().min(1, "Mínimo 1 dia"),
+    tipo: z.string().min(1, "Seleccione o tipo"),
+    observacao: z.string().optional(),
+});
