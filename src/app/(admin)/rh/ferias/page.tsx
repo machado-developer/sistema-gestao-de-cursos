@@ -27,11 +27,7 @@ export default function FeriasPage() {
     const [cargos, setCargos] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Mock data for requests since we don't have a full API for this yet
-    const [solicitacoes, setSolicitacoes] = useState([
-        { id: "1", funcionario: { nome: "António Machado", cargo: { nome: "Diretor Executivo" }, departamentoId: "dept-1" }, inicio: "2025-02-01", fim: "2025-02-22", dias: 22, status: "APROVADO", tipo: "GOZO_FERIAS" },
-        { id: "2", funcionario: { nome: "Maria Silva", cargo: { nome: "Consultor Técnico" }, departamentoId: "dept-2" }, inicio: "2025-03-10", fim: "2025-03-24", dias: 10, status: "PENDENTE", tipo: "GOZO_FERIAS" },
-    ]);
+    const [solicitacoes, setSolicitacoes] = useState<any[]>([]);
 
     // Filters
     const [search, setSearch] = useState("");
@@ -40,20 +36,25 @@ export default function FeriasPage() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const [deptRes, cargoRes] = await Promise.all([
+            const [deptRes, cargoRes, feriasRes] = await Promise.all([
                 fetch("/api/rh/departamentos"),
-                fetch("/api/rh/cargos")
+                fetch("/api/rh/cargos"),
+                fetch("/api/rh/ferias")
             ]);
 
-            const [deptData, cargoData] = await Promise.all([
+            const [deptData, cargoData, feriasData] = await Promise.all([
                 deptRes.json(),
-                cargoRes.json()
+                cargoRes.json(),
+                feriasRes.json()
             ]);
 
             setDepts(deptData);
             setCargos(cargoData);
+            setSolicitacoes(feriasData);
         } catch (error) {
-            console.error("Erro ao carregar auxiliares");
+            toast.error("Erro de Carregamento", {
+                description: "Não foi possível sincronizar o mapa de férias."
+            });
         } finally {
             setLoading(false);
         }

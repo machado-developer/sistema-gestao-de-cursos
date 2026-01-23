@@ -245,30 +245,24 @@ export default function FuncionarioForm({ initialData }: { initialData?: any }) 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-1.5">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Unidade / Departamento</label>
-                            <div className="relative group">
-                                <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
-                                <select
-                                    {...register("departamentoId")}
-                                    className={`w-full h-11 pl-9 pr-3 rounded-md border-2 bg-slate-50 dark:bg-zinc-800/30 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer ${errors.departamentoId ? 'border-red-500 ring-red-500' : 'border-slate-100 dark:border-zinc-800'}`}
-                                >
-                                    <option value="">FILTRAR POR UNIDADE...</option>
-                                    {departamentos.map(d => <option key={d.id} value={d.id}>{d.nome.toUpperCase()}</option>)}
-                                </select>
-                            </div>
+                            <select
+                                {...register("departamentoId")}
+                                className={`w-full h-11 px-3 rounded-md border-2 bg-slate-50 dark:bg-zinc-800/30 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer ${errors.departamentoId ? 'border-red-500 ring-red-500' : 'border-slate-100 dark:border-zinc-800'}`}
+                            >
+                                <option value="">FILTRAR POR UNIDADE...</option>
+                                {departamentos.map(d => <option key={d.id} value={d.id}>{d.nome.toUpperCase()}</option>)}
+                            </select>
                             {errors.departamentoId && <p className="text-[9px] font-black text-red-500 uppercase">{errors.departamentoId.message}</p>}
                         </div>
                         <div className="space-y-1.5">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Cargo e Especialidade</label>
-                            <div className="relative group">
-                                <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
-                                <select
-                                    {...register("cargoId")}
-                                    className={`w-full h-11 pl-9 pr-3 rounded-md border-2 bg-slate-50 dark:bg-zinc-800/30 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer ${errors.cargoId ? 'border-red-500 ring-red-500' : 'border-slate-100 dark:border-zinc-800'}`}
-                                >
-                                    <option value="">SELECCIONE A FUNÇÃO...</option>
-                                    {filteredCargos.map(c => <option key={c.id} value={c.id}>{c.nome.toUpperCase()}</option>)}
-                                </select>
-                            </div>
+                            <select
+                                {...register("cargoId")}
+                                className={`w-full h-11 px-3 rounded-md border-2 bg-slate-50 dark:bg-zinc-800/30 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer ${errors.cargoId ? 'border-red-500 ring-red-500' : 'border-slate-100 dark:border-zinc-800'}`}
+                            >
+                                <option value="">SELECCIONE A FUNÇÃO...</option>
+                                {filteredCargos.map(c => <option key={c.id} value={c.id}>{c.nome.toUpperCase()}</option>)}
+                            </select>
                             {errors.cargoId && <p className="text-[9px] font-black text-red-500 uppercase">{errors.cargoId.message}</p>}
                         </div>
                     </div>
