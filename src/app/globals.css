@@ -5,85 +5,69 @@
 @tailwind utilities;
 
 :root {
-  /* Dark Mode - Premium Dark (Standard) */
-  --bg-color: #09090B;
-  /* Zinc-950 */
-  --surface-color: #121214;
-  /* Refined surface */
-  --surface-secondary: #18181B;
-  /* Zinc-900 */
-  --surface-hover: #27272A;
-  /* Zinc-800 */
-
-  --text-primary: #FFFFFF;
-  /* Pure White */
-  --text-secondary: #E4E4E7;
-  /* Zinc-200 for higher contrast */
-  --text-muted: #A1A1AA;
-  /* Zinc-400 */
-
-  --border-color: #27272A;
-  /* Zinc-800 */
-  --border-hover: #3F3F46;
-  /* Zinc-700 */
-
-  --sidebar-bg: #020202;
-  --card-bg: rgba(24, 24, 27, 0.4);
-
-  /* Vibrant High-Fidelity Colors */
-  --dashboard-blue: #2962FF;
-  --dashboard-green: #00C853;
-  --dashboard-orange: #FF8A00;
-  --dashboard-red: #D50000;
-  --dashboard-purple: #AA00FF;
-  --dashboard-cyan: #00B8D4;
-
-  /* Accent Colors */
-  --accent-primary: var(--dashboard-blue);
-  --accent-secondary: #1E4BDD;
-  --accent-light: #60A5FA;
-
-  /* Status Colors */
-  --success: var(--dashboard-green);
-  --warning: var(--dashboard-orange);
-  --error: var(--dashboard-red);
-  --info: var(--dashboard-blue);
-}
-
-.light {
-  /* Light Mode - Enterprise Polish */
+  /* Hostinger Inspired Palette - Light Mode (Default) */
   --bg-color: #FFFFFF;
-  --surface-color: #F8FAFC;
-  /* Slate-50 */
-  --surface-secondary: #F1F5F9;
-  /* Slate-100 */
-  --surface-hover: #E2E8F0;
-  /* Slate-200 */
+  --surface-color: #F6F7F9;
+  --surface-secondary: #EDEFF2;
+  --surface-hover: #E1E4E9;
 
-  --text-primary: #0F172A;
-  /* Slate-900 - Deep, sharp black */
-  --text-secondary: #334155;
-  /* Slate-700 - High legibility */
-  --text-muted: #64748B;
-  /* Slate-500 */
+  --text-primary: #000000;
+  /* Pitch black for high contrast */
+  --text-secondary: #40444B;
+  --text-muted: #6A6F75;
 
-  --border-color: #E2E8F0;
-  /* Slate-200 */
-  --border-hover: #CBD5E1;
-  /* Slate-300 */
+  --border-color: #E1E4E8;
+  --border-hover: #D1D5DA;
 
   --sidebar-bg: #FFFFFF;
   --card-bg: #FFFFFF;
 
-  /* Accent Colors - Optimized for white background */
+  /* Accent Colors - Professional Blue */
   --accent-primary: #2563EB;
   --accent-secondary: #1D4ED8;
   --accent-light: #3B82F6;
+
+  /* Status Colors */
+  --success: #00B67A;
+  --warning: #FF9800;
+  --error: #FF5252;
+  --info: #2196F3;
+
+  --dashboard-blue: #2196F3;
+  --dashboard-green: #00B67A;
+  --dashboard-orange: #FF9800;
+  --dashboard-red: #FF5252;
+  --dashboard-purple: #2563EB;
+  --dashboard-cyan: #00BCD4;
+}
+
+.dark {
+  /* Ultra Dark Mode */
+  --bg-color: #000000;
+  /* True Black */
+  --surface-color: #0A0A0B;
+  --surface-secondary: #121214;
+  --surface-hover: #1C1C1F;
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A5;
+  --text-muted: #71717A;
+
+  --border-color: #1C1C1F;
+  --border-hover: #27272A;
+
+  --sidebar-bg: #000000;
+  --card-bg: rgba(10, 10, 11, 0.8);
+
+  /* Blue in Dark Mode */
+  --accent-primary: #60A5FA;
+  --accent-secondary: #3B82F6;
+  --accent-light: #93C5FD;
 }
 
 .light body {
-  background-color: #F8FAFC !important;
-  color: #0F172A !important;
+  background-color: var(--bg-color) !important;
+  color: var(--text-primary) !important;
 }
 
 @layer base {

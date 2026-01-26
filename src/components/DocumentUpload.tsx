@@ -1,26 +1,43 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useMemo } from 'react'
 import { Button } from '@/components/ui/Button'
+import { Select } from '@/components/ui/Select'
 import { Upload, X, Check, Loader2, AlertCircle } from 'lucide-react'
 import { toast } from 'sonner'
 
 interface DocumentUploadProps {
-    alunoId: string
-    onUploadSuccess: (doc: any) => void
+    entityId?: string
+    entityType?: 'alunos' | 'rh/funcionarios'
+    onUploadSuccess?: (doc: any) => void
+    onFileSelect?: (file: File, type: string) => void
 }
 
-export function DocumentUpload({ alunoId, onUploadSuccess }: DocumentUploadProps) {
-    const [isUploading, setIsUploading] = useState(false)
-    const [dragActive, setDragActive] = useState(false)
-    const [selectedType, setSelectedType] = useState('Outro')
-    const fileInputRef = useRef<HTMLInputElement>(null)
-
-    const docTypes = [
+const DOC_TYPES_MAP = {
+    'alunos': [
         { id: 'Foto', label: 'Foto de Perfil' },
         { id: 'BI', label: 'Bilhete de Identidade' },
+        { id: 'Certificado', label: 'Certificado Escolar' },
+        { id: 'Outro', label: 'Outro Documento' },
+    ],
+    'rh/funcionarios': [
+        { id: 'Foto', label: 'Foto de Perfil' },
+        { id: 'BI', label: 'BI / Passaporte' },
+        { id: 'NIF', label: 'Cartão de NIF' },
+        { id: 'INSS', label: 'Cartão INSS' },
+        { id: 'Contrato', label: 'Contrato Assinado' },
+        { id: 'Habilitações', label: 'Diploma / Certificado' },
+        { id: 'CV', label: 'Currículo (CV)' },
         { id: 'Outro', label: 'Outro Documento' },
     ]
+}
+
+export function DocumentUpload({ entityId, entityType = 'alunos', onUploadSuccess, onFileSelect }: DocumentUploadProps) {
+    const [isUploading, setIsUploading] = useState(false)
+    const [dragActive, setDragActive] = useState(false)
+    const docTypes = DOC_TYPES_MAP[entityType as keyof typeof DOC_TYPES_MAP] || DOC_TYPES_MAP['alunos']
+    const [selectedType, setSelectedType] = useState(docTypes[0].id)
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
     const handleFile = async (file: File) => {
         if (!file) return
@@ -31,6 +48,16 @@ export function DocumentUpload({ alunoId, onUploadSuccess }: DocumentUploadProps
             return
         }
 
+        if (onFileSelect) {
+            onFileSelect(file, selectedType)
+            return
+        }
+
+        if (!entityId || !onUploadSuccess) {
+            toast.error('Configuração de upload incompleta.')
+            return
+        }
+
         setIsUploading(true)
         const formData = new FormData()
         formData.append('file', file)
@@ -38,7 +65,7 @@ export function DocumentUpload({ alunoId, onUploadSuccess }: DocumentUploadProps
         formData.append('nome', file.name)
 
         try {
-            const response = await fetch(`/api/alunos/${alunoId}/documentos`, {
+            const response = await fetch(`/api/${entityType}/${entityId}/documentos`, {
                 method: 'POST',
                 body: formData,
             })
@@ -63,20 +90,14 @@ export function DocumentUpload({ alunoId, onUploadSuccess }: DocumentUploadProps
     }
 
     return (
-        <div className="space-y-6">
-            <div className="flex flex-wrap gap-2">
-                {docTypes.map(type => (
-                    <button
-                        key={type.id}
-                        onClick={() => setSelectedType(type.id)}
-                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${selectedType === type.id
-                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                                : 'bg-white/5 text-zinc-500 hover:text-zinc-300 border border-white/5'
-                            }`}
-                    >
-                        {type.label}
-                    </button>
-                ))}
+        <div className="space-y-4">
+            <div className="max-w-xs">
+                <Select
+                    label="Tipo de Documento"
+                    value={selectedType}
+                    onChange={setSelectedType}
+                    options={docTypes.map(t => ({ value: t.id, label: t.label }))}
+                />
             </div>
 
             <div
@@ -85,8 +106,8 @@ export function DocumentUpload({ alunoId, onUploadSuccess }: DocumentUploadProps
                 onDrop={(e) => { e.preventDefault(); setDragActive(false); if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]) }}
                 onClick={() => fileInputRef.current?.click()}
                 className={`
-                    h-48 rounded-3xl border-2 border-dashed transition-all flex flex-col items-center justify-center cursor-pointer relative overflow-hidden group
-                    ${dragActive ? 'border-blue-500 bg-blue-500/10' : 'border-white/5 hover:border-blue-500/50 hover:bg-white/5'}
+                    h-40 rounded-3xl border-2 border-dashed transition-all flex flex-col items-center justify-center cursor-pointer relative overflow-hidden group
+                    ${dragActive ? 'border-blue-500 bg-blue-500/10' : 'border-[var(--border-color)] dark:border-zinc-800 hover:border-blue-500/50 hover:bg-white/5'}
                 `}
             >
                 <input
@@ -99,17 +120,17 @@ export function DocumentUpload({ alunoId, onUploadSuccess }: DocumentUploadProps
 
                 {isUploading ? (
                     <div className="flex flex-col items-center gap-4 animate-in fade-in zoom-in duration-300">
-                        <Loader2 className="animate-spin text-blue-500" size={40} />
-                        <p className="text-sm font-black text-blue-400 uppercase tracking-widest">A processar...</p>
+                        <Loader2 className="animate-spin text-blue-500" size={32} />
+                        <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest">A processar...</p>
                     </div>
                 ) : (
-                    <>
-                        <div className="w-16 h-16 rounded-full bg-blue-500/5 flex items-center justify-center text-blue-500 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all mb-4">
-                            <Upload size={28} />
+                    <div className="flex flex-col items-center text-center px-6">
+                        <div className="w-12 h-12 rounded-full bg-blue-500/5 flex items-center justify-center text-blue-500 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all mb-3">
+                            <Upload size={22} />
                         </div>
-                        <h4 className="font-black text-white text-lg">Arraste ou clique para enviar</h4>
-                        <p className="text-xs text-zinc-500 font-bold uppercase tracking-tighter mt-1">Imagens ou PDF até 10MB</p>
-                    </>
+                        <h4 className="font-black text-white text-sm">Arraste ou clique para enviar</h4>
+                        <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-tight mt-1">Imagens ou PDF até 10MB</p>
+                    </div>
                 )}
             </div>
         </div>

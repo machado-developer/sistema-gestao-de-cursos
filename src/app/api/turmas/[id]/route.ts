@@ -56,7 +56,7 @@ export async function PUT(
                 codigo_turma: data.codigo_turma,
                 data_inicio: data.data_inicio,
                 data_fim: data.data_fim,
-                status: data.status,
+
                 instrutorId: body.instrutorId || null
             }
         })

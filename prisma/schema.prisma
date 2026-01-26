@@ -24,18 +24,22 @@ model Aluno {
     escolaridade    String?
     Endereco        String?
     bolseiro        Boolean     @default(false)
+    userId          String?
+    user            User?       @relation("UserAlunos", fields: [userId], references: [id])
 
     @@map("alunos")
 }
 
 model Documento {
-    id        String   @id @default(uuid())
-    alunoId   String
-    aluno     Aluno    @relation(fields: [alunoId], references: [id])
-    tipo      String // "Foto", "BI", "Outro"
-    url       String
-    nome      String
-    createdAt DateTime @default(now())
+    id            String       @id @default(uuid())
+    alunoId       String?
+    aluno         Aluno?       @relation(fields: [alunoId], references: [id])
+    funcionarioId String?
+    funcionario   Funcionario? @relation(fields: [funcionarioId], references: [id])
+    tipo          String // "Foto", "BI", "Outro", "Contrato"
+    url           String
+    nome          String
+    createdAt     DateTime     @default(now())
 
     @@map("documentos")
 }
@@ -53,6 +57,8 @@ model Curso {
     turmas                 Turma[]
     createdAt              DateTime             @default(now())
     updatedAt              DateTime             @updatedAt
+    userId                 String?
+    user                   User?                @relation("UserCursos", fields: [userId], references: [id])
 
     @@map("cursos")
 }
@@ -89,6 +95,8 @@ model Turma {
     aulas        Aula[]
     createdAt    DateTime    @default(now())
     updatedAt    DateTime    @updatedAt
+    userId       String?
+    user         User?       @relation("UserTurmas", fields: [userId], references: [id])
 
     @@map("turmas")
 }
@@ -110,6 +118,8 @@ model Matricula {
     createdAt             DateTime     @default(now())
     updatedAt             DateTime     @updatedAt
     certificate           Certificate?
+    userId                String?
+    user                  User?        @relation("UserMatriculas", fields: [userId], references: [id])
 
     @@map("matriculas")
 }
@@ -123,21 +133,29 @@ model Pagamento {
     metodo_pagamento String
     createdAt        DateTime  @default(now())
     updatedAt        DateTime  @updatedAt
+    userId           String?
+    user             User?     @relation("UserPagamentos", fields: [userId], references: [id])
 
     @@map("pagamentos")
 }
 
 model User {
-    id          String       @id @default(uuid())
-    name        String
-    email       String       @unique
-    password    String
-    role        String       @default("USER")
-    language    String       @default("pt") // "pt", "en"
-    theme       String       @default("dark") // "dark", "light"
-    createdAt   DateTime     @default(now())
-    updatedAt   DateTime     @updatedAt
-    funcionario Funcionario?
+    id           String        @id @default(uuid())
+    name         String
+    email        String        @unique
+    password     String
+    role         String        @default("USER")
+    language     String        @default("pt") // "pt", "en"
+    theme        String        @default("dark") // "dark", "light"
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+    funcionario  Funcionario?
+    alunos       Aluno[]       @relation("UserAlunos")
+    matriculas   Matricula[]   @relation("UserMatriculas")
+    pagamentos   Pagamento[]   @relation("UserPagamentos")
+    certificados Certificate[] @relation("UserCertificados")
+    turmas       Turma[]       @relation("UserTurmas")
+    cursos       Curso[]       @relation("UserCursos")
 
     @@map("users")
 }
@@ -176,6 +194,8 @@ model Certificate {
     hash_validacao String    @unique // Verification hash
     data_emissao   DateTime  @default(now())
     createdAt      DateTime  @default(now())
+    userId         String?
+    user           User?     @relation("UserCertificados", fields: [userId], references: [id])
 
     @@map("certificates")
 }
@@ -270,6 +290,9 @@ model Funcionario {
     nif             String?   @unique
     iban            String? // IBAN Angolano
     numero_inss     String?   @unique
+    hora_entrada    String? // HH:mm
+    hora_saida      String? // HH:mm
+    dias_trabalho   String? // JSON array as string: ["seg", "ter"...]
 
     cargoId String?
     cargo   Cargo?  @relation(fields: [cargoId], references: [id])
@@ -288,8 +311,9 @@ model Funcionario {
     folhas    FolhaPagamento[]
     ferias    FeriasSolicitacao[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt  DateTime    @default(now())
+    updatedAt  DateTime    @updatedAt
+    documentos Documento[]
 
     @@map("rh_funcionarios")
 }
@@ -299,10 +323,11 @@ model Contrato {
     funcionarioId String
     funcionario   Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
 
-    tipo        String // DETERMINADO, INDETERMINADO, ESTAGIO
-    data_inicio DateTime
-    data_fim    DateTime?
-    status      String    @default("VIGENTE") // VIGENTE, ENCERRADO
+    tipo                 String // DETERMINADO, INDETERMINADO, ESTAGIO
+    data_inicio          DateTime
+    data_fim             DateTime?
+    renovacao_automatica Boolean   @default(false)
+    status               String    @default("VIGENTE") // VIGENTE, ENCERRADO, CADUCADO, RENOVADO
 
     salario_base         Decimal @db.Decimal(18, 2)
     subsidio_alimentacao Decimal @default(0) @db.Decimal(18, 2)
@@ -353,6 +378,7 @@ model FolhaPagamento {
     total_subsidios_isentos     Decimal @default(0) @db.Decimal(18, 2)
     total_horas_extras          Decimal @default(0) @db.Decimal(18, 2)
     total_faltas                Decimal @default(0) @db.Decimal(18, 2)
+    faltas_count                Int     @default(0)
 
     base_inss        Decimal @db.Decimal(18, 2)
     inss_trabalhador Decimal @db.Decimal(18, 2) // 3%
@@ -405,4 +431,21 @@ model ConfigRH {
     updatedAt DateTime @updatedAt
 
     @@map("rh_configs")
+}
+
+model Empresa {
+    id        String   @id @default(uuid())
+    nome      String
+    nif       String?
+    endereco  String?
+    telefone  String?
+    email     String?
+    website   String?
+    logoUrl   String?
+    cidade    String?  @default("Luanda")
+    pais      String?  @default("Angola")
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("empresa_config")
 }

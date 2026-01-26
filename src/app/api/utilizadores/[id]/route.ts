@@ -6,7 +6,7 @@ import { authOptions } from "@/lib/auth";
 
 export async function PUT(
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     const session = await getServerSession(authOptions);
 
@@ -16,7 +16,7 @@ export async function PUT(
 
     try {
         const { name, email, password, role } = await req.json();
-        const { id } = params;
+        const { id } = await params;
 
         const data: any = { name, email, role };
 
@@ -43,7 +43,7 @@ export async function PUT(
 
 export async function DELETE(
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     const session = await getServerSession(authOptions);
 
@@ -52,7 +52,7 @@ export async function DELETE(
     }
 
     try {
-        const { id } = params;
+        const { id } = await params;
 
         // Impedir que o admin se apague a si próprio se houver apenas um admin (segurança básica)
         const userToDelete = await prisma.user.findUnique({ where: { id } });

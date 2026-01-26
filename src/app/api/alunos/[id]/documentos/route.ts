@@ -26,28 +26,38 @@ export async function POST(
         await mkdir(uploadDir, { recursive: true })
 
         const buffer = Buffer.from(await file.arrayBuffer())
-        const fileName = `${Date.now()}-${tipo.toLowerCase()}.webp`
+        const isImage = file.type.startsWith('image/')
+        const fileName = `${Date.now()}-${tipo.toLowerCase()}.${isImage ? 'webp' : file.name.split('.').pop()}`
         const filePath = path.join(uploadDir, fileName)
         const publicUrl = `/uploads/alunos/${id}/${fileName}`
 
-        // Optimized Image Processing with Sharp
-        let processedImage = sharp(buffer)
+        if (isImage) {
+            let processedImage = sharp(buffer)
 
-        if (tipo === 'Foto') {
-            // Square crop and resize for profile photo
-            processedImage = processedImage
-                .resize(400, 400, { fit: 'cover' })
-                .webp({ quality: 80 })
-        } else {
-            // General optimization for documents
-            const metadata = await processedImage.metadata()
-            if (metadata.width && metadata.width > 1200) {
-                processedImage = processedImage.resize(1200)
+            if (tipo === 'Foto') {
+                processedImage = processedImage
+                    .resize(400, 400, { fit: 'cover' })
+            } else {
+                const metadata = await processedImage.metadata()
+                if (metadata.width && metadata.width > 1200) {
+                    processedImage = processedImage.resize(1200, null, { withoutEnlargement: true })
+                }
             }
-            processedImage = processedImage.webp({ quality: 85 })
-        }
 
-        await processedImage.toFile(filePath)
+            // aggressive compression to webp
+            await processedImage
+                .webp({
+                    quality: 75,
+                    effort: 6,
+                    lossless: false,
+                    smartSubsample: true
+                })
+                .toFile(filePath)
+        } else {
+            // Save non-image files directly
+            const { writeFile } = await import('fs/promises')
+            await writeFile(filePath, buffer)
+        }
 
         // Save record to database
         const documento = await prisma.documento.create({

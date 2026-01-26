@@ -3,9 +3,15 @@ import { matriculaService } from '@/services/matriculaService'
 import { turmaService } from '@/services/turmaService'
 import { matriculaSchema } from '@/lib/schemas'
 import { withAudit } from '@/lib/withAudit'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
 
 async function POSTHandler(request: NextRequest) {
     try {
+        const session = await getServerSession(authOptions)
+        const user = session?.user?.email ? await prisma.user.findUnique({ where: { email: session.user.email } }) : null
+
         const body = await request.json()
 
         // Zod Validation
@@ -36,7 +42,7 @@ async function POSTHandler(request: NextRequest) {
             valor_pago: 0,
             estado_pagamento: 'Pendente',
             status_academico: 'Cursando'
-        })
+        }, user?.id)
 
         return NextResponse.json(matricula)
     } catch (error: any) {
@@ -57,7 +63,11 @@ export const POST = withAudit(POSTHandler, { acao: 'CRIAR', entidade: 'MATRICULA
 
 export async function GET() {
     try {
-        const matriculas = await matriculaService.findAll()
+        const session = await getServerSession(authOptions)
+        const user = session?.user?.email ? await prisma.user.findUnique({ where: { email: session.user.email } }) : null
+
+        const isAdmin = user?.role === 'ADMIN'
+        const matriculas = await matriculaService.findAll(user?.id, isAdmin)
 
         // Enrich with academic data
         const enriched = matriculas.map((m: any) => ({

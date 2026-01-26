@@ -1,20 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Paystub } from "@/components/rh/Paystub";
 import { Button } from "@/components/ui/Button";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 
-export default function ReciboDetallePage({ params }: { params: { id: string } }) {
+export default function ReciboDetallePage({ params }: { params: Promise<{ id: string }> }) {
+    const resolvedParams = use(params);
     const [folha, setFolha] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchFolha = async () => {
             try {
-                const res = await fetch(`/api/rh/processamento/${params.id}`);
+                const res = await fetch(`/api/rh/processamento/${resolvedParams.id}`);
                 if (!res.ok) throw new Error();
                 const data = await res.json();
                 setFolha(data);
@@ -31,7 +32,7 @@ export default function ReciboDetallePage({ params }: { params: { id: string } }
             }
         };
         fetchFolha();
-    }, [params.id]);
+    }, [resolvedParams.id]);
 
     if (loading) {
         return (

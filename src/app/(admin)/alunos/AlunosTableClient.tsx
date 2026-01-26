@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { User, Mail, FileText, GraduationCap, Banknote, Download } from 'lucide-react'
 import { DataTable, Column } from '@/components/ui/DataTable'
-import { generatePdfTable } from '@/lib/pdf-export'
+import { DocumentService, DocumentType, ExportFormat } from '@/services/DocumentService'
 import { TableFilters, FilterConfig } from '@/components/ui/TableFilters'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -70,11 +70,9 @@ export function AlunosTableClient({ alunos, cursos, turmas, title, subtitle, pag
             ]
         })
 
-        generatePdfTable({
+        DocumentService.generate(DocumentType.STUDENT_LIST, ExportFormat.PDF, data, {
             title: t('pages.students.title'),
-            subtitle: `Total: ${pagination.totalItems} alunos`,
             columns,
-            data,
             filename: 'lista_alunos'
         })
     }

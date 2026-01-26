@@ -20,7 +20,6 @@ export interface ResultadoProcessamento {
 
 /**
  * Calcula o INSS do trabalhador (3%) e da empresa (8%)
- * @param base Rendimento bruto tributável
  */
 export function calcularINSS(base: number) {
     const trabalhador = Math.round(base * 0.03 * 100) / 100;
@@ -30,44 +29,29 @@ export function calcularINSS(base: number) {
 
 /**
  * Calcula o IRT (Imposto sobre o Rendimento do Trabalho) 
- * Estritamente baseado nos escalões fornecidos:
- * - Até 70.000 Kz → Isento
- * - 70.001 – 100.000 Kz → 10%
- * - 100.001 – 150.000 Kz → 13%
- * - 150.001 – 200.000 Kz → 16%
- * - 200.001 – 300.000 Kz → 18%
- * - Acima de 300.000 Kz → 19%
+ * Baseado na tabela de IRT de Angola (Lei 12/23 e regulamentos atuais)
  */
 export function calcularIRT(valor: number): number {
     if (valor <= 70000) return 0;
 
     let imposto = 0;
 
-    // Escalão 1: 70.001 - 100.000 (30.000 de base)
     if (valor > 70000) {
         const excesso = Math.min(valor, 100000) - 70000;
         imposto += excesso * 0.10;
     }
-
-    // Escalão 2: 100.001 - 150.000
     if (valor > 100000) {
         const excesso = Math.min(valor, 150000) - 100000;
         imposto += excesso * 0.13;
     }
-
-    // Escalão 3: 150.001 - 200.000
     if (valor > 150000) {
         const excesso = Math.min(valor, 200000) - 150000;
         imposto += excesso * 0.16;
     }
-
-    // Escalão 4: 200.001 - 300.000
     if (valor > 200000) {
         const excesso = Math.min(valor, 300000) - 200000;
         imposto += excesso * 0.18;
     }
-
-    // Escalão 5: Acima de 300.000
     if (valor > 300000) {
         const excesso = valor - 300000;
         imposto += excesso * 0.19;
@@ -77,76 +61,76 @@ export function calcularIRT(valor: number): number {
 }
 
 /**
- * Cálculo de horas extras com percentuais específicos
+ * Cálculo de horas extras conforme LGT 12/23
+ * - Dias Normais: 1ªs 30h (+50%), seguintes (+75%)
+ * - Dias Descanso/Feriados: (+100%)
  */
-export function calcularHorasExtras(
+export function calcularValorHorasExtras(
     salarioBase: number,
-    horas: number,
-    tipo: 0.5 | 1.0 | 0.25, // 50%, 100%, 25% (noturno)
+    horasNormaisExtras: number,
+    horasDescansoExtras: number,
     jornadaSemanal: number = 44
 ): number {
-    // Cálculo do valor da hora (LGT Angola)
-    const cargaHorariaMensal = (jornadaSemanal / 6) * 30; // ~220h
-    const valorHora = salarioBase / cargaHorariaMensal;
+    const valorHora = salarioBase / ((jornadaSemanal / 6) * 30);
 
-    return horas * valorHora * (1 + tipo);
+    // Tiers para dias normais (LGT Art. 116)
+    const he50 = Math.min(horasNormaisExtras, 30);
+    const he75 = Math.max(0, horasNormaisExtras - 30);
+
+    const valorHe50 = he50 * valorHora * 1.5;
+    const valorHe75 = he75 * valorHora * 1.75;
+    const valorHe100 = horasDescansoExtras * valorHora * 2.0;
+
+    return valorHe50 + valorHe75 + valorHe100;
 }
 
-/**
- * Processamento completo do salário respeitando a ordem obrigatória:
- * Bruto -> Faltas -> INSS (Trabalhador) -> Base IRT -> IRT -> Líquido
- */
 export function processarSalarioMensal(dados: {
     salarioBase: number;
     subsidiosTributaveis: number;
     subsidiosIsentos: number;
-    horasExtras50?: number;
-    horasExtras100?: number;
-    horasNoturnas?: number;
+    horasExtrasNormais?: number;   // Horas em dias úteis
+    horasExtrasDescanso?: number;  // Horas em fins de semana/feriados
+    horasNoturnas?: number;        // Horas noturnas (21h-06h, +20%)
     faltasNaoJustificadas?: number;
 }): ResultadoProcessamento {
     const {
         salarioBase,
         subsidiosTributaveis,
         subsidiosIsentos,
-        horasExtras50 = 0,
-        horasExtras100 = 0,
+        horasExtrasNormais = 0,
+        horasExtrasDescanso = 0,
         horasNoturnas = 0,
         faltasNaoJustificadas = 0
     } = dados;
 
-    // 1. Horas Extras e Noturnas
-    const valorHE50 = calcularHorasExtras(salarioBase, horasExtras50, 0.5);
-    const valorHE100 = calcularHorasExtras(salarioBase, horasExtras100, 1.0);
-    const valorNoturno = calcularHorasExtras(salarioBase, horasNoturnas, 0.25);
-    const totalHE = valorHE50 + valorHE100 + valorNoturno;
+    const valorHora = salarioBase / ((44 / 6) * 30);
 
-    // 2. Salário Bruto Inicial (Base + Subsidios + HE)
-    let rendimentoBruto = salarioBase + subsidiosTributaveis + totalHE;
+    // 1. Horas Extras (50%, 75%, 100%)
+    const totalHEValue = calcularValorHorasExtras(salarioBase, horasExtrasNormais, horasExtrasDescanso);
 
-    // 3. Desconto de faltas (Proporcional ao Salário Bruto / 30 por dia)
+    // 2. Horas Noturnas (LGT Art. 166: +20%)
+    const valorNoturno = horasNoturnas * valorHora * 0.20;
+
+    // 3. Rendimento Bruto
+    let rendimentoBruto = salarioBase + subsidiosTributaveis + totalHEValue + valorNoturno;
+
+    // 4. Faltas
     const valorFalta = (salarioBase / 30) * faltasNaoJustificadas;
+    const brutoAjustado = Math.max(0, rendimentoBruto - valorFalta);
 
-    // 4. Salário Bruto Ajustado (Após faltas)
-    const brutoAjustado = rendimentoBruto - valorFalta;
-
-    // 5. INSS (Incide sobre Bruto Ajustado)
+    // 5. Impostos e Descontos
     const inss = calcularINSS(brutoAjustado);
-
-    // 6. Base IRT (Bruto Ajustado - INSS Trabalhador)
     const baseIrt = brutoAjustado - inss.trabalhador;
-
-    // 7. IRT Progressive
     const irtValue = calcularIRT(baseIrt);
 
-    // 8. Salário Líquido (Base IRT - IRT + Subsidios Isentos)
+    // 6. Líquido
     const liquido = baseIrt - irtValue + subsidiosIsentos;
 
     return {
         salarioBase,
         totalSubsidiosTributaveis: subsidiosTributaveis,
         totalSubsidiosIsentos: subsidiosIsentos,
-        totalHorasExtras: totalHE,
+        totalHorasExtras: totalHEValue + valorNoturno,
         totalFaltas: valorFalta,
         rendimentoBruto: brutoAjustado,
         baseInss: brutoAjustado,

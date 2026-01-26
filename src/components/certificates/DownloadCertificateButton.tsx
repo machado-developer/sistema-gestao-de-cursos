@@ -1,8 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { PDFDownloadLink } from '@react-pdf/renderer'
-import { NewTechCertificateDocument } from './NewTechCertificateDocument'
+import { DocumentService, DocumentType, ExportFormat } from '@/services/DocumentService'
 import { Button } from '@/components/ui/Button'
 import { Award, Loader2, Download, CheckCircle2, RefreshCw } from 'lucide-react'
 import { toast } from 'sonner'
@@ -64,31 +63,16 @@ export function DownloadCertificateButton({ matricula }: DownloadCertificateButt
         return (
             <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
-                    <PDFDownloadLink
-                        className="flex-1"
-                        document={
-                            <NewTechCertificateDocument
-                                data={{
-                                    ...currentCertificate.data,
-                                    qrCode: currentCertificate.qrCode,
-                                    codigo_unico: currentCertificate.certificate.codigo_unico
-                                }}
-                                backgroundImage={backgroundUrl}
-                            />
-                        }
-                        fileName={`certificado_${currentCertificate.data.aluno.nome_completo.replace(/\s+/g, '_')}.pdf`}
+                    <Button
+                        variant="primary"
+                        className="flex-1 gap-2 font-black uppercase text-[10px] tracking-widest py-4 bg-green-600 hover:bg-green-700 border-green-500"
+                        onClick={() => DocumentService.generate(DocumentType.CERTIFICATE, ExportFormat.PDF, currentCertificate.data, {
+                            qrCode: currentCertificate.qrCode,
+                            codigo_unico: currentCertificate.certificate.codigo_unico
+                        })}
                     >
-                        {({ loading }) => (
-                            <Button
-                                variant="primary"
-                                className="w-full gap-2 font-black uppercase text-[10px] tracking-widest py-4 bg-green-600 hover:bg-green-700 border-green-500"
-                                disabled={loading}
-                            >
-                                {loading ? <Loader2 className="animate-spin" size={14} /> : <Download size={14} />}
-                                BAIXAR
-                            </Button>
-                        )}
-                    </PDFDownloadLink>
+                        <Download size={14} /> BAIXAR
+                    </Button>
 
                     <Button
                         variant="danger"

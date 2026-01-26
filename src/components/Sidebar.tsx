@@ -29,7 +29,11 @@ import {
     UserCog,
     Briefcase,
     Building2,
-    Network
+    Network,
+    Calculator,
+    Banknote,
+    FileSignature,
+    BarChart3
 } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useTheme } from '@/components/ThemeProvider'
@@ -118,7 +122,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         {
             id: 'rh_mod',
             name: 'Capital Humano',
-            icon: Users,
+            icon: UserCog,
             submodules: [
                 {
                     id: 'rh_gestao',
@@ -126,9 +130,10 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                     items: [
                         { name: 'Dashboard RH', href: '/rh', icon: LayoutDashboard },
                         { name: 'Funcionários', href: '/rh/funcionarios', icon: Users },
+                        { name: 'Gestão de Contratos', href: '/rh/contratos', icon: FileSignature },
                         { name: 'Presenças', href: '/rh/presencas', icon: ClipboardList },
-                        { name: 'Processamento', href: '/rh/processamento', icon: Wallet },
-                        { name: 'Relatórios Legais', href: '/rh/relatorios', icon: FileText },
+                        { name: 'Processamento', href: '/rh/processamento', icon: Calculator },
+                        { name: 'Relatórios Legais', href: '/rh/relatorios', icon: BarChart3 },
                         { name: 'Férias e Licenças', href: '/rh/ferias', icon: Umbrella },
                     ]
                 },
@@ -197,13 +202,12 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             )}
 
             <aside className={`w-72 h-screen
-             fixed left-0 top-0 glass border-r 
-             border-white/10 p-6 flex flex-col
+             fixed left-0 top-0 glass p-6 flex flex-col
               z-[70] overflow-y-auto custom-scrollbar
                transition-transform duration-300 
                ${isOpen ? 'translate-x-0' : '-translate-x-full'
                 } bg-[var(--sidebar-bg)]`}>
-                <div className="flex items-center justify-between mb-10 border-b-2 border-slate-400 dark:border-zinc-800/50 pb-4">
+                <div className="flex items-center justify-between mb-10 pb-4">
                     <div className="flex items-center gap-3">
                         <Image
                             src={Logo}
@@ -234,19 +238,19 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                             <div key={module.id} className="flex flex-col">
                                 <button
                                     onClick={() => toggleSection(module.id)}
-                                    className={`flex items-center justify-between p-2.5 rounded group transition-all ${isModuleOpen || hasActiveSub
-                                        ? 'bg-blue-600/5 text-blue-600'
-                                        : 'text-slate-500 hover:text-slate-900 dark:text-zinc-300 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-zinc-800/50'
+                                    className={`flex items-center justify-between p-2 rounded-md group transition-all border-none outline-none ring-0 ${isModuleOpen || hasActiveSub
+                                        ? 'bg-[var(--surface-color)] text-[var(--accent-primary)]'
+                                        : 'text-[var(--text-primary)] hover:text-[var(--accent-primary)] dark:text-white dark:hover:text-white hover:bg-[var(--surface-color)]'
                                         }`}
                                 >
                                     <div className="flex items-center gap-3">
-                                        <div className={`p-2 rounded-sm transition-transform group-hover:scale-110 ${isModuleOpen || hasActiveSub ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-zinc-800 text-slate-500 underline decoration-blue-600/0'
+                                        <div className={`transition-transform group-hover:scale-110 ${isModuleOpen || hasActiveSub ? 'text-[var(--accent-primary)]' : 'text-[var(--text-primary)]'
                                             }`}>
-                                            <ModuleIcon size={18} strokeWidth={2.5} />
+                                            <ModuleIcon size={20} strokeWidth={1.5} />
                                         </div>
-                                        <span className="font-bold text-[11px] uppercase tracking-tighter">{module.name}</span>
+                                        <span className="font-medium text-[14px] leading-tight">{module.name}</span>
                                     </div>
-                                    <div className="opacity-50">
+                                    <div className="opacity-40">
                                         {isModuleOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                                     </div>
                                 </button>
@@ -261,10 +265,13 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                                 <div key={sub.id} className="flex flex-col px-2">
                                                     <button
                                                         onClick={() => toggleSection(sub.id)}
-                                                        className={`flex items-center justify-between py-1.5 px-3 rounded text-[10px] font-semibold uppercase tracking-widest transition-all ${hasActiveItem ? 'text-blue-600' : 'text-slate-400 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200'
+                                                        className={`flex items-center justify-between py-1.5 px-3 rounded text-[12px] font-medium transition-all border-none outline-none ring-0 ${hasActiveItem ? 'text-[var(--accent-primary)]' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200'
                                                             }`}
                                                     >
                                                         {sub.name}
+                                                        <div className="opacity-40">
+                                                            {isSubOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+                                                        </div>
                                                     </button>
 
                                                     <div className={`overflow-hidden transition-all duration-300 ${isSubOpen ? 'max-h-[500px] mt-0.5' : 'max-h-0'}`}>
@@ -277,12 +284,12 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                                                     <Link
                                                                         key={item.href}
                                                                         href={item.href}
-                                                                        className={`py-2 px-3 rounded-sm transition-all text-[10px] font-bold uppercase tracking-tight flex items-center gap-3 ${isActive
-                                                                            ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
-                                                                            : 'text-slate-500 dark:text-zinc-300 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/10'
+                                                                        className={`py-2 px-3 rounded-md transition-all text-[13px] font-medium flex items-center gap-3 ${isActive
+                                                                            ? 'bg-[var(--surface-color)] text-[var(--accent-primary)]'
+                                                                            : 'text-[var(--text-secondary)] dark:text-zinc-300 hover:text-[var(--accent-primary)] hover:bg-[var(--surface-hover)]'
                                                                             }`}
                                                                     >
-                                                                        <Icon size={14} strokeWidth={2.5} />
+                                                                        <Icon size={18} strokeWidth={1.5} />
                                                                         {item.name}
                                                                     </Link>
                                                                 )

@@ -237,7 +237,8 @@ export function AlunoProfileClient({ aluno }: AlunoProfileClientProps) {
                                 Novo Documento
                             </h3>
                             <DocumentUpload
-                                alunoId={aluno.id}
+                                entityId={aluno.id}
+                                entityType="alunos"
                                 onUploadSuccess={(doc) => {
                                     setDocs(prev => [doc, ...prev])
                                     // If it's a photo, we should ideally trigger a refresh or handle it

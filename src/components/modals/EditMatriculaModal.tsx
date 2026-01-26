@@ -53,7 +53,7 @@ export function EditMatriculaModal({ matricula, isOpen, onClose }: EditMatricula
                 <Select
                     label="Status Académico"
                     value={statusAcademico}
-                    onChange={(e) => setStatusAcademico(e.target.value)}
+                    onChange={(val) => setStatusAcademico(val)}
                     options={[
                         { value: 'Cursando', label: 'Cursando' },
                         { value: 'Aprovado', label: 'Aprovado' },
@@ -64,7 +64,7 @@ export function EditMatriculaModal({ matricula, isOpen, onClose }: EditMatricula
                 <Select
                     label="Estado do Pagamento"
                     value={estadoPagamento}
-                    onChange={(e) => setEstadoPagamento(e.target.value)}
+                    onChange={(val) => setEstadoPagamento(val)}
                     options={[
                         { value: 'Pendente', label: 'Pendente' },
                         { value: 'Parcial', label: 'Parcial' },

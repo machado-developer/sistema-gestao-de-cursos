@@ -25,34 +25,34 @@ export function StatCard({
 }: StatCardProps) {
     const variants = {
         orange: {
-            bg: 'bg-[#FF8A00]',
-            sidebar: 'bg-[#E67C00]',
-            subBg: 'bg-black/10'
+            bg: 'bg-orange-500',
+            sidebar: 'bg-orange-600',
+            subBg: 'bg-white/10'
         },
         green: {
-            bg: 'bg-[#00C853]',
-            sidebar: 'bg-[#00A846]',
-            subBg: 'bg-black/10'
+            bg: 'bg-emerald-500',
+            sidebar: 'bg-emerald-600',
+            subBg: 'bg-white/10'
         },
         red: {
-            bg: 'bg-[#D50000]',
-            sidebar: 'bg-[#B70000]',
-            subBg: 'bg-black/10'
+            bg: 'bg-rose-500',
+            sidebar: 'bg-rose-600',
+            subBg: 'bg-white/10'
         },
         blue: {
-            bg: 'bg-[#2962FF]',
-            sidebar: 'bg-[#1E4BDD]',
-            subBg: 'bg-black/10'
+            bg: 'bg-blue-500',
+            sidebar: 'bg-blue-600',
+            subBg: 'bg-white/10'
         },
         purple: {
-            bg: 'bg-[#AA00FF]',
-            sidebar: 'bg-[#8F00D6]',
-            subBg: 'bg-black/10'
+            bg: 'bg-violet-500',
+            sidebar: 'bg-violet-600',
+            subBg: 'bg-white/10'
         },
         cyan: {
-            bg: 'bg-[#00B8D4]',
-            sidebar: 'bg-[#009BB3]',
-            subBg: 'bg-black/10'
+            bg: 'bg-cyan-500',
+            sidebar: 'bg-cyan-600',
+            subBg: 'bg-white/10'
         }
     }
 
@@ -68,17 +68,17 @@ export function StatCard({
 
                 {/* Content Area */}
                 <div className="flex-1 p-4 flex flex-col justify-center">
-                    <div className="text-[11px] font-bold uppercase tracking-wider opacity-90 mb-0.5">
+                    <div className="text-[11px] font-semibold uppercase tracking-wider opacity-90 mb-0.5">
                         {title}
                     </div>
-                    <div className="text-3xl font-black tracking-tight leading-none mb-1">
+                    <div className="text-3xl font-bold tracking-tight leading-none mb-1">
                         {value}
                     </div>
 
                     {subStats && (
                         <div className="flex flex-wrap gap-2 mt-2">
                             {subStats.map((sub, idx) => (
-                                <div key={idx} className={`${style.subBg} px-2 py-0.5 rounded text-[10px] font-bold border border-white/10`}>
+                                <div key={idx} className={`${style.subBg} px-2 py-0.5 rounded text-[10px] font-semibold border border-white/10`}>
                                     <span className="opacity-70 mr-1">{sub.label}:</span>
                                     <span>{sub.value}</span>
                                 </div>

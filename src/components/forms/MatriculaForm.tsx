@@ -125,7 +125,7 @@ export function MatriculaForm() {
                         <Select
                             label="Estudante"
                             value={selectedAlunoId}
-                            onChange={(e) => setValue('alunoId', e.target.value)}
+                            onChange={(val) => setValue('alunoId', val)}
                             options={[
                                 { value: '', label: 'Selecionar Aluno' },
                                 ...alunos.map(a => ({ value: a.id, label: a.nome_completo }))
@@ -136,7 +136,7 @@ export function MatriculaForm() {
                         <Select
                             label="Turma Disponível"
                             value={selectedTurmaId}
-                            onChange={(e) => setValue('turmaId', e.target.value)}
+                            onChange={(val) => setValue('turmaId', val)}
                             options={[
                                 { value: '', label: 'Selecionar Turma' },
                                 ...turmas.map(t => ({

@@ -9,6 +9,7 @@ export class RHService {
             include: {
                 cargo: true,
                 departamento: true,
+                documentos: true,
                 contratos: {
                     where: { status: "VIGENTE" },
                     take: 1
@@ -19,20 +20,43 @@ export class RHService {
     }
 
     static async obterFuncionario(id: string) {
-        return await prisma.funcionario.findUnique({
+        const funcionario = await prisma.funcionario.findUnique({
             where: { id },
             include: {
-                contratos: true,
-                presencas: {
-                    take: 30,
-                    orderBy: { data: "desc" }
+                cargo: true,
+                departamento: true,
+                documentos: true,
+                contratos: {
+                    orderBy: { data_inicio: 'desc' }
                 },
                 folhas: {
-                    take: 12,
-                    orderBy: { ano: "desc", mes: "desc" }
+                    orderBy: [
+                        { ano: 'desc' },
+                        { mes: 'desc' }
+                    ]
                 }
             }
         });
+
+        if (!funcionario) return null;
+
+        // Achatar dados do contrato vigente para o formulário
+        const contratoVigente = funcionario.contratos.find(c => c.status === "VIGENTE") || funcionario.contratos[0];
+
+        return {
+            ...funcionario,
+            iban: funcionario.iban || "",
+            tipo_contrato: contratoVigente?.tipo || "INDETERMINADO",
+            data_fim: contratoVigente?.data_fim ? new Date(contratoVigente.data_fim).toISOString().split("T")[0] : "",
+            renovacao_automatica: contratoVigente?.renovacao_automatica || false,
+            salario_base: contratoVigente?.salario_base ? Number(contratoVigente.salario_base) : 0,
+            subsidio_alimentacao: contratoVigente?.subsidio_alimentacao ? Number(contratoVigente.subsidio_alimentacao) : 0,
+            subsidio_transporte: contratoVigente?.subsidio_transporte ? Number(contratoVigente.subsidio_transporte) : 0,
+            subsidio_residencia: contratoVigente?.subsidio_residencia ? Number(contratoVigente.subsidio_residencia) : 0,
+            outros_subsidios: contratoVigente?.outros_subsidios ? Number(contratoVigente.outros_subsidios) : 0,
+            historico_contratos: funcionario.contratos, // Enviar todos os contratos para o histórico
+            historico_pagamentos: funcionario.folhas, // Enviar todas as folhas de pagamento para o histórico
+        };
     }
 
     static async criarFuncionario(dados: any) {
@@ -42,13 +66,24 @@ export class RHService {
             email,
             telefone,
             nif,
+            iban,
             numero_inss,
+            genero,
+            data_nascimento,
             cargoId,
             departamentoId,
             data_admissao,
+            tipo_contrato,
+            data_fim,
+            renovacao_automatica,
             salario_base,
             subsidio_alimentacao,
             subsidio_transporte,
+            subsidio_residencia,
+            outros_subsidios,
+            hora_entrada,
+            hora_saida,
+            dias_trabalho,
             ...resto
         } = dados;
 
@@ -62,29 +97,135 @@ export class RHService {
                     email: email || null,
                     telefone,
                     nif: nif || null,
+                    iban: iban || null,
                     numero_inss: numero_inss || null,
+                    genero: genero || null,
+                    data_nascimento: data_nascimento ? new Date(data_nascimento) : null,
                     cargoId,
                     departamentoId,
                     data_admissao: dataAdmissao,
-                    status: "ATIVO"
+                    status: "ATIVO",
+                    hora_entrada: hora_entrada || null,
+                    hora_saida: hora_saida || null,
+                    dias_trabalho: dias_trabalho || null
                 }
             });
 
             await tx.contrato.create({
                 data: {
                     funcionarioId: funcionario.id,
-                    tipo: "INDETERMINADO", // Default
+                    tipo: tipo_contrato || "INDETERMINADO",
                     data_inicio: dataAdmissao,
+                    data_fim: data_fim ? new Date(data_fim) : null,
+                    renovacao_automatica: !!renovacao_automatica,
                     status: "VIGENTE",
                     salario_base: Number(salario_base || 0),
                     subsidio_alimentacao: Number(subsidio_alimentacao || 0),
                     subsidio_transporte: Number(subsidio_transporte || 0),
-                    subsidio_residencia: 0,
-                    outros_subsidios: 0
+                    subsidio_residencia: Number(subsidio_residencia || 0),
+                    outros_subsidios: Number(outros_subsidios || 0)
                 }
             });
 
             return funcionario;
+        });
+    }
+
+    static async atualizarFuncionario(id: string, dados: any) {
+        const {
+            nome,
+            bi_documento,
+            email,
+            telefone,
+            nif,
+            iban,
+            numero_inss,
+            genero,
+            data_nascimento,
+            cargoId,
+            departamentoId,
+            data_admissao,
+            tipo_contrato,
+            data_fim,
+            renovacao_automatica,
+            salario_base,
+            subsidio_alimentacao,
+            subsidio_transporte,
+            subsidio_residencia,
+            outros_subsidios,
+            hora_entrada,
+            hora_saida,
+            dias_trabalho
+        } = dados;
+
+        return await prisma.$transaction(async (tx) => {
+            const funcionario = await tx.funcionario.update({
+                where: { id },
+                data: {
+                    nome,
+                    bi_documento,
+                    email: email || null,
+                    telefone,
+                    nif: nif || null,
+                    iban: iban || null,
+                    numero_inss: numero_inss || null,
+                    genero: genero || null,
+                    data_nascimento: data_nascimento ? new Date(data_nascimento) : null,
+                    cargoId,
+                    departamentoId,
+                    data_admissao: new Date(data_admissao),
+                    hora_entrada: hora_entrada || null,
+                    hora_saida: hora_saida || null,
+                    dias_trabalho: dias_trabalho || null
+                }
+            });
+
+            // Atualizar contrato vigente ou criar um novo se não existir
+            const contratoVigente = await tx.contrato.findFirst({
+                where: { funcionarioId: id, status: "VIGENTE" }
+            });
+
+            if (contratoVigente) {
+                await tx.contrato.update({
+                    where: { id: contratoVigente.id },
+                    data: {
+                        tipo: tipo_contrato,
+                        data_fim: data_fim ? new Date(data_fim) : null,
+                        renovacao_automatica: !!renovacao_automatica,
+                        salario_base: Number(salario_base),
+                        subsidio_alimentacao: Number(subsidio_alimentacao),
+                        subsidio_transporte: Number(subsidio_transporte),
+                        subsidio_residencia: Number(subsidio_residencia),
+                        outros_subsidios: Number(outros_subsidios)
+                    }
+                });
+            } else {
+                await tx.contrato.create({
+                    data: {
+                        funcionarioId: id,
+                        tipo: tipo_contrato || "INDETERMINADO",
+                        data_inicio: new Date(data_admissao),
+                        data_fim: data_fim ? new Date(data_fim) : null,
+                        renovacao_automatica: !!renovacao_automatica,
+                        status: "VIGENTE",
+                        salario_base: Number(salario_base || 0),
+                        subsidio_alimentacao: Number(subsidio_alimentacao || 0),
+                        subsidio_transporte: Number(subsidio_transporte || 0),
+                        subsidio_residencia: Number(subsidio_residencia || 0),
+                        outros_subsidios: Number(outros_subsidios || 0)
+                    }
+                });
+            }
+
+            return funcionario;
+        });
+    }
+
+    static async eliminarFuncionario(id: string) {
+        // Usar transação para garantir que excluímos registros relacionados se necessário
+        // Ou simplesmente deixar o banco lidar com cascade se configurado
+        return await prisma.funcionario.delete({
+            where: { id }
         });
     }
 
@@ -129,6 +270,89 @@ export class RHService {
         });
     }
 
+    static async listarPresencasPorData(data: Date) {
+        return await prisma.presencaHR.findMany({
+            where: { data }
+        });
+    }
+
+    // --- Gestão de Contratos e Renovação ---
+
+    static async verificarContratosExpirados() {
+        const hoje = new Date();
+        hoje.setUTCHours(0, 0, 0, 0);
+
+        const expirados = await prisma.contrato.findMany({
+            where: {
+                status: "VIGENTE",
+                data_fim: { lt: hoje }
+            }
+        });
+
+        for (const contrato of expirados) {
+            if (contrato.renovacao_automatica && contrato.tipo !== "INDETERMINADO") {
+                await this.renovarContrato(contrato.id);
+            } else {
+                await prisma.contrato.update({
+                    where: { id: contrato.id },
+                    data: { status: "CADUCADO" }
+                });
+            }
+        }
+
+        return expirados.length;
+    }
+
+    static async renovarContrato(id: string) {
+        return await prisma.$transaction(async (tx) => {
+            const antigo = await tx.contrato.findUnique({
+                where: { id },
+                include: { funcionario: true }
+            });
+
+            if (!antigo || antigo.status !== "VIGENTE") {
+                throw new Error("Contrato inválido para renovação");
+            }
+
+            // Marcar antigo como renovado
+            await tx.contrato.update({
+                where: { id },
+                data: { status: "RENOVADO" }
+            });
+
+            // Calcular nova data de fim se for determinado (ex: +6 meses ou manter mesmo período)
+            let novaDataFim = null;
+            if (antigo.data_fim && antigo.data_inicio) {
+                const duracao = antigo.data_fim.getTime() - antigo.data_inicio.getTime();
+                novaDataFim = new Date(antigo.data_fim.getTime() + duracao);
+            }
+
+            // Criar novo contrato
+            return await tx.contrato.create({
+                data: {
+                    funcionarioId: antigo.funcionarioId,
+                    tipo: antigo.tipo,
+                    data_inicio: antigo.data_fim || new Date(),
+                    data_fim: novaDataFim,
+                    renovacao_automatica: antigo.renovacao_automatica,
+                    status: "VIGENTE",
+                    salario_base: antigo.salario_base,
+                    subsidio_alimentacao: antigo.subsidio_alimentacao,
+                    subsidio_transporte: antigo.subsidio_transporte,
+                    subsidio_residencia: antigo.subsidio_residencia,
+                    outros_subsidios: antigo.outros_subsidios
+                }
+            });
+        });
+    }
+
+    static async encerrarContrato(id: string) {
+        return await prisma.contrato.update({
+            where: { id },
+            data: { status: "ENCERRADO" }
+        });
+    }
+
     // --- Processamento Salarial ---
 
     static async processarFolhaMensal(mes: number, ano: number) {
@@ -147,6 +371,19 @@ export class RHService {
             }
         });
 
+        // Verificar se já existe processamento para este mês/ano
+        const existeProcessamento = await prisma.folhaPagamento.findFirst({
+            where: {
+                mes,
+                ano,
+                status: "PROCESSADO"
+            }
+        });
+
+        if (existeProcessamento) {
+            throw new Error(`A folha de salário para ${mes}/${ano} já foi processada. Só é possível gerar novamente no próximo mês.`);
+        }
+
         const resultados = [];
 
         for (const func of funcionarios) {
@@ -155,25 +392,28 @@ export class RHService {
             const contrato = func.contratos[0];
 
             // Consolidar presenças do mês
-            let totalHE50 = 0;
-            let totalHE100 = 0;
+            let totalHENormais = 0;
+            let totalHEDescanso = 0;
             let totalNoturnas = 0;
             let totalFaltas = 0;
 
             func.presencas.forEach(p => {
-                totalHE50 += p.horas_extras_50 || 0;
-                totalHE100 += p.horas_extras_100 || 0;
+                // Categorizar extras baseadas no tipo de dia (Regra LGT 23)
+                // Se o campo horas_extras_100 for usado, assumimos descanso (ou feriado)
+                totalHENormais += p.horas_extras_50 || 0;
+                totalHEDescanso += p.horas_extras_100 || 0;
                 totalNoturnas += p.horas_noturnas || 0;
+
                 if (p.status === "FALTA_I") totalFaltas++;
             });
 
-            // Executar cálculo angolano
+            // Executar cálculo angolano (Lei 12/23)
             const calc = processarSalarioMensal({
                 salarioBase: Number(contrato.salario_base),
                 subsidiosTributaveis: Number(contrato.subsidio_alimentacao || 0) + Number(contrato.subsidio_transporte || 0),
                 subsidiosIsentos: Number(contrato.subsidio_residencia || 0) + Number(contrato.outros_subsidios || 0),
-                horasExtras50: totalHE50,
-                horasExtras100: totalHE100,
+                horasExtrasNormais: totalHENormais,
+                horasExtrasDescanso: totalHEDescanso,
                 horasNoturnas: totalNoturnas,
                 faltasNaoJustificadas: totalFaltas
             });
@@ -193,6 +433,7 @@ export class RHService {
                     total_subsidios_isentos: calc.totalSubsidiosIsentos,
                     total_horas_extras: calc.totalHorasExtras,
                     total_faltas: calc.totalFaltas,
+                    faltas_count: totalFaltas,
                     base_inss: calc.baseInss,
                     inss_trabalhador: calc.inssTrabalhador,
                     inss_empresa: calc.inssEmpresa,
@@ -210,6 +451,7 @@ export class RHService {
                     total_subsidios_isentos: calc.totalSubsidiosIsentos,
                     total_horas_extras: calc.totalHorasExtras,
                     total_faltas: calc.totalFaltas,
+                    faltas_count: totalFaltas,
                     base_inss: calc.baseInss,
                     inss_trabalhador: calc.inssTrabalhador,
                     inss_empresa: calc.inssEmpresa,
@@ -243,7 +485,17 @@ export class RHService {
     static async obterRelatorioMensal(mes: number, ano: number) {
         const folhas = await prisma.folhaPagamento.findMany({
             where: { mes, ano },
-            include: { funcionario: { select: { nome: true, bi_documento: true, numero_inss: true } } }
+            include: {
+                funcionario: {
+                    select: {
+                        nome: true,
+                        bi_documento: true,
+                        numero_inss: true,
+                        iban: true,
+                        cargo: { select: { nome: true } }
+                    }
+                }
+            }
         });
 
         const totalLiquid = folhas.reduce((acc, f) => acc + Number(f.liquido_receber), 0);
@@ -331,6 +583,20 @@ export class RHService {
     }
 
     static async eliminarDepartamento(id: string) {
+        // Verificar se existem funcionários ou cargos vinculados
+        const [funcCount, cargoCount] = await Promise.all([
+            prisma.funcionario.count({ where: { departamentoId: id } }),
+            prisma.cargo.count({ where: { departamentoId: id } })
+        ]);
+
+        if (funcCount > 0 || cargoCount > 0) {
+            const motivos = [];
+            if (funcCount > 0) motivos.push(`${funcCount} colaborador(es)`);
+            if (cargoCount > 0) motivos.push(`${cargoCount} cargo(s)`);
+
+            throw new Error(`Não é possível eliminar: este departamento ainda possui ${motivos.join(' e ')} vinculados.`);
+        }
+
         return await prisma.departamento.delete({ where: { id } });
     }
 
@@ -347,16 +613,36 @@ export class RHService {
     }
 
     static async criarCargo(dados: any) {
-        const { id, ...cleanData } = dados;
-        const finalData = id ? dados : cleanData;
-        return await prisma.cargo.create({ data: finalData });
+        const { id, nome, departamentoId, salario_base_sugerido } = dados;
+        return await prisma.cargo.create({
+            data: {
+                nome,
+                departamentoId,
+                salario_base: salario_base_sugerido ? Number(salario_base_sugerido) : null
+            }
+        });
     }
 
     static async atualizarCargo(id: string, dados: any) {
-        return await prisma.cargo.update({ where: { id }, data: dados });
+        const { nome, departamentoId, salario_base_sugerido } = dados;
+        return await prisma.cargo.update({
+            where: { id },
+            data: {
+                nome,
+                departamentoId,
+                salario_base: salario_base_sugerido ? Number(salario_base_sugerido) : null
+            }
+        });
     }
 
     static async eliminarCargo(id: string) {
+        // Verificar se existem funcionários vinculados
+        const funcCount = await prisma.funcionario.count({ where: { cargoId: id } });
+
+        if (funcCount > 0) {
+            throw new Error(`Não é possível eliminar: este cargo ainda possui ${funcCount} colaborador(es) vinculado(s).`);
+        }
+
         return await prisma.cargo.delete({ where: { id } });
     }
 

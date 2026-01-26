@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cargoSchema } from '@/lib/schemas'
 import { Card } from "@/components/ui/Card"
@@ -14,6 +14,8 @@ import { toast } from "sonner"
 import { formatCurrency } from "@/lib/utils"
 import { z } from 'zod'
 import { ConfirmModal } from '@/components/ui/ConfirmModal'
+import { Select } from "@/components/ui/Select"
+import { Controller } from "react-hook-form"
 
 type CargoFormData = z.infer<typeof cargoSchema>;
 
@@ -36,10 +38,16 @@ export default function CargosPage() {
         register,
         handleSubmit,
         reset,
+        control,
         formState: { errors, isSubmitting }
     } = useForm<CargoFormData>({
-        resolver: zodResolver(cargoSchema)
+        resolver: zodResolver(cargoSchema) as any
     })
+
+    const selectedDeptId = useWatch({
+        control,
+        name: "departamentoId"
+    });
 
     useEffect(() => {
         fetchCargos()
@@ -110,7 +118,7 @@ export default function CargosPage() {
     const handleCloseModal = () => {
         setShowModal(false)
         setEditingId(null)
-        reset({ nome: '', departamentoId: '', salario_base_sugerido: 0 })
+        reset({ nome: '', departamentoId: undefined, salario_base_sugerido: 0 })
     }
 
     const handleOpenDelete = (id: string) => {
@@ -123,7 +131,10 @@ export default function CargosPage() {
         setConfirmDelete(prev => ({ ...prev, loading: true }))
         try {
             const res = await fetch(`/api/rh/cargos/${confirmDelete.id}`, { method: 'DELETE' })
-            if (!res.ok) throw new Error()
+            if (!res.ok) {
+                const data = await res.json()
+                throw new Error(data.error || "Falha na comunicação com o servidor.")
+            }
 
             toast.success("Registo Removido", {
                 description: "O cargo profissional foi eliminado com sucesso.",
@@ -132,9 +143,9 @@ export default function CargosPage() {
 
             setConfirmDelete({ isOpen: false, id: null, loading: false })
             fetchCargos()
-        } catch (error) {
+        } catch (error: any) {
             toast.error("Impossível Eliminar", {
-                description: "Este cargo pode estar vinculado a colaboradores ativos."
+                description: error.message || "Este cargo pode estar vinculado a colaboradores ativos."
             })
             setConfirmDelete(prev => ({ ...prev, loading: false }))
         }
@@ -213,13 +224,13 @@ export default function CargosPage() {
             {/* Header */}
             <div className="border-b-2 border-slate-200 dark:border-zinc-800 pb-2 flex justify-between items-end">
                 <div>
-                    <h1 className="text-lg font-bold text-emerald-600 uppercase tracking-tighter">
+                    <h1 className="text-2xl font-semibold text-slate-900 dark:text-white tracking-tight">
                         Cargos e Níveis Ocupacionais
                     </h1>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Definição de Funções e Grelhas Salariais</p>
+                    <p className="text-sm text-slate-500 font-medium">Definição de Funções e Grelhas Salariais</p>
                 </div>
-                <Button onClick={() => setShowModal(true)} className="bg-emerald-600 text-[10px] font-black uppercase tracking-widest h-9 border-b-2 border-emerald-800">
-                    <Plus size={16} className="mr-2" /> Novo Cargo
+                <Button onClick={() => setShowModal(true)} className="bg-[var(--accent-primary)] text-sm font-medium h-10 px-6 text-white shadow-sm hover:opacity-90 transition-opacity">
+                    <Plus size={18} className="mr-2" /> Novo Cargo
                 </Button>
             </div>
 
@@ -252,10 +263,10 @@ export default function CargosPage() {
             <Card className="p-4 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 shadow-sm overflow-visible">
                 <div className="flex flex-col md:flex-row gap-4">
                     <div className="relative flex-1 group">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={16} />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[var(--accent-primary)] transition-colors" size={16} />
                         <Input
                             placeholder="PESQUISAR CARGO OU FUNÇÃO..."
-                            className="pl-10 h-11 bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 text-[10px] font-black uppercase tracking-widest"
+                            className="pl-10 h-11 bg-slate-50 dark:bg-zinc-800/50 border-[var(--border-color)] dark:border-zinc-800 text-sm font-medium"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
@@ -283,55 +294,62 @@ export default function CargosPage() {
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                     <Card className="w-full max-w-md p-8 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 animate-in zoom-in-95 shadow-xl">
                         <div className="border-b-2 border-slate-100 dark:border-zinc-800 pb-2 mb-6">
-                            <h2 className="text-[11px] font-black text-[var(--text-primary)] uppercase tracking-tighter">
+                            <h2 className="text-lg font-semibold text-slate-900 dark:text-white tracking-tight">
                                 {editingId ? 'Configurar Função' : 'Nova Função Ocupacional'}
                             </h2>
                         </div>
 
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Designação do Cargo</label>
+                                <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">Designação do Cargo</label>
                                 <Input
                                     {...register("nome")}
                                     placeholder="Ex: Consultor de Tecnologia"
-                                    className={`bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 font-bold h-11 ${errors.nome ? 'border-red-500 ring-red-500' : ''}`}
+                                    className={`bg-slate-50 dark:bg-zinc-800/50 border-[var(--border-color)] dark:border-zinc-800 font-medium h-11 ${errors.nome ? 'border-red-500 ring-red-500' : ''}`}
                                 />
-                                {errors.nome && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.nome.message}</p>}
+                                {errors.nome && <p className="text-xs font-medium text-red-500">{errors.nome.message}</p>}
                             </div>
 
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Departamento Relacionado</label>
-                                <select
-                                    {...register("departamentoId")}
-                                    className={`w-full h-11 px-3 bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-800 rounded-md text-sm font-bold text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-emerald-500 ${errors.departamentoId ? 'border-red-500 ring-red-500' : ''}`}
-                                >
-                                    <option value="">Selecione o Departamento...</option>
-                                    {depts.map(d => (
-                                        <option key={d.id} value={d.id}>{d.nome}</option>
-                                    ))}
-                                </select>
-                                {errors.departamentoId && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.departamentoId.message}</p>}
+                                <Controller
+                                    name="departamentoId"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select
+                                            value={field.value || ""}
+                                            onChange={field.onChange}
+                                            options={depts.map(d => ({
+                                                value: d.id,
+                                                label: d.nome
+                                            }))}
+                                            label="Departamento Relacionado"
+                                            placeholder="Selecione o Departamento..."
+                                            error={errors.departamentoId?.message}
+                                            loading={loading}
+                                        />
+                                    )}
+                                />
                             </div>
 
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Salário de Referência (Kz)</label>
+                                <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">Salário de Referência (Kz)</label>
                                 <div className="relative">
-                                    <Wallet className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-emerald-600">Kz</span>
                                     <Input
                                         type="number"
                                         {...register("salario_base_sugerido")}
                                         placeholder="0.00"
-                                        className={`pl-10 bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 font-bold h-11 text-emerald-600 ${errors.salario_base_sugerido ? 'border-red-500 ring-red-500' : ''}`}
+                                        className={`pl-10 bg-slate-50 dark:bg-zinc-800/50 border-[var(--border-color)] dark:border-zinc-800 font-medium h-11 text-emerald-600 ${errors.salario_base_sugerido ? 'border-red-500 ring-red-500' : ''}`}
                                     />
                                 </div>
-                                {errors.salario_base_sugerido && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.salario_base_sugerido.message}</p>}
+                                {errors.salario_base_sugerido && <p className="text-xs font-medium text-red-500">{errors.salario_base_sugerido.message}</p>}
                             </div>
 
                             <div className="flex gap-3 pt-4">
-                                <Button type="button" variant="outline" onClick={handleCloseModal} className="flex-1 font-black uppercase tracking-widest text-[10px] h-11">Cancelar</Button>
-                                <Button type="submit" disabled={isSubmitting} className="flex-1 bg-emerald-600 font-black uppercase tracking-widest text-[10px] h-11 border-b-4 border-emerald-800 text-white gap-2">
+                                <Button type="button" variant="outline" onClick={handleCloseModal} className="flex-1 font-medium h-11">Cancelar</Button>
+                                <Button type="submit" disabled={isSubmitting} className="flex-1 bg-[var(--accent-primary)] font-medium h-11 text-white gap-2">
                                     {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : null}
-                                    {isSubmitting ? 'PROCESSANDO...' : (editingId ? 'GUARDAR ALTERAÇÕES' : 'CONFIRMAR CARGO')}
+                                    {isSubmitting ? 'Processando...' : (editingId ? 'Guardar' : 'Confirmar')}
                                 </Button>
                             </div>
                         </form>

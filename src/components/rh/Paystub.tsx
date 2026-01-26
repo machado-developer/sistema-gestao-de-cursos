@@ -1,20 +1,35 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/Card";
 import { formatCurrency } from "@/lib/utils";
-import { Printer, Download, MapPin, Building2, User } from "lucide-react";
+import { Printer, Download, MapPin, Building2, User, FileSpreadsheet, FileText } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { DocumentService, DocumentType, ExportFormat } from "@/services/DocumentService";
 
 interface PaystubProps {
     data: any;
 }
 
 export function Paystub({ data }: PaystubProps) {
+    const [empresa, setEmpresa] = useState<any>(null);
+
+    useEffect(() => {
+        fetch('/api/configuracoes/empresa')
+            .then(res => res.json())
+            .then(setEmpresa)
+            .catch(() => console.error("Falha ao carregar dados da empresa"));
+    }, []);
+
     if (!data) return null;
 
     const { funcionario, mes, ano, salario_base, total_subsidios_tributaveis, total_subsidios_isentos, total_horas_extras, total_faltas, inss_trabalhador, irt_devido, liquido_receber } = data;
 
     const meses = ["", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+    const companyName = empresa?.nome || "SGRH ANGOLA - ERP";
+    const companyAddress = empresa?.endereco || "Luanda, Angola";
+    const companyEmail = empresa?.email || "RH@SGRH.CO.AO";
 
     return (
         <div className="bg-white dark:bg-zinc-900 p-8 rounded-lg border shadow-sm max-w-4xl mx-auto print:border-0 print:shadow-none print:p-0">
@@ -25,11 +40,11 @@ export function Paystub({ data }: PaystubProps) {
                         <Building2 size={32} />
                     </div>
                     <div>
-                        <h2 className="text-xl font-black uppercase tracking-tighter">SGRH ANGOLA - ERP</h2>
+                        <h2 className="text-xl font-black uppercase tracking-tighter">{companyName}</h2>
                         <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Gestão Inteligente de Capital Humano</p>
                         <div className="flex items-center gap-4 mt-2">
-                            <span className="flex items-center gap-1 text-[9px] font-bold text-slate-400 uppercase"><MapPin size={10} /> Luanda, Angola</span>
-                            <span className="flex items-center gap-1 text-[9px] font-bold text-slate-400 uppercase"><User size={10} /> RH@SGRH.CO.AO</span>
+                            <span className="flex items-center gap-1 text-[9px] font-bold text-slate-400 uppercase"><MapPin size={10} /> {companyAddress}</span>
+                            <span className="flex items-center gap-1 text-[9px] font-bold text-slate-400 uppercase"><User size={10} /> {companyEmail}</span>
                         </div>
                     </div>
                 </div>
@@ -47,7 +62,7 @@ export function Paystub({ data }: PaystubProps) {
                     <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">Colaborador</p>
                     <p className="text-sm font-black uppercase text-blue-600">{funcionario.nome}</p>
                     <p className="text-[10px] font-bold text-slate-600 uppercase">BI: {funcionario.bi_documento}</p>
-                    <p className="text-[10px] font-bold text-slate-600 uppercase">NIF: {funcionario.nif || '999999999'}</p>
+                    <p className="text-[10px] font-bold text-slate-600 uppercase">NIF: {funcionario.nif || '---'}</p>
                 </div>
                 <div className="space-y-1 text-right">
                     <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">Departamento / Cargo</p>
@@ -146,13 +161,24 @@ export function Paystub({ data }: PaystubProps) {
             </div>
 
             {/* Acoes de exportacao (Hidden in Print) */}
-            <div className="flex justify-center gap-4 border-t pt-6 print:hidden">
-                <Button variant="outline" className="gap-2" onClick={() => window.print()}>
-                    <Printer size={16} /> Imprimir Recibo
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-t pt-6 print:hidden">
+                <Button variant="outline" className="gap-2 w-full sm:w-auto" onClick={() => window.print()}>
+                    <Printer size={16} /> Imprimir
                 </Button>
-                <Button className="bg-slate-900 gap-2">
-                    <Download size={16} /> Baixar PDF
-                </Button>
+                <div className="flex gap-2 w-full sm:w-auto">
+                    <Button className="flex-1 sm:flex-none bg-red-600 hover:bg-red-700 gap-2 text-white"
+                        onClick={() => DocumentService.generate(DocumentType.PAYROLL_RECEIPT, ExportFormat.PDF, data, { companyInfo: empresa })}>
+                        <Download size={16} /> PDF
+                    </Button>
+                    <Button className="flex-1 sm:flex-none bg-green-600 hover:bg-green-700 gap-2 text-white"
+                        onClick={() => DocumentService.generate(DocumentType.PAYROLL_RECEIPT, ExportFormat.XLSX, data, { companyInfo: empresa })}>
+                        <FileSpreadsheet size={16} /> Excel
+                    </Button>
+                    <Button className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 gap-2 text-white"
+                        onClick={() => DocumentService.generate(DocumentType.PAYROLL_RECEIPT, ExportFormat.DOCX, data, { companyInfo: empresa })}>
+                        <FileText size={16} /> Word
+                    </Button>
+                </div>
             </div>
         </div>
     );

@@ -31,7 +31,7 @@ export function AlunoForm({ initialData }: AlunoFormProps) {
         setValue,
         watch
     } = useForm<AlunoFormData>({
-        resolver: zodResolver(alunoSchema),
+        resolver: zodResolver(alunoSchema) as any,
         defaultValues: initialData || {
             nome_completo: '',
             bi_documento: '',
@@ -143,7 +143,7 @@ export function AlunoForm({ initialData }: AlunoFormProps) {
                             <Select
                                 label="Género"
                                 value={generoValue}
-                                onChange={(e) => setValue('genero', e.target.value)}
+                                onChange={(val) => setValue('genero', val)}
                                 options={[
                                     { value: '', label: 'Selecionar' },
                                     { value: 'Masculino', label: 'Masculino' },
@@ -193,7 +193,7 @@ export function AlunoForm({ initialData }: AlunoFormProps) {
                                 />
                                 <Select
                                     label="Escolaridade"
-                                    onChange={(e) => setValue('escolaridade', e.target.value)}
+                                    onChange={(val) => setValue('escolaridade', val)}
                                     options={[
                                         { value: '', label: 'Selecionar' },
                                         { value: '6ª Classe', label: '6ª Classe' },

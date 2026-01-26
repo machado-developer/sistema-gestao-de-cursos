@@ -17,17 +17,56 @@ import {
     FileText,
     Download,
     Printer,
-    User
+    User,
+    FileSpreadsheet,
+    Calculator,
+    Banknote
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/utils";
+import { Select } from "@/components/ui/Select";
 import Link from "next/link";
+import { DocumentService, DocumentType, ExportFormat } from "@/services/DocumentService";
 
 export default function ProcessamentoPage() {
     const [mes, setMes] = useState(new Date().getMonth() + 1);
     const [ano, setAno] = useState(new Date().getFullYear());
     const [loading, setLoading] = useState(false);
     const [relatorio, setRelatorio] = useState<any>(null);
+    const [empresa, setEmpresa] = useState<any>(null);
+
+    useEffect(() => {
+        fetch('/api/configuracoes/empresa').then(res => res.json()).then(setEmpresa);
+    }, []);
+
+    const exportOptions = [
+        { value: "XLSX_FULL", label: "Folha Completa (Excel)" },
+        { value: "XLSX_LAYOUT_B", label: "Layout B (Excel Interno)" },
+        { value: "PDF_FULL", label: "Folha Completa (PDF)" },
+        { value: "CSV_IRT", label: "Mapa IRT (CSV)" },
+        { value: "CSV_INSS", label: "Mapa INSS (CSV)" },
+    ];
+
+    const handleExport = (value: string) => {
+        if (!relatorio) return toast.error("Gere ou carregue o relatório primeiro");
+
+        const options = { mes, ano, companyInfo: empresa };
+
+        switch (value) {
+            case "XLSX_FULL":
+                DocumentService.generate(DocumentType.PAYROLL_SHEET, ExportFormat.XLSX, relatorio, options);
+                break;
+            case "PDF_FULL":
+                DocumentService.generate(DocumentType.PAYROLL_SHEET, ExportFormat.PDF, relatorio, options);
+                break;
+            case "CSV_IRT":
+                DocumentService.generate(DocumentType.IRT_MAP, ExportFormat.CSV, relatorio, options);
+                break;
+            case "CSV_INSS":
+                DocumentService.generate(DocumentType.INSS_MAP, ExportFormat.CSV, relatorio, options);
+                break;
+        }
+    };
 
     const meses = [
         { value: 1, label: "Janeiro" }, { value: 2, label: "Fevereiro" },
@@ -64,47 +103,29 @@ export default function ProcessamentoPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ mes, ano }),
             });
-            if (!res.ok) throw new Error();
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || "Não foi possível processar a folha salarial.");
+            }
 
             toast.success("Processamento concluído", {
                 description: `A folha salarial de ${meses.find(m => m.value === mes)?.label} / ${ano} foi gerada e validada.`,
-                icon: <Wallet className="text-emerald-500" size={16} />,
+                icon: <Calculator className="text-emerald-500" size={16} />,
                 duration: 5000
             });
             fetchRelatorio();
-        } catch (error) {
-            toast.error("Erro no Cálculo", {
-                description: "Não foi possível processar a folha salarial. Verifique as presenças e cargos."
+        } catch (error: any) {
+            toast.error("Erro no Processamento", {
+                description: error.message || "Verifique as presenças e configurações salariais."
             });
         } finally {
             setLoading(false);
         }
     };
 
-    const exportToCSV = (data: any[], type: 'IRT' | 'INSS') => {
-        if (!data.length) return toast.error("Sem dados para exportar");
 
-        let csvContent = "data:text/csv;charset=utf-8,";
-        if (type === 'IRT') {
-            csvContent += "NOME,BI,BASE IRT,IRT DEVIDO\n";
-            data.forEach(f => {
-                csvContent += `${f.funcionario.nome},${f.funcionario.bi_documento},${f.base_irt},${f.irt_devido}\n`;
-            });
-        } else {
-            csvContent += "NOME,NUMERO INSS,BASE INSS,TRABALHADOR(3%),EMPRESA(8%)\n";
-            data.forEach(f => {
-                csvContent += `${f.funcionario.nome},${f.funcionario.numero_inss || ''},${f.base_inss},${f.inss_trabalhador},${f.inss_empresa}\n`;
-            });
-        }
-
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `MAPA_${type}_${mes}_${ano}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
 
     const columns: Column<any>[] = [
         {
@@ -202,6 +223,14 @@ export default function ProcessamentoPage() {
                             {anos.map(a => <option key={a} value={a}>{a}</option>)}
                         </select>
                     </div>
+
+                    <Select
+                        options={exportOptions}
+                        placeholder="Exportar Dados..."
+                        onChange={handleExport}
+                        className="w-48 h-9 [&>button]:h-9 [&>button]:text-[10px] [&>button]:font-black [&>button]:uppercase"
+                    />
+
                     <Button
                         onClick={handleProcessar}
                         disabled={loading}
@@ -214,11 +243,11 @@ export default function ProcessamentoPage() {
             </div>
 
             {/* Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <StatCard
                     title="Folha Líquida"
                     value={formatCurrency(relatorio?.resumo?.totalLiquid || 0)}
-                    icon={Wallet}
+                    icon={Banknote}
                     variant="blue"
                     subStats={[{ label: 'Colaboradores', value: relatorio?.resumo?.totalColaboradores || 0 }]}
                 />
@@ -236,25 +265,6 @@ export default function ProcessamentoPage() {
                     variant="green"
                     subStats={[{ label: 'Trabalhador + Empresa', value: '11%' }]}
                 />
-                <Card className="p-4 border-2 border-slate-100 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex flex-col justify-between">
-                    <p className="text-[8px] font-black uppercase tracking-[0.2em] text-slate-400">Mapas Obrigatórios</p>
-                    <div className="flex flex-col gap-2 mt-2">
-                        <Button
-                            variant="outline" size="sm"
-                            className="h-8 justify-start text-[9px] font-bold uppercase tracking-widest gap-2 bg-white dark:bg-zinc-900"
-                            onClick={() => exportToCSV(relatorio?.folhas || [], 'IRT')}
-                        >
-                            <Download size={12} className="text-blue-500" /> Exportar Mapa IRT
-                        </Button>
-                        <Button
-                            variant="outline" size="sm"
-                            className="h-8 justify-start text-[9px] font-bold uppercase tracking-widest gap-2 bg-white dark:bg-zinc-900"
-                            onClick={() => exportToCSV(relatorio?.folhas || [], 'INSS')}
-                        >
-                            <Download size={12} className="text-emerald-500" /> Exportar Mapa INSS
-                        </Button>
-                    </div>
-                </Card>
             </div>
 
             {/* Processed List */}

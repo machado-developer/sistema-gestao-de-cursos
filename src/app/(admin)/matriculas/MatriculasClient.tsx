@@ -7,7 +7,7 @@ import { PaymentForm } from '@/components/forms/PaymentForm'
 import { User, School, Banknote, Download } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { formatCurrency } from '@/lib/utils'
-import { generatePdfTable } from '@/lib/pdf-export'
+import { DocumentService, DocumentType, ExportFormat } from '@/services/DocumentService'
 
 interface MatriculasClientProps {
     initialMatriculas: any[]
@@ -61,11 +61,9 @@ export function MatriculasClient({ initialMatriculas, pagination }: MatriculasCl
             formatCurrency(Number(m.valor_pago))
         ])
 
-        generatePdfTable({
+        DocumentService.generate(DocumentType.ENROLLMENT_LIST, ExportFormat.PDF, data, {
             title: 'Relatório de Matrículas',
-            subtitle: `Total: ${pagination.totalItems} registos`,
             columns,
-            data,
             filename: 'lista_matriculas'
         })
     }
@@ -138,7 +136,15 @@ export function MatriculasClient({ initialMatriculas, pagination }: MatriculasCl
                                         </td>
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex justify-end gap-2">
-                                                <Button variant="ghost" className="h-8 px-2 text-xs">Detalhes</Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    className="h-8 px-2 text-xs"
+                                                    onClick={() => DocumentService.generate(DocumentType.MATRICULA_CONFIRMATION, ExportFormat.PDF, m)}
+                                                    title="Baixar Confirmação de Matrícula"
+                                                >
+                                                    <Download size={12} className="mr-1" />
+                                                    Confirmação
+                                                </Button>
                                                 <Button
                                                     variant="secondary"
                                                     className="h-8 px-2 text-xs gap-1"

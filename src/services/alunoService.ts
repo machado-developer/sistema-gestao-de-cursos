@@ -2,8 +2,10 @@ import { prisma } from '@/lib/prisma'
 import { Prisma } from '@prisma/client'
 
 export const alunoService = {
-    async create(data: Prisma.AlunoCreateInput) {
-        return prisma.aluno.create({ data })
+    async create(data: Prisma.AlunoCreateInput, userId?: string) {
+        return prisma.aluno.create({
+            data: { ...data, userId }
+        })
     },
 
     async findAll() {

@@ -111,7 +111,7 @@ export function TableFilters({ filters, onFilterChange }: TableFiltersProps) {
                                 </label>
                                 <Select
                                     value={filterValues[filter.key]}
-                                    onChange={(e) => handleFilterChange(filter.key, e.target.value)}
+                                    onChange={(val) => handleFilterChange(filter.key, val)}
                                     options={[
                                         { value: '', label: 'Todos' },
                                         ...filter.options

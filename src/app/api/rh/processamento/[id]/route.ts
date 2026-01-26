@@ -3,10 +3,11 @@ import { RHService } from "@/services/rhService";
 
 export async function GET(
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const folha = await RHService.obterFolhaPorId(params.id);
+        const { id } = await params;
+        const folha = await RHService.obterFolhaPorId(id);
         if (!folha) {
             return NextResponse.json({ error: "Folha não encontrada" }, { status: 404 });
         }

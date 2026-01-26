@@ -17,9 +17,15 @@ import {
     X,
     MoreHorizontal,
     Calendar,
-    Plane
+    Plane,
+    Trash2,
+    Eye
 } from "lucide-react";
 import { toast } from "sonner";
+import { Select } from "@/components/ui/Select";
+import { VacationModal } from "@/components/rh/VacationModal";
+import { VacationDetailModal } from "@/components/rh/VacationDetailModal";
+import { ConfirmModal } from "@/components/ui/ConfirmModal";
 
 export default function FeriasPage() {
     const [funcionarios, setFuncionarios] = useState<any[]>([]);
@@ -28,6 +34,14 @@ export default function FeriasPage() {
     const [loading, setLoading] = useState(true);
 
     const [solicitacoes, setSolicitacoes] = useState<any[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+    const [selectedVacation, setSelectedVacation] = useState<any>(null);
+    const [confirmDelete, setConfirmDelete] = useState<{ isOpen: boolean; id: string | null; loading: boolean }>({
+        isOpen: false,
+        id: null,
+        loading: false
+    });
 
     // Filters
     const [search, setSearch] = useState("");
@@ -36,21 +50,24 @@ export default function FeriasPage() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const [deptRes, cargoRes, feriasRes] = await Promise.all([
+            const [deptRes, cargoRes, feriasRes, funcRes] = await Promise.all([
                 fetch("/api/rh/departamentos"),
                 fetch("/api/rh/cargos"),
-                fetch("/api/rh/ferias")
+                fetch("/api/rh/ferias"),
+                fetch("/api/rh/funcionarios")
             ]);
 
-            const [deptData, cargoData, feriasData] = await Promise.all([
+            const [deptData, cargoData, feriasData, funcData] = await Promise.all([
                 deptRes.json(),
                 cargoRes.json(),
-                feriasRes.json()
+                feriasRes.json(),
+                funcRes.json()
             ]);
 
             setDepts(deptData);
             setCargos(cargoData);
             setSolicitacoes(feriasData);
+            setFuncionarios(funcData);
         } catch (error) {
             toast.error("Erro de Carregamento", {
                 description: "Não foi possível sincronizar o mapa de férias."
@@ -63,6 +80,38 @@ export default function FeriasPage() {
     useEffect(() => {
         fetchData();
     }, []);
+
+    const handleStatusUpdate = async (id: string, newStatus: string) => {
+        try {
+            const res = await fetch(`/api/rh/ferias/${id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: newStatus })
+            });
+
+            if (!res.ok) throw new Error();
+
+            toast.success(`Pedido ${newStatus.toLowerCase()} com sucesso`);
+            fetchData();
+        } catch (error) {
+            toast.error("Erro ao atualizar estado do pedido");
+        }
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!confirmDelete.id) return;
+        setConfirmDelete(prev => ({ ...prev, loading: true }));
+        try {
+            const res = await fetch(`/api/rh/ferias/${confirmDelete.id}`, { method: "DELETE" });
+            if (!res.ok) throw new Error();
+            toast.success("Solicitação removida");
+            fetchData();
+            setConfirmDelete({ isOpen: false, id: null, loading: false });
+        } catch (error) {
+            toast.error("Erro ao remover solicitação");
+            setConfirmDelete(prev => ({ ...prev, loading: false }));
+        }
+    };
 
     const columns: Column<any>[] = [
         {
@@ -125,9 +174,49 @@ export default function FeriasPage() {
             key: "acoes",
             header: "",
             render: (item) => (
-                <div className="flex justify-end pr-2">
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-slate-100 dark:hover:bg-zinc-800">
-                        <MoreHorizontal size={16} />
+                <div className="flex justify-end pr-2 gap-2">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-9 w-9 p-0 text-blue-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/10"
+                        onClick={() => {
+                            setSelectedVacation(item);
+                            setIsDetailModalOpen(true);
+                        }}
+                        title="Ver Detalhes"
+                    >
+                        <Eye size={20} />
+                    </Button>
+                    {item.status === "PENDENTE" && (
+                        <>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-9 w-9 p-0 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/10"
+                                onClick={() => handleStatusUpdate(item.id, "APROVADO")}
+                                title="Aprovar Gozo"
+                            >
+                                <CheckCircle size={20} />
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-9 w-9 p-0 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/10"
+                                onClick={() => handleStatusUpdate(item.id, "REPROVADO")}
+                                title="Recusar Pedido"
+                            >
+                                <X size={20} />
+                            </Button>
+                        </>
+                    )}
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-9 w-9 p-0 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-zinc-800"
+                        onClick={() => setConfirmDelete({ isOpen: true, id: item.id, loading: false })}
+                        title="Eliminar Registro"
+                    >
+                        <Trash2 size={20} />
                     </Button>
                 </div>
             ),
@@ -136,7 +225,8 @@ export default function FeriasPage() {
     ];
 
     const filteredData = solicitacoes.filter((s: any) => {
-        const matchesSearch = s.funcionario.nome.toLowerCase().includes(search.toLowerCase());
+        const matchesSearch = s.funcionario.nome.toLowerCase().includes(search.toLowerCase()) ||
+            s.funcionario.bi_documento?.toLowerCase().includes(search.toLowerCase());
         const matchesDept = !selectedDept || s.funcionario.departamentoId === selectedDept;
         return matchesSearch && matchesDept;
     });
@@ -146,13 +236,16 @@ export default function FeriasPage() {
             {/* Header */}
             <div className="border-b-2 border-slate-200 dark:border-zinc-800 pb-2 flex justify-between items-end">
                 <div>
-                    <h1 className="text-lg font-bold text-[var(--text-secondary)] uppercase tracking-tighter">
+                    <h1 className="text-2xl font-semibold text-slate-900 dark:text-white tracking-tight">
                         Gestão de Férias e Ausências
                     </h1>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Planeamento e Aprovação de Licenças</p>
+                    <p className="text-sm text-slate-500 font-medium">Planeamento e Aprovação de Licenças</p>
                 </div>
-                <Button className="bg-purple-600 text-[10px] font-black uppercase tracking-widest h-9 border-b-2 border-purple-800">
-                    <Plus size={16} className="mr-2" /> Nova Solicitação
+                <Button
+                    onClick={() => setIsModalOpen(true)}
+                    className="bg-[var(--accent-primary)] text-sm font-medium h-10 px-6 text-white shadow-sm hover:opacity-90 transition-opacity"
+                >
+                    <Plus size={18} className="mr-2" /> Nova Solicitação
                 </Button>
             </div>
 
@@ -185,25 +278,23 @@ export default function FeriasPage() {
             <Card className="p-4 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 shadow-sm overflow-visible">
                 <div className="flex flex-col md:flex-row gap-4">
                     <div className="relative flex-1 group">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-purple-500 transition-colors" size={16} />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[var(--accent-primary)] transition-colors" size={16} />
                         <Input
                             placeholder="PESQUISAR POR COLABORADOR..."
-                            className="pl-10 h-11 bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 text-[10px] font-black uppercase tracking-widest text-purple-600"
+                            className="pl-10 h-11 bg-slate-50 dark:bg-zinc-800/50 border-[var(--border-color)] dark:border-zinc-800 text-sm font-medium"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </div>
 
                     <div className="flex-1 relative group">
-                        <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-purple-500 transition-colors" size={14} />
-                        <select
-                            className="w-full h-11 pl-9 pr-3 bg-slate-50 dark:bg-zinc-800/50 border-2 border-slate-200 dark:border-zinc-800 rounded-md text-[10px] font-black uppercase tracking-widest text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer"
+                        <Select
                             value={selectedDept}
-                            onChange={(e) => setSelectedDept(e.target.value)}
-                        >
-                            <option value="">FILTRAR POR DEPARTAMENTO</option>
-                            {depts.map(d => <option key={d.id} value={d.id}>{d.nome.toUpperCase()}</option>)}
-                        </select>
+                            onChange={setSelectedDept}
+                            options={depts.map(d => ({ value: d.id, label: d.nome }))}
+                            placeholder="FILTRAR POR DEPARTAMENTO"
+                            className="h-11"
+                        />
                     </div>
 
                     {(search || selectedDept) && (
@@ -227,15 +318,43 @@ export default function FeriasPage() {
                     columns={columns}
                     data={filteredData}
                     keyExtractor={(item) => item.id}
+                    loading={loading}
                     className="border-none shadow-none"
                     emptyState={
                         <div className="py-24 flex flex-col items-center justify-center text-slate-400 space-y-4">
                             <Umbrella size={64} className="opacity-10" />
-                            <p className="text-[10px] font-black uppercase tracking-widest">Nenhum registo de férias</p>
+                            <p className="text-xs font-medium text-slate-500">Nenhum registo de férias</p>
                         </div>
                     }
                 />
             </Card>
-        </div>
+
+            <VacationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSuccess={fetchData}
+                funcionarios={funcionarios}
+            />
+
+            <VacationDetailModal
+                isOpen={isDetailModalOpen}
+                onClose={() => {
+                    setIsDetailModalOpen(false);
+                    setSelectedVacation(null);
+                }}
+                vacation={selectedVacation}
+            />
+
+            <ConfirmModal
+                isOpen={confirmDelete.isOpen}
+                title="Eliminar Solicitação"
+                message="Tem a certeza que deseja remover esta solicitação de ausência? Esta ação não pode ser desfeita."
+                type="danger"
+                confirmText="Confirmar Eliminação"
+                onConfirm={handleConfirmDelete}
+                onCancel={() => setConfirmDelete({ isOpen: false, id: null, loading: false })}
+                isLoading={confirmDelete.loading}
+            />
+        </div >
     );
 }

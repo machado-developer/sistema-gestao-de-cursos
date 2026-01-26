@@ -12,8 +12,15 @@ export async function GET() {
     }
 }
 
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
+
 async function POSTHandler(request: NextRequest) {
     try {
+        const session = await getServerSession(authOptions)
+        const user = session?.user?.email ? await prisma.user.findUnique({ where: { email: session.user.email } }) : null
+
         const body = await request.json()
 
         const validation = alunoSchema.safeParse(body)
@@ -29,7 +36,7 @@ async function POSTHandler(request: NextRequest) {
             ...validation.data,
             data_nascimento: new Date(validation.data.data_nascimento),
             email: validation.data.email || null,
-        })
+        }, user?.id)
 
         return NextResponse.json(aluno)
     } catch (error: any) {

@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { RHService } from "@/services/rhService";
+import { serializePrisma } from "@/lib/utils";
 
 export async function GET() {
     try {
+        // Garantir que contratos expirados são atualizados ou renovados
+        await RHService.verificarContratosExpirados();
+
         const funcionarios = await RHService.listarFuncionarios();
-        return NextResponse.json(funcionarios);
+        return NextResponse.json(serializePrisma(funcionarios));
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }

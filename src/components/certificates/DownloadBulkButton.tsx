@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { PDFDownloadLink } from '@react-pdf/renderer'
-import { DynamicCertificateDocument } from './DynamicCertificateDocument'
+import { DocumentService, DocumentType, ExportFormat } from '@/services/DocumentService'
 import { Button } from '@/components/ui/Button'
 import { Printer, Loader2, Download, AlertCircle } from 'lucide-react'
 import { toast } from 'sonner'
@@ -52,30 +51,19 @@ export function DownloadBulkButton({ matriculas, disabled }: DownloadBulkButtonP
         const template = matriculas[0]?.turma?.curso?.certificateTemplate || { imageUrl: '/certificate-bg.png', mapping: '[]' }
 
         return (
-            <PDFDownloadLink
-                document={
-                    <DynamicCertificateDocument
-                        certificates={dataForPdf.map(item => ({
-                            ...item.data,
-                            qrCode: item.qrCode,
-                            codigo_unico: item.certificate.codigo_unico
-                        }))}
-                        template={template}
-                    />
-                }
-                fileName={`certificados_lote_${new Date().toISOString().split('T')[0]}.pdf`}
+            <Button
+                variant="primary"
+                disabled={disabled}
+                className="gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold"
+                onClick={() => DocumentService.generate(DocumentType.BULK_CERTIFICATES, ExportFormat.PDF, dataForPdf.map(item => ({
+                    ...item.data,
+                    qrCode: item.qrCode,
+                    codigo_unico: item.certificate.codigo_unico
+                })))}
             >
-                {({ loading }) => (
-                    <Button
-                        variant="primary"
-                        disabled={disabled || loading}
-                        className="gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold"
-                    >
-                        {loading ? <Loader2 className="animate-spin" size={18} /> : <Download size={18} />}
-                        BAIXAR LOTE ({matriculas.length})
-                    </Button>
-                )}
-            </PDFDownloadLink>
+                <Download size={18} />
+                BAIXAR LOTE ({matriculas.length})
+            </Button>
         )
     }
 

@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt" suppressHydrationWarning>
-      <body className="antialiased min-h-screen text-zinc-50 selection:bg-blue-500/30" style={{ fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#09090B' }}>
+      <body className="antialiased min-h-screen" suppressHydrationWarning>
         <NextAuthSessionProvider>
           <LanguageProvider>
             <ThemeProvider>

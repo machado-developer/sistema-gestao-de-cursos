@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { cursoSchema } from '@/lib/schemas'
 
 export async function GET(
-    request: Request,
+    req: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
@@ -23,12 +23,12 @@ export async function GET(
 }
 
 export async function PUT(
-    request: Request,
+    req: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const { id } = await params
-        const body = await request.json()
+        const body = await req.json()
         const result = cursoSchema.safeParse(body)
 
         if (!result.success) {
@@ -46,7 +46,7 @@ export async function PUT(
                 nome: data.nome,
                 descricao: data.descricao,
                 carga_horaria: data.carga_horaria,
-                preco_base: data.preco
+                preco_base: data.preco_base
             }
         })
 
@@ -57,7 +57,7 @@ export async function PUT(
 }
 
 export async function DELETE(
-    request: Request,
+    req: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {

@@ -108,7 +108,10 @@ export default function DepartamentosPage() {
         setConfirmDelete(prev => ({ ...prev, loading: true }))
         try {
             const res = await fetch(`/api/rh/departamentos/${confirmDelete.id}`, { method: 'DELETE' })
-            if (!res.ok) throw new Error()
+            if (!res.ok) {
+                const data = await res.json()
+                throw new Error(data.error || "Falha na comunicação com o servidor.")
+            }
 
             toast.success("Registo Eliminado", {
                 description: "O departamento foi removido permanentemente da estrutura orgânica.",
@@ -117,9 +120,9 @@ export default function DepartamentosPage() {
 
             setConfirmDelete({ isOpen: false, id: null, loading: false })
             fetchDepts()
-        } catch (error) {
+        } catch (error: any) {
             toast.error("Erro ao Remover", {
-                description: "Não foi possível eliminar este departamento. Verifique se existem colaboradores vinculados."
+                description: error.message || "Não foi possível eliminar este departamento."
             })
             setConfirmDelete(prev => ({ ...prev, loading: false }))
         }
@@ -190,13 +193,13 @@ export default function DepartamentosPage() {
             {/* Header */}
             <div className="border-b-2 border-slate-200 dark:border-zinc-800 pb-2 flex justify-between items-end">
                 <div>
-                    <h1 className="text-lg font-bold text-blue-600 uppercase tracking-tighter">
+                    <h1 className="text-2xl font-semibold text-slate-900 dark:text-white tracking-tight">
                         Estrutura por Departamentos
                     </h1>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Níveis de Organização e Unidades de Negócio</p>
+                    <p className="text-sm text-slate-500 font-medium">Níveis de Organização e Unidades de Negócio</p>
                 </div>
-                <Button onClick={() => setShowModal(true)} className="bg-blue-600 text-[10px] font-black uppercase tracking-widest h-9 border-b-2 border-blue-800">
-                    <Plus size={16} className="mr-2" /> Novo Departamento
+                <Button onClick={() => setShowModal(true)} className="bg-[var(--accent-primary)] text-sm font-medium h-10 px-6 text-white shadow-sm hover:opacity-90 transition-opacity">
+                    <Plus size={18} className="mr-2" /> Novo Departamento
                 </Button>
             </div>
 
@@ -229,10 +232,10 @@ export default function DepartamentosPage() {
             <Card className="p-4 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 shadow-sm overflow-visible">
                 <div className="flex flex-col md:flex-row gap-4">
                     <div className="relative flex-1 group">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={16} />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[var(--accent-primary)] transition-colors" size={16} />
                         <Input
                             placeholder="PESQUISAR DEPARTAMENTO OU UNIDADE..."
-                            className="pl-10 h-11 bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 text-[10px] font-black uppercase tracking-widest"
+                            className="pl-10 h-11 bg-slate-50 dark:bg-zinc-800/50 border-[var(--border-color)] dark:border-zinc-800 text-sm font-medium"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
@@ -260,35 +263,35 @@ export default function DepartamentosPage() {
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                     <Card className="w-full max-w-md p-8 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 animate-in zoom-in-95 shadow-xl">
                         <div className="border-b-2 border-slate-100 dark:border-zinc-800 pb-2 mb-6">
-                            <h2 className="text-[11px] font-black text-[var(--text-primary)] uppercase tracking-tighter">
+                            <h2 className="text-lg font-semibold text-slate-900 dark:text-white tracking-tight">
                                 {editingId ? 'Editar Unidade' : 'Configurar Nova Unidade'}
                             </h2>
                         </div>
 
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Nome do Departamento</label>
+                                <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">Nome do Departamento</label>
                                 <Input
                                     {...register("nome")}
                                     placeholder="Ex: Direção de Operações"
-                                    className={`bg-slate-50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 font-bold h-11 ${errors.nome ? 'border-red-500 ring-red-500' : ''}`}
+                                    className={`bg-slate-50 dark:bg-zinc-800/50 border-[var(--border-color)] dark:border-zinc-800 font-medium h-11 ${errors.nome ? 'border-red-500 ring-red-500' : ''}`}
                                 />
-                                {errors.nome && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.nome.message}</p>}
+                                {errors.nome && <p className="text-xs font-medium text-red-500">{errors.nome.message}</p>}
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Missão / Descritivo Curto</label>
+                                <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">Missão / Descritivo Curto</label>
                                 <textarea
                                     {...register("descricao")}
                                     placeholder="Defina o propósito desta unidade escolar ou administrativa..."
-                                    className={`w-full min-h-[100px] p-3 text-sm font-bold bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-[var(--text-primary)] transition-all ${errors.descricao ? 'border-red-500 ring-red-500' : ''}`}
+                                    className={`w-full min-h-[100px] p-3 text-sm font-medium bg-slate-50 dark:bg-zinc-800/50 border border-[var(--border-color)] dark:border-zinc-800 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] text-[var(--text-primary)] transition-all ${errors.descricao ? 'border-red-500 ring-red-500' : ''}`}
                                 />
-                                {errors.descricao && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.descricao.message}</p>}
+                                {errors.descricao && <p className="text-xs font-medium text-red-500">{errors.descricao.message}</p>}
                             </div>
                             <div className="flex gap-3 pt-4">
-                                <Button type="button" variant="outline" onClick={handleCloseModal} className="flex-1 font-black uppercase tracking-widest text-[10px] h-11">Cancelar</Button>
-                                <Button type="submit" disabled={isSubmitting} className="flex-1 bg-blue-600 font-black uppercase tracking-widest text-[10px] h-11 border-b-4 border-blue-800 gap-2">
+                                <Button type="button" variant="outline" onClick={handleCloseModal} className="flex-1 font-medium h-11">Cancelar</Button>
+                                <Button type="submit" disabled={isSubmitting} className="flex-1 bg-[var(--accent-primary)] font-medium h-11 text-white gap-2">
                                     {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : null}
-                                    {isSubmitting ? 'PROCESSANDO...' : (editingId ? 'GUARDAR ALTERAÇÕES' : 'CONFIRMAR REGISTO')}
+                                    {isSubmitting ? 'Processando...' : (editingId ? 'Guardar' : 'Confirmar')}
                                 </Button>
                             </div>
                         </form>

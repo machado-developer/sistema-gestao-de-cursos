@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { RHService } from "@/services/rhService";
+import { serializePrisma } from "@/lib/utils";
 
 export async function GET(req: Request) {
     try {
@@ -12,7 +13,7 @@ export async function GET(req: Request) {
         }
 
         const relatorio = await RHService.obterRelatorioMensal(mes, ano);
-        return NextResponse.json(relatorio);
+        return NextResponse.json(serializePrisma(relatorio));
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }

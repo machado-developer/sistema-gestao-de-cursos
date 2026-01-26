@@ -40,11 +40,11 @@ export function DataTable<T>({
                         <div className="absolute inset-0 bg-white/50 dark:bg-black/50 backdrop-blur-[2px] z-10 flex items-center justify-center">
                             <div className="flex flex-col items-center gap-2">
                                 <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
-                                <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-secondary)]">Sincronizando...</span>
+                                <span className="text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]">Sincronizando...</span>
                             </div>
                         </div>
                     )}
-                    <table className="w-full text-left min-w-[800px]">
+                    <table className="w-full text-left min-w-[1000px]">
                         <thead>
                             <tr className="border-b border-[var(--border-color)] bg-[var(--surface-color)] text-[var(--text-secondary)] text-xs uppercase tracking-wider">
                                 {columns.map((column) => (

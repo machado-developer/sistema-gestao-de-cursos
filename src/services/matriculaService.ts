@@ -3,7 +3,7 @@ import { presencaService } from './presencaService'
 import { avaliacaoService } from './avaliacaoService'
 
 export const matriculaService = {
-    async create(data: any) {
+    async create(data: any, userId?: string) {
         // Extract alunoId - handle both formats
         const alunoId = data.alunoId || data.aluno?.connect?.id
 
@@ -23,11 +23,15 @@ export const matriculaService = {
             data.estado_pagamento = 'Isento'
         }
 
-        return prisma.matricula.create({ data })
+        return prisma.matricula.create({
+            data: { ...data, userId }
+        })
     },
 
-    async findAll() {
+    async findAll(userId?: string, isAdmin = false) {
+        const where: any = isAdmin ? {} : { userId };
         return prisma.matricula.findMany({
+            where,
             include: {
                 aluno: true,
                 turma: { include: { curso: true } },

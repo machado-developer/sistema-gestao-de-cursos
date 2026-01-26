@@ -28,7 +28,7 @@ export function InstrutorForm({ initialData }: InstrutorFormProps) {
         handleSubmit,
         formState: { errors }
     } = useForm<InstrutorFormData>({
-        resolver: zodResolver(instrutorSchema),
+        resolver: zodResolver(instrutorSchema) as any,
         defaultValues: initialData || {
             nome: '',
             email: '',

@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { instrutorSchema } from '@/lib/schemas'
 
 export async function GET(
-    request: Request,
+    req: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
@@ -23,12 +23,13 @@ export async function GET(
 }
 
 export async function PUT(
-    request: Request,
+    req: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const { id } = await params
-        const body = await request.json()
+        const body = await req.json()
+        const validation = instrutorSchema.safeParse(body)
         const result = instrutorSchema.safeParse(body)
 
         if (!result.success) {
@@ -60,7 +61,7 @@ export async function PUT(
 }
 
 export async function DELETE(
-    request: Request,
+    req: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {

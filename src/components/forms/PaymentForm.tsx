@@ -32,7 +32,7 @@ export function PaymentForm({ matricula, onSuccess }: PaymentFormProps) {
         watch,
         control
     } = useForm<PagamentoFormData>({
-        resolver: zodResolver(pagamentoSchema),
+        resolver: zodResolver(pagamentoSchema) as any,
         defaultValues: {
             matriculaId: matricula.id,
             valor: undefined,
@@ -114,7 +114,7 @@ export function PaymentForm({ matricula, onSuccess }: PaymentFormProps) {
                 <Select
                     label="Método de Pagamento"
                     value={metodoPagamento}
-                    onChange={(e) => setValue('metodo_pagamento', e.target.value as any)}
+                    onChange={(val) => setValue('metodo_pagamento', val as any)}
                     options={[
                         { value: 'Dinheiro', label: 'Dinheiro' },
                         { value: 'Transferência', label: 'Transferência' },

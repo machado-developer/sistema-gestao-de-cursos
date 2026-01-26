@@ -76,9 +76,9 @@ export default function UtilizadoresPage() {
             header: "Perfil",
             render: (item) => (
                 <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${item.role === 'ADMIN' ? 'bg-red-100 text-red-700' :
-                        item.role === 'RH' ? 'bg-blue-100 text-blue-700' :
-                            item.role === 'FINANCEIRO' ? 'bg-green-100 text-green-700' :
-                                'bg-gray-100 text-gray-700'
+                    item.role === 'RH' ? 'bg-blue-100 text-blue-700' :
+                        item.role === 'FINANCEIRO' ? 'bg-green-100 text-green-700' :
+                            'bg-gray-100 text-gray-700'
                     }`}>
                     {item.role}
                 </span>
@@ -153,7 +153,7 @@ export default function UtilizadoresPage() {
                             <label className="text-sm font-medium">Perfil</label>
                             <Select
                                 value={formData.role}
-                                onChange={(e: any) => setFormData({ ...formData, role: e.target.value })}
+                                onChange={(val) => setFormData({ ...formData, role: val })}
                                 options={[
                                     { value: 'USER', label: 'Utilizador Padrão' },
                                     { value: 'RH', label: 'Recursos Humanos' },
