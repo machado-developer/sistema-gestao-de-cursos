@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { PasswordInput } from '@/components/ui/PasswordInput'
 import { PhoneInput } from '@/components/ui/PhoneInput'
 import { User, Upload, Save, Lock } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -157,23 +158,20 @@ export default function AdministradorPage() {
 
                 {showPasswordForm && (
                     <form onSubmit={handlePasswordChange} className="space-y-4 pt-4 border-t border-white/10">
-                        <Input
+                        <PasswordInput
                             label={t('settings.admin.current_password')}
-                            type="password"
                             value={passwordData.currentPassword}
                             onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
                             required
                         />
-                        <Input
+                        <PasswordInput
                             label={t('settings.admin.new_password')}
-                            type="password"
                             value={passwordData.newPassword}
                             onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
                             required
                         />
-                        <Input
+                        <PasswordInput
                             label={t('settings.admin.confirm_password')}
-                            type="password"
                             value={passwordData.confirmPassword}
                             onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
                             required

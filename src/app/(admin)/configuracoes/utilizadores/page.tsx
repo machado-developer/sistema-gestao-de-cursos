@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
-import { UserPlus, Shield, Mail, Calendar, Trash2, Edit } from "lucide-react";
+import { UserPlus, Shield, Mail, Calendar, Trash2, Edit, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 export default function UtilizadoresPage() {
@@ -14,6 +14,7 @@ export default function UtilizadoresPage() {
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState({ name: "", email: "", password: "", role: "USER" });
+    const [showPassword, setShowPassword] = useState(false);
 
     const fetchUsers = async () => {
         try {
@@ -141,13 +142,24 @@ export default function UtilizadoresPage() {
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Password</label>
-                            <Input
-                                type="password"
-                                value={formData.password}
-                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                placeholder="******"
-                                required
-                            />
+                            <div className="relative">
+                                <Input
+                                    type={showPassword ? "text" : "password"}
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                    placeholder="******"
+                                    className="pr-10"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                    aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Perfil</label>

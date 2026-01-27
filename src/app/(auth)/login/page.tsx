@@ -9,7 +9,7 @@ import { loginSchema } from '@/lib/schemas'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { z } from 'zod'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Eye, EyeOff } from 'lucide-react'
 import Link from 'next/link'
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -17,6 +17,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 export default function LoginPage() {
     const router = useRouter()
     const [serverError, setServerError] = useState<string | null>(null)
+    const [showPassword, setShowPassword] = useState(false)
 
     const {
         register,
@@ -79,12 +80,22 @@ export default function LoginPage() {
 
                 <div className="space-y-2">
                     <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">Chave de Acesso</label>
-                    <Input
-                        {...register("password")}
-                        type="password"
-                        placeholder="••••••••"
-                        className={`bg-zinc-50 border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-14 rounded-xl focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 transition-all font-medium ${errors.password ? 'border-red-500 bg-red-50' : ''}`}
-                    />
+                    <div className="relative">
+                        <Input
+                            {...register("password")}
+                            type={showPassword ? "text" : "password"}
+                            placeholder="••••••••"
+                            className={`bg-zinc-50 border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-14 rounded-xl focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 transition-all font-medium pr-12 ${errors.password ? 'border-red-500 bg-red-50' : ''}`}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-colors focus:outline-none"
+                            aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                        >
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                    </div>
                     {errors.password && <p className="text-[10px] font-bold text-red-500 uppercase pl-1 mt-1">{errors.password.message}</p>}
                 </div>
 
