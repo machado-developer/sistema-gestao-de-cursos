@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { mkdir, writeFile } from 'fs/promises'
-import path from 'path'
 import sharp from 'sharp'
 import { prisma } from '@/lib/prisma'
+import { uploadFile } from '@/lib/storage'
 
 export async function POST(req: NextRequest) {
     try {
@@ -13,24 +12,26 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: 'Nenhum ficheiro enviado' }, { status: 400 })
         }
 
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'empresa')
-
-        // Ensure directory exists
-        await mkdir(uploadDir, { recursive: true })
-
-        const buffer = Buffer.from(await file.arrayBuffer())
+        const arrayBuffer = await file.arrayBuffer()
+        const buffer = Buffer.from(arrayBuffer) as any as Buffer
         const fileName = `logo-${Date.now()}.webp`
-        const filePath = path.join(uploadDir, fileName)
-        const publicUrl = `/uploads/empresa/${fileName}`
+        const storagePath = `uploads/empresa`
 
         // Process image with sharp: resize and convert to webp
-        await sharp(buffer)
+        const processedBuffer = await sharp(buffer)
             .resize(800, 800, {
                 fit: 'inside',
                 withoutEnlargement: true
             })
             .webp({ quality: 80 })
-            .toFile(filePath)
+            .toBuffer()
+
+        // Use centralized storage utility
+        const publicUrl = await uploadFile(processedBuffer, {
+            path: storagePath,
+            filename: fileName,
+            contentType: 'image/webp'
+        })
 
         // Update company record with new logoUrl
         const existing = await prisma.empresa.findFirst()

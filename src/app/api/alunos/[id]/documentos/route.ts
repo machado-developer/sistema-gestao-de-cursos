@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { mkdir } from 'fs/promises'
-import path from 'path'
 import sharp from 'sharp'
 import { createAuditLog } from '@/lib/audit'
+import { uploadFile } from '@/lib/storage'
 
 export async function POST(
     req: NextRequest,
@@ -20,16 +19,15 @@ export async function POST(
         }
 
         const id = (await params).id
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'alunos', id)
-
-        // Ensure directory exists
-        await mkdir(uploadDir, { recursive: true })
-
-        const buffer = Buffer.from(await file.arrayBuffer())
+        const arrayBuffer = await file.arrayBuffer()
+        const buffer = Buffer.from(arrayBuffer) as any as Buffer
         const isImage = file.type.startsWith('image/')
-        const fileName = `${Date.now()}-${tipo.toLowerCase()}.${isImage ? 'webp' : file.name.split('.').pop()}`
-        const filePath = path.join(uploadDir, fileName)
-        const publicUrl = `/uploads/alunos/${id}/${fileName}`
+        const extension = isImage ? 'webp' : file.name.split('.').pop()
+        const fileName = `${Date.now()}-${tipo.toLowerCase()}.${extension}`
+        const storagePath = `uploads/alunos/${id}`
+
+        let finalBuffer = buffer
+        let finalContentType = file.type
 
         if (isImage) {
             let processedImage = sharp(buffer)
@@ -45,19 +43,23 @@ export async function POST(
             }
 
             // aggressive compression to webp
-            await processedImage
+            finalBuffer = await processedImage
                 .webp({
                     quality: 75,
                     effort: 6,
                     lossless: false,
                     smartSubsample: true
                 })
-                .toFile(filePath)
-        } else {
-            // Save non-image files directly
-            const { writeFile } = await import('fs/promises')
-            await writeFile(filePath, buffer)
+                .toBuffer()
+            finalContentType = 'image/webp'
         }
+
+        // Use centralized storage utility
+        const publicUrl = await uploadFile(finalBuffer, {
+            path: storagePath,
+            filename: fileName,
+            contentType: finalContentType
+        })
 
         // Save record to database
         const documento = await prisma.documento.create({
