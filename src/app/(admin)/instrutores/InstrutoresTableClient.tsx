@@ -1,9 +1,10 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
-import { User, Mail, GraduationCap, ChevronRight } from 'lucide-react'
+import { User, Mail, GraduationCap, ChevronRight, Download } from 'lucide-react'
 import Link from 'next/link'
 import { DataTable, Column } from '@/components/ui/DataTable'
+import { DocumentService, DocumentType, ExportFormat } from '@/services/DocumentService'
 import { TableFilters, FilterConfig } from '@/components/ui/TableFilters'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -43,6 +44,30 @@ export function InstrutoresTableClient({ instrutores, title, subtitle, paginatio
 
     const onPageChange = (page: number) => {
         router.push(pathname + '?' + createQueryString('page', page.toString()))
+    }
+
+    const handleExport = async () => {
+        const columns = [
+            t('pages.instructors.table.instructor'),
+            t('pages.instructors.table.phone'),
+            'Email',
+            t('pages.instructors.table.specialty'),
+            t('pages.instructors.table.classes')
+        ]
+
+        const data = instrutores.map(instrutor => [
+            instrutor.nome,
+            instrutor.telefone || 'N/A',
+            instrutor.email,
+            instrutor.especialidade || 'Geral',
+            (instrutor.turmas?.length || 0).toString()
+        ])
+
+        await DocumentService.generate(DocumentType.ACADEMIC_PAUTA, ExportFormat.PDF, data, {
+            title: t('pages.instructors.title'),
+            columns,
+            filename: 'lista_instrutores'
+        })
     }
 
     const filters: FilterConfig[] = [
@@ -131,11 +156,17 @@ export function InstrutoresTableClient({ instrutores, title, subtitle, paginatio
                     <h1 className="text-3xl font-bold">{title}</h1>
                     <p className="text-zinc-400">{subtitle}</p>
                 </div>
-                <Link href="/instrutores/novo">
-                    <Button className="gap-2">
-                        <User size={18} /> {t('pages.instructors.new')}
+                <div className="flex gap-3">
+                    <Button variant="outline" className="gap-2" onClick={handleExport}>
+                        <Download size={18} />
+                        Exportar PDF
                     </Button>
-                </Link>
+                    <Link href="/instrutores/novo">
+                        <Button className="gap-2">
+                            <User size={18} /> {t('pages.instructors.new')}
+                        </Button>
+                    </Link>
+                </div>
             </div>
 
             <TableFilters filters={filters} />

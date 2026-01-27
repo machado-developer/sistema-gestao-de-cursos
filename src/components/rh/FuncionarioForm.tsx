@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { funcionarioSchema, type FuncionarioSchema } from "@/lib/schemas";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { CurrencyInput } from "@/components/ui/CurrencyInput";
+import { PhoneInput } from "@/components/ui/PhoneInput";
 import { Card } from "@/components/ui/Card";
 
 import { Select } from "@/components/ui/Select";
@@ -86,8 +88,8 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                 genero: initialData.genero || "",
                 data_nascimento: initialData.data_nascimento ?
                     new Date(initialData.data_nascimento).toISOString().split("T")[0] : "",
-                cargoId: initialData.cargoId || undefined,
-                departamentoId: initialData.departamentoId || undefined,
+                cargoId: initialData.cargoId || "",
+                departamentoId: initialData.departamentoId || "",
                 data_admissao: initialData.data_admissao ?
                     new Date(initialData.data_admissao).toISOString().split("T")[0] :
                     new Date().toISOString().split("T")[0],
@@ -115,8 +117,8 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
             telefone: "",
             genero: "",
             data_nascimento: "",
-            cargoId: undefined,
-            departamentoId: undefined,
+            cargoId: "",
+            departamentoId: "",
             data_admissao: new Date().toISOString().split("T")[0],
             numero_inss: "",
             tipo_contrato: "INDETERMINADO",
@@ -237,8 +239,8 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                 telefone: data.telefone || null,
                 genero: data.genero || null,
                 data_nascimento: data.data_nascimento ? new Date(data.data_nascimento).toISOString() : null,
-                cargoId: data.cargoId || null,
-                departamentoId: data.departamentoId || null,
+                cargoId: (data.cargoId && data.cargoId.trim() !== "") ? data.cargoId : null,
+                departamentoId: (data.departamentoId && data.departamentoId.trim() !== "") ? data.departamentoId : null,
                 data_admissao: new Date(data.data_admissao).toISOString(),
                 numero_inss: data.numero_inss || null,
                 tipo_contrato: data.tipo_contrato,
@@ -271,7 +273,8 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
 
             if (!res.ok) {
                 const error = await res.json();
-                throw new Error(error.message || 'Erro ao processar a requisição');
+                console.error("API Error Response:", error);
+                throw new Error(error.message || error.error || 'Erro ao processar a requisição');
             }
 
             const savedFuncionario = await res.json();
@@ -335,8 +338,58 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
     const currentSubAlimentacao = watch("subsidio_alimentacao") || 0;
     const currentSubTransporte = watch("subsidio_transporte") || 0;
 
+    const onInvalid = (errors: any) => {
+        console.error("Form errors:", errors);
+        const errorFields = Object.keys(errors);
+
+        if (errorFields.length > 0) {
+            // Map fields to tabs
+            const tabMap: Record<string, string> = {
+                // Dados Pessoais
+                nome: "dados",
+                bi_documento: "dados",
+                nif: "dados",
+                email: "dados",
+                telefone: "dados",
+                genero: "dados",
+                data_nascimento: "dados",
+                hora_entrada: "dados",
+                hora_saida: "dados",
+                dias_trabalho: "dados",
+
+                // Vínculo e Salário
+                departamentoId: "vencimento",
+                cargoId: "vencimento",
+                data_admissao: "vencimento",
+                tipo_contrato: "vencimento",
+                data_fim: "vencimento",
+                renovacao_automatica: "vencimento",
+                iban: "vencimento",
+                numero_inss: "vencimento",
+                salario_base: "vencimento",
+                subsidio_alimentacao: "vencimento",
+                subsidio_transporte: "vencimento",
+                subsidio_residencia: "vencimento",
+                outros_subsidios: "vencimento",
+            };
+
+            // Encontrar a tab do primeiro erro
+            for (const field of errorFields) {
+                const targetTab = tabMap[field];
+                if (targetTab) {
+                    setActiveTab(targetTab as any);
+                    break;
+                }
+            }
+
+            toast.error("Formulário Inválido", {
+                description: "Por favor, verifique os campos destacados em vermelho."
+            });
+        }
+    };
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             {/* Form Header Action Bar */}
             <div className="flex justify-between items-center border-b-2 border-slate-100 dark:border-zinc-800 pb-4">
                 <div className="flex items-center gap-4">
@@ -468,8 +521,12 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                                         <Input
                                             {...register("bi_documento")}
                                             placeholder="Nº de Identificação"
-                                            className={`h-11 font-medium bg-slate-50 dark:bg-zinc-800/30 border ${errors.bi_documento ? 'border-red-500' : 'border-[var(--border-color)] dark:border-zinc-800'}`}
+                                            className={`h-11 font-medium bg-slate-50 dark:bg-zinc-800/30 border ${errors.bi_documento ? 'border-red-500' : 'border-[var(--border-color)] dark:border-zinc-800'} uppercase`}
                                             disabled={isSubmitting}
+                                            onChange={(e) => {
+                                                e.target.value = e.target.value.toUpperCase();
+                                                register("bi_documento").onChange(e);
+                                            }}
                                         />
                                         {errors.bi_documento && (
                                             <p className="text-xs font-medium text-red-500 mt-1">{errors.bi_documento.message}</p>
@@ -482,8 +539,54 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                                         <Input
                                             {...register("nif")}
                                             placeholder="Nº Fiscal"
-                                            className={`h-11 font-medium bg-slate-50 dark:bg-zinc-800/30 border ${errors.nif ? 'border-red-500' : 'border-[var(--border-color)] dark:border-zinc-800'}`}
+                                            className={`h-11 font-medium bg-slate-50 dark:bg-zinc-800/30 border ${errors.nif ? 'border-red-500' : 'border-[var(--border-color)] dark:border-zinc-800'} uppercase`}
                                             disabled={isSubmitting}
+                                            onChange={(e) => {
+                                                e.target.value = e.target.value.toUpperCase();
+                                                register("nif").onChange(e);
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-1.5">
+                                        <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">
+                                            Data de Nascimento *
+                                        </label>
+                                        <div className="relative group">
+                                            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
+                                            <Input
+                                                {...register("data_nascimento")}
+                                                type="date"
+                                                className={`pl-9 h-11 font-medium bg-slate-50 dark:bg-zinc-800/30 border ${errors.data_nascimento ? 'border-red-500' : 'border-[var(--border-color)] dark:border-zinc-800'}`}
+                                                disabled={isSubmitting}
+                                            />
+                                        </div>
+                                        {errors.data_nascimento && (
+                                            <p className="text-xs font-medium text-red-500 mt-1">{errors.data_nascimento.message}</p>
+                                        )}
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">
+                                            Género
+                                        </label>
+                                        <Controller
+                                            name="genero"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <Select
+                                                    value={field.value || ""}
+                                                    onChange={field.onChange}
+                                                    options={[
+                                                        { value: "M", label: "Masculino" },
+                                                        { value: "F", label: "Feminino" }
+                                                    ]}
+                                                    placeholder="Selecione..."
+                                                    error={errors.genero?.message}
+                                                    disabled={isSubmitting}
+                                                />
+                                            )}
                                         />
                                     </div>
                                 </div>
@@ -510,11 +613,17 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                                         </label>
                                         <div className="relative group">
                                             <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[var(--accent-primary)] transition-colors pointer-events-none" size={14} />
-                                            <Input
-                                                {...register("telefone")}
-                                                placeholder="+244 9..."
-                                                className={`pl-9 h-11 font-medium bg-slate-50 dark:bg-zinc-800/30 border ${errors.telefone ? 'border-red-500' : 'border-[var(--border-color)] dark:border-zinc-800'}`}
-                                                disabled={isSubmitting}
+                                            <Controller
+                                                name="telefone"
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <PhoneInput
+                                                        {...field}
+                                                        placeholder="9XX XXX XXX"
+                                                        className={`pl-9 h-11 font-medium bg-slate-50 dark:bg-zinc-800/30 border ${errors.telefone ? 'border-red-500' : 'border-[var(--border-color)] dark:border-zinc-800'}`}
+                                                        disabled={isSubmitting}
+                                                    />
+                                                )}
                                             />
                                         </div>
                                     </div>
@@ -736,8 +845,12 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                                                     <Input
                                                         {...register("iban")}
                                                         placeholder="AO06.0000.0000.0000.0000.0"
-                                                        className="pl-9 h-11 font-medium bg-slate-50 dark:bg-zinc-800/30 border border-[var(--border-color)] dark:border-zinc-800"
+                                                        className="pl-9 h-11 font-medium bg-slate-50 dark:bg-zinc-800/30 border border-[var(--border-color)] dark:border-zinc-800 uppercase"
                                                         disabled={isSubmitting}
+                                                        onChange={(e) => {
+                                                            e.target.value = e.target.value.toUpperCase();
+                                                            register("iban").onChange(e);
+                                                        }}
                                                     />
                                                 </div>
                                             </div>
@@ -778,100 +891,95 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                                                     Salário Base *
                                                 </label>
                                             </div>
-                                            <div className="relative group">
-                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-emerald-600">Kz</span>
-                                                <Input
-                                                    {...register("salario_base", {
-                                                        valueAsNumber: true,
-                                                        setValueAs: (value) => Number(value)
-                                                    })}
-                                                    type="number"
-                                                    step="0.01"
-                                                    min="32120"
-                                                    className={`pl-10 h-11 font-semibold bg-white dark:bg-zinc-900/50 border ${errors.salario_base ? 'border-red-500' : 'border-[var(--border-color)] dark:border-zinc-800'}`}
-                                                    disabled={isSubmitting}
-                                                />
-                                            </div>
+                                            <Controller
+                                                name="salario_base"
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <CurrencyInput
+                                                        {...field}
+                                                        error={errors.salario_base?.message}
+                                                        disabled={isSubmitting}
+                                                        placeholder="0,00"
+                                                        className={`bg-white dark:bg-zinc-900/50 ${errors.salario_base ? 'border-red-500' : ''}`}
+                                                    />
+                                                )}
+                                            />
                                         </div>
 
                                         <div className="space-y-2">
                                             <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">
                                                 Subs. Alimentação
                                             </label>
-                                            <div className="relative group">
-                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">Kz</span>
-                                                <Input
-                                                    {...register("subsidio_alimentacao", {
-                                                        valueAsNumber: true,
-                                                        setValueAs: (value) => Number(value)
-                                                    })}
-                                                    type="number"
-                                                    step="0.01"
-                                                    min="0"
-                                                    className="pl-10 h-11 font-medium bg-white dark:bg-zinc-900/50 border border-[var(--border-color)] dark:border-zinc-800"
-                                                    disabled={isSubmitting}
-                                                />
-                                            </div>
+                                            <Controller
+                                                name="subsidio_alimentacao"
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <CurrencyInput
+                                                        {...field}
+                                                        error={errors.subsidio_alimentacao?.message}
+                                                        disabled={isSubmitting}
+                                                        placeholder="0,00"
+                                                        className="bg-white dark:bg-zinc-900/50"
+                                                    />
+                                                )}
+                                            />
                                         </div>
 
                                         <div className="space-y-2">
                                             <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">
                                                 Subs. Transporte
                                             </label>
-                                            <div className="relative group">
-                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">Kz</span>
-                                                <Input
-                                                    {...register("subsidio_transporte", {
-                                                        valueAsNumber: true,
-                                                        setValueAs: (value) => Number(value)
-                                                    })}
-                                                    type="number"
-                                                    step="0.01"
-                                                    min="0"
-                                                    className="pl-10 h-11 font-medium bg-white dark:bg-zinc-900/50 border border-[var(--border-color)] dark:border-zinc-800"
-                                                    disabled={isSubmitting}
-                                                />
-                                            </div>
+                                            <Controller
+                                                name="subsidio_transporte"
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <CurrencyInput
+                                                        {...field}
+                                                        error={errors.subsidio_transporte?.message}
+                                                        disabled={isSubmitting}
+                                                        placeholder="0,00"
+                                                        className="bg-white dark:bg-zinc-900/50"
+                                                    />
+                                                )}
+                                            />
                                         </div>
 
                                         <div className="space-y-2">
                                             <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">
                                                 Subs. Residência
                                             </label>
-                                            <div className="relative group">
-                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">Kz</span>
-                                                <Input
-                                                    {...register("subsidio_residencia", {
-                                                        valueAsNumber: true,
-                                                        setValueAs: (value) => Number(value)
-                                                    })}
-                                                    type="number"
-                                                    step="0.01"
-                                                    min="0"
-                                                    className="pl-10 h-11 font-medium bg-white dark:bg-zinc-900/50 border border-[var(--border-color)] dark:border-zinc-800"
-                                                    disabled={isSubmitting}
-                                                />
-                                            </div>
+                                            <Controller
+                                                name="subsidio_residencia"
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <CurrencyInput
+                                                        {...field}
+                                                        error={errors.subsidio_residencia?.message}
+                                                        disabled={isSubmitting}
+                                                        placeholder="0,00"
+                                                        className="bg-white dark:bg-zinc-900/50"
+                                                    />
+                                                )}
+                                            />
                                         </div>
 
                                         <div className="space-y-2">
                                             <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">
                                                 Outros Subsídios
                                             </label>
-                                            <div className="relative group">
-                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">Kz</span>
-                                                <Input
-                                                    {...register("outros_subsidios", {
-                                                        valueAsNumber: true,
-                                                        setValueAs: (value) => Number(value)
-                                                    })}
-                                                    type="number"
-                                                    step="0.01"
-                                                    min="0"
-                                                    className="pl-10 h-11 font-medium bg-white dark:bg-zinc-900/50 border border-[var(--border-color)] dark:border-zinc-800"
-                                                    disabled={isSubmitting}
-                                                />
-                                            </div>
+                                            <Controller
+                                                name="outros_subsidios"
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <CurrencyInput
+                                                        {...field}
+                                                        error={errors.outros_subsidios?.message}
+                                                        disabled={isSubmitting}
+                                                        placeholder="0,00"
+                                                        className="bg-white dark:bg-zinc-900/50"
+                                                    />
+                                                )}
+                                            />
                                         </div>
                                     </div>
 

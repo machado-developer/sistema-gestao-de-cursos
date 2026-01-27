@@ -6,18 +6,22 @@
 
 :root {
   /* Hostinger Inspired Palette - Light Mode (Default) */
-  --bg-color: #FFFFFF;
-  --surface-color: #F6F7F9;
-  --surface-secondary: #EDEFF2;
-  --surface-hover: #E1E4E9;
+  --bg-color: #F8FAFC;
+  /* Slate 50 */
+  --surface-color: #F1F5F9;
+  /* Slate 100 */
+  --surface-secondary: #E2E8F0;
+  --surface-hover: #CBD5E1;
 
-  --text-primary: #000000;
-  /* Pitch black for high contrast */
-  --text-secondary: #40444B;
-  --text-muted: #6A6F75;
+  --text-primary: #0F172A;
+  /* Slate 900 */
+  --text-secondary: #475569;
+  /* Slate 600 */
+  --text-muted: #64748B;
+  /* Slate 500 */
 
-  --border-color: #E1E4E8;
-  --border-hover: #D1D5DA;
+  --border-color: #E2E8F0;
+  --border-hover: #CBD5E1;
 
   --sidebar-bg: #FFFFFF;
   --card-bg: #FFFFFF;
@@ -43,36 +47,41 @@
 
 .dark {
   /* Ultra Dark Mode */
-  --bg-color: #000000;
-  /* True Black */
-  --surface-color: #0A0A0B;
-  --surface-secondary: #121214;
-  --surface-hover: #1C1C1F;
+  /* Professional Deep Blue Dark Mode */
+  --bg-color: #020617;
+  /* Slate 950 */
+  --surface-color: #0F172A;
+  /* Slate 900 */
+  --surface-secondary: #1E293B;
+  /* Slate 800 */
+  --surface-hover: #334155;
+  /* Slate 700 */
 
-  --text-primary: #FFFFFF;
-  --text-secondary: #A0A0A5;
-  --text-muted: #71717A;
+  --text-primary: #F8FAFC;
+  /* Slate 50 */
+  --text-secondary: #94A3B8;
+  /* Slate 400 */
+  --text-muted: #64748B;
+  /* Slate 500 */
 
-  --border-color: #1C1C1F;
-  --border-hover: #27272A;
+  --border-color: #1E293B;
+  --border-hover: #334155;
 
-  --sidebar-bg: #000000;
-  --card-bg: rgba(10, 10, 11, 0.8);
+  --sidebar-bg: #020617;
+  --card-bg: rgba(15, 23, 42, 0.8);
+  /* Semi-transparent Slate 900 */
 
-  /* Blue in Dark Mode */
-  --accent-primary: #60A5FA;
-  --accent-secondary: #3B82F6;
-  --accent-light: #93C5FD;
-}
+  --accent-primary: #3B82F6;
+  --accent-secondary: #2563EB;
+  --accent-light: #60A5FA;
 
-.light body {
-  background-color: var(--bg-color) !important;
-  color: var(--text-primary) !important;
+  /* Gradient Background for Main */
+  --bg-gradient: radial-gradient(circle at top right, #1e293b 0%, #020617 100%);
 }
 
 @layer base {
   body {
-    @apply font-sans antialiased;
+    @apply font-sans antialiased min-h-screen transition-colors duration-300;
     background-color: var(--bg-color);
     color: var(--text-primary);
     line-height: 1.6;
@@ -147,7 +156,7 @@
 
   /* App Text Color Utility */
   .text-app-text {
-    color: var(--text-color);
+    color: var(--text-primary);
   }
 
   .text-app-secondary {

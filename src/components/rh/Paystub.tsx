@@ -32,7 +32,7 @@ export function Paystub({ data }: PaystubProps) {
     const companyEmail = empresa?.email || "RH@SGRH.CO.AO";
 
     return (
-        <div className="bg-white dark:bg-zinc-900 p-8 rounded-lg border shadow-sm max-w-4xl mx-auto print:border-0 print:shadow-none print:p-0">
+        <div className="bg-white dark:bg-zinc-900 p-8 rounded-lg border shadow-sm max-w-4xl mx-auto print:border-0 print:shadow-none print:p-0 print:m-0" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' } as any}>
             {/* Cabecalho */}
             <div className="flex justify-between items-start border-b-2 border-slate-900 pb-6 mb-6">
                 <div className="flex items-center gap-4">
@@ -49,7 +49,7 @@ export function Paystub({ data }: PaystubProps) {
                     </div>
                 </div>
                 <div className="text-right">
-                    <div className="inline-block bg-slate-900 text-white px-4 py-2 rounded-sm mb-2">
+                    <div className="inline-block bg-blue-600 text-white px-4 py-2 rounded-sm mb-2 shadow-sm">
                         <h1 className="text-sm font-black uppercase tracking-widest">Recibo de Salário</h1>
                     </div>
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Período: {meses[mes]} / {ano}</p>
@@ -73,9 +73,9 @@ export function Paystub({ data }: PaystubProps) {
             </div>
 
             {/* Tabela de Vencimentos */}
-            <div className="border-2 border-slate-900 overflow-hidden rounded-sm mb-8">
+            <div className="border-2 border-slate-900 dark:border-zinc-700 overflow-hidden rounded-sm mb-8">
                 <table className="w-full text-left text-[10px]">
-                    <thead className="bg-slate-900 text-white uppercase font-black tracking-widest">
+                    <thead className="bg-[#1e293b] text-white uppercase font-black tracking-widest">
                         <tr>
                             <th className="py-2 px-4">Descrição dos Rendimentos e Descontos</th>
                             <th className="py-2 px-4 text-center">Quant.</th>
@@ -135,10 +135,10 @@ export function Paystub({ data }: PaystubProps) {
                             <td className="py-3 px-4 text-right font-bold text-rose-600">{formatCurrency(Number(irt_devido))}</td>
                         </tr>
                     </tbody>
-                    <tfoot className="border-t-2 border-slate-900 bg-slate-50 dark:bg-zinc-800 font-black">
+                    <tfoot className="bg-emerald-600 text-white font-black">
                         <tr>
                             <td colSpan={2} className="py-4 px-4 uppercase text-xs tracking-tighter">Líquido a Disponibilizar ▸</td>
-                            <td colSpan={2} className="py-4 px-4 text-right text-lg text-emerald-600 tracking-tighter">
+                            <td colSpan={2} className="py-4 px-4 text-right text-lg tracking-tighter border-l border-emerald-500/30">
                                 {formatCurrency(Number(liquido_receber))}
                             </td>
                         </tr>
@@ -161,10 +161,7 @@ export function Paystub({ data }: PaystubProps) {
             </div>
 
             {/* Acoes de exportacao (Hidden in Print) */}
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-t pt-6 print:hidden">
-                <Button variant="outline" className="gap-2 w-full sm:w-auto" onClick={() => window.print()}>
-                    <Printer size={16} /> Imprimir
-                </Button>
+            <div className="flex flex-col sm:flex-row justify-end items-center gap-4 border-t pt-6 print:hidden">
                 <div className="flex gap-2 w-full sm:w-auto">
                     <Button className="flex-1 sm:flex-none bg-red-600 hover:bg-red-700 gap-2 text-white"
                         onClick={() => DocumentService.generate(DocumentType.PAYROLL_RECEIPT, ExportFormat.PDF, data, { companyInfo: empresa })}>

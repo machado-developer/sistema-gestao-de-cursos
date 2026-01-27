@@ -1,10 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { instrutorSchema } from '@/lib/schemas'
 import { Input } from '@/components/ui/Input'
+import { PhoneInput } from '@/components/ui/PhoneInput'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { User, Mail, Loader2, ArrowLeft } from 'lucide-react'
@@ -26,6 +27,7 @@ export function InstrutorForm({ initialData }: InstrutorFormProps) {
     const {
         register,
         handleSubmit,
+        control,
         formState: { errors }
     } = useForm<InstrutorFormData>({
         resolver: zodResolver(instrutorSchema) as any,
@@ -138,11 +140,17 @@ export function InstrutorForm({ initialData }: InstrutorFormProps) {
                                 {...register('email')}
                                 error={errors.email?.message}
                             />
-                            <Input
-                                label="Telefone"
-                                placeholder="+244 ..."
-                                {...register('telefone')}
-                                error={errors.telefone?.message}
+                            <Controller
+                                name="telefone"
+                                control={control}
+                                render={({ field }) => (
+                                    <PhoneInput
+                                        {...field}
+                                        label="Telefone"
+                                        placeholder="9XX XXX XXX"
+                                        error={errors.telefone?.message}
+                                    />
+                                )}
                             />
                             <div className="space-y-2">
                                 <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Biografia / Observações</label>

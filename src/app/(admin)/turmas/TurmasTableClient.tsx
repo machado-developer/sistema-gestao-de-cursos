@@ -2,8 +2,9 @@
 
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
-import { Calendar, Users, GraduationCap, User } from 'lucide-react'
+import { Calendar, Users, GraduationCap, User, Download } from 'lucide-react'
 import { DataTable, Column } from '@/components/ui/DataTable'
+import { DocumentService, DocumentType, ExportFormat } from '@/services/DocumentService'
 import { TableFilters, FilterConfig } from '@/components/ui/TableFilters'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -48,6 +49,30 @@ export function TurmasTableClient({ turmas, title, subtitle, pagination }: Turma
 
     const onPageChange = (page: number) => {
         router.push(pathname + '?' + createQueryString('page', page.toString()))
+    }
+
+    const handleExport = async () => {
+        const columns = [
+            t('pages.classes.table.code'),
+            t('pages.classes.table.course'),
+            t('pages.classes.table.instructor'),
+            t('pages.classes.table.students'),
+            t('common.status')
+        ]
+
+        const data = turmas.map(t => [
+            t.codigo_turma,
+            t.curso.nome,
+            t.instrutor?.nome || 'N/A',
+            t.matriculas.length.toString(),
+            t.status
+        ])
+
+        await DocumentService.generate(DocumentType.ACADEMIC_PAUTA, ExportFormat.PDF, data, {
+            title: t('pages.classes.title'),
+            columns,
+            filename: 'lista_turmas'
+        })
     }
 
     const filters: FilterConfig[] = [
@@ -176,11 +201,17 @@ export function TurmasTableClient({ turmas, title, subtitle, pagination }: Turma
                     <h1 className="text-3xl font-bold">{title}</h1>
                     <p className="text-zinc-400">{subtitle}</p>
                 </div>
-                <Link href="/turmas/novo">
-                    <Button className="gap-2">
-                        <GraduationCap size={18} /> {t('pages.classes.new')}
+                <div className="flex gap-3">
+                    <Button variant="outline" className="gap-2" onClick={handleExport}>
+                        <Download size={18} />
+                        Exportar PDF
                     </Button>
-                </Link>
+                    <Link href="/turmas/novo">
+                        <Button className="gap-2">
+                            <GraduationCap size={18} /> {t('pages.classes.new')}
+                        </Button>
+                    </Link>
+                </div>
             </div>
 
             <TableFilters filters={filters} />

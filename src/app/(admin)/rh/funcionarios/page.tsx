@@ -26,8 +26,7 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/utils";
 import { Select } from "@/components/ui/Select";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import { DocumentService, DocumentType, ExportFormat } from "@/services/DocumentService";
 
 export default function FuncionariosPage() {
     const [funcionarios, setFuncionarios] = useState<any[]>([]);
@@ -147,23 +146,14 @@ export default function FuncionariosPage() {
         });
     };
 
-    const handleExportPDF = () => {
+    const handleExportPDF = async () => {
         if (filteredData.length === 0) {
             toast.error("Sem dados para exportar");
             return;
         }
 
-        const doc = new jsPDF();
-
-        // Add Header
-        doc.setFontSize(16);
-        doc.text("Lista de Colaboradores", 14, 20);
-        doc.setFontSize(10);
-        doc.text(`Gerado em: ${new Date().toLocaleDateString('pt-AO')}`, 14, 26);
-
-        // Prepare Data
-        const tableColumn = ["Nome", "Identificação", "Departamento", "Cargo", "Tipo Contrato", "Estado"];
-        const tableRows = filteredData.map(f => {
+        const columns = ["Nome", "Identificação", "Departamento", "Cargo", "Tipo Contrato", "Salário Base", "Estado"];
+        const data = filteredData.map(f => {
             const contrato = f.contratos?.[0];
             return [
                 f.nome,
@@ -171,21 +161,16 @@ export default function FuncionariosPage() {
                 f.departamento?.nome || 'N/A',
                 f.cargo?.nome || 'N/A',
                 contrato?.tipo || 'N/A',
+                formatCurrency(contrato?.salario_base || 0),
                 f.status
             ];
         });
 
-        // Generate Table
-        autoTable(doc, {
-            head: [tableColumn],
-            body: tableRows,
-            startY: 32,
-            styles: { fontSize: 8 },
-            headStyles: { fillColor: [41, 128, 185] },
+        await DocumentService.generate(DocumentType.EMPLOYEE_LIST, ExportFormat.PDF, data, {
+            title: "Lista de Colaboradores",
+            columns,
+            filename: `funcionarios_export_${new Date().toISOString().split('T')[0]}`
         });
-
-        const fileName = `funcionarios_export_${new Date().toISOString().split('T')[0]}.pdf`;
-        doc.save(fileName);
 
         toast.success("PDF Gerado", {
             description: "O ficheiro foi descarregado com sucesso."
@@ -362,17 +347,17 @@ export default function FuncionariosPage() {
                 <div className="flex gap-2">
                     <Button
                         variant="outline"
-                        className="h-10 px-4 text-xs font-semibold text-slate-600 border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-800"
+                        className="h-10 px-4 text-xs font-semibold text-slate-600 dark:text-slate-200 border-slate-300 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-zinc-800"
                         onClick={handleExport}
                     >
-                        <Download size={16} className="mr-2" /> CSV
+                        <Download size={16} className="mr-2 text-slate-400 dark:text-slate-300" /> CSV
                     </Button>
                     <Button
                         variant="outline"
-                        className="h-10 px-4 text-xs font-semibold text-slate-600 border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-800"
+                        className="h-10 px-4 text-xs font-semibold text-slate-600 dark:text-slate-200 border-slate-300 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-zinc-800"
                         onClick={handleExportPDF}
                     >
-                        <Download size={16} className="mr-2" /> PDF
+                        <Download size={16} className="mr-2 text-slate-400 dark:text-slate-300" /> PDF
                     </Button>
                     <Link href="/rh/funcionarios/novo">
                         <Button className="bg-[var(--accent-primary)] text-sm font-medium h-10 px-6 text-white shadow-sm hover:opacity-90 transition-opacity">

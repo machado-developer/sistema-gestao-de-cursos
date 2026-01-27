@@ -1,94 +1,35 @@
-import { prisma } from '@/lib/prisma'
+import { DashboardService } from '@/services/dashboardService'
 import { DashboardClient } from './DashboardClient'
 import { serializePrisma } from '@/lib/utils'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
-// Force dynamic rendering to ensure fresh data
 export const dynamic = 'force-dynamic'
-
-async function getDashboardData(userId?: string, isAdmin = false) {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-  // Define global filter based on user role
-  const globalFilter = isAdmin ? {} : { userId };
-
-  const [
-    totalAlunos,
-    turmasAtivas,
-    totalPayments,
-    totalCertificados,
-    recentMatriculas,
-    totalFuncionarios,
-    presencasHoje,
-    pagamentosPendentes,
-    recentActivity
-  ] = await Promise.all([
-    prisma.aluno.count({ where: globalFilter }),
-    prisma.turma.count({ where: { status: 'Em Andamento', ...globalFilter } }),
-    prisma.pagamento.aggregate({
-      where: globalFilter,
-      _sum: { valor: true }
-    }),
-    prisma.certificate.count({ where: globalFilter }),
-    prisma.matricula.findMany({
-      take: 5,
-      where: globalFilter,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        aluno: true,
-        turma: { include: { curso: true } }
-      }
-    }),
-    prisma.funcionario.count({ where: { status: 'ATIVO' } }), // HR data is usually shared or differently protected
-    prisma.presencaHR.count({
-      where: {
-        data: { gte: today },
-        status: 'PRESENTE'
-      }
-    }),
-    prisma.matricula.count({
-      where: {
-        estado_pagamento: { in: ['Pendente', 'Parcial'] },
-        ...globalFilter
-      }
-    }),
-    prisma.auditLog.findMany({
-      take: 5,
-      where: isAdmin ? {} : { userId },
-      orderBy: { createdAt: 'desc' }
-    })
-  ])
-
-  return serializePrisma({
-    totalAlunos,
-    turmasAtivas,
-    totalRevenue: Number(totalPayments._sum.valor || 0),
-    totalCertificados,
-    recentMatriculas,
-    totalFuncionarios,
-    presencasHoje,
-    pagamentosPendentes,
-    recentActivity
-  })
-}
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
-  if (!session?.user?.email) {
-    return <div>Não autorizado</div>;
+  if (!session?.user) {
+    redirect('/auth/signin');
   }
 
-  const user = await prisma.user.findUnique({
-    where: { email: session.user.email }
-  });
+  // Redireciona usuários não-admin para seus dashboards específicos
+  if ((session.user as any).role === 'RH') {
+    redirect('/rh');
+  }
 
-  if (!user) return null;
+  if ((session.user as any).role === 'GESTOR_ACADEMICO') {
+    redirect('/academico');
+  }
 
-  const isAdmin = user.role === 'ADMIN';
-  const data = await getDashboardData(user.id, isAdmin);
+  // Se não for ADMIN e não caiu em nenhum redirecionamento acima, vai para a página padrão
+  // (Ou se quiser ser estrito: if (session.user.role !== 'ADMIN') redirect('/algum-lugar') )
+  if ((session.user as any).role !== 'ADMIN') {
+    // Por excesso de zelo, se for um USER comum, redireciona para acadêmico ou exibe erro
+    redirect('/academico');
+  }
 
-  return <DashboardClient data={data as any} />
+  const data = await DashboardService.getGlobalStats();
+  return <DashboardClient data={serializePrisma(data)} />
 }

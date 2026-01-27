@@ -4,22 +4,31 @@ import { z } from "zod";
 
 
 export const funcionarioSchema = z.object({
-    nome: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
-    bi_documento: z.string().min(10, "Documento de identificação inválido").max(15, "Documento de identificação muito longo"),
-    nif: z.string().min(9, "NIF inválido").max(14, "NIF inválido").optional().or(z.literal("")),
-    email: z.string().email("Email inválido").optional().or(z.literal("")),
-    telefone: z.string().min(9, "Telefone deve ter pelo menos 9 dígitos").optional().or(z.literal("")),
+    nome: z.string().trim().min(3, "O nome deve ter pelo menos 3 caracteres"),
+    bi_documento: z.string().trim().toUpperCase().min(10, "Documento de identificação inválido").max(15, "Documento de identificação muito longo"),
+    nif: z.string().trim().toUpperCase().min(9, "NIF inválido").max(14, "NIF inválido").optional().or(z.literal("")),
+    email: z.string().trim().toLowerCase().email("Email inválido").optional().or(z.literal("")),
+    telefone: z.string().trim().min(9, "Telefone deve ter pelo menos 9 dígitos").optional().or(z.literal("")),
     genero: z.string().optional().or(z.literal("")),
-    data_nascimento: z.string().min(1, "Data de nascimento é obrigatória"),
-    cargoId: z.string().optional().or(z.literal("")), // No Prisma é opcional
-    departamentoId: z.string().optional().or(z.literal("")), // No Prisma é opcional
+    data_nascimento: z.string().min(1, "Data de nascimento é obrigatória").refine((dateString) => {
+        const birthDate = new Date(dateString);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age >= 18;
+    }, "O funcionário deve ter pelo menos 18 anos"),
+    cargoId: z.string().min(1, "Seleccione um cargo").optional().or(z.literal("")),
+    departamentoId: z.string().min(1, "Seleccione um departamento").optional().or(z.literal("")),
     data_admissao: z.string().min(1, "Data de admissão é obrigatória"),
-    numero_inss: z.string().optional().or(z.literal("")),
+    numero_inss: z.string().trim().optional().or(z.literal("")),
     tipo_contrato: z.enum(["DETERMINADO", "INDETERMINADO", "ESTAGIO"]),
     data_fim: z.string().optional().or(z.literal("")),
     renovacao_automatica: z.boolean().default(false),
     salario_base: z.coerce.number().min(32120, "O salário mínimo nacional é 32,120 Kz"),
-    iban: z.string().optional().or(z.literal("")),
+    iban: z.string().trim().toUpperCase().optional().or(z.literal("")),
     subsidio_alimentacao: z.coerce.number().min(0),
     subsidio_transporte: z.coerce.number().min(0),
     subsidio_residencia: z.coerce.number().min(0).default(0),

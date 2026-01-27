@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/Button'
 import { Tabs } from '@/components/ui/Tabs'
 import {
     GraduationCap, User, Calendar, BookOpen, Plus, Edit3, Trash2,
-    CheckCircle2, XCircle, Award, ClipboardList, BarChart3
+    CheckCircle2, XCircle, Award, ClipboardList, BarChart3, Download
 } from 'lucide-react'
+import { DocumentService, DocumentType, ExportFormat } from '@/services/DocumentService'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -111,6 +112,24 @@ export function TurmaAcademicClient({ turma, aulas: initialAulas }: TurmaAcademi
         { id: 'aulas', label: 'Aulas', icon: <BookOpen size={16} /> },
         { id: 'relatorio', label: 'Relatório', icon: <BarChart3 size={16} /> }
     ]
+
+    const handleExportPauta = async () => {
+        const columns = ["Estudante", "BI", "Média Final", "Frequência", "Estado Pagamento", "Status Académico"];
+        const data = turma.matriculas.map((m: any) => [
+            m.aluno.nome_completo,
+            m.aluno.bi_documento,
+            m.media_final?.toFixed(1) || '0.0',
+            `${m.percentual_frequencia?.toFixed(0) || '0'}%`,
+            m.estado_pagamento,
+            m.status_academico
+        ]);
+
+        await DocumentService.generate(DocumentType.ACADEMIC_PAUTA, ExportFormat.PDF, data, {
+            title: `PAUTA ACADÉMICA - ${turma.codigo_turma} - ${turma.curso.nome}`,
+            columns,
+            filename: `pauta_${turma.codigo_turma.replace(/\s+/g, '_')}`
+        });
+    }
 
     return (
         <div className="space-y-8">
@@ -422,7 +441,17 @@ export function TurmaAcademicClient({ turma, aulas: initialAulas }: TurmaAcademi
 
             {activeTab === 'relatorio' && (
                 <Card className="p-6 bg-card-bg border-border">
-                    <h2 className="font-black uppercase tracking-tight text-white mb-6">Relatório Académico</h2>
+                    <div className="flex items-center justify-between mb-6">
+                        <h2 className="font-black uppercase tracking-tight text-white flex items-center gap-2">
+                            Relatório Académico
+                        </h2>
+                        <Button
+                            onClick={handleExportPauta}
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-black uppercase text-[10px] tracking-widest gap-2"
+                        >
+                            <Download size={16} /> Exportar Pauta PDF
+                        </Button>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <Card className="p-6 bg-zinc-900 border-white/10">
                             <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-2">Aprovados</p>

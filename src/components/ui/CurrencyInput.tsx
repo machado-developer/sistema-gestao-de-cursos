@@ -1,87 +1,67 @@
-import { forwardRef, useEffect, useState } from 'react'
+'use client'
+
+import React, { forwardRef, useState, useEffect } from 'react'
 import { Input } from './Input'
 
-interface CurrencyInputProps extends Omit<React.ComponentProps<typeof Input>, 'value' | 'onChange'> {
-    value?: number | string
-    onChange: (value: number) => void
+interface CurrencyInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> {
+    label?: string
+    error?: string
+    value?: number
+    onChange?: (value: number) => void
+    currencySymbol?: string
 }
 
 export const CurrencyInput = forwardRef<HTMLInputElement, CurrencyInputProps>(
-    ({ value, onChange, ...props }, ref) => {
+    ({ label, error, value = 0, onChange, className = '', currencySymbol = 'Kz', onBlur, ...props }, ref) => {
         const [displayValue, setDisplayValue] = useState('')
 
+        const formatATMValue = (val: number) => {
+            return new Intl.NumberFormat('pt-AO', {
+                style: 'decimal',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }).format(val)
+        }
+
         useEffect(() => {
-            if (value !== undefined && value !== null) {
-                // If the user is not typing (active element check logic could go here, but keep it simple first)
-                // For now, just sync if value changes externally or initially
-                // We'll format it as money
-                const numberVal = Number(value)
-                if (!isNaN(numberVal)) {
-                    setDisplayValue(new Intl.NumberFormat('pt-AO', {
-                        style: 'currency',
-                        currency: 'AOA'
-                    }).format(numberVal))
-                }
-            } else {
-                setDisplayValue('')
+            // Only update display value if it's different from the formatted current value
+            // (prevents cursor jumping in some edge cases, although less critical for ATM style)
+            const formatted = formatATMValue(value)
+            if (formatted !== displayValue) {
+                setDisplayValue(formatted)
             }
         }, [value])
 
         const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            const rawValue = e.target.value
+            const rawValue = e.target.value.replace(/\D/g, '')
+            // ATM logic: every digit typed shifts the decimals
+            const numericValue = parseInt(rawValue || '0', 10) / 100
 
-            // Allow only numbers and decimals
-            const numericsOnly = rawValue.replace(/[^0-9,.]/g, '')
-            setDisplayValue(numericsOnly)
-        }
-
-        const handleBlur = () => {
-            // Parse the string to a number
-            // Remove non-numeric characters except comma and dot (handle Kz symbol etc)
-            // AO locale uses comma as decimal separator usually, but let's be robust
-            let numericString = displayValue
-                .replace(/[^\d,.-]/g, '') // Keep digits, comma, dot, minus
-                .replace(/\./g, '')       // Remove thousands separators (dots) - ASSUMPTION: input is PT-AO format (1.000,00)
-                .replace(',', '.')        // Replace decimal comma with dot
-
-            if (numericString.split('.').length > 2) {
-                // Handle cases where multiple dots might appear? 
-                // Simple regex replacement might be risky if aggressive.
-                // Let's rely on standard parsing
-            }
-
-            const parsed = parseFloat(numericString)
-
-            if (!isNaN(parsed)) {
-                onChange(parsed)
-                setDisplayValue(new Intl.NumberFormat('pt-AO', {
-                    style: 'currency',
-                    currency: 'AOA'
-                }).format(parsed))
-            } else {
-                onChange(0)
-                setDisplayValue('')
-            }
-        }
-
-        const handleFocus = () => {
-            // On focus, show raw number for easier editing? 
-            // Or keep it simple. Let's keep formatted but user has to delete valid chars.
-            // Better: strip formatting on focus
-            if (value) {
-                setDisplayValue(value.toString())
+            if (onChange) {
+                onChange(numericValue)
             }
         }
 
         return (
-            <Input
-                {...props}
-                ref={ref}
-                value={displayValue}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                onFocus={handleFocus}
-            />
+            <div className="relative group w-full">
+                {currencySymbol && (
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] font-black text-emerald-600 z-10 uppercase tracking-tighter">
+                        {currencySymbol}
+                    </span>
+                )}
+                <Input
+                    {...props}
+                    ref={ref}
+                    type="text"
+                    value={displayValue}
+                    onChange={handleChange}
+                    onBlur={onBlur}
+                    className={`pl-10 h-11 font-black text-slate-700 dark:text-white ${className}`}
+                    label={label}
+                    error={error}
+                    placeholder="0,00"
+                />
+            </div>
         )
     }
 )

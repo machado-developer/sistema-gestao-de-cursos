@@ -1,6 +1,8 @@
-import { prisma } from '@/lib/prisma'
+import { PrismaClient } from '@prisma/client'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+
+const prismaRaw = new PrismaClient()
 
 export async function createAuditLog({
     acao,
@@ -14,16 +16,16 @@ export async function createAuditLog({
     try {
         const session: any = await getServerSession(authOptions)
 
-        await (prisma as any).auditLog.create({
+        await prismaRaw.auditLog.create({
             data: {
                 userId: session?.user?.id || null,
                 usuario: session?.user?.email || session?.user?.name || 'Sistema',
                 acao,
                 entidade,
-                detalhes: detalhes ? JSON.stringify(detalhes) : null
+                detalhes: detalhes ? (typeof detalhes === 'string' ? detalhes : JSON.stringify(detalhes)) : null
             }
         })
     } catch (error) {
-        console.error('Audit Log Error:', error)
+        console.error('Manual Audit Log Error:', error)
     }
 }

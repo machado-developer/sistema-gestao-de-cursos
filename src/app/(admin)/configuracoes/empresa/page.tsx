@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { PhoneInput } from '@/components/ui/PhoneInput'
 import { Building2, Upload, Save, Loader2 } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { toast } from 'sonner'
@@ -20,7 +21,8 @@ export default function EmpresaPage() {
         telefone: '',
         email: '',
         website: '',
-        nif: ''
+        nif: '',
+        logoUrl: ''
     })
 
     const fetchEmpresa = async () => {
@@ -37,7 +39,8 @@ export default function EmpresaPage() {
                     telefone: data.telefone || '',
                     email: data.email || '',
                     website: data.website || '',
-                    nif: data.nif || ''
+                    nif: data.nif || '',
+                    logoUrl: data.logoUrl || ''
                 })
             }
         } catch (error) {
@@ -70,6 +73,32 @@ export default function EmpresaPage() {
         }
     }
 
+    const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        const formDataUpload = new FormData()
+        formDataUpload.append('file', file)
+
+        setLoading(true)
+        try {
+            const res = await fetch('/api/configuracoes/empresa/logo', {
+                method: 'POST',
+                body: formDataUpload
+            })
+
+            if (!res.ok) throw new Error()
+
+            const data = await res.json()
+            setFormData(prev => ({ ...prev, logoUrl: data.url }))
+            toast.success("Logotipo atualizado com sucesso")
+        } catch (error) {
+            toast.error("Erro ao carregar logotipo")
+        } finally {
+            setLoading(false)
+        }
+    }
+
     if (initialLoading) {
         return (
             <div className="flex items-center justify-center h-64">
@@ -94,11 +123,34 @@ export default function EmpresaPage() {
                     </h2>
 
                     <div className="flex items-center gap-6">
-                        <div className="w-24 h-24 bg-blue-600 flex items-center justify-center text-white font-black text-3xl border border-white/20">
-                            {formData.nome?.substring(0, 2).toUpperCase() || 'GP'}
+                        <div className="w-24 h-24 bg-zinc-800 flex items-center justify-center text-white font-black text-3xl border border-white/20 overflow-hidden relative group">
+                            {formData.logoUrl ? (
+                                <img src={formData.logoUrl} alt="Logo" className="w-full h-full object-contain" />
+                            ) : (
+                                <span>{formData.nome?.substring(0, 2).toUpperCase() || 'GP'}</span>
+                            )}
+                            {loading && (
+                                <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                                    <Loader2 className="w-6 h-6 animate-spin text-blue-500" />
+                                </div>
+                            )}
                         </div>
                         <div className="flex-1">
-                            <Button type="button" variant="secondary" className="gap-2">
+                            <input
+                                type="file"
+                                id="logo-upload"
+                                className="hidden"
+                                accept="image/*"
+                                onChange={handleLogoUpload}
+                                disabled={loading}
+                            />
+                            <Button
+                                type="button"
+                                variant="secondary"
+                                className="gap-2"
+                                onClick={() => document.getElementById('logo-upload')?.click()}
+                                disabled={loading}
+                            >
                                 <Upload size={16} />
                                 {t('settings.company.upload_logo') || "Substituir Logo"}
                             </Button>
@@ -143,11 +195,10 @@ export default function EmpresaPage() {
                             onChange={(e) => setFormData({ ...formData, pais: e.target.value })}
                         />
 
-                        <Input
+                        <PhoneInput
                             label={t('common.phone') || "Telefone de Contacto"}
-                            type="tel"
                             value={formData.telefone || ""}
-                            onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+                            onChange={(val) => setFormData({ ...formData, telefone: val })}
                         />
 
                         <Input

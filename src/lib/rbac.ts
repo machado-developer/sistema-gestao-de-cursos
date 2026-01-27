@@ -8,23 +8,23 @@ export interface Permission {
 export const ROLE_PERMISSIONS: Record<Role, string[]> = {
     ADMIN: ['*'], // Acesso total
     GESTOR_ACADEMICO: [
-        'dashboard.view',
+
         'academic.view', 'academic.create', 'academic.edit',
         'enrollment.view', 'enrollment.create',
         'certificates.view', 'certificates.create'
     ],
     FINANCEIRO: [
-        'dashboard.view',
+
         'finance.view', 'finance.create', 'finance.edit',
         'payments.view'
     ],
     RH: [
-        'dashboard.view',
+
         'rh.view', 'rh.create', 'rh.edit', 'rh.process',
         'rh.reports', 'rh.vacation'
     ],
     USER: [
-        'dashboard.view',
+
         'profile.self'
     ]
 };

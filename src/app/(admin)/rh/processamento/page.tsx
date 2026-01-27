@@ -20,7 +20,8 @@ import {
     User,
     FileSpreadsheet,
     Calculator,
-    Banknote
+    Banknote,
+    Eye
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/utils";
@@ -179,48 +180,43 @@ export default function ProcessamentoPage() {
             key: "acoes",
             header: "",
             render: (item) => (
-                <div className="flex justify-end gap-1">
+                <div className="flex justify-end gap-2 pr-2">
                     <Link href={`/rh/processamento/recibo/${item.id}`}>
-                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0" title="Ver Recibo">
-                            <Receipt size={14} className="text-blue-500" />
-                        </Button>
-                    </Link>
-                    <Link href={`/rh/processamento/recibo/${item.id}?print=true`}>
-                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0" title="Imprimir">
-                            <Printer size={14} className="text-slate-400" />
+                        <Button variant="outline" size="sm" className="h-10 w-10 p-0 bg-blue-50/50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 shadow-sm" title="Ver Recibo">
+                            <Eye size={22} className="text-blue-600 dark:text-blue-400" />
                         </Button>
                     </Link>
                 </div>
             ),
-            className: "w-20"
+            className: "w-28"
         }
     ];
 
     return (
-        <div className="p-1 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
             {/* Header */}
-            <div className="border-b-2 border-slate-200 dark:border-zinc-800 pb-2 flex justify-between items-end">
+            <div className="border-b-2 border-[var(--border-color)] pb-4 flex justify-between items-end">
                 <div>
-                    <h1 className="text-lg font-bold text-[var(--text-secondary)] uppercase tracking-tighter text-blue-600">
+                    <h1 className="text-xl font-black text-app-text tracking-tighter uppercase leading-none mb-1">
                         Gestão de Processamento Salarial
                     </h1>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Calculo Integral • Legislação Angolana 🇦🇴</p>
+                    <p className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest leading-none">Calculo Integral • Legislação Angolana 🇦🇴</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="flex gap-1">
                         <select
                             value={mes}
                             onChange={(e) => setMes(Number(e.target.value))}
-                            className="h-9 px-3 bg-white dark:bg-zinc-900 border-2 border-slate-200 dark:border-zinc-800 rounded-md text-[10px] font-black uppercase tracking-widest"
+                            className="h-9 px-3 bg-[var(--surface-color)] border-2 border-[var(--border-color)] rounded-md text-[10px] font-black uppercase tracking-widest text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            {meses.map(m => <option key={m.value} value={m.value}>{m.label.toUpperCase()}</option>)}
+                            {meses.map(m => <option key={m.value} value={m.value} className="bg-[var(--card-bg)] text-[var(--text-primary)]">{m.label.toUpperCase()}</option>)}
                         </select>
                         <select
                             value={ano}
                             onChange={(e) => setAno(Number(e.target.value))}
-                            className="h-9 px-3 bg-white dark:bg-zinc-900 border-2 border-slate-200 dark:border-zinc-800 rounded-md text-[10px] font-black uppercase tracking-widest"
+                            className="h-9 px-3 bg-[var(--surface-color)] border-2 border-[var(--border-color)] rounded-md text-[10px] font-black uppercase tracking-widest text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            {anos.map(a => <option key={a} value={a}>{a}</option>)}
+                            {anos.map(a => <option key={a} value={a} className="bg-[var(--card-bg)] text-[var(--text-primary)]">{a}</option>)}
                         </select>
                     </div>
 
@@ -268,13 +264,13 @@ export default function ProcessamentoPage() {
             </div>
 
             {/* Processed List */}
-            <Card className="border border-slate-200 dark:border-zinc-800 shadow-sm overflow-hidden">
-                <div className="px-6 py-4 border-b border-slate-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex justify-between items-center">
+            <Card className="border border-[var(--border-color)] shadow-sm overflow-hidden">
+                <div className="px-6 py-4 border-b border-[var(--border-color)] bg-[var(--surface-color)] flex justify-between items-center">
                     <div className="flex items-center gap-2">
                         <FileText size={16} className="text-blue-600" />
-                        <h2 className="text-[10px] font-black uppercase tracking-widest">Detalhamento da Folha Salarial</h2>
+                        <h2 className="text-[10px] font-black uppercase tracking-widest text-app-text">Detalhamento da Folha Salarial</h2>
                     </div>
-                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Período: {meses.find(m => m.value === mes)?.label} / {ano}</p>
+                    <p className="text-[9px] font-bold text-[var(--text-muted)] uppercase tracking-widest">Período: {meses.find(m => m.value === mes)?.label} / {ano}</p>
                 </div>
                 <DataTable
                     columns={columns}

@@ -7,6 +7,7 @@ import { cargoSchema } from '@/lib/schemas'
 import { Card } from "@/components/ui/Card"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
+import { CurrencyInput } from "@/components/ui/CurrencyInput"
 import { DataTable, Column } from "@/components/ui/DataTable"
 import { StatCard } from "@/components/dashboard/StatCard"
 import { Plus, Briefcase, Trash2, Edit2, Wallet, TrendingUp, ShieldCheck, Search, Loader2, CheckCircle2 } from "lucide-react"
@@ -333,16 +334,19 @@ export default function CargosPage() {
 
                             <div className="space-y-1.5">
                                 <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">Salário de Referência (Kz)</label>
-                                <div className="relative">
-                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-emerald-600">Kz</span>
-                                    <Input
-                                        type="number"
-                                        {...register("salario_base_sugerido")}
-                                        placeholder="0.00"
-                                        className={`pl-10 bg-slate-50 dark:bg-zinc-800/50 border-[var(--border-color)] dark:border-zinc-800 font-medium h-11 text-emerald-600 ${errors.salario_base_sugerido ? 'border-red-500 ring-red-500' : ''}`}
-                                    />
-                                </div>
-                                {errors.salario_base_sugerido && <p className="text-xs font-medium text-red-500">{errors.salario_base_sugerido.message}</p>}
+                                <Controller
+                                    name="salario_base_sugerido"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <CurrencyInput
+                                            {...field}
+                                            error={errors.salario_base_sugerido?.message}
+                                            disabled={isSubmitting}
+                                            placeholder="0,00"
+                                            className={`bg-slate-50 dark:bg-zinc-800/50 border-[var(--border-color)] dark:border-zinc-800 font-medium h-11 text-emerald-600 ${errors.salario_base_sugerido ? 'border-red-500 ring-red-500' : ''}`}
+                                        />
+                                    )}
+                                />
                             </div>
 
                             <div className="flex gap-3 pt-4">

@@ -140,22 +140,24 @@ model Pagamento {
 }
 
 model User {
-    id           String        @id @default(uuid())
-    name         String
-    email        String        @unique
-    password     String
-    role         String        @default("USER")
-    language     String        @default("pt") // "pt", "en"
-    theme        String        @default("dark") // "dark", "light"
-    createdAt    DateTime      @default(now())
-    updatedAt    DateTime      @updatedAt
-    funcionario  Funcionario?
-    alunos       Aluno[]       @relation("UserAlunos")
-    matriculas   Matricula[]   @relation("UserMatriculas")
-    pagamentos   Pagamento[]   @relation("UserPagamentos")
-    certificados Certificate[] @relation("UserCertificados")
-    turmas       Turma[]       @relation("UserTurmas")
-    cursos       Curso[]       @relation("UserCursos")
+    id                String        @id @default(uuid())
+    name              String
+    email             String        @unique
+    password          String
+    role              String        @default("USER")
+    language          String        @default("pt") // "pt", "en"
+    theme             String        @default("dark") // "dark", "light"
+    resetToken        String?       @unique
+    resetTokenExpires DateTime?
+    createdAt         DateTime      @default(now())
+    updatedAt         DateTime      @updatedAt
+    funcionario       Funcionario?
+    alunos            Aluno[]       @relation("UserAlunos")
+    matriculas        Matricula[]   @relation("UserMatriculas")
+    pagamentos        Pagamento[]   @relation("UserPagamentos")
+    certificados      Certificate[] @relation("UserCertificados")
+    turmas            Turma[]       @relation("UserTurmas")
+    cursos            Curso[]       @relation("UserCursos")
 
     @@map("users")
 }

@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { matriculaSchema } from '@/lib/schemas'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { CurrencyInput } from '@/components/ui/CurrencyInput'
 import { Select } from '@/components/ui/Select'
 import { Alert } from '@/components/ui/Alert'
 import { ArrowLeft, Loader2, BookOpen, GraduationCap, DollarSign, UserCheck } from 'lucide-react'
@@ -163,20 +164,30 @@ export function MatriculaForm() {
                                 Condições Financeiras
                             </div>
 
-                            <Input
-                                label="Valor Total da Formação (AOA)"
-                                type="number"
-                                {...register('valor_total', { valueAsNumber: true })}
-                                error={errors.valor_total?.message}
-                                placeholder="0.00"
+                            <Controller
+                                name="valor_total"
+                                control={control}
+                                render={({ field }) => (
+                                    <CurrencyInput
+                                        {...field}
+                                        label="Valor Total da Formação (AOA)"
+                                        error={errors.valor_total?.message}
+                                        placeholder="0,00"
+                                    />
+                                )}
                             />
 
-                            <Input
-                                label="Desconto Aplicado (AOA)"
-                                type="number"
-                                {...register('desconto', { valueAsNumber: true })}
-                                error={errors.desconto?.message}
-                                placeholder="0.00"
+                            <Controller
+                                name="desconto"
+                                control={control}
+                                render={({ field }) => (
+                                    <CurrencyInput
+                                        {...field}
+                                        label="Desconto Aplicado (AOA)"
+                                        error={errors.desconto?.message}
+                                        placeholder="0,00"
+                                    />
+                                )}
                             />
 
                             <div className="p-4 rounded-xl bg-blue-500/5 border border-white/5">

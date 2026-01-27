@@ -8,32 +8,10 @@ import Logo from '@/assets/logo.png'
 import Logo2 from '@/assets/logo2.png'
 import {
     LayoutDashboard,
-    Users,
-    BookOpen,
-    School,
-    ClipboardList,
-    Wallet,
     LogOut,
-    User as UserIcon,
     ChevronDown,
     ChevronRight,
-    Award,
     X,
-    Languages,
-    Sun,
-    Moon,
-    Settings,
-    History,
-    FileText,
-    Umbrella,
-    UserCog,
-    Briefcase,
-    Building2,
-    Network,
-    Calculator,
-    Banknote,
-    FileSignature,
-    BarChart3
 } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useTheme } from '@/components/ThemeProvider'
@@ -46,6 +24,8 @@ interface SidebarProps {
 
 import { MODULE_PERMISSION_MAP, hasPermission } from '@/lib/rbac'
 
+import { getNavigation } from '@/config/navigation'
+
 export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     const pathname = usePathname()
     const { data: session } = useSession()
@@ -54,6 +34,8 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     const { theme, toggleTheme } = useTheme()
     const [openSections, setOpenSections] = useState<string[]>([])
     const [mounted, setMounted] = useState(false)
+
+    const modules = getNavigation(t)
 
     useEffect(() => {
         setMounted(true)
@@ -64,113 +46,6 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             prev.includes(name) ? prev.filter(s => s !== name) : [...prev, name]
         )
     }
-
-    const modules = [
-        {
-            id: 'dashboard',
-            name: 'Página Inicial',
-            icon: LayoutDashboard,
-            submodules: [
-                {
-                    id: 'geral',
-                    name: 'Geral',
-                    items: [
-                        { name: t('sidebar.dashboard'), href: '/', icon: LayoutDashboard },
-                    ]
-                }
-            ]
-        },
-        {
-            id: 'gestao_cursos',
-            name: 'Gestão de Cursos',
-            icon: BookOpen,
-            submodules: [
-                {
-                    id: 'academico',
-                    name: 'Académico',
-                    items: [
-                        { name: t('sidebar.students'), href: '/alunos', icon: Users },
-                        { name: t('sidebar.courses'), href: '/cursos', icon: BookOpen },
-                        { name: t('sidebar.classes'), href: '/turmas', icon: School },
-                        { name: t('sidebar.instructors'), href: '/instrutores', icon: UserIcon },
-                    ]
-                },
-                {
-                    id: 'administrativo',
-                    name: 'Administrativo',
-                    items: [
-                        { name: t('sidebar.enrollments'), href: '/matriculas', icon: ClipboardList },
-                        { name: t('sidebar.certificates'), href: '/certificados', icon: Award },
-                    ]
-                }
-            ]
-        },
-        {
-            id: 'financeiro_mod',
-            name: 'Financeiro',
-            icon: Wallet,
-            submodules: [
-                {
-                    id: 'financeiro_sub',
-                    name: 'Controlo Financeiro',
-                    items: [
-                        { name: t('sidebar.finance'), href: '/financeiro', icon: Wallet },
-                    ]
-                }
-            ]
-        },
-        {
-            id: 'rh_mod',
-            name: 'Capital Humano',
-            icon: UserCog,
-            submodules: [
-                {
-                    id: 'rh_gestao',
-                    name: 'Gestão de Pessoal',
-                    items: [
-                        { name: 'Dashboard RH', href: '/rh', icon: LayoutDashboard },
-                        { name: 'Funcionários', href: '/rh/funcionarios', icon: Users },
-                        { name: 'Gestão de Contratos', href: '/rh/contratos', icon: FileSignature },
-                        { name: 'Presenças', href: '/rh/presencas', icon: ClipboardList },
-                        { name: 'Processamento', href: '/rh/processamento', icon: Calculator },
-                        { name: 'Relatórios Legais', href: '/rh/relatorios', icon: BarChart3 },
-                        { name: 'Férias e Licenças', href: '/rh/ferias', icon: Umbrella },
-                    ]
-                },
-                {
-                    id: 'rh_config',
-                    name: 'Estrutura Orgânica',
-                    items: [
-                        { name: 'Organograma', href: '/rh/organograma', icon: Network },
-                        { name: 'Departamentos', href: '/rh/departamentos', icon: Building2 },
-                        { name: 'Cargos e Funções', href: '/rh/cargos', icon: Briefcase },
-                    ]
-                }
-            ]
-        },
-        {
-            id: 'sistema',
-            name: 'Sistema',
-            icon: Settings,
-            submodules: [
-                {
-                    id: 'config_sub',
-                    name: 'Configurações',
-                    items: [
-                        { name: 'Utilizadores', href: '/configuracoes/utilizadores', icon: UserCog },
-                        { name: t('sidebar.settings'), href: '/configuracoes', icon: Settings },
-                    ]
-                },
-                {
-                    id: 'auditoria',
-                    name: 'Segurança',
-                    items: [
-                        { name: t('sidebar.audit'), href: '/audit', icon: History },
-                    ]
-                }
-            ]
-        }
-    ]
 
     const filteredModules = modules.filter(module => {
         const requiredPermission = MODULE_PERMISSION_MAP[module.id]
@@ -220,7 +95,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                         />
                     </div>
                     {onClose && (
-                        <button onClick={onClose} className="lg:hidden p-2 text-zinc-900 hover:text-white">
+                        <button onClick={onClose} className="lg:hidden p-2 text-[var(--text-primary)] hover:text-[var(--accent-primary)]">
                             <X size={20} />
                         </button>
                     )}
@@ -240,7 +115,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                     onClick={() => toggleSection(module.id)}
                                     className={`flex items-center justify-between p-2 rounded-md group transition-all border-none outline-none ring-0 ${isModuleOpen || hasActiveSub
                                         ? 'bg-[var(--surface-color)] text-[var(--accent-primary)]'
-                                        : 'text-[var(--text-primary)] hover:text-[var(--accent-primary)] dark:text-white dark:hover:text-white hover:bg-[var(--surface-color)]'
+                                        : 'text-[var(--text-primary)] hover:text-[var(--accent-primary)] hover:bg-[var(--surface-color)]'
                                         }`}
                                 >
                                     <div className="flex items-center gap-3">
@@ -256,7 +131,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                 </button>
 
                                 <div className={`overflow-hidden transition-all duration-300 ${isModuleOpen ? 'max-h-[1000px] mt-1' : 'max-h-0'}`}>
-                                    <div className="flex flex-col gap-1.5 border-l-2 border-slate-100 dark:border-zinc-800/50 ml-6 py-1">
+                                    <div className="flex flex-col gap-1.5 border-l-2 border-[var(--border-color)] ml-6 py-1">
                                         {module.submodules.map(sub => {
                                             const isSubOpen = openSections.includes(sub.id)
                                             const hasActiveItem = sub.items.some(item => pathname === item.href)
@@ -265,7 +140,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                                 <div key={sub.id} className="flex flex-col px-2">
                                                     <button
                                                         onClick={() => toggleSection(sub.id)}
-                                                        className={`flex items-center justify-between py-1.5 px-3 rounded text-[12px] font-medium transition-all border-none outline-none ring-0 ${hasActiveItem ? 'text-[var(--accent-primary)]' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200'
+                                                        className={`flex items-center justify-between py-1.5 px-3 rounded text-[12px] font-medium transition-all border-none outline-none ring-0 ${hasActiveItem ? 'text-[var(--accent-primary)]' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
                                                             }`}
                                                     >
                                                         {sub.name}
@@ -286,7 +161,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                                                         href={item.href}
                                                                         className={`py-2 px-3 rounded-md transition-all text-[13px] font-medium flex items-center gap-3 ${isActive
                                                                             ? 'bg-[var(--surface-color)] text-[var(--accent-primary)]'
-                                                                            : 'text-[var(--text-secondary)] dark:text-zinc-300 hover:text-[var(--accent-primary)] hover:bg-[var(--surface-hover)]'
+                                                                            : 'text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--surface-hover)]'
                                                                             }`}
                                                                     >
                                                                         <Icon size={18} strokeWidth={1.5} />

@@ -41,7 +41,7 @@ export class RHService {
         if (!funcionario) return null;
 
         // Achatar dados do contrato vigente para o formulário
-        const contratoVigente = funcionario.contratos.find(c => c.status === "VIGENTE") || funcionario.contratos[0];
+        const contratoVigente = funcionario.contratos.find((c: { status: string; }) => c.status === "VIGENTE") || funcionario.contratos[0];
 
         return {
             ...funcionario,
@@ -87,7 +87,7 @@ export class RHService {
             ...resto
         } = dados;
 
-        return await prisma.$transaction(async (tx) => {
+        return await prisma.$transaction(async (tx: { funcionario: { create: (arg0: { data: { nome: any; bi_documento: any; email: any; telefone: any; nif: any; iban: any; numero_inss: any; genero: any; data_nascimento: Date | null; cargo: { connect: { id: any; }; } | undefined; departamento: { connect: { id: any; }; } | undefined; data_admissao: Date; status: string; hora_entrada: any; hora_saida: any; dias_trabalho: any; }; }) => any; }; contrato: { create: (arg0: { data: { funcionarioId: any; tipo: any; data_inicio: Date; data_fim: Date | null; renovacao_automatica: boolean; status: string; salario_base: number; subsidio_alimentacao: number; subsidio_transporte: number; subsidio_residencia: number; outros_subsidios: number; }; }) => any; }; }) => {
             const dataAdmissao = new Date(data_admissao);
 
             const funcionario = await tx.funcionario.create({
@@ -101,8 +101,8 @@ export class RHService {
                     numero_inss: numero_inss || null,
                     genero: genero || null,
                     data_nascimento: data_nascimento ? new Date(data_nascimento) : null,
-                    cargoId,
-                    departamentoId,
+                    cargo: cargoId ? { connect: { id: cargoId } } : undefined,
+                    departamento: departamentoId ? { connect: { id: departamentoId } } : undefined,
                     data_admissao: dataAdmissao,
                     status: "ATIVO",
                     hora_entrada: hora_entrada || null,
@@ -158,7 +158,7 @@ export class RHService {
             dias_trabalho
         } = dados;
 
-        return await prisma.$transaction(async (tx) => {
+        return await prisma.$transaction(async (tx: { funcionario: { update: (arg0: { where: { id: string; }; data: { nome: any; bi_documento: any; email: any; telefone: any; nif: any; iban: any; numero_inss: any; genero: any; data_nascimento: Date | null; cargo: { connect: { id: any; }; disconnect?: undefined; } | { disconnect: boolean; connect?: undefined; }; departamento: { connect: { id: any; }; disconnect?: undefined; } | { disconnect: boolean; connect?: undefined; }; data_admissao: Date; hora_entrada: any; hora_saida: any; dias_trabalho: any; }; }) => any; }; contrato: { findFirst: (arg0: { where: { funcionarioId: string; status: string; }; }) => any; update: (arg0: { where: { id: any; }; data: { tipo: any; data_fim: Date | null; renovacao_automatica: boolean; salario_base: number; subsidio_alimentacao: number; subsidio_transporte: number; subsidio_residencia: number; outros_subsidios: number; }; }) => any; create: (arg0: { data: { funcionarioId: string; tipo: any; data_inicio: Date; data_fim: Date | null; renovacao_automatica: boolean; status: string; salario_base: number; subsidio_alimentacao: number; subsidio_transporte: number; subsidio_residencia: number; outros_subsidios: number; }; }) => any; }; }) => {
             const funcionario = await tx.funcionario.update({
                 where: { id },
                 data: {
@@ -171,8 +171,8 @@ export class RHService {
                     numero_inss: numero_inss || null,
                     genero: genero || null,
                     data_nascimento: data_nascimento ? new Date(data_nascimento) : null,
-                    cargoId,
-                    departamentoId,
+                    cargo: cargoId ? { connect: { id: cargoId } } : { disconnect: true },
+                    departamento: departamentoId ? { connect: { id: departamentoId } } : { disconnect: true },
                     data_admissao: new Date(data_admissao),
                     hora_entrada: hora_entrada || null,
                     hora_saida: hora_saida || null,
@@ -304,7 +304,7 @@ export class RHService {
     }
 
     static async renovarContrato(id: string) {
-        return await prisma.$transaction(async (tx) => {
+        return await prisma.$transaction(async (tx: { contrato: { findUnique: (arg0: { where: { id: string; }; include: { funcionario: boolean; }; }) => any; update: (arg0: { where: { id: string; }; data: { status: string; }; }) => any; create: (arg0: { data: { funcionarioId: any; tipo: any; data_inicio: any; data_fim: Date | null; renovacao_automatica: any; status: string; salario_base: any; subsidio_alimentacao: any; subsidio_transporte: any; subsidio_residencia: any; outros_subsidios: any; }; }) => any; }; }) => {
             const antigo = await tx.contrato.findUnique({
                 where: { id },
                 include: { funcionario: true }
@@ -397,7 +397,7 @@ export class RHService {
             let totalNoturnas = 0;
             let totalFaltas = 0;
 
-            func.presencas.forEach(p => {
+            func.presencas.forEach((p: { horas_extras_50: any; horas_extras_100: any; horas_noturnas: any; status: string; }) => {
                 // Categorizar extras baseadas no tipo de dia (Regra LGT 23)
                 // Se o campo horas_extras_100 for usado, assumimos descanso (ou feriado)
                 totalHENormais += p.horas_extras_50 || 0;
@@ -498,16 +498,19 @@ export class RHService {
             }
         });
 
-        const totalLiquid = folhas.reduce((acc, f) => acc + Number(f.liquido_receber), 0);
-        const totalIRT = folhas.reduce((acc, f) => acc + Number(f.irt_devido), 0);
-        const totalINSS_T = folhas.reduce((acc, f) => acc + Number(f.inss_trabalhador), 0);
-        const totalINSS_E = folhas.reduce((acc, f) => acc + Number(f.inss_empresa), 0);
+        const totalBase = folhas.reduce((acc: number, f: { salario_base: any; }) => acc + Number(f.salario_base), 0);
+        const totalLiquid = folhas.reduce((acc: number, f: { liquido_receber: any; }) => acc + Number(f.liquido_receber), 0);
+        const totalIRT = folhas.reduce((acc: number, f: { irt_devido: any; }) => acc + Number(f.irt_devido), 0);
+        const totalINSS_T = folhas.reduce((acc: number, f: { inss_trabalhador: any; }) => acc + Number(f.inss_trabalhador), 0);
+        const totalINSS_E = folhas.reduce((acc: number, f: { inss_empresa: any; }) => acc + Number(f.inss_empresa), 0);
 
         return {
             folhas,
             resumo: {
+                totalBase,
                 totalLiquid,
                 totalIRT,
+                totalINSS: totalINSS_T, // Para compatibilidade com o DocumentService
                 totalINSS_T,
                 totalINSS_E,
                 totalEncargosSociais: totalINSS_T + totalINSS_E,
@@ -654,15 +657,22 @@ export class RHService {
             include: { funcionario: { select: { nome: true, numero_inss: true, bi_documento: true } } }
         });
 
-        const linhas = folhas.map(f => ({
+        const safeNumber = (val: any) => {
+            if (val === null || val === undefined) return 0;
+            if (typeof val === 'object' && typeof val.toNumber === 'function') return val.toNumber();
+            const n = Number(val);
+            return isNaN(n) ? 0 : n;
+        };
+
+        const linhas = folhas.map((f: any) => ({
             funcionario: f.funcionario,
-            base_incidencia: Number(f.base_inss),
-            trabalhador_3: Number(f.inss_trabalhador),
-            empresa_8: Number(f.inss_empresa),
-            total_11: Number(f.inss_trabalhador) + Number(f.inss_empresa)
+            base_incidencia: safeNumber(f.base_inss),
+            trabalhador_3: safeNumber(f.inss_trabalhador),
+            empresa_8: safeNumber(f.inss_empresa),
+            total_11: safeNumber(f.inss_trabalhador) + safeNumber(f.inss_empresa)
         }));
 
-        const totais = linhas.reduce((acc, curr) => ({
+        const totais = linhas.reduce((acc: any, curr: any) => ({
             base: acc.base + curr.base_incidencia,
             trabalhador: acc.trabalhador + curr.trabalhador_3,
             empresa: acc.empresa + curr.empresa_8,
@@ -678,14 +688,21 @@ export class RHService {
             include: { funcionario: { select: { nome: true, nif: true, bi_documento: true } } }
         });
 
-        const linhas = folhas.map(f => ({
+        const safeNumber = (val: any) => {
+            if (val === null || val === undefined) return 0;
+            if (typeof val === 'object' && typeof val.toNumber === 'function') return val.toNumber();
+            const n = Number(val);
+            return isNaN(n) ? 0 : n;
+        };
+
+        const linhas = folhas.map((f: any) => ({
             funcionario: f.funcionario,
-            rendimento_bruto: Number(f.salario_base) + Number(f.total_subsidios_tributaveis) + Number(f.total_horas_extras),
-            materia_colectavel: Number(f.base_irt),
-            irt_retido: Number(f.irt_devido)
+            rendimento_bruto: safeNumber(f.salario_base) + safeNumber(f.total_subsidios_tributaveis) + safeNumber(f.total_horas_extras),
+            materia_colectavel: safeNumber(f.base_irt),
+            irt_retido: safeNumber(f.irt_devido)
         }));
 
-        const totalIRT = linhas.reduce((acc, curr) => acc + curr.irt_retido, 0);
+        const totalIRT = linhas.reduce((acc: any, curr: any) => acc + curr.irt_retido, 0);
 
         return { linhas, totalIRT };
     }

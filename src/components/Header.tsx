@@ -6,6 +6,7 @@ import { useTheme } from './ThemeProvider'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 import Image from 'next/image'
 import Logo from '@/assets/logo2.png'
 
@@ -46,9 +47,9 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
     }
 
     return (
-        <header className="fixed top-0 left-0 right-0 h-16 bg-[var(--sidebar-bg)] border-b border-white/10 z-50 flex">
+        <header className="fixed top-0 left-0 right-0 h-16 bg-[var(--sidebar-bg)] border-b border-[var(--border-color)] z-50 flex">
             {/* Sidebar Section - Fixed width matching sidebar */}
-            <div className={`flex items-center px-6 border-r border-white/10 transition-all duration-300 ${isMenuOpen ? 'w-72' : 'w- px-0 overflow-hidden'
+            <div className={`flex items-center px-6 border-r border-[var(--border-color)] transition-all duration-300 ${isMenuOpen ? 'w-72' : 'w- px-0 overflow-hidden'
                 }`}>
                 <Image
                     src={Logo}
@@ -66,7 +67,7 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
                 {/* Menu Toggle - Always visible */}
                 <button
                     onClick={onMenuToggle}
-                    className="p-2 hover:bg-white/5 transition-colors text-zinc-400 dark:text-zinc-300 hover:text-white"
+                    className="p-2 hover:bg-[var(--surface-hover)] transition-colors text-[var(--text-secondary)] hover:text-[var(--accent-primary)]"
                     aria-label={mounted ? t('header.toggle_menu') : 'Toggle Menu'}
                 >
                     {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -80,24 +81,24 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
                     {/* Theme Toggle */}
                     <button
                         onClick={toggleTheme}
-                        className="p-2 hover:bg-white/5 transition-colors text-zinc-400 dark:text-zinc-300 hover:text-white"
+                        className="p-2 hover:bg-[var(--surface-hover)] transition-colors text-[var(--text-secondary)] hover:text-[var(--accent-primary)]"
                         aria-label={mounted ? t('header.toggle_theme') : 'Toggle Theme'}
                     >
                         {mounted && theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
                     </button>
 
                     {/* Language Selector */}
-                    <div className="flex items-center gap-1 p-1 bg-white/5 border border-white/10">
+                    <div className="flex items-center gap-1 p-1 bg-[var(--surface-color)] border border-[var(--border-color)]">
                         <button
                             onClick={() => handleLanguageChange('pt')}
-                            className={`px-3 py-1 text-[10px] font-black uppercase transition-all ${mounted && language === 'pt' ? 'bg-blue-600 text-white' : 'text-zinc-500 hover:text-zinc-300'
+                            className={`px-3 py-1 text-[10px] font-black uppercase transition-all ${mounted && language === 'pt' ? 'bg-blue-600 text-white' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
                                 }`}
                         >
                             PT
                         </button>
                         <button
                             onClick={() => handleLanguageChange('en')}
-                            className={`px-3 py-1 text-[10px] font-black uppercase transition-all ${mounted && language === 'en' ? 'bg-blue-600 text-white' : 'text-zinc-500 hover:text-zinc-300'
+                            className={`px-3 py-1 text-[10px] font-black uppercase transition-all ${mounted && language === 'en' ? 'bg-blue-600 text-white' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
                                 }`}
                         >
                             EN
@@ -105,23 +106,37 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
                     </div>
 
                     {/* Divider */}
-                    <div className="w-px h-6 bg-white/10" />
+                    <div className="w-px h-6 bg-[var(--border-color)]" />
 
                     {/* User Menu */}
                     {session?.user && (
                         <div className="relative">
                             <button
                                 onClick={() => setShowUserMenu(!showUserMenu)}
-                                className="flex items-center gap-3 p-2 hover:bg-white/5 transition-colors"
+                                className="flex items-center gap-3 p-2 hover:bg-[var(--surface-hover)] transition-colors"
                             >
-                                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center text-white font-black border border-white/20 rounded-full">
-                                    <User size={20} />
+                                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center text-white text-xs font-black border border-white/20 rounded-full overflow-hidden">
+                                    {(session.user as any).image ? (
+                                        <Image
+                                            src={(session.user as any).image}
+                                            alt={session.user.name || ''}
+                                            width={32}
+                                            height={32}
+                                            className="object-cover w-full h-full"
+                                        />
+                                    ) : session.user.name ? (
+                                        session.user.name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase()
+                                    ) : (
+                                        <User size={18} />
+                                    )}
                                 </div>
                                 <div className="hidden md:block text-left">
-                                    <p className="text-sm font-bold text-white">{session.user.name}</p>
-                                    <p className="text-[10px] text-zinc-500 dark:text-zinc-400 uppercase font-bold">{mounted ? t('header.administrator') : 'Admin'}</p>
+                                    <p className="text-sm font-bold text-[var(--text-primary)]">{session.user.name}</p>
+                                    <p className="text-[10px] text-[var(--text-muted)] uppercase font-bold">
+                                        {(session.user as any).role === 'ADMIN' ? (mounted ? t('header.administrator') : 'Admin') : ((session.user as any).role || 'User')}
+                                    </p>
                                 </div>
-                                <ChevronDown size={16} className={`text-zinc-400 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} />
+                                <ChevronDown size={16} className={`text-[var(--text-muted)] transition-transform ${showUserMenu ? 'rotate-180' : ''}`} />
                             </button>
 
                             {/* Dropdown Menu */}
@@ -131,24 +146,48 @@ export function Header({ onMenuToggle, isMenuOpen }: HeaderProps) {
                                         className="fixed inset-0 z-40"
                                         onClick={() => setShowUserMenu(false)}
                                     />
-                                    <div className="absolute right-0 top-full mt-2 w-56 bg-zinc-900 border border-white/10 overflow-hidden z-50">
-                                        <div className="p-4 border-b border-white/10">
-                                            <p className="text-sm font-bold text-white">{session.user.name}</p>
-                                            <p className="text-xs text-zinc-500">{session.user.email}</p>
+                                    <div className="absolute right-0 top-full mt-2 w-64 bg-[var(--card-bg)] border border-[var(--border-color)] overflow-hidden z-50 shadow-xl rounded-lg">
+                                        <div className="p-4 border-b border-[var(--border-color)] bg-[var(--surface-color)]/50 flex items-center gap-4">
+                                            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center text-white text-lg font-black border-2 border-white/20 rounded-full overflow-hidden shrink-0">
+                                                {(session.user as any).image ? (
+                                                    <Image
+                                                        src={(session.user as any).image}
+                                                        alt={session.user.name || ''}
+                                                        width={48}
+                                                        height={48}
+                                                        className="object-cover w-full h-full"
+                                                    />
+                                                ) : session.user.name ? (
+                                                    session.user.name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase()
+                                                ) : (
+                                                    <User size={24} />
+                                                )}
+                                            </div>
+                                            <div className="overflow-hidden">
+                                                <p className="text-sm font-bold text-[var(--text-primary)] truncate">{session.user.name}</p>
+                                                <p className="text-xs text-[var(--text-muted)] truncate mb-1">{session.user.email}</p>
+                                                <span className="px-2 py-0.5 bg-blue-500/10 text-blue-500 text-[9px] font-black uppercase rounded shadow-sm">
+                                                    {(session.user as any).role === 'ADMIN' ? (mounted ? t('header.administrator') : 'Admin') : ((session.user as any).role || 'User')}
+                                                </span>
+                                            </div>
                                         </div>
 
                                         <div className="p-2">
-                                            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
+                                            <Link
+                                                href="/perfil"
+                                                onClick={() => setShowUserMenu(false)}
+                                                className="w-full flex items-center gap-3 px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--surface-hover)] transition-colors rounded-md"
+                                            >
                                                 <User size={16} />
                                                 {t('common.profile')}
-                                            </button>
-                                            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
+                                            </Link>
+                                            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--surface-hover)] transition-colors rounded-md">
                                                 <Settings size={16} />
                                                 {t('sidebar.settings')}
                                             </button>
                                         </div>
 
-                                        <div className="p-2 border-t border-white/10">
+                                        <div className="p-2 border-t border-[var(--border-color)]">
                                             <button
                                                 onClick={() => signOut()}
                                                 className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-400/5 transition-colors"

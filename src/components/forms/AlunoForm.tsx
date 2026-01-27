@@ -2,11 +2,12 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { alunoSchema } from '@/lib/schemas'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { PhoneInput } from '@/components/ui/PhoneInput'
 import { Select } from '@/components/ui/Select'
 import { Alert } from '@/components/ui/Alert'
 import { Save, ArrowLeft, Loader2, UserPlus, FileText, MapPin, GraduationCap } from 'lucide-react'
@@ -27,6 +28,7 @@ export function AlunoForm({ initialData }: AlunoFormProps) {
     const {
         register,
         handleSubmit,
+        control,
         formState: { errors },
         setValue,
         watch
@@ -152,11 +154,17 @@ export function AlunoForm({ initialData }: AlunoFormProps) {
                                 ]}
                                 error={errors.genero?.message}
                             />
-                            <Input
-                                label="Telefone"
-                                placeholder="+244 9XX XXX XXX"
-                                {...register('telefone')}
-                                error={errors.telefone?.message}
+                            <Controller
+                                name="telefone"
+                                control={control}
+                                render={({ field }) => (
+                                    <PhoneInput
+                                        {...field}
+                                        label="Telefone"
+                                        placeholder="9XX XXX XXX"
+                                        error={errors.telefone?.message}
+                                    />
+                                )}
                             />
                         </div>
 

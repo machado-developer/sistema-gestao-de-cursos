@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { z } from 'zod'
 import { Loader2 } from 'lucide-react'
+import Link from 'next/link'
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
@@ -81,7 +82,9 @@ export default function LoginPage() {
                     <div className="space-y-1.5">
                         <div className="flex justify-between items-center">
                             <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Chave de Acesso</label>
-                            <span className="text-[9px] font-black text-blue-400 cursor-pointer hover:text-blue-300 uppercase tracking-widest">Esqueci a senha</span>
+                            <Link href="/auth/forgot-password">
+                                <span className="text-[9px] font-black text-blue-400 cursor-pointer hover:text-blue-300 uppercase tracking-widest">Esqueci a senha</span>
+                            </Link>
                         </div>
                         <Input
                             {...register("password")}

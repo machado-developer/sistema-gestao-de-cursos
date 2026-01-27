@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { PhoneInput } from '@/components/ui/PhoneInput'
 import { User, Upload, Save, Lock } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useSession } from 'next-auth/react'
@@ -103,11 +104,10 @@ export default function AdministradorPage() {
                             required
                         />
 
-                        <Input
+                        <PhoneInput
                             label={t('common.phone')}
-                            type="tel"
                             value={formData.telefone}
-                            onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+                            onChange={(val) => setFormData({ ...formData, telefone: val })}
                         />
 
                         <div className="md:col-span-2">

@@ -30,8 +30,8 @@ export function RHDashboardClient({ data }: RHDashboardClientProps) {
     return (
         <div className="p-1 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
             {/* Header / Module Title */}
-            <div className="border-b-2 border-slate-200 dark:border-zinc-800 pb-2">
-                <h1 className="text-lg font-bold text-[var(--text-secondary)] uppercase tracking-tighter">
+            <div className="border-b-2 border-[var(--border-color)] pb-2">
+                <h1 className="text-xl font-black text-app-text tracking-tighter uppercase leading-none">
                     Gestão de Recursos Humanos
                 </h1>
             </div>
@@ -82,49 +82,49 @@ export function RHDashboardClient({ data }: RHDashboardClientProps) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Link href="/rh/funcionarios/novo">
-                            <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-6 rounded-sm hover:border-blue-500 transition-all group flex items-start gap-4 shadow-sm cursor-pointer">
+                            <div className="bg-[var(--card-bg)] border border-[var(--border-color)] p-6 rounded-sm hover:border-blue-500 transition-all group flex items-start gap-4 shadow-sm cursor-pointer">
                                 <div className="p-3 bg-blue-600 rounded text-white group-hover:scale-110 transition-transform">
                                     <Plus size={24} />
                                 </div>
                                 <div>
                                     <p className="text-sm font-bold text-[var(--text-primary)]">Novo Funcionário</p>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Registar colaborador</p>
+                                    <p className="text-[10px] text-[var(--text-muted)] font-bold uppercase tracking-widest mt-1">Registar colaborador</p>
                                 </div>
                             </div>
                         </Link>
 
                         <Link href="/rh/processamento">
-                            <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-6 rounded-sm hover:border-emerald-500 transition-all group flex items-start gap-4 shadow-sm cursor-pointer">
+                            <div className="bg-[var(--card-bg)] border border-[var(--border-color)] p-6 rounded-sm hover:border-emerald-500 transition-all group flex items-start gap-4 shadow-sm cursor-pointer">
                                 <div className="p-3 bg-emerald-600 rounded text-white group-hover:scale-110 transition-transform">
                                     <Calculator size={24} />
                                 </div>
                                 <div>
                                     <p className="text-sm font-bold text-[var(--text-primary)]">Processar Salários</p>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Fechar folha do mês</p>
+                                    <p className="text-[10px] text-[var(--text-muted)] font-bold uppercase tracking-widest mt-1">Fechar folha do mês</p>
                                 </div>
                             </div>
                         </Link>
 
                         <Link href="/rh/presencas">
-                            <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-6 rounded-sm hover:border-amber-500 transition-all group flex items-start gap-4 shadow-sm cursor-pointer">
+                            <div className="bg-[var(--card-bg)] border border-[var(--border-color)] p-6 rounded-sm hover:border-amber-500 transition-all group flex items-start gap-4 shadow-sm cursor-pointer">
                                 <div className="p-3 bg-amber-600 rounded text-white group-hover:scale-110 transition-transform">
                                     <ClipboardCheck size={24} />
                                 </div>
                                 <div>
                                     <p className="text-sm font-bold text-[var(--text-primary)]">Mapa de Assiduidade</p>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Gerir faltas e horas</p>
+                                    <p className="text-[10px] text-[var(--text-muted)] font-bold uppercase tracking-widest mt-1">Gerir faltas e horas</p>
                                 </div>
                             </div>
                         </Link>
 
                         <Link href="/rh/relatorios">
-                            <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-6 rounded-sm hover:border-purple-500 transition-all group flex items-start gap-4 shadow-sm cursor-pointer">
+                            <div className="bg-[var(--card-bg)] border border-[var(--border-color)] p-6 rounded-sm hover:border-purple-500 transition-all group flex items-start gap-4 shadow-sm cursor-pointer">
                                 <div className="p-3 bg-purple-600 rounded text-white group-hover:scale-110 transition-transform">
                                     <FileText size={24} />
                                 </div>
                                 <div>
                                     <p className="text-sm font-bold text-[var(--text-primary)]">Relatórios Mensais</p>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Exportar guias</p>
+                                    <p className="text-[10px] text-[var(--text-muted)] font-bold uppercase tracking-widest mt-1">Exportar guias</p>
                                 </div>
                             </div>
                         </Link>
@@ -138,17 +138,17 @@ export function RHDashboardClient({ data }: RHDashboardClientProps) {
                     </div>
 
                     <div className="grid grid-cols-1 gap-3">
-                        <div className="bg-white dark:bg-zinc-900 border-b border-r border-t border-slate-200 dark:border-zinc-800 p-4 rounded-sm flex justify-between items-center shadow-sm border-l-4 border-emerald-500">
+                        <div className="bg-[var(--card-bg)] border-b border-r border-t border-[var(--border-color)] p-4 rounded-sm flex justify-between items-center shadow-sm border-l-4 border-emerald-500">
                             <div>
-                                <p className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase">Segurança Social</p>
+                                <p className="text-[10px] font-bold text-[var(--text-muted)] uppercase">Segurança Social</p>
                                 <p className="text-sm font-bold text-[var(--text-primary)]">Regularizado</p>
                             </div>
                             <div className="w-2 h-2 rounded-full bg-emerald-500" />
                         </div>
 
-                        <div className="bg-white dark:bg-zinc-900 border-b border-r border-t border-slate-200 dark:border-zinc-800 p-4 rounded-sm flex justify-between items-center shadow-sm border-l-4 border-amber-500">
+                        <div className="bg-[var(--card-bg)] border-b border-r border-t border-[var(--border-color)] p-4 rounded-sm flex justify-between items-center shadow-sm border-l-4 border-amber-500">
                             <div>
-                                <p className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase">Imposto IRT</p>
+                                <p className="text-[10px] font-bold text-[var(--text-muted)] uppercase">Imposto IRT</p>
                                 <p className="text-sm font-bold text-[var(--text-primary)]">Processando</p>
                             </div>
                             <div className="w-2 h-2 rounded-full bg-amber-500" />

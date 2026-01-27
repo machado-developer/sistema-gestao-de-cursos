@@ -71,7 +71,12 @@ export function StatCard({
                     <div className="text-[11px] font-semibold uppercase tracking-wider opacity-90 mb-0.5">
                         {title}
                     </div>
-                    <div className="text-3xl font-bold tracking-tight leading-none mb-1">
+                    <div className={`font-bold tracking-tight leading-none mb-1 ${typeof value === 'string' && value.length > 15
+                            ? 'text-xl'
+                            : typeof value === 'string' && value.length > 10
+                                ? 'text-2xl'
+                                : 'text-3xl'
+                        } break-words`}>
                         {value}
                     </div>
 

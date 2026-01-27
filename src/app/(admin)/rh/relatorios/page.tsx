@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/utils";
+import { DocumentService, DocumentType, ExportFormat } from "@/services/DocumentService";
 
 export default function RelatoriosPage() {
     const [activeTab, setActiveTab] = useState("inss");
@@ -206,11 +207,26 @@ export default function RelatoriosPage() {
                                         </div>
                                     </div>
                                     <div className="flex gap-2">
-                                        <Button variant="outline" size="sm" onClick={exportToCSV} className="h-8 gap-2 text-[9px] font-bold uppercase tracking-widest border-2">
+                                        <Button variant="outline" size="sm" onClick={exportToCSV} className="h-8 gap-2 text-[9px] font-bold uppercase tracking-widest border-2 border-slate-200 dark:border-zinc-700 dark:text-slate-200">
                                             <Download size={14} className="text-blue-500" /> EXPORTAR CSV
                                         </Button>
-                                        <Button size="sm" onClick={() => window.print()} className="h-8 gap-2 text-[9px] font-bold uppercase tracking-widest bg-slate-900 text-white">
-                                            <Printer size={14} /> IMPRIMIR PDF
+                                        <Button variant="outline" size="sm" onClick={() => {
+                                            const type = activeTab === 'inss' ? DocumentType.INSS_MAP
+                                                : activeTab === 'irt' ? DocumentType.IRT_MAP
+                                                    : activeTab === 'ferias' ? DocumentType.VACATION_MAP
+                                                        : DocumentType.ABSENCE_REPORT;
+                                            DocumentService.generate(type, ExportFormat.XLSX, data, { mes, ano });
+                                        }} className="h-8 gap-2 text-[9px] font-bold uppercase tracking-widest border-2 border-slate-200 dark:border-zinc-700 dark:text-emerald-500">
+                                            <Download size={14} className="text-emerald-500" /> EXCEL
+                                        </Button>
+                                        <Button size="sm" onClick={() => {
+                                            const type = activeTab === 'inss' ? DocumentType.INSS_MAP
+                                                : activeTab === 'irt' ? DocumentType.IRT_MAP
+                                                    : activeTab === 'ferias' ? DocumentType.VACATION_MAP
+                                                        : DocumentType.ABSENCE_REPORT;
+                                            DocumentService.generate(type, ExportFormat.PDF, data, { mes, ano });
+                                        }} className="h-8 gap-2 text-[9px] font-bold uppercase tracking-widest bg-blue-600 text-white">
+                                            <Download size={14} /> EXPORTAR PDF
                                         </Button>
                                     </div>
                                 </div>
