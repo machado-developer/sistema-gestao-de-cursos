@@ -54,7 +54,7 @@ export async function GET(
                 statusAcademico: matricula.status_academico,
                 mediaFinal: media,
                 percentualFrequencia: frequencia,
-                avaliacoes: matricula.avaliacoes.map((av) => ({
+                avaliacoes: matricula.avaliacoes.map((av: any) => ({
                     id: av.id,
                     tipo: av.tipo,
                     nota: av.nota,

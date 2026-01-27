@@ -143,10 +143,10 @@ export const avaliacaoService = {
         }
 
         const somaNotasPonderadas = avaliacoes.reduce(
-            (acc, av) => acc + av.nota * av.peso,
+            (acc: number, av: { nota: number; peso: number }) => acc + av.nota * av.peso,
             0
         )
-        const somaPesos = avaliacoes.reduce((acc, av) => acc + av.peso, 0)
+        const somaPesos = avaliacoes.reduce((acc: any, av: { peso: any }) => acc + av.peso, 0)
 
         if (somaPesos === 0) {
             return 0
@@ -209,12 +209,12 @@ export const avaliacaoService = {
         const avaliacoes = await this.findByMatricula(matriculaId)
         const media = await this.calcularMedia(matriculaId)
 
-        const breakdown = avaliacoes.map((av) => ({
+        const breakdown = avaliacoes.map((av: { id: any; tipo: any; nota: number; peso: number; instrutor: { nome: any }; createdAt: any }) => ({
             id: av.id,
             tipo: av.tipo,
             nota: av.nota,
             peso: av.peso,
-            contribuicao: (av.nota * av.peso) / avaliacoes.reduce((acc, a) => acc + a.peso, 0),
+            contribuicao: (av.nota * av.peso) / avaliacoes.reduce((acc: any, a: { peso: any }) => acc + a.peso, 0),
             instrutor: av.instrutor?.nome,
             data: av.createdAt
         }))
@@ -223,7 +223,7 @@ export const avaliacaoService = {
             avaliacoes: breakdown,
             media_final: media,
             total_avaliacoes: avaliacoes.length,
-            soma_pesos: avaliacoes.reduce((acc, av) => acc + av.peso, 0)
+            soma_pesos: avaliacoes.reduce((acc: any, av: { peso: any }) => acc + av.peso, 0)
         }
     }
 }

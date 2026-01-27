@@ -29,7 +29,7 @@ export const turmaService = {
     },
 
     async concluirTurma(id: string) {
-        return prisma.$transaction(async (tx) => {
+        return prisma.$transaction(async (tx: { turma: { findUnique: (arg0: { where: { id: string }; include: { curso: boolean; matriculas: boolean } }) => any; update: (arg0: { where: { id: string }; data: { status: string } }) => any }; matricula: { update: (arg0: { where: { id: any }; data: { status_academico: string } }) => any } }) => {
             const turma = await tx.turma.findUnique({
                 where: { id },
                 include: { curso: true, matriculas: true }
@@ -103,7 +103,7 @@ export const turmaService = {
 
         // Process each turma in a transaction
         for (const turma of turmasToProcess) {
-            await prisma.$transaction(async (tx) => {
+            await prisma.$transaction(async (tx: { turma: { update: (arg0: { where: { id: any }; data: { status: string } }) => any }; matricula: { update: (arg0: { where: { id: any }; data: { status_academico: string } }) => any } }) => {
                 // Ensure status is Concluída
                 if (turma.status !== 'Concluída') {
                     await tx.turma.update({

@@ -3,14 +3,15 @@ import { prisma } from "@/lib/prisma";
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const body = await req.json();
         const { status, observacao } = body;
 
         const solicitacao = await prisma.feriasSolicitacao.update({
-            where: { id: params.id },
+            where: { id },
             data: {
                 status,
                 ...(observacao && { observacao })
@@ -30,11 +31,12 @@ export async function PATCH(
 
 export async function DELETE(
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         await prisma.feriasSolicitacao.delete({
-            where: { id: params.id }
+            where: { id }
         });
         return NextResponse.json({ message: "Solicitação eliminada com sucesso" });
     } catch (error: any) {

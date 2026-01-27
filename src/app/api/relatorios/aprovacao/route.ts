@@ -28,16 +28,16 @@ export async function GET(req: NextRequest) {
         })
 
         const total = matriculas.length
-        const aprovados = matriculas.filter((m) => m.status_academico === 'Aprovado').length
-        const reprovados = matriculas.filter((m) => m.status_academico === 'Reprovado').length
-        const cursando = matriculas.filter((m) => m.status_academico === 'Cursando').length
+        const aprovados = matriculas.filter((m: { status_academico: string }) => m.status_academico === 'Aprovado').length
+        const reprovados = matriculas.filter((m: { status_academico: string }) => m.status_academico === 'Reprovado').length
+        const cursando = matriculas.filter((m: { status_academico: string }) => m.status_academico === 'Cursando').length
 
         const taxaAprovacao = total > 0 ? (aprovados / total) * 100 : 0
 
         // Breakdown by curso if no specific filters
         let porCurso: any = {}
         if (!cursoId && !turmaId) {
-            porCurso = matriculas.reduce((acc: any, m) => {
+            porCurso = matriculas.reduce((acc: any, m: { turma: { curso: { nome: any } }; status_academico: string }) => {
                 const cursoNome = m.turma.curso.nome
                 if (!acc[cursoNome]) {
                     acc[cursoNome] = {

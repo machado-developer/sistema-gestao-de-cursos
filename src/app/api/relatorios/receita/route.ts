@@ -26,10 +26,10 @@ export async function GET(req: NextRequest) {
             })
 
             const totalReceita = matriculas.reduce(
-                (acc, m) => acc + Number(m.valor_pago),
+                (acc: number, m: any) => acc + Number(m.valor_pago),
                 0
             )
-            const totalBolseiros = matriculas.filter((m) => m.aluno.bolseiro).length
+            const totalBolseiros = matriculas.filter((m: { aluno: { bolseiro: any } }) => m.aluno.bolseiro).length
             const totalPagantes = matriculas.length - totalBolseiros
 
             return NextResponse.json({
@@ -57,10 +57,10 @@ export async function GET(req: NextRequest) {
             })
 
             const totalReceita = matriculas.reduce(
-                (acc, m) => acc + Number(m.valor_pago),
+                (acc: number, m: any) => acc + Number(m.valor_pago),
                 0
             )
-            const totalBolseiros = matriculas.filter((m) => m.aluno.bolseiro).length
+            const totalBolseiros = matriculas.filter((m: { aluno: { bolseiro: any } }) => m.aluno.bolseiro).length
             const totalPagantes = matriculas.length - totalBolseiros
 
             return NextResponse.json({
@@ -86,14 +86,14 @@ export async function GET(req: NextRequest) {
         })
 
         const totalReceita = matriculas.reduce(
-            (acc, m) => acc + Number(m.valor_pago),
+            (acc: number, m: any) => acc + Number(m.valor_pago),
             0
         )
-        const totalBolseiros = matriculas.filter((m) => m.aluno.bolseiro).length
+        const totalBolseiros = matriculas.filter((m: { aluno: { bolseiro: any } }) => m.aluno.bolseiro).length
         const totalPagantes = matriculas.length - totalBolseiros
 
         // Group by curso
-        const porCurso = matriculas.reduce((acc: any, m) => {
+        const porCurso = matriculas.reduce((acc: any, m: any) => {
             const cursoNome = m.turma.curso.nome
             if (!acc[cursoNome]) {
                 acc[cursoNome] = {

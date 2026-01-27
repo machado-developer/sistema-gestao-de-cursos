@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 export class MailService {
     static async sendPasswordResetEmail(email: string, token: string) {
-        const resetUrl = `${process.env.APP_URL}/auth/reset-password?token=${token}`;
+        const resetUrl = `${process.env.APP_URL}/reset-password?token=${token}`;
 
         const mailOptions = {
             from: `"Gestão NewTech" <${process.env.EMAIL_FROM}>`,

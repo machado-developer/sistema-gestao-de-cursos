@@ -48,65 +48,82 @@ export default function LoginPage() {
         }
     }
 
+
     return (
-        <div className="min-h-screen flex items-center justify-center bg-blue-600 p-4">
-            {/* Background ambient light */}
-            <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-[-1] overflow-hidden">
-                <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]" />
+        <div className="w-full max-w-sm mx-auto">
+            <div className="mb-10 text-left">
+                <h1 className="text-4xl font-extrabold text-zinc-900 mb-2 tracking-tight">Iniciar Sessão</h1>
+                <p className="text-zinc-500 text-sm font-medium">
+                    Não tem uma conta? <span className="text-blue-600 font-bold cursor-pointer hover:underline hover:text-blue-700 transition-colors">Contacte o Admin</span>
+                </p>
             </div>
 
-            <div className="glass-card p-10 w-full max-w-md border border-white/5 bg-zinc-900/40">
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600 mb-2">Gestão PRO</h1>
-                    <p className="text-zinc-400 text-sm font-medium uppercase tracking-widest">Sistema de Gestão Escolar e RH</p>
+            {serverError && (
+                <div className="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl mb-6 text-xs font-bold uppercase tracking-wide flex items-center gap-3 animate-pulse">
+                    <div className="w-2 h-2 rounded-full bg-red-500" />
+                    {serverError}
+                </div>
+            )}
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                <div className="space-y-2">
+                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">Endereço de Email</label>
+                    <Input
+                        {...register("email")}
+                        type="email"
+                        placeholder="exemplo@newtech.ao"
+                        className={`bg-zinc-50 border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-14 rounded-xl focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 transition-all font-medium ${errors.email ? 'border-red-500 bg-red-50' : ''}`}
+                    />
+                    {errors.email && <p className="text-[10px] font-bold text-red-500 uppercase pl-1 mt-1">{errors.email.message}</p>}
                 </div>
 
-                {serverError && (
-                    <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-3 rounded-lg mb-6 text-[10px] font-black uppercase tracking-widest text-center">
-                        {serverError}
-                    </div>
-                )}
+                <div className="space-y-2">
+                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">Chave de Acesso</label>
+                    <Input
+                        {...register("password")}
+                        type="password"
+                        placeholder="••••••••"
+                        className={`bg-zinc-50 border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-14 rounded-xl focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 transition-all font-medium ${errors.password ? 'border-red-500 bg-red-50' : ''}`}
+                    />
+                    {errors.password && <p className="text-[10px] font-bold text-red-500 uppercase pl-1 mt-1">{errors.password.message}</p>}
+                </div>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                    <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Endereço de Email</label>
-                        <Input
-                            {...register("email")}
-                            type="email"
-                            placeholder="admin@gestao.com"
-                            className={`bg-zinc-800/50 border-white/10 text-white placeholder-zinc-500 h-11 ${errors.email ? 'border-red-500' : ''}`}
-                        />
-                        {errors.email && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.email.message}</p>}
-                    </div>
-
-                    <div className="space-y-1.5">
-                        <div className="flex justify-between items-center">
-                            <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Chave de Acesso</label>
-                            <Link href="/auth/forgot-password">
-                                <span className="text-[9px] font-black text-blue-400 cursor-pointer hover:text-blue-300 uppercase tracking-widest">Esqueci a senha</span>
-                            </Link>
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2 cursor-pointer group">
+                        <div className="w-5 h-5 border-2 border-zinc-300 rounded bg-zinc-50 flex items-center justify-center group-hover:border-blue-600 transition-colors">
+                            {/* Checkbox visual placeholder */}
                         </div>
-                        <Input
-                            {...register("password")}
-                            type="password"
-                            placeholder="••••••••"
-                            className={`bg-zinc-800/50 border-white/10 text-white placeholder-zinc-500 h-11 ${errors.password ? 'border-red-500' : ''}`}
-                        />
-                        {errors.password && <p className="text-[10px] font-bold text-red-500 uppercase">{errors.password.message}</p>}
+                        <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-800 transition-colors">Lembrar-me</span>
                     </div>
-
-                    <Button type="submit" disabled={isSubmitting} className="w-full h-12 mb-4 bg-blue-600 hover:bg-blue-700 text-[11px] font-black uppercase tracking-[0.2em] border-b-4 border-blue-800 flex items-center justify-center gap-2">
-                        {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : null}
-                        {isSubmitting ? 'VERIFICANDO...' : 'ACESSAR PAINEL'}
-                    </Button>
-                </form>
-
-                <div className="mt-6 pt-6 border-t border-white/5 text-center">
-                    <p className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
-                        © 2026 MACHA-TECH • SOLUÇÕES CORPORATIVAS
-                    </p>
+                    <Link href="/forgot-password">
+                        <span className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors uppercase tracking-widest border-b border-transparent hover:border-blue-600">
+                            Esqueci a Senha?
+                        </span>
+                    </Link>
                 </div>
-            </div>
+
+                <Button type="submit" disabled={isSubmitting} className="w-full h-14 bg-blue-900 hover:bg-blue-800 text-white text-xs font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-blue-900/20 flex items-center justify-center gap-3 group transition-all transform active:scale-[0.98]">
+                    {isSubmitting ? <Loader2 className="animate-spin text-white" size={20} /> : null}
+                    {isSubmitting ? 'VERIFICANDO...' : 'ENTRAR NA PLATAFORMA'}
+                </Button>
+
+                <div className="relative flex py-2 items-center">
+                    <div className="flex-grow border-t border-zinc-200"></div>
+                    <span className="flex-shrink mx-4 text-zinc-400 text-[10px] font-black uppercase tracking-widest">Ou continue com</span>
+                    <div className="flex-grow border-t border-zinc-200"></div>
+                </div>
+                {/* 
+                <div className="space-y-3">
+                    <button type="button" className="w-full h-12 border border-zinc-200 rounded-xl flex items-center justify-center gap-3 hover:bg-zinc-50 transition-colors text-xs font-bold text-zinc-600 group">
+                        <div className="w-5 h-5 flex items-center justify-center font-serif font-black text-lg text-blue-600">G</div>
+                        CONTINUAR COM GOOGLE
+                    </button>
+                    <button type="button" className="w-full h-12 border border-zinc-200 rounded-xl flex items-center justify-center gap-3 hover:bg-zinc-50 transition-colors text-xs font-bold text-zinc-600 group">
+                        <div className="w-5 h-5 flex items-center justify-center font-black text-lg text-blue-700">f</div>
+                        CONTINUAR COM FACEBOOK
+                    </button>
+                </div> */}
+            </form>
         </div>
     )
 }
