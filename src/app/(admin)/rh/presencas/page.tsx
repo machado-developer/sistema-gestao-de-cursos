@@ -17,12 +17,15 @@ import {
     Briefcase,
     Filter,
     X,
-    UserCircle
+    UserCircle,
+    CalendarCheck
 } from "lucide-react";
 import { toast } from "sonner";
+import { calculateDailyWorkHours, DayType } from "@/lib/workingHoursEngine";
 
 export default function PresencasPage() {
     const [data, setData] = useState(new Date().toISOString().split("T")[0]);
+    const [dayType, setDayType] = useState<DayType>("NORMAL");
     const [funcionarios, setFuncionarios] = useState<any[]>([]);
     const [depts, setDepts] = useState<any[]>([]);
     const [cargos, setCargos] = useState<any[]>([]);
@@ -89,8 +92,26 @@ export default function PresencasPage() {
     };
 
     useEffect(() => {
+        // Auto-detect weekend
+        const dateObj = new Date(data);
+        const day = dateObj.getDay();
+        if (day === 0 || day === 6) { // 0=Dom, 6=Sab
+            setDayType("WEEKLY_REST");
+        } else {
+            setDayType("NORMAL");
+        }
         fetchData();
     }, [data]);
+
+    // Re-calculate when dayType changes for all loaded employees
+    useEffect(() => {
+        if (funcionarios.length > 0) {
+            setFuncionarios(prev => prev.map(f => {
+                const updated = calculateWithEngine(f, dayType);
+                return updated;
+            }));
+        }
+    }, [dayType]);
 
     const handleStatusChange = (id: string, status: string) => {
         setFuncionarios((prev: any) => prev.map((f: any) => {
@@ -111,32 +132,30 @@ export default function PresencasPage() {
         }));
     };
 
-    const calculateHours = (f: any) => {
-        if (!f.entrada || !f.saida) return { heNormal: 0, heDescanso: 0 };
+    const calculateWithEngine = (f: any, currentDayType: DayType) => {
+        const result = calculateDailyWorkHours({
+            entryTime: f.entrada,
+            exitTime: f.saida,
+            dayType: currentDayType,
+            normalDailyHours: 8 // Could be dynamic from employee contract
+        });
 
-        const [hIn, mIn] = f.entrada.split(':').map(Number);
-        const [hOut, mOut] = f.saida.split(':').map(Number);
+        // Uncomment to debug
+        // console.log(`Calc for ${f.nome}:`, result);
 
-        const totalMinutes = (hOut * 60 + mOut) - (hIn * 60 + mIn);
-        const totalHours = Math.max(0, totalMinutes / 60 - 1); // Descontar 1h para almoço
-
-        const isWeekend = new Date(data).getDay() === 0 || new Date(data).getDay() === 6;
-
-        if (isWeekend) {
-            return { heNormal: 0, heDescanso: totalHours }; // No fim de semana tudo é extra 100%
-        } else {
-            const normal = 8;
-            const extra = Math.max(0, totalHours - normal);
-            return { heNormal: extra, heDescanso: 0 };
-        }
+        return {
+            ...f,
+            he50: result.extraHoursNormal,
+            he100: result.extraHoursRest,
+            totalWorked: result.totalWorkedHuman
+        };
     };
 
     const handleTimeChange = (id: string, field: 'entrada' | 'saida', value: string) => {
         setFuncionarios((prev: any) => prev.map((f: any) => {
             if (f.id === id) {
-                const updated = { ...f, [field]: value };
-                const calc = calculateHours(updated);
-                return { ...updated, he50: calc.heNormal, he100: calc.heDescanso };
+                const baseUpdate = { ...f, [field]: value };
+                return calculateWithEngine(baseUpdate, dayType);
             }
             return f;
         }));
@@ -308,6 +327,27 @@ export default function PresencasPage() {
                     <p className="text-sm font-medium text-slate-400">Registo Diário e Gestão de Horas Extras</p>
                 </div>
                 <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 bg-slate-100 dark:bg-zinc-800 p-1 rounded-md border border-slate-200 dark:border-zinc-700">
+                        <button
+                            onClick={() => setDayType("NORMAL")}
+                            className={`px-3 py-1 text-[10px] font-bold uppercase rounded transition-all ${dayType === 'NORMAL' ? 'bg-white shadow text-slate-800 dark:bg-zinc-700 dark:text-white' : 'text-slate-400 hover:text-slate-600'}`}
+                        >
+                            Dia Normal
+                        </button>
+                        <button
+                            onClick={() => setDayType("WEEKLY_REST")}
+                            className={`px-3 py-1 text-[10px] font-bold uppercase rounded transition-all ${dayType === 'WEEKLY_REST' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' : 'text-slate-400 hover:text-slate-600'}`}
+                        >
+                            Fim de Semana
+                        </button>
+                        <button
+                            onClick={() => setDayType("HOLIDAY")}
+                            className={`px-3 py-1 text-[10px] font-bold uppercase rounded transition-all ${dayType === 'HOLIDAY' ? 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400' : 'text-slate-400 hover:text-slate-600'}`}
+                        >
+                            Feriado
+                        </button>
+                    </div>
+
                     <input
                         type="date"
                         className="h-9 px-3 border-2 border-slate-200 dark:border-zinc-800 rounded-md bg-white dark:bg-zinc-900 text-xs font-semibold"

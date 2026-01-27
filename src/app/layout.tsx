@@ -6,8 +6,8 @@ import { LanguageProvider } from "@/lib/i18n/LanguageContext"
 import { ThemeProvider } from "@/components/ThemeProvider"
 
 export const metadata: Metadata = {
-  title: 'Gestão Académica PRO',
-  description: 'Sistema Profissional de Gestão De cursos',
+  title: 'Newtech Gestão',
+  description: 'Sistema Profissional de Gestão Empresarial',
 }
 
 import { Suspense } from 'react'

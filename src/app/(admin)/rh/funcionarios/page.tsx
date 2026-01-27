@@ -18,13 +18,16 @@ import {
     Filter,
     X,
     Trash2,
-    Edit
+    Edit,
+    Download
 } from "lucide-react";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import Link from "next/link";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/utils";
 import { Select } from "@/components/ui/Select";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 export default function FuncionariosPage() {
     const [funcionarios, setFuncionarios] = useState<any[]>([]);
@@ -101,6 +104,92 @@ export default function FuncionariosPage() {
         setSearch("");
         setSelectedDept("");
         setSelectedCargo("");
+    };
+
+    const handleExport = () => {
+        if (filteredData.length === 0) {
+            toast.error("Sem dados para exportar");
+            return;
+        }
+
+        const headers = ["Nome", "Identificacao", "NIF", "Email", "Telefone", "Departamento", "Cargo", "Tipo Contrato", "Salario Base", "Estado"];
+        const csvContent = [
+            headers.join(","),
+            ...filteredData.map(f => {
+                const contrato = f.contratos?.[0];
+                return [
+                    `"${f.nome}"`,
+                    `"${f.bi_documento}"`,
+                    f.nif ? `"${f.nif}"` : "",
+                    f.email ? `"${f.email}"` : "",
+                    f.telefone ? `"${f.telefone}"` : "",
+                    `"${f.departamento?.nome || 'N/A'}"`,
+                    `"${f.cargo?.nome || 'N/A'}"`,
+                    `"${contrato?.tipo || 'N/A'}"`,
+                    contrato?.salario_base || 0,
+                    `"${f.status}"`
+                ].join(",");
+            })
+        ].join("\n");
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `funcionarios_export_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        toast.success("Download Iniciado", {
+            description: `${filteredData.length} registos exportados.`
+        });
+    };
+
+    const handleExportPDF = () => {
+        if (filteredData.length === 0) {
+            toast.error("Sem dados para exportar");
+            return;
+        }
+
+        const doc = new jsPDF();
+
+        // Add Header
+        doc.setFontSize(16);
+        doc.text("Lista de Colaboradores", 14, 20);
+        doc.setFontSize(10);
+        doc.text(`Gerado em: ${new Date().toLocaleDateString('pt-AO')}`, 14, 26);
+
+        // Prepare Data
+        const tableColumn = ["Nome", "Identificação", "Departamento", "Cargo", "Tipo Contrato", "Estado"];
+        const tableRows = filteredData.map(f => {
+            const contrato = f.contratos?.[0];
+            return [
+                f.nome,
+                f.bi_documento,
+                f.departamento?.nome || 'N/A',
+                f.cargo?.nome || 'N/A',
+                contrato?.tipo || 'N/A',
+                f.status
+            ];
+        });
+
+        // Generate Table
+        autoTable(doc, {
+            head: [tableColumn],
+            body: tableRows,
+            startY: 32,
+            styles: { fontSize: 8 },
+            headStyles: { fillColor: [41, 128, 185] },
+        });
+
+        const fileName = `funcionarios_export_${new Date().toISOString().split('T')[0]}.pdf`;
+        doc.save(fileName);
+
+        toast.success("PDF Gerado", {
+            description: "O ficheiro foi descarregado com sucesso."
+        });
     };
 
     const columns: Column<any>[] = [
@@ -270,11 +359,27 @@ export default function FuncionariosPage() {
                     </h1>
                     <p className="text-sm text-slate-500 font-medium">Gestão Integral de Capital Humano</p>
                 </div>
-                <Link href="/rh/funcionarios/novo">
-                    <Button className="bg-[var(--accent-primary)] text-sm font-medium h-10 px-6 text-white shadow-sm hover:opacity-90 transition-opacity">
-                        <Plus size={18} className="mr-2" /> Novo Funcionário
+                <div className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        className="h-10 px-4 text-xs font-semibold text-slate-600 border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-800"
+                        onClick={handleExport}
+                    >
+                        <Download size={16} className="mr-2" /> CSV
                     </Button>
-                </Link>
+                    <Button
+                        variant="outline"
+                        className="h-10 px-4 text-xs font-semibold text-slate-600 border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-800"
+                        onClick={handleExportPDF}
+                    >
+                        <Download size={16} className="mr-2" /> PDF
+                    </Button>
+                    <Link href="/rh/funcionarios/novo">
+                        <Button className="bg-[var(--accent-primary)] text-sm font-medium h-10 px-6 text-white shadow-sm hover:opacity-90 transition-opacity">
+                            <Plus size={18} className="mr-2" /> Novo Funcionário
+                        </Button>
+                    </Link>
+                </div>
             </div>
 
             {/* Metrics */}
@@ -378,6 +483,6 @@ export default function FuncionariosPage() {
                 onCancel={() => setConfirmDelete({ isOpen: false, id: null, loading: false })}
                 isLoading={confirmDelete.loading}
             />
-        </div>
+        </div >
     );
 }
