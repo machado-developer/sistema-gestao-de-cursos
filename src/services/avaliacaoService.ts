@@ -209,7 +209,7 @@ export const avaliacaoService = {
         const avaliacoes = await this.findByMatricula(matriculaId)
         const media = await this.calcularMedia(matriculaId)
 
-        const breakdown = avaliacoes.map((av: { id: any; tipo: any; nota: number; peso: number; instrutor: { nome: any }; createdAt: any }) => ({
+        const breakdown = avaliacoes.map((av: { id: any; tipo: any; nota: number; peso: number; instrutor: { nome: any } | null; createdAt: any }) => ({
             id: av.id,
             tipo: av.tipo,
             nota: av.nota,
