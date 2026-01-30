@@ -3,7 +3,6 @@
 import { useState, useEffect, use } from "react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 import { DataTable, Column } from "@/components/ui/DataTable";
 import {
     Building2, Mail, Phone, MapPin, User, Users,
@@ -13,6 +12,7 @@ import {
 import Link from "next/link";
 import { toast } from "sonner";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { Badge } from "@/components/ui/Badge";
 
 export default function EmpresaDetalhesPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
