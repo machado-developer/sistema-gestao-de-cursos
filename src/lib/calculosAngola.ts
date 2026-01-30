@@ -78,7 +78,8 @@ export function calcularValorHorasExtras(
     const valorHe75 = he75 * valorHora * 1.75;
     const valorHe100 = horasDescansoExtras * valorHora * 2.0;
 
-    return valorHe50 + valorHe75 + valorHe100;
+    return Math.round((valorHe50 + valorHe75 + valorHe100) * 100) / 100;
+
 }
 
 export function processarSalarioMensal(dados: {
@@ -113,15 +114,18 @@ export function processarSalarioMensal(dados: {
 
     // 4. Faltas
     const valorFalta = (salarioBase / 30) * faltasNaoJustificadas;
-    const brutoAjustado = Math.max(0, rendimentoBruto - valorFalta);
+    const brutoAjustado = Math.round(Math.max(0, rendimentoBruto - valorFalta) * 100) / 100;
 
     // 5. Impostos e Descontos
     const inss = calcularINSS(brutoAjustado);
-    const baseIrt = brutoAjustado - inss.trabalhador;
+    const baseIrt = Math.round((brutoAjustado - inss.trabalhador) * 100) / 100;
+
     const irtValue = calcularIRT(baseIrt);
 
     // 6. Líquido
-    const liquido = baseIrt - irtValue + subsidiosIsentos;
+    const liquido = Math.round((baseIrt - irtValue + subsidiosIsentos) * 100) / 100;
+
+
 
     return {
         salarioBase,
