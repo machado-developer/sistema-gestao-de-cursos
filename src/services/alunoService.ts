@@ -1,10 +1,13 @@
 import { prisma } from '@/lib/prisma'
-import { Prisma } from '@prisma/client'
+import { Prisma } from '@/generated/client'
 
 export const alunoService = {
     async create(data: Prisma.AlunoCreateInput, userId?: string) {
         return prisma.aluno.create({
-            data: { ...data, userId }
+            data: {
+                ...data,
+                user: userId ? { connect: { id: userId } } : undefined
+            }
         })
     },
 

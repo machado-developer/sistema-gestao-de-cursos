@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@/generated/client'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 

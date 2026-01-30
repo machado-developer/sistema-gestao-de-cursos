@@ -24,6 +24,11 @@ interface AlunoFormProps {
 export function AlunoForm({ initialData }: AlunoFormProps) {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
+    const [empresas, setEmpresas] = useState<{ id: string, nome: string }[]>([])
+
+    useEffect(() => {
+        fetch('/api/empresas-clientes').then(r => r.json()).then(setEmpresas)
+    }, [])
 
     const {
         register,
@@ -43,7 +48,8 @@ export function AlunoForm({ initialData }: AlunoFormProps) {
             email: '',
             Endereco: '',
             escolaAcademica: '',
-            escolaridade: ''
+            escolaridade: '',
+            empresaId: ''
         }
     })
 
@@ -213,6 +219,17 @@ export function AlunoForm({ initialData }: AlunoFormProps) {
                                     error={errors.escolaridade?.message}
                                 />
                             </div>
+
+                            <Select
+                                label="Empresa / Empregador (Opcional)"
+                                value={watch('empresaId') || ''}
+                                onChange={(val) => setValue('empresaId', val)}
+                                options={[
+                                    { value: '', label: 'Particular / Nenhum' },
+                                    ...empresas.map(e => ({ value: e.id, label: e.nome }))
+                                ]}
+                                error={errors.empresaId?.message}
+                            />
                         </div>
 
                         {/* Card Informativo das Regras */}

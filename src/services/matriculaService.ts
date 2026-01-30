@@ -24,7 +24,10 @@ export const matriculaService = {
         }
 
         return prisma.matricula.create({
-            data: { ...data, userId }
+            data: {
+                ...data,
+                user: userId ? { connect: { id: userId } } : undefined
+            }
         })
     },
 

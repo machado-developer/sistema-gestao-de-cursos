@@ -78,6 +78,7 @@ export const alunoSchema = z.object({
     Endereco: z.string().optional(),
     escolaAcademica: z.string().optional(),
     escolaridade: z.string().optional(),
+    empresaId: z.string().optional().or(z.literal("")),
 });
 
 export const instrutorSchema = z.object({
@@ -115,6 +116,7 @@ export const matriculaSchema = z.object({
     valor_pago: z.coerce.number().min(0),
     desconto: z.coerce.number().min(0).default(0),
     estado_pagamento: z.string(),
+    empresaId: z.string().optional().or(z.literal("")),
 });
 
 export const pagamentoSchema = z.object({

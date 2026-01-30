@@ -24,7 +24,7 @@ async function POSTHandler(request: NextRequest) {
             }, { status: 400 })
         }
 
-        const { alunoId, turmaId, valor_total, desconto } = validation.data
+        const { alunoId, turmaId, valor_total, desconto, empresaId } = validation.data
 
         // Business Rule: Check for vacancies
         const vagas = await turmaService.getVagasDisponiveis(turmaId)
@@ -35,14 +35,20 @@ async function POSTHandler(request: NextRequest) {
             }, { status: 422 })
         }
 
-        const matricula = await matriculaService.create({
+        const data: any = {
             aluno: { connect: { id: alunoId } },
             turma: { connect: { id: turmaId } },
             valor_total: valor_total - (desconto || 0),
             valor_pago: 0,
             estado_pagamento: 'Pendente',
             status_academico: 'Cursando'
-        }, user?.id)
+        }
+
+        if (empresaId) {
+            data.empresaCliente = { connect: { id: empresaId } }
+        }
+
+        const matricula = await matriculaService.create(data, user?.id)
 
         return NextResponse.json(matricula)
     } catch (error: any) {

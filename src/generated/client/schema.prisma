@@ -1,0 +1,475 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Aluno {
+  id              String      @id @default(uuid())
+  nome_completo   String
+  bi_documento    String      @unique
+  email           String?     @unique
+  data_nascimento DateTime
+  matriculas      Matricula[]
+  documentos      Documento[]
+  presencas       Presenca[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  telefone        String?
+  genero          String?
+  escolaAcademica String?
+  escolaridade    String?
+  Endereco        String?
+  bolseiro        Boolean     @default(false)
+  userId          String?
+  user            User?       @relation("UserAlunos", fields: [userId], references: [id])
+
+  empresaId String?
+  empresa   EmpresaCliente? @relation(fields: [empresaId], references: [id])
+
+  @@map("alunos")
+}
+
+model EmpresaCliente {
+  id          String      @id @default(uuid())
+  nome        String
+  nif         String?     @unique
+  email       String?
+  telefone    String?
+  endereco    String?
+  responsavel String?
+  alunos      Aluno[]
+  matriculas  Matricula[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("empresas_clientes")
+}
+
+model Documento {
+  id            String       @id @default(uuid())
+  alunoId       String?
+  aluno         Aluno?       @relation(fields: [alunoId], references: [id])
+  funcionarioId String?
+  funcionario   Funcionario? @relation(fields: [funcionarioId], references: [id])
+  tipo          String // "Foto", "BI", "Outro", "Contrato"
+  url           String
+  nome          String
+  createdAt     DateTime     @default(now())
+
+  @@map("documentos")
+}
+
+model Curso {
+  id                     String               @id @default(uuid())
+  nome                   String
+  carga_horaria          Int
+  descricao              String?
+  media_minima_aprovacao Float                @default(10.0)
+  frequencia_minima      Float                @default(75.0)
+  preco_base             Decimal
+  certificateTemplateId  String?
+  certificateTemplate    CertificateTemplate? @relation(fields: [certificateTemplateId], references: [id])
+  turmas                 Turma[]
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+  userId                 String?
+  user                   User?                @relation("UserCursos", fields: [userId], references: [id])
+
+  @@map("cursos")
+}
+
+model Instrutor {
+  id            String      @id @default(uuid())
+  nome          String
+  email         String      @unique
+  telefone      String?
+  especialidade String?
+  bi_documento  String?     @unique
+  genero        String?
+  bio           String?     @db.Text
+  turmas        Turma[]
+  avaliacoes    Avaliacao[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("instrutores")
+}
+
+model Turma {
+  id           String      @id @default(uuid())
+  cursoId      String
+  curso        Curso       @relation(fields: [cursoId], references: [id])
+  codigo_turma String      @unique
+  data_inicio  DateTime
+  data_fim     DateTime
+  instrutorId  String?
+  instrutor    Instrutor?  @relation(fields: [instrutorId], references: [id])
+  status       String      @default("Em Andamento") // "Em Andamento", "Concluída"
+  vagas        Int         @default(20)
+  matriculas   Matricula[]
+  aulas        Aula[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  userId       String?
+  user         User?       @relation("UserTurmas", fields: [userId], references: [id])
+
+  @@map("turmas")
+}
+
+model Matricula {
+  id                    String          @id @default(uuid())
+  alunoId               String
+  aluno                 Aluno           @relation(fields: [alunoId], references: [id])
+  turmaId               String
+  turma                 Turma           @relation(fields: [turmaId], references: [id])
+  avaliacoes            Avaliacao[]
+  media_final           Float?
+  percentual_frequencia Float?
+  status_academico      String          @default("Cursando") // "Cursando", "Aprovado", "Reprovado"
+  valor_total           Decimal
+  valor_pago            Decimal         @default(0)
+  estado_pagamento      String          @default("Pendente") // "Pendente", "Parcial", "Pago", "Isento"
+  pagamentos            Pagamento[]
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  certificate           Certificate?
+  userId                String?
+  user                  User?           @relation("UserMatriculas", fields: [userId], references: [id])
+  empresaCliente        EmpresaCliente? @relation(fields: [empresaClienteId], references: [id])
+  empresaClienteId      String?
+
+  @@map("matriculas")
+}
+
+model Pagamento {
+  id               String    @id @default(uuid())
+  matriculaId      String
+  matricula        Matricula @relation(fields: [matriculaId], references: [id])
+  valor            Decimal
+  data             DateTime  @default(now())
+  metodo_pagamento String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  userId           String?
+  user             User?     @relation("UserPagamentos", fields: [userId], references: [id])
+
+  @@map("pagamentos")
+}
+
+model User {
+  id                String        @id @default(uuid())
+  name              String
+  email             String        @unique
+  password          String
+  role              String        @default("USER")
+  language          String        @default("pt") // "pt", "en"
+  theme             String        @default("dark") // "dark", "light"
+  resetToken        String?       @unique
+  resetTokenExpires DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  funcionario       Funcionario?
+  alunos            Aluno[]       @relation("UserAlunos")
+  matriculas        Matricula[]   @relation("UserMatriculas")
+  pagamentos        Pagamento[]   @relation("UserPagamentos")
+  certificados      Certificate[] @relation("UserCertificados")
+  turmas            Turma[]       @relation("UserTurmas")
+  cursos            Curso[]       @relation("UserCursos")
+
+  @@map("users")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  usuario   String? // Name or email of the actor
+  acao      String // e.g., "CREATE_ALUNO", "UPDATE_FINANCEIRO"
+  entidade  String? // e.g., "ALUNO", "MATRICULA"
+  detalhes  String?  @db.Text // JSON with changed data
+  createdAt DateTime @default(now())
+
+  @@map("audit_logs")
+}
+
+model CertificateTemplate {
+  id        String   @id @default(uuid())
+  nome      String
+  imageUrl  String // Image of the certificate template
+  mapping   String   @db.Text // JSON with field positions
+  isDefault Boolean  @default(false)
+  cursos    Curso[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("certificate_templates")
+}
+
+model Certificate {
+  id             String    @id @default(uuid())
+  matriculaId    String    @unique
+  matricula      Matricula @relation(fields: [matriculaId], references: [id])
+  templateId     String?
+  codigo_unico   String    @unique // Verification code
+  hash_validacao String    @unique // Verification hash
+  data_emissao   DateTime  @default(now())
+  createdAt      DateTime  @default(now())
+  userId         String?
+  user           User?     @relation("UserCertificados", fields: [userId], references: [id])
+
+  @@map("certificates")
+}
+
+model Aula {
+  id         String      @id @default(uuid())
+  turmaId    String
+  turma      Turma       @relation(fields: [turmaId], references: [id], onDelete: Cascade)
+  data       DateTime
+  tema       String
+  tipo       String      @default("normal") // "normal", "prova", "trabalho"
+  presencas  Presenca[]
+  avaliacoes Avaliacao[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@map("aulas")
+}
+
+model Presenca {
+  id        String   @id @default(uuid())
+  aulaId    String
+  aula      Aula     @relation(fields: [aulaId], references: [id], onDelete: Cascade)
+  alunoId   String
+  aluno     Aluno    @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+  status    String // "Presente", "Ausente"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([aulaId, alunoId])
+  @@map("presencas")
+}
+
+model Avaliacao {
+  id          String     @id @default(uuid())
+  aulaId      String?
+  aula        Aula?      @relation(fields: [aulaId], references: [id], onDelete: SetNull)
+  matriculaId String
+  matricula   Matricula  @relation(fields: [matriculaId], references: [id], onDelete: Cascade)
+  tipo        String // "prova", "trabalho", "participacao"
+  nota        Float
+  peso        Float      @default(1.0)
+  instrutorId String?
+  instrutor   Instrutor? @relation(fields: [instrutorId], references: [id], onDelete: SetNull)
+  observacao  String?    @db.Text
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("avaliacoes")
+}
+
+// ==========================================
+// MÓDULO DE RECURSOS HUMANOS (RH)
+// ==========================================
+
+model Departamento {
+  id           String        @id @default(uuid())
+  nome         String        @unique
+  descricao    String?       @db.Text
+  funcionarios Funcionario[]
+  cargos       Cargo[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("rh_departamentos")
+}
+
+model Cargo {
+  id           String        @id @default(uuid())
+  nome         String        @unique
+  descricao    String?       @db.Text
+  salario_base Decimal?      @db.Decimal(18, 2)
+  funcionarios Funcionario[]
+
+  departamentoId String?
+  departamento   Departamento? @relation(fields: [departamentoId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("rh_cargos")
+}
+
+model Funcionario {
+  id              String    @id @default(uuid())
+  nome            String
+  bi_documento    String    @unique
+  email           String?   @unique
+  telefone        String?
+  data_nascimento DateTime?
+  genero          String?
+  nif             String?   @unique
+  iban            String? // IBAN Angolano
+  numero_inss     String?   @unique
+  hora_entrada    String? // HH:mm
+  hora_saida      String? // HH:mm
+  dias_trabalho   String? // JSON array as string: ["seg", "ter"...]
+
+  cargoId String?
+  cargo   Cargo?  @relation(fields: [cargoId], references: [id])
+
+  departamentoId String?
+  departamento   Departamento? @relation(fields: [departamentoId], references: [id])
+
+  data_admissao DateTime
+  status        String   @default("ATIVO") // ATIVO, FERIAS, LICENCA, DESLIGADO
+
+  userId String? @unique
+  user   User?   @relation(fields: [userId], references: [id])
+
+  contratos Contrato[]
+  presencas PresencaHR[]
+  folhas    FolhaPagamento[]
+  ferias    FeriasSolicitacao[]
+
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  documentos Documento[]
+
+  @@map("rh_funcionarios")
+}
+
+model Contrato {
+  id            String      @id @default(uuid())
+  funcionarioId String
+  funcionario   Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+
+  tipo                 String // DETERMINADO, INDETERMINADO, ESTAGIO
+  data_inicio          DateTime
+  data_fim             DateTime?
+  renovacao_automatica Boolean   @default(false)
+  status               String    @default("VIGENTE") // VIGENTE, ENCERRADO, CADUCADO, RENOVADO
+
+  salario_base         Decimal @db.Decimal(18, 2)
+  subsidio_alimentacao Decimal @default(0) @db.Decimal(18, 2)
+  subsidio_transporte  Decimal @default(0) @db.Decimal(18, 2)
+  subsidio_residencia  Decimal @default(0) @db.Decimal(18, 2)
+  outros_subsidios     Decimal @default(0) @db.Decimal(18, 2)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("rh_contratos")
+}
+
+model PresencaHR {
+  id            String      @id @default(uuid())
+  funcionarioId String
+  funcionario   Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+
+  data    DateTime
+  entrada DateTime?
+  saida   DateTime?
+  status  String // PRESENTE, FALTA_J, FALTA_I, FERIAS, FERIADO, LICENCA, FOLGA
+
+  horas_normais    Float @default(8)
+  horas_extras_50  Float @default(0)
+  horas_extras_100 Float @default(0)
+  horas_noturnas   Float @default(0)
+
+  observacao String?  @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([funcionarioId, data])
+  @@map("rh_presencas")
+}
+
+model FolhaPagamento {
+  id            String      @id @default(uuid())
+  funcionarioId String
+  funcionario   Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+
+  mes                Int
+  ano                Int
+  data_processamento DateTime @default(now())
+
+  salario_base                Decimal @db.Decimal(18, 2)
+  total_subsidios_tributaveis Decimal @default(0) @db.Decimal(18, 2)
+  total_subsidios_isentos     Decimal @default(0) @db.Decimal(18, 2)
+  total_horas_extras          Decimal @default(0) @db.Decimal(18, 2)
+  total_faltas                Decimal @default(0) @db.Decimal(18, 2)
+  faltas_count                Int     @default(0)
+
+  base_inss        Decimal @db.Decimal(18, 2)
+  inss_trabalhador Decimal @db.Decimal(18, 2) // 3%
+  inss_empresa     Decimal @db.Decimal(18, 2) // 8%
+
+  base_irt   Decimal @db.Decimal(18, 2)
+  irt_devido Decimal @db.Decimal(18, 2)
+
+  outros_descontos Decimal @default(0) @db.Decimal(18, 2)
+  liquido_receber  Decimal @db.Decimal(18, 2)
+
+  status    String   @default("RASCUNHO") // RASCUNHO, PROCESSADO, PAGO
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([funcionarioId, mes, ano])
+  @@map("rh_folhas_pagamento")
+}
+
+model FeriasSolicitacao {
+  id            String      @id @default(uuid())
+  funcionarioId String
+  funcionario   Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+
+  data_inicio    DateTime
+  data_fim       DateTime
+  dias_uteis     Int
+  ano_referencia Int
+  tipo           String   @default("GOZO_FERIAS") // GOZO_FERIAS, LICENCA_M, LICENCA_P, DOENCA
+  status         String   @default("PENDENTE") // PENDENTE, APROVADO, REPROVADO, CONCLUIDO
+
+  observacao String?  @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("rh_ferias_solicitacoes")
+}
+
+model ConfigRH {
+  id             String  @id @default(uuid())
+  mes_referencia Int?
+  ano_referencia Int?
+  salario_minimo Decimal @default(70000) @db.Decimal(18, 2)
+
+  // Percentagens Legais (Angola)
+  inss_trabalhador_pct Decimal @default(0.03) @db.Decimal(5, 4)
+  inss_empresa_pct     Decimal @default(0.08) @db.Decimal(5, 4)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("rh_configs")
+}
+
+model Empresa {
+  id        String   @id @default(uuid())
+  nome      String
+  nif       String?
+  endereco  String?
+  telefone  String?
+  email     String?
+  website   String?
+  logoUrl   String?
+  cidade    String?  @default("Luanda")
+  pais      String?  @default("Angola")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("empresa_config")
+}

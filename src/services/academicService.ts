@@ -27,8 +27,12 @@ export class AcademicService {
             prisma.curso.findMany({
                 select: {
                     nome: true,
-                    _count: {
-                        select: { matriculas: true }
+                    turmas: {
+                        select: {
+                            _count: {
+                                select: { matriculas: true }
+                            }
+                        }
                     }
                 }
             })
@@ -40,9 +44,9 @@ export class AcademicService {
             totalTurmasAtivas,
             totalInstrutores,
             recentMatriculas,
-            matriculasPorCurso: matriculasPorCurso.map((c: { nome: any; _count: { matriculas: any; }; }) => ({
+            matriculasPorCurso: matriculasPorCurso.map((c: any) => ({
                 curso: c.nome,
-                total: c._count.matriculas
+                total: c.turmas.reduce((acc: number, t: any) => acc + (t._count?.matriculas || 0), 0)
             }))
         };
     }

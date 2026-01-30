@@ -64,19 +64,22 @@ async function PUTHandler(
             )
         }
 
+        const { empresaId, data_nascimento, ...rest } = result.data
+
+        const updateData: any = {
+            ...rest,
+            data_nascimento: new Date(data_nascimento)
+        }
+
+        if (empresaId) {
+            updateData.empresa = { connect: { id: empresaId } }
+        } else {
+            updateData.empresa = { disconnect: true }
+        }
+
         const aluno = await prisma.aluno.update({
             where: { id },
-            data: {
-                nome_completo: data.nome_completo,
-                bi_documento: data.bi_documento,
-                data_nascimento: data.data_nascimento,
-                genero: data.genero,
-                telefone: data.telefone,
-                email: data.email,
-                Endereco: data.Endereco,
-                escolaAcademica: data.escolaAcademica,
-                escolaridade: data.escolaridade
-            }
+            data: updateData
         })
 
         return NextResponse.json(aluno)

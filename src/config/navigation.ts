@@ -81,6 +81,7 @@ export const getNavigation = (t: (key: string) => string): NavigationModule[] =>
                 name: 'Administrativo',
                 items: [
                     { name: t('sidebar.enrollments'), href: '/matriculas', icon: ClipboardList },
+                    { name: t('sidebar.corporate_clients'), href: '/empresas-clientes', icon: Building2 },
                     { name: t('sidebar.certificates'), href: '/certificados', icon: Award },
                 ]
             }

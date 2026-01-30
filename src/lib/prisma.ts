@@ -1,19 +1,13 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/client'
 
-const globalForPrisma = global as unknown as {
-    prisma: PrismaClient,
-    extendedPrisma?: any
-}
+const prismaBase = new PrismaClient()
 
-const prismaClient = globalForPrisma.prisma || new PrismaClient()
+export const PRISMA_VERSION_ID = 'final_v4_clean';
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prismaClient
-
-export const prisma = globalForPrisma.extendedPrisma || prismaClient.$extends({
+export const prisma = prismaBase.$extends({
     query: {
         $allModels: {
             async $allOperations({ model, operation, args, query }) {
-                // Mutating operations to track
                 const mutatedOps = [
                     'create', 'update', 'upsert', 'delete',
                     'createMany', 'updateMany', 'deleteMany',
@@ -23,7 +17,6 @@ export const prisma = globalForPrisma.extendedPrisma || prismaClient.$extends({
                 const result = await query(args)
 
                 if (mutatedOps.includes(operation) && model !== 'AuditLog') {
-                    // Log asynchronously to not block the response
                     (async () => {
                         try {
                             const { getServerSession } = await import('next-auth')
@@ -31,7 +24,6 @@ export const prisma = globalForPrisma.extendedPrisma || prismaClient.$extends({
                             const session: any = await getServerSession(authOptions).catch(() => null)
 
                             const detailsObj = JSON.parse(JSON.stringify({ args }))
-                            // Redigir campos sensíveis
                             const sensitiveFields = ['password', 'senha', 'token', 'secret']
                             const sanitize = (obj: any) => {
                                 if (!obj || typeof obj !== 'object') return
@@ -50,7 +42,7 @@ export const prisma = globalForPrisma.extendedPrisma || prismaClient.$extends({
                                 ? detailsStr.substring(0, 50000) + "... [truncated due to size]"
                                 : detailsStr
 
-                            await prismaClient.auditLog.create({
+                            await prismaBase.auditLog.create({
                                 data: {
                                     userId: session?.user?.id || null,
                                     usuario: session?.user?.email || session?.user?.name || 'Sistema',
@@ -70,5 +62,3 @@ export const prisma = globalForPrisma.extendedPrisma || prismaClient.$extends({
         }
     }
 })
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.extendedPrisma = prisma

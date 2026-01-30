@@ -32,11 +32,19 @@ async function POSTHandler(request: NextRequest) {
             }, { status: 400 })
         }
 
-        const aluno = await alunoService.create({
-            ...validation.data,
-            data_nascimento: new Date(validation.data.data_nascimento),
-            email: validation.data.email || null,
-        }, user?.id)
+        const { empresaId, data_nascimento, email, ...rest } = validation.data
+
+        const createData: any = {
+            ...rest,
+            data_nascimento: new Date(data_nascimento),
+            email: email || null,
+        }
+
+        if (empresaId) {
+            createData.empresa = { connect: { id: empresaId } }
+        }
+
+        const aluno = await alunoService.create(createData, user?.id)
 
         return NextResponse.json(aluno)
     } catch (error: any) {

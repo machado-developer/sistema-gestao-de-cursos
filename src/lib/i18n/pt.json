@@ -40,6 +40,7 @@
         "classes": "Turmas",
         "courses": "Cursos",
         "enrollments": "Matrículas",
+        "corporate_clients": "Empresas Clientes",
         "finance": "Financeiro",
         "certificates": "Certificados",
         "instructors": "Instrutores",
@@ -160,6 +161,19 @@
         "certificates": {
             "title": "Certificados",
             "subtitle": "Emissão de diplomas e certificados"
+        },
+        "corporate": {
+            "title": "Empresas Clientes",
+            "subtitle": "Gestão de empresas e funcionários externos",
+            "new": "Nova Empresa",
+            "no_companies": "Nenhuma empresa registada.",
+            "table": {
+                "company": "Empresa",
+                "employees": "Funcionários",
+                "total_to_pay": "Total a Pagar",
+                "total_paid": "Total Pago",
+                "balance": "Saldo Devedor"
+            }
         }
     },
     "dashboard": {

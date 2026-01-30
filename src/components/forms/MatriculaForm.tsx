@@ -22,6 +22,7 @@ export function MatriculaForm() {
     const [loading, setLoading] = useState(false)
     const [alunos, setAlunos] = useState<{ id: string, nome_completo: string }[]>([])
     const [turmas, setTurmas] = useState<{ id: string, codigo_turma: string, curso: { nome: string, preco_base: number } }[]>([])
+    const [empresas, setEmpresas] = useState<{ id: string, nome: string }[]>([])
 
     const {
         register,
@@ -35,6 +36,7 @@ export function MatriculaForm() {
         defaultValues: {
             alunoId: '',
             turmaId: '',
+            empresaId: '',
             valor_total: 0,
             desconto: 0
         }
@@ -42,18 +44,21 @@ export function MatriculaForm() {
 
     const selectedTurmaId = watch('turmaId')
     const selectedAlunoId = watch('alunoId')
+    const selectedEmpresaId = watch('empresaId')
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [alunosRes, turmasRes] = await Promise.all([
+                const [alunosRes, turmasRes, empresasRes] = await Promise.all([
                     fetch('/api/alunos').then(r => r.json()),
-                    fetch('/api/turmas').then(r => r.json())
+                    fetch('/api/turmas').then(r => r.json()),
+                    fetch('/api/empresas-clientes').then(r => r.json())
                 ])
                 setAlunos(alunosRes)
                 setTurmas(turmasRes)
+                setEmpresas(empresasRes)
             } catch (err) {
-                toast.error('Erro de Conexão', { description: 'Não foi possível carregar os dados de alunos e turmas.' })
+                toast.error('Erro de Conexão', { description: 'Não foi possível carregar os dados necessários.' })
             }
         }
         fetchData()
@@ -147,6 +152,17 @@ export function MatriculaForm() {
                                 }))
                             ]}
                             error={errors.turmaId?.message}
+                        />
+
+                        <Select
+                            label="Empresa Responsável (Opcional)"
+                            value={selectedEmpresaId || ''}
+                            onChange={(val) => setValue('empresaId', val)}
+                            options={[
+                                { value: '', label: 'Formação Particular (Aluno Paga)' },
+                                ...empresas.map(e => ({ value: e.id, label: e.nome }))
+                            ]}
+                            error={errors.empresaId?.message}
                         />
 
                         <div className="pt-4">

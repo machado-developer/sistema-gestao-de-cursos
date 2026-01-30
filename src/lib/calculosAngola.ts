@@ -29,33 +29,30 @@ export function calcularINSS(base: number) {
 
 /**
  * Calcula o IRT (Imposto sobre o Rendimento do Trabalho) 
- * Baseado na tabela de IRT de Angola (Lei 12/23 e regulamentos atuais)
+ * Baseado na tabela de IRT de Angola conforme Lei n.º 14/25 (Tabela 2026)
  */
 export function calcularIRT(valor: number): number {
-    if (valor <= 70000) return 0;
+    const escaloes = [
+        { limite: 150000, fixa: 0, taxa: 0, excesso: 0 },
+        { limite: 200000, fixa: 12500, taxa: 0.16, excesso: 150000 },
+        { limite: 300000, fixa: 31250, taxa: 0.18, excesso: 200000 },
+        { limite: 500000, fixa: 49250, taxa: 0.19, excesso: 300000 },
+        { limite: 1000000, fixa: 87250, taxa: 0.20, excesso: 500000 },
+        { limite: 1500000, fixa: 187250, taxa: 0.21, excesso: 1000000 },
+        { limite: 2000000, fixa: 292250, taxa: 0.22, excesso: 1500000 },
+        { limite: 2500000, fixa: 402250, taxa: 0.23, excesso: 2000000 },
+        { limite: 5000000, fixa: 517250, taxa: 0.24, excesso: 2500000 },
+        { limite: 10000000, fixa: 1117250, taxa: 0.245, excesso: 5000000 },
+        { limite: Infinity, fixa: 2342250, taxa: 0.25, excesso: 10000000 },
+    ];
 
-    let imposto = 0;
+    // Se o valor for menor ou igual ao limite de isenção
+    if (valor <= 150000) return 0;
 
-    if (valor > 70000) {
-        const excesso = Math.min(valor, 100000) - 70000;
-        imposto += excesso * 0.10;
-    }
-    if (valor > 100000) {
-        const excesso = Math.min(valor, 150000) - 100000;
-        imposto += excesso * 0.13;
-    }
-    if (valor > 150000) {
-        const excesso = Math.min(valor, 200000) - 150000;
-        imposto += excesso * 0.16;
-    }
-    if (valor > 200000) {
-        const excesso = Math.min(valor, 300000) - 200000;
-        imposto += excesso * 0.18;
-    }
-    if (valor > 300000) {
-        const excesso = valor - 300000;
-        imposto += excesso * 0.19;
-    }
+    // Encontra o escalão correspondente
+    const escalao = escaloes.find(e => valor <= e.limite) || escaloes[escaloes.length - 1];
+
+    const imposto = escalao.fixa + (valor - escalao.excesso) * escalao.taxa;
 
     return Math.round(imposto * 100) / 100;
 }

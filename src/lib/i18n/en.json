@@ -40,6 +40,7 @@
         "classes": "Classes",
         "courses": "Courses",
         "enrollments": "Enrollments",
+        "corporate_clients": "Corporate Clients",
         "finance": "Finance",
         "certificates": "Certificates",
         "instructors": "Instructors",
@@ -160,6 +161,19 @@
         "certificates": {
             "title": "Certificates",
             "subtitle": "Diploma and certificate issuance"
+        },
+        "corporate": {
+            "title": "Corporate Clients",
+            "subtitle": "Management of companies and external employees",
+            "new": "New Company",
+            "no_companies": "No companies registered.",
+            "table": {
+                "company": "Company",
+                "employees": "Employees",
+                "total_to_pay": "Total to Pay",
+                "total_paid": "Total Paid",
+                "balance": "Outstanding Balance"
+            }
         }
     },
     "dashboard": {

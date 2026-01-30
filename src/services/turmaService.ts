@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { Prisma } from '@prisma/client'
+import { Prisma } from '@/generated/client'
 
 export const turmaService = {
     async create(data: Prisma.TurmaCreateInput) {

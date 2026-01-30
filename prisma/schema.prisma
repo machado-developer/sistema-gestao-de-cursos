@@ -1,5 +1,6 @@
 generator client {
     provider = "prisma-client-js"
+    output   = "../src/generated/client"
 }
 
 datasource db {
@@ -27,7 +28,26 @@ model Aluno {
     userId          String?
     user            User?       @relation("UserAlunos", fields: [userId], references: [id])
 
+    empresaId String?
+    empresa   EmpresaCliente? @relation(fields: [empresaId], references: [id])
+
     @@map("alunos")
+}
+
+model EmpresaCliente {
+    id          String      @id @default(uuid())
+    nome        String
+    nif         String?     @unique
+    email       String?
+    telefone    String?
+    endereco    String?
+    responsavel String?
+    alunos      Aluno[]
+    matriculas  Matricula[]
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+
+    @@map("empresas_clientes")
 }
 
 model Documento {
@@ -102,24 +122,26 @@ model Turma {
 }
 
 model Matricula {
-    id                    String       @id @default(uuid())
+    id                    String          @id @default(uuid())
     alunoId               String
-    aluno                 Aluno        @relation(fields: [alunoId], references: [id])
+    aluno                 Aluno           @relation(fields: [alunoId], references: [id])
     turmaId               String
-    turma                 Turma        @relation(fields: [turmaId], references: [id])
+    turma                 Turma           @relation(fields: [turmaId], references: [id])
     avaliacoes            Avaliacao[]
     media_final           Float?
     percentual_frequencia Float?
-    status_academico      String       @default("Cursando") // "Cursando", "Aprovado", "Reprovado"
+    status_academico      String          @default("Cursando") // "Cursando", "Aprovado", "Reprovado"
     valor_total           Decimal
-    valor_pago            Decimal      @default(0)
-    estado_pagamento      String       @default("Pendente") // "Pendente", "Parcial", "Pago", "Isento"
+    valor_pago            Decimal         @default(0)
+    estado_pagamento      String          @default("Pendente") // "Pendente", "Parcial", "Pago", "Isento"
     pagamentos            Pagamento[]
-    createdAt             DateTime     @default(now())
-    updatedAt             DateTime     @updatedAt
+    createdAt             DateTime        @default(now())
+    updatedAt             DateTime        @updatedAt
     certificate           Certificate?
     userId                String?
-    user                  User?        @relation("UserMatriculas", fields: [userId], references: [id])
+    user                  User?           @relation("UserMatriculas", fields: [userId], references: [id])
+    empresaCliente        EmpresaCliente? @relation(fields: [empresaClienteId], references: [id])
+    empresaClienteId      String?
 
     @@map("matriculas")
 }
