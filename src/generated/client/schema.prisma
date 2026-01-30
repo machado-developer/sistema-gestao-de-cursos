@@ -289,7 +289,7 @@ model Departamento {
 
 model Cargo {
   id           String        @id @default(uuid())
-  nome         String        @unique
+  nome         String
   descricao    String?       @db.Text
   salario_base Decimal?      @db.Decimal(18, 2)
   funcionarios Funcionario[]
@@ -300,6 +300,7 @@ model Cargo {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([nome, departamentoId])
   @@map("rh_cargos")
 }
 

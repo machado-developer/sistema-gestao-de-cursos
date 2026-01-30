@@ -29035,10 +29035,11 @@ export namespace Prisma {
 
   export type CargoWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    nome?: string
+    nome_departamentoId?: CargoNomeDepartamentoIdCompoundUniqueInput
     AND?: CargoWhereInput | CargoWhereInput[]
     OR?: CargoWhereInput[]
     NOT?: CargoWhereInput | CargoWhereInput[]
+    nome?: StringFilter<"Cargo"> | string
     descricao?: StringNullableFilter<"Cargo"> | string | null
     salario_base?: DecimalNullableFilter<"Cargo"> | Decimal | DecimalJsLike | number | string | null
     departamentoId?: StringNullableFilter<"Cargo"> | string | null
@@ -29046,7 +29047,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Cargo"> | Date | string
     funcionarios?: FuncionarioListRelationFilter
     departamento?: XOR<DepartamentoNullableRelationFilter, DepartamentoWhereInput> | null
-  }, "id" | "nome">
+  }, "id" | "nome_departamentoId">
 
   export type CargoOrderByWithAggregationInput = {
     id?: SortOrder
@@ -33237,6 +33238,11 @@ export namespace Prisma {
   export type DepartamentoNullableRelationFilter = {
     is?: DepartamentoWhereInput | null
     isNot?: DepartamentoWhereInput | null
+  }
+
+  export type CargoNomeDepartamentoIdCompoundUniqueInput = {
+    nome: string
+    departamentoId: string
   }
 
   export type CargoCountOrderByAggregateInput = {
