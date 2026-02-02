@@ -4,9 +4,9 @@ import { InstrutorProfileClient } from './InstrutorProfileClient'
 import { serializePrisma } from '@/lib/utils'
 
 interface InstrutorProfilePageProps {
-    params: {
+    params: Promise<{
         id: string
-    }
+    }>
 }
 
 export const dynamic = 'force-dynamic'
