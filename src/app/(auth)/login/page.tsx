@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema } from '@/lib/schemas'
@@ -16,16 +16,35 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
     const router = useRouter()
+    const searchParams = useSearchParams()
     const [serverError, setServerError] = useState<string | null>(null)
     const [showPassword, setShowPassword] = useState(false)
 
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors, isSubmitting }
     } = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema)
     })
+
+    useEffect(() => {
+        const email = searchParams.get('email')
+        const password = searchParams.get('password')
+
+        if (email || password) {
+            if (email) setValue('email', email)
+            if (password) setValue('password', password)
+
+            // Limpa a URL imediatamente para esconder as credenciais
+            router.replace('/login')
+
+            if (email && password) {
+                handleSubmit(onSubmit)()
+            }
+        }
+    }, [searchParams, setValue, handleSubmit, router])
 
     async function onSubmit(data: LoginFormData) {
         setServerError(null)

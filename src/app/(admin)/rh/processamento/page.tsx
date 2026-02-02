@@ -195,19 +195,19 @@ export default function ProcessamentoPage() {
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
             {/* Header */}
-            <div className="border-b-2 border-[var(--border-color)] pb-4 flex justify-between items-end">
+            <div className="border-b-2 border-[var(--border-color)] pb-4 flex flex-col xl:flex-row justify-between items-start xl:items-end gap-6">
                 <div>
                     <h1 className="text-xl font-black text-app-text tracking-tighter uppercase leading-none mb-1">
                         Gestão de Processamento Salarial
                     </h1>
                     <p className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest leading-none">Calculo Integral • Legislação Angolana 🇦🇴</p>
                 </div>
-                <div className="flex items-center gap-3">
-                    <div className="flex gap-1">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full xl:w-auto">
+                    <div className="flex gap-1 w-full sm:w-auto">
                         <select
                             value={mes}
                             onChange={(e) => setMes(Number(e.target.value))}
-                            className="h-9 px-3 bg-[var(--surface-color)] border-2 border-[var(--border-color)] rounded-md text-[10px] font-black uppercase tracking-widest text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="h-9 px-3 bg-[var(--surface-color)] border-2 border-[var(--border-color)] rounded-md text-[10px] font-black uppercase tracking-widest text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 sm:flex-none"
                         >
                             {meses.map(m => <option key={m.value} value={m.value} className="bg-[var(--card-bg)] text-[var(--text-primary)]">{m.label.toUpperCase()}</option>)}
                         </select>
@@ -220,21 +220,23 @@ export default function ProcessamentoPage() {
                         </select>
                     </div>
 
-                    <Select
-                        options={exportOptions}
-                        placeholder="Exportar Dados..."
-                        onChange={handleExport}
-                        className="w-48 h-9 [&>button]:h-9 [&>button]:text-[10px] [&>button]:font-black [&>button]:uppercase"
-                    />
+                    <div className="flex gap-2 w-full sm:w-auto">
+                        <Select
+                            options={exportOptions}
+                            placeholder="Exportar Dados..."
+                            onChange={handleExport}
+                            className="w-full sm:w-48 h-9 [&>button]:h-9 [&>button]:text-[10px] [&>button]:font-black [&>button]:uppercase"
+                        />
 
-                    <Button
-                        onClick={handleProcessar}
-                        disabled={loading}
-                        className="bg-blue-600 h-9 px-6 text-[10px] font-black uppercase tracking-widest border-b-2 border-blue-800 gap-2"
-                    >
-                        {loading ? <Loader2 className="animate-spin" size={16} /> : <Play size={16} />}
-                        {loading ? "PROCESSANDO..." : "EXECUTAR FOLHA"}
-                    </Button>
+                        <Button
+                            onClick={handleProcessar}
+                            disabled={loading}
+                            className="bg-blue-600 h-9 px-6 text-[10px] font-black uppercase tracking-widest border-b-2 border-blue-800 gap-2 flex-1 sm:flex-none"
+                        >
+                            {loading ? <Loader2 className="animate-spin" size={16} /> : <Play size={16} />}
+                            {loading ? "..." : "EXECUTAR"}
+                        </Button>
+                    </div>
                 </div>
             </div>
 

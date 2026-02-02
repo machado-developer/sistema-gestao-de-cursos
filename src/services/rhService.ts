@@ -407,6 +407,18 @@ export class RHService {
                 if (p.status === "FALTA_I") totalFaltas++;
             });
 
+            // Buscar adiantamentos aprovados
+            const adiantamentos = await prisma.adiantamentoSalario.findMany({
+                where: {
+                    funcionarioId: func.id,
+                    mes_referencia: mes,
+                    ano_referencia: ano,
+                    status: "APROVADO"
+                }
+            });
+
+            const totalAdiantamentos = adiantamentos.reduce((acc: number, curr: { valor: any; }) => acc + Number(curr.valor), 0);
+
             // Executar cálculo angolano (Lei 12/23)
             const calc = processarSalarioMensal({
                 salarioBase: Number(contrato.salario_base),
@@ -415,7 +427,8 @@ export class RHService {
                 horasExtrasNormais: totalHENormais,
                 horasExtrasDescanso: totalHEDescanso,
                 horasNoturnas: totalNoturnas,
-                faltasNaoJustificadas: totalFaltas
+                faltasNaoJustificadas: totalFaltas,
+                totalAdiantamentos
             });
 
             // Persistir folha
@@ -440,6 +453,7 @@ export class RHService {
                     base_irt: calc.baseIrt,
                     irt_devido: calc.irt,
                     liquido_receber: calc.liquido,
+                    total_adiantamentos: totalAdiantamentos,
                     status: "PROCESSADO"
                 },
                 create: {
@@ -458,9 +472,18 @@ export class RHService {
                     base_irt: calc.baseIrt,
                     irt_devido: calc.irt,
                     liquido_receber: calc.liquido,
+                    total_adiantamentos: totalAdiantamentos,
                     status: "PROCESSADO"
                 }
             });
+
+            // Atualizar status dos adiantamentos para PROCESSADO
+            if (totalAdiantamentos > 0) {
+                await prisma.adiantamentoSalario.updateMany({
+                    where: { id: { in: adiantamentos.map((a: { id: any; }) => a.id) } },
+                    data: { status: "PROCESSADO" }
+                });
+            }
 
             resultados.push(folha);
         }
@@ -736,5 +759,55 @@ export class RHService {
         });
 
         return { faltas };
+    }
+    // --- Adiantamentos Salariais ---
+
+    static async solicitarAdiantamento(dados: {
+        funcionarioId: string;
+        valor: number;
+        mes_referencia: number;
+        ano_referencia: number;
+        motivo?: string;
+    }) {
+        return await prisma.adiantamentoSalario.create({
+            data: {
+                ...dados,
+                valor: Number(dados.valor)
+            }
+        });
+    }
+
+    static async listarAdiantamentos(filtros?: {
+        funcionarioId?: string;
+        status?: string;
+        mes?: number;
+        ano?: number;
+    }) {
+        const where: any = {};
+        if (filtros?.funcionarioId) where.funcionarioId = filtros.funcionarioId;
+        if (filtros?.status) where.status = filtros.status;
+        if (filtros?.mes) where.mes_referencia = filtros.mes;
+        if (filtros?.ano) where.ano_referencia = filtros.ano;
+
+        return await prisma.adiantamentoSalario.findMany({
+            where,
+            include: {
+                funcionario: {
+                    select: {
+                        nome: true,
+                        cargo: { select: { nome: true } },
+                        departamento: { select: { nome: true } }
+                    }
+                }
+            },
+            orderBy: { createdAt: 'desc' }
+        });
+    }
+
+    static async atualizarStatusAdiantamento(id: string, status: string, observacao?: string) {
+        return await prisma.adiantamentoSalario.update({
+            where: { id },
+            data: { status, observacao }
+        });
     }
 }

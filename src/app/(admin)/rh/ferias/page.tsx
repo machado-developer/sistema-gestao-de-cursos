@@ -234,7 +234,7 @@ export default function FeriasPage() {
     return (
         <div className="p-1 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
             {/* Header */}
-            <div className="border-b-2 border-slate-200 dark:border-zinc-800 pb-2 flex justify-between items-end">
+            <div className="border-b-2 border-slate-200 dark:border-zinc-800 pb-2 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
                 <div>
                     <h1 className="text-2xl font-semibold text-slate-900 dark:text-white tracking-tight">
                         Gestão de Férias e Ausências

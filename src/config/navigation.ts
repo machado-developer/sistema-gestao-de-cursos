@@ -16,6 +16,7 @@ import {
     Network,
     Building2,
     Briefcase,
+    Banknote,
     UserCog
 } from 'lucide-react'
 
@@ -115,6 +116,7 @@ export const getNavigation = (t: (key: string) => string): NavigationModule[] =>
                     { name: 'Gestão de Contratos', href: '/rh/contratos', icon: FileSignature },
                     { name: 'Presenças', href: '/rh/presencas', icon: ClipboardList },
                     { name: 'Processamento', href: '/rh/processamento', icon: Calculator },
+                    { name: 'Adiantamentos', href: '/rh/adiantamentos', icon: Banknote },
                     { name: 'Relatórios Legais', href: '/rh/relatorios', icon: BarChart3 },
                     { name: 'Férias e Licenças', href: '/rh/ferias', icon: Umbrella },
                 ]

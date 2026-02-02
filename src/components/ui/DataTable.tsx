@@ -35,58 +35,97 @@ export function DataTable<T>({
     return (
         <div className="space-y-4">
             <div className={`glass-card border border-[var(--border-color)] overflow-hidden ${className}`}>
-                <div className="overflow-x-auto relative">
+                <div className="relative">
                     {loading && (
-                        <div className="absolute inset-0 bg-white/50 dark:bg-black/50 backdrop-blur-[2px] z-10 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-white/50 dark:bg-black/50 backdrop-blur-[2px] z-10 flex items-center justify-center h-full min-h-[200px]">
                             <div className="flex flex-col items-center gap-2">
                                 <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
                                 <span className="text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]">Sincronizando...</span>
                             </div>
                         </div>
                     )}
-                    <table className="w-full text-left min-w-[1000px]">
-                        <thead>
-                            <tr className="border-b border-[var(--border-color)] bg-[var(--surface-color)] text-[var(--text-secondary)] text-xs uppercase tracking-wider">
-                                {columns.map((column) => (
-                                    <th
-                                        key={column.key}
-                                        className={`px-6 py-4 font-medium ${column.className || ''}`}
-                                    >
-                                        {column.header}
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-[var(--border-color)] text-sm text-[var(--text-primary)]">
-                            {data.length > 0 ? (
-                                data.map((item) => (
-                                    <tr
+
+                    {/* Desktop View: Table */}
+                    <div className="hidden md:block overflow-x-auto">
+                        <table className="w-full text-left min-w-[1000px]">
+                            <thead>
+                                <tr className="border-b border-[var(--border-color)] bg-[var(--surface-color)] text-[var(--text-secondary)] text-xs uppercase tracking-wider">
+                                    {columns.map((column) => (
+                                        <th
+                                            key={column.key}
+                                            className={`px-6 py-4 font-medium ${column.className || ''}`}
+                                        >
+                                            {column.header}
+                                        </th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-[var(--border-color)] text-sm text-[var(--text-primary)]">
+                                {data.length > 0 ? (
+                                    data.map((item) => (
+                                        <tr
+                                            key={keyExtractor(item)}
+                                            className="hover:bg-[var(--surface-hover)] transition-colors"
+                                        >
+                                            {columns.map((column) => (
+                                                <td
+                                                    key={column.key}
+                                                    className={`px-6 py-4 ${column.className || ''}`}
+                                                >
+                                                    {column.render(item)}
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={columns.length} className="px-6 py-20">
+                                            {emptyState || (
+                                                <div className="text-center text-[var(--text-muted)]">
+                                                    Nenhum resultado encontrado.
+                                                </div>
+                                            )}
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {/* Mobile View: Cards */}
+                    <div className="md:hidden">
+                        {data.length > 0 ? (
+                            <div className="divide-y divide-[var(--border-color)]">
+                                {data.map((item) => (
+                                    <div
                                         key={keyExtractor(item)}
-                                        className="hover:bg-[var(--surface-hover)] transition-colors"
+                                        className="p-4 space-y-3 bg-[var(--card-bg)]"
                                     >
                                         {columns.map((column) => (
-                                            <td
-                                                key={column.key}
-                                                className={`px-6 py-4 ${column.className || ''}`}
-                                            >
-                                                {column.render(item)}
-                                            </td>
-                                        ))}
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan={columns.length} className="px-6 py-20">
-                                        {emptyState || (
-                                            <div className="text-center text-[var(--text-muted)]">
-                                                Nenhum resultado encontrado.
+                                            <div key={column.key} className="flex flex-col gap-1">
+                                                {column.header && (
+                                                    <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">
+                                                        {column.header}
+                                                    </span>
+                                                )}
+                                                <div className={column.className}>
+                                                    {column.render(item)}
+                                                </div>
                                             </div>
-                                        )}
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="p-12">
+                                {emptyState || (
+                                    <div className="text-center text-[var(--text-muted)]">
+                                        Nenhum resultado encontrado.
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 

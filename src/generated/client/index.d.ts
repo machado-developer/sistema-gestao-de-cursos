@@ -133,6 +133,11 @@ export type ConfigRH = $Result.DefaultSelection<Prisma.$ConfigRHPayload>
  * 
  */
 export type Empresa = $Result.DefaultSelection<Prisma.$EmpresaPayload>
+/**
+ * Model AdiantamentoSalario
+ * 
+ */
+export type AdiantamentoSalario = $Result.DefaultSelection<Prisma.$AdiantamentoSalarioPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -496,6 +501,16 @@ export class PrismaClient<
     * ```
     */
   get empresa(): Prisma.EmpresaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.adiantamentoSalario`: Exposes CRUD operations for the **AdiantamentoSalario** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AdiantamentoSalarios
+    * const adiantamentoSalarios = await prisma.adiantamentoSalario.findMany()
+    * ```
+    */
+  get adiantamentoSalario(): Prisma.AdiantamentoSalarioDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -960,7 +975,8 @@ export namespace Prisma {
     FolhaPagamento: 'FolhaPagamento',
     FeriasSolicitacao: 'FeriasSolicitacao',
     ConfigRH: 'ConfigRH',
-    Empresa: 'Empresa'
+    Empresa: 'Empresa',
+    AdiantamentoSalario: 'AdiantamentoSalario'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -976,7 +992,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "aluno" | "empresaCliente" | "documento" | "curso" | "instrutor" | "turma" | "matricula" | "pagamento" | "user" | "auditLog" | "certificateTemplate" | "certificate" | "aula" | "presenca" | "avaliacao" | "departamento" | "cargo" | "funcionario" | "contrato" | "presencaHR" | "folhaPagamento" | "feriasSolicitacao" | "configRH" | "empresa"
+      modelProps: "aluno" | "empresaCliente" | "documento" | "curso" | "instrutor" | "turma" | "matricula" | "pagamento" | "user" | "auditLog" | "certificateTemplate" | "certificate" | "aula" | "presenca" | "avaliacao" | "departamento" | "cargo" | "funcionario" | "contrato" | "presencaHR" | "folhaPagamento" | "feriasSolicitacao" | "configRH" | "empresa" | "adiantamentoSalario"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2564,6 +2580,72 @@ export namespace Prisma {
           }
         }
       }
+      AdiantamentoSalario: {
+        payload: Prisma.$AdiantamentoSalarioPayload<ExtArgs>
+        fields: Prisma.AdiantamentoSalarioFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AdiantamentoSalarioFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdiantamentoSalarioPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AdiantamentoSalarioFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdiantamentoSalarioPayload>
+          }
+          findFirst: {
+            args: Prisma.AdiantamentoSalarioFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdiantamentoSalarioPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AdiantamentoSalarioFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdiantamentoSalarioPayload>
+          }
+          findMany: {
+            args: Prisma.AdiantamentoSalarioFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdiantamentoSalarioPayload>[]
+          }
+          create: {
+            args: Prisma.AdiantamentoSalarioCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdiantamentoSalarioPayload>
+          }
+          createMany: {
+            args: Prisma.AdiantamentoSalarioCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.AdiantamentoSalarioDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdiantamentoSalarioPayload>
+          }
+          update: {
+            args: Prisma.AdiantamentoSalarioUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdiantamentoSalarioPayload>
+          }
+          deleteMany: {
+            args: Prisma.AdiantamentoSalarioDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AdiantamentoSalarioUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.AdiantamentoSalarioUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdiantamentoSalarioPayload>
+          }
+          aggregate: {
+            args: Prisma.AdiantamentoSalarioAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAdiantamentoSalario>
+          }
+          groupBy: {
+            args: Prisma.AdiantamentoSalarioGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AdiantamentoSalarioGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AdiantamentoSalarioCountArgs<ExtArgs>
+            result: $Utils.Optional<AdiantamentoSalarioCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3187,6 +3269,7 @@ export namespace Prisma {
     presencas: number
     folhas: number
     ferias: number
+    adiantamentos: number
     documentos: number
   }
 
@@ -3195,6 +3278,7 @@ export namespace Prisma {
     presencas?: boolean | FuncionarioCountOutputTypeCountPresencasArgs
     folhas?: boolean | FuncionarioCountOutputTypeCountFolhasArgs
     ferias?: boolean | FuncionarioCountOutputTypeCountFeriasArgs
+    adiantamentos?: boolean | FuncionarioCountOutputTypeCountAdiantamentosArgs
     documentos?: boolean | FuncionarioCountOutputTypeCountDocumentosArgs
   }
 
@@ -3235,6 +3319,13 @@ export namespace Prisma {
    */
   export type FuncionarioCountOutputTypeCountFeriasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FeriasSolicitacaoWhereInput
+  }
+
+  /**
+   * FuncionarioCountOutputType without action
+   */
+  export type FuncionarioCountOutputTypeCountAdiantamentosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdiantamentoSalarioWhereInput
   }
 
   /**
@@ -20298,6 +20389,7 @@ export namespace Prisma {
     presencas?: boolean | Funcionario$presencasArgs<ExtArgs>
     folhas?: boolean | Funcionario$folhasArgs<ExtArgs>
     ferias?: boolean | Funcionario$feriasArgs<ExtArgs>
+    adiantamentos?: boolean | Funcionario$adiantamentosArgs<ExtArgs>
     documentos?: boolean | Funcionario$documentosArgs<ExtArgs>
     _count?: boolean | FuncionarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["funcionario"]>
@@ -20334,6 +20426,7 @@ export namespace Prisma {
     presencas?: boolean | Funcionario$presencasArgs<ExtArgs>
     folhas?: boolean | Funcionario$folhasArgs<ExtArgs>
     ferias?: boolean | Funcionario$feriasArgs<ExtArgs>
+    adiantamentos?: boolean | Funcionario$adiantamentosArgs<ExtArgs>
     documentos?: boolean | Funcionario$documentosArgs<ExtArgs>
     _count?: boolean | FuncionarioCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -20348,6 +20441,7 @@ export namespace Prisma {
       presencas: Prisma.$PresencaHRPayload<ExtArgs>[]
       folhas: Prisma.$FolhaPagamentoPayload<ExtArgs>[]
       ferias: Prisma.$FeriasSolicitacaoPayload<ExtArgs>[]
+      adiantamentos: Prisma.$AdiantamentoSalarioPayload<ExtArgs>[]
       documentos: Prisma.$DocumentoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -20718,6 +20812,7 @@ export namespace Prisma {
     presencas<T extends Funcionario$presencasArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$presencasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PresencaHRPayload<ExtArgs>, T, "findMany"> | Null>
     folhas<T extends Funcionario$folhasArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$folhasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolhaPagamentoPayload<ExtArgs>, T, "findMany"> | Null>
     ferias<T extends Funcionario$feriasArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$feriasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeriasSolicitacaoPayload<ExtArgs>, T, "findMany"> | Null>
+    adiantamentos<T extends Funcionario$adiantamentosArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$adiantamentosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "findMany"> | Null>
     documentos<T extends Funcionario$documentosArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$documentosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentoPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -21189,6 +21284,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FeriasSolicitacaoScalarFieldEnum | FeriasSolicitacaoScalarFieldEnum[]
+  }
+
+  /**
+   * Funcionario.adiantamentos
+   */
+  export type Funcionario$adiantamentosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdiantamentoSalario
+     */
+    select?: AdiantamentoSalarioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdiantamentoSalarioInclude<ExtArgs> | null
+    where?: AdiantamentoSalarioWhereInput
+    orderBy?: AdiantamentoSalarioOrderByWithRelationInput | AdiantamentoSalarioOrderByWithRelationInput[]
+    cursor?: AdiantamentoSalarioWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdiantamentoSalarioScalarFieldEnum | AdiantamentoSalarioScalarFieldEnum[]
   }
 
   /**
@@ -23294,6 +23409,7 @@ export namespace Prisma {
     base_irt: Decimal | null
     irt_devido: Decimal | null
     outros_descontos: Decimal | null
+    total_adiantamentos: Decimal | null
     liquido_receber: Decimal | null
   }
 
@@ -23312,6 +23428,7 @@ export namespace Prisma {
     base_irt: Decimal | null
     irt_devido: Decimal | null
     outros_descontos: Decimal | null
+    total_adiantamentos: Decimal | null
     liquido_receber: Decimal | null
   }
 
@@ -23333,6 +23450,7 @@ export namespace Prisma {
     base_irt: Decimal | null
     irt_devido: Decimal | null
     outros_descontos: Decimal | null
+    total_adiantamentos: Decimal | null
     liquido_receber: Decimal | null
     status: string | null
     createdAt: Date | null
@@ -23357,6 +23475,7 @@ export namespace Prisma {
     base_irt: Decimal | null
     irt_devido: Decimal | null
     outros_descontos: Decimal | null
+    total_adiantamentos: Decimal | null
     liquido_receber: Decimal | null
     status: string | null
     createdAt: Date | null
@@ -23381,6 +23500,7 @@ export namespace Prisma {
     base_irt: number
     irt_devido: number
     outros_descontos: number
+    total_adiantamentos: number
     liquido_receber: number
     status: number
     createdAt: number
@@ -23404,6 +23524,7 @@ export namespace Prisma {
     base_irt?: true
     irt_devido?: true
     outros_descontos?: true
+    total_adiantamentos?: true
     liquido_receber?: true
   }
 
@@ -23422,6 +23543,7 @@ export namespace Prisma {
     base_irt?: true
     irt_devido?: true
     outros_descontos?: true
+    total_adiantamentos?: true
     liquido_receber?: true
   }
 
@@ -23443,6 +23565,7 @@ export namespace Prisma {
     base_irt?: true
     irt_devido?: true
     outros_descontos?: true
+    total_adiantamentos?: true
     liquido_receber?: true
     status?: true
     createdAt?: true
@@ -23467,6 +23590,7 @@ export namespace Prisma {
     base_irt?: true
     irt_devido?: true
     outros_descontos?: true
+    total_adiantamentos?: true
     liquido_receber?: true
     status?: true
     createdAt?: true
@@ -23491,6 +23615,7 @@ export namespace Prisma {
     base_irt?: true
     irt_devido?: true
     outros_descontos?: true
+    total_adiantamentos?: true
     liquido_receber?: true
     status?: true
     createdAt?: true
@@ -23602,6 +23727,7 @@ export namespace Prisma {
     base_irt: Decimal
     irt_devido: Decimal
     outros_descontos: Decimal
+    total_adiantamentos: Decimal
     liquido_receber: Decimal
     status: string
     createdAt: Date
@@ -23645,6 +23771,7 @@ export namespace Prisma {
     base_irt?: boolean
     irt_devido?: boolean
     outros_descontos?: boolean
+    total_adiantamentos?: boolean
     liquido_receber?: boolean
     status?: boolean
     createdAt?: boolean
@@ -23671,6 +23798,7 @@ export namespace Prisma {
     base_irt?: boolean
     irt_devido?: boolean
     outros_descontos?: boolean
+    total_adiantamentos?: boolean
     liquido_receber?: boolean
     status?: boolean
     createdAt?: boolean
@@ -23704,6 +23832,7 @@ export namespace Prisma {
       base_irt: Prisma.Decimal
       irt_devido: Prisma.Decimal
       outros_descontos: Prisma.Decimal
+      total_adiantamentos: Prisma.Decimal
       liquido_receber: Prisma.Decimal
       status: string
       createdAt: Date
@@ -24095,6 +24224,7 @@ export namespace Prisma {
     readonly base_irt: FieldRef<"FolhaPagamento", 'Decimal'>
     readonly irt_devido: FieldRef<"FolhaPagamento", 'Decimal'>
     readonly outros_descontos: FieldRef<"FolhaPagamento", 'Decimal'>
+    readonly total_adiantamentos: FieldRef<"FolhaPagamento", 'Decimal'>
     readonly liquido_receber: FieldRef<"FolhaPagamento", 'Decimal'>
     readonly status: FieldRef<"FolhaPagamento", 'String'>
     readonly createdAt: FieldRef<"FolhaPagamento", 'DateTime'>
@@ -27220,6 +27350,993 @@ export namespace Prisma {
 
 
   /**
+   * Model AdiantamentoSalario
+   */
+
+  export type AggregateAdiantamentoSalario = {
+    _count: AdiantamentoSalarioCountAggregateOutputType | null
+    _avg: AdiantamentoSalarioAvgAggregateOutputType | null
+    _sum: AdiantamentoSalarioSumAggregateOutputType | null
+    _min: AdiantamentoSalarioMinAggregateOutputType | null
+    _max: AdiantamentoSalarioMaxAggregateOutputType | null
+  }
+
+  export type AdiantamentoSalarioAvgAggregateOutputType = {
+    valor: Decimal | null
+    mes_referencia: number | null
+    ano_referencia: number | null
+  }
+
+  export type AdiantamentoSalarioSumAggregateOutputType = {
+    valor: Decimal | null
+    mes_referencia: number | null
+    ano_referencia: number | null
+  }
+
+  export type AdiantamentoSalarioMinAggregateOutputType = {
+    id: string | null
+    funcionarioId: string | null
+    valor: Decimal | null
+    data_solicitacao: Date | null
+    motivo: string | null
+    status: string | null
+    mes_referencia: number | null
+    ano_referencia: number | null
+    observacao: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdiantamentoSalarioMaxAggregateOutputType = {
+    id: string | null
+    funcionarioId: string | null
+    valor: Decimal | null
+    data_solicitacao: Date | null
+    motivo: string | null
+    status: string | null
+    mes_referencia: number | null
+    ano_referencia: number | null
+    observacao: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdiantamentoSalarioCountAggregateOutputType = {
+    id: number
+    funcionarioId: number
+    valor: number
+    data_solicitacao: number
+    motivo: number
+    status: number
+    mes_referencia: number
+    ano_referencia: number
+    observacao: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AdiantamentoSalarioAvgAggregateInputType = {
+    valor?: true
+    mes_referencia?: true
+    ano_referencia?: true
+  }
+
+  export type AdiantamentoSalarioSumAggregateInputType = {
+    valor?: true
+    mes_referencia?: true
+    ano_referencia?: true
+  }
+
+  export type AdiantamentoSalarioMinAggregateInputType = {
+    id?: true
+    funcionarioId?: true
+    valor?: true
+    data_solicitacao?: true
+    motivo?: true
+    status?: true
+    mes_referencia?: true
+    ano_referencia?: true
+    observacao?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdiantamentoSalarioMaxAggregateInputType = {
+    id?: true
+    funcionarioId?: true
+    valor?: true
+    data_solicitacao?: true
+    motivo?: true
+    status?: true
+    mes_referencia?: true
+    ano_referencia?: true
+    observacao?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdiantamentoSalarioCountAggregateInputType = {
+    id?: true
+    funcionarioId?: true
+    valor?: true
+    data_solicitacao?: true
+    motivo?: true
+    status?: true
+    mes_referencia?: true
+    ano_referencia?: true
+    observacao?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AdiantamentoSalarioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdiantamentoSalario to aggregate.
+     */
+    where?: AdiantamentoSalarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdiantamentoSalarios to fetch.
+     */
+    orderBy?: AdiantamentoSalarioOrderByWithRelationInput | AdiantamentoSalarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AdiantamentoSalarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdiantamentoSalarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdiantamentoSalarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AdiantamentoSalarios
+    **/
+    _count?: true | AdiantamentoSalarioCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AdiantamentoSalarioAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AdiantamentoSalarioSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AdiantamentoSalarioMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AdiantamentoSalarioMaxAggregateInputType
+  }
+
+  export type GetAdiantamentoSalarioAggregateType<T extends AdiantamentoSalarioAggregateArgs> = {
+        [P in keyof T & keyof AggregateAdiantamentoSalario]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAdiantamentoSalario[P]>
+      : GetScalarType<T[P], AggregateAdiantamentoSalario[P]>
+  }
+
+
+
+
+  export type AdiantamentoSalarioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdiantamentoSalarioWhereInput
+    orderBy?: AdiantamentoSalarioOrderByWithAggregationInput | AdiantamentoSalarioOrderByWithAggregationInput[]
+    by: AdiantamentoSalarioScalarFieldEnum[] | AdiantamentoSalarioScalarFieldEnum
+    having?: AdiantamentoSalarioScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AdiantamentoSalarioCountAggregateInputType | true
+    _avg?: AdiantamentoSalarioAvgAggregateInputType
+    _sum?: AdiantamentoSalarioSumAggregateInputType
+    _min?: AdiantamentoSalarioMinAggregateInputType
+    _max?: AdiantamentoSalarioMaxAggregateInputType
+  }
+
+  export type AdiantamentoSalarioGroupByOutputType = {
+    id: string
+    funcionarioId: string
+    valor: Decimal
+    data_solicitacao: Date
+    motivo: string | null
+    status: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: AdiantamentoSalarioCountAggregateOutputType | null
+    _avg: AdiantamentoSalarioAvgAggregateOutputType | null
+    _sum: AdiantamentoSalarioSumAggregateOutputType | null
+    _min: AdiantamentoSalarioMinAggregateOutputType | null
+    _max: AdiantamentoSalarioMaxAggregateOutputType | null
+  }
+
+  type GetAdiantamentoSalarioGroupByPayload<T extends AdiantamentoSalarioGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AdiantamentoSalarioGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AdiantamentoSalarioGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AdiantamentoSalarioGroupByOutputType[P]>
+            : GetScalarType<T[P], AdiantamentoSalarioGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AdiantamentoSalarioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    funcionarioId?: boolean
+    valor?: boolean
+    data_solicitacao?: boolean
+    motivo?: boolean
+    status?: boolean
+    mes_referencia?: boolean
+    ano_referencia?: boolean
+    observacao?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    funcionario?: boolean | FuncionarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["adiantamentoSalario"]>
+
+
+  export type AdiantamentoSalarioSelectScalar = {
+    id?: boolean
+    funcionarioId?: boolean
+    valor?: boolean
+    data_solicitacao?: boolean
+    motivo?: boolean
+    status?: boolean
+    mes_referencia?: boolean
+    ano_referencia?: boolean
+    observacao?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AdiantamentoSalarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    funcionario?: boolean | FuncionarioDefaultArgs<ExtArgs>
+  }
+
+  export type $AdiantamentoSalarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AdiantamentoSalario"
+    objects: {
+      funcionario: Prisma.$FuncionarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      funcionarioId: string
+      valor: Prisma.Decimal
+      data_solicitacao: Date
+      motivo: string | null
+      status: string
+      mes_referencia: number
+      ano_referencia: number
+      observacao: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["adiantamentoSalario"]>
+    composites: {}
+  }
+
+  type AdiantamentoSalarioGetPayload<S extends boolean | null | undefined | AdiantamentoSalarioDefaultArgs> = $Result.GetResult<Prisma.$AdiantamentoSalarioPayload, S>
+
+  type AdiantamentoSalarioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<AdiantamentoSalarioFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: AdiantamentoSalarioCountAggregateInputType | true
+    }
+
+  export interface AdiantamentoSalarioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AdiantamentoSalario'], meta: { name: 'AdiantamentoSalario' } }
+    /**
+     * Find zero or one AdiantamentoSalario that matches the filter.
+     * @param {AdiantamentoSalarioFindUniqueArgs} args - Arguments to find a AdiantamentoSalario
+     * @example
+     * // Get one AdiantamentoSalario
+     * const adiantamentoSalario = await prisma.adiantamentoSalario.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AdiantamentoSalarioFindUniqueArgs>(args: SelectSubset<T, AdiantamentoSalarioFindUniqueArgs<ExtArgs>>): Prisma__AdiantamentoSalarioClient<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one AdiantamentoSalario that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {AdiantamentoSalarioFindUniqueOrThrowArgs} args - Arguments to find a AdiantamentoSalario
+     * @example
+     * // Get one AdiantamentoSalario
+     * const adiantamentoSalario = await prisma.adiantamentoSalario.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AdiantamentoSalarioFindUniqueOrThrowArgs>(args: SelectSubset<T, AdiantamentoSalarioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AdiantamentoSalarioClient<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first AdiantamentoSalario that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdiantamentoSalarioFindFirstArgs} args - Arguments to find a AdiantamentoSalario
+     * @example
+     * // Get one AdiantamentoSalario
+     * const adiantamentoSalario = await prisma.adiantamentoSalario.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AdiantamentoSalarioFindFirstArgs>(args?: SelectSubset<T, AdiantamentoSalarioFindFirstArgs<ExtArgs>>): Prisma__AdiantamentoSalarioClient<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first AdiantamentoSalario that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdiantamentoSalarioFindFirstOrThrowArgs} args - Arguments to find a AdiantamentoSalario
+     * @example
+     * // Get one AdiantamentoSalario
+     * const adiantamentoSalario = await prisma.adiantamentoSalario.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AdiantamentoSalarioFindFirstOrThrowArgs>(args?: SelectSubset<T, AdiantamentoSalarioFindFirstOrThrowArgs<ExtArgs>>): Prisma__AdiantamentoSalarioClient<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more AdiantamentoSalarios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdiantamentoSalarioFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AdiantamentoSalarios
+     * const adiantamentoSalarios = await prisma.adiantamentoSalario.findMany()
+     * 
+     * // Get first 10 AdiantamentoSalarios
+     * const adiantamentoSalarios = await prisma.adiantamentoSalario.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const adiantamentoSalarioWithIdOnly = await prisma.adiantamentoSalario.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AdiantamentoSalarioFindManyArgs>(args?: SelectSubset<T, AdiantamentoSalarioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a AdiantamentoSalario.
+     * @param {AdiantamentoSalarioCreateArgs} args - Arguments to create a AdiantamentoSalario.
+     * @example
+     * // Create one AdiantamentoSalario
+     * const AdiantamentoSalario = await prisma.adiantamentoSalario.create({
+     *   data: {
+     *     // ... data to create a AdiantamentoSalario
+     *   }
+     * })
+     * 
+     */
+    create<T extends AdiantamentoSalarioCreateArgs>(args: SelectSubset<T, AdiantamentoSalarioCreateArgs<ExtArgs>>): Prisma__AdiantamentoSalarioClient<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many AdiantamentoSalarios.
+     * @param {AdiantamentoSalarioCreateManyArgs} args - Arguments to create many AdiantamentoSalarios.
+     * @example
+     * // Create many AdiantamentoSalarios
+     * const adiantamentoSalario = await prisma.adiantamentoSalario.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AdiantamentoSalarioCreateManyArgs>(args?: SelectSubset<T, AdiantamentoSalarioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a AdiantamentoSalario.
+     * @param {AdiantamentoSalarioDeleteArgs} args - Arguments to delete one AdiantamentoSalario.
+     * @example
+     * // Delete one AdiantamentoSalario
+     * const AdiantamentoSalario = await prisma.adiantamentoSalario.delete({
+     *   where: {
+     *     // ... filter to delete one AdiantamentoSalario
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AdiantamentoSalarioDeleteArgs>(args: SelectSubset<T, AdiantamentoSalarioDeleteArgs<ExtArgs>>): Prisma__AdiantamentoSalarioClient<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one AdiantamentoSalario.
+     * @param {AdiantamentoSalarioUpdateArgs} args - Arguments to update one AdiantamentoSalario.
+     * @example
+     * // Update one AdiantamentoSalario
+     * const adiantamentoSalario = await prisma.adiantamentoSalario.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AdiantamentoSalarioUpdateArgs>(args: SelectSubset<T, AdiantamentoSalarioUpdateArgs<ExtArgs>>): Prisma__AdiantamentoSalarioClient<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more AdiantamentoSalarios.
+     * @param {AdiantamentoSalarioDeleteManyArgs} args - Arguments to filter AdiantamentoSalarios to delete.
+     * @example
+     * // Delete a few AdiantamentoSalarios
+     * const { count } = await prisma.adiantamentoSalario.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AdiantamentoSalarioDeleteManyArgs>(args?: SelectSubset<T, AdiantamentoSalarioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AdiantamentoSalarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdiantamentoSalarioUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AdiantamentoSalarios
+     * const adiantamentoSalario = await prisma.adiantamentoSalario.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AdiantamentoSalarioUpdateManyArgs>(args: SelectSubset<T, AdiantamentoSalarioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one AdiantamentoSalario.
+     * @param {AdiantamentoSalarioUpsertArgs} args - Arguments to update or create a AdiantamentoSalario.
+     * @example
+     * // Update or create a AdiantamentoSalario
+     * const adiantamentoSalario = await prisma.adiantamentoSalario.upsert({
+     *   create: {
+     *     // ... data to create a AdiantamentoSalario
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AdiantamentoSalario we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AdiantamentoSalarioUpsertArgs>(args: SelectSubset<T, AdiantamentoSalarioUpsertArgs<ExtArgs>>): Prisma__AdiantamentoSalarioClient<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of AdiantamentoSalarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdiantamentoSalarioCountArgs} args - Arguments to filter AdiantamentoSalarios to count.
+     * @example
+     * // Count the number of AdiantamentoSalarios
+     * const count = await prisma.adiantamentoSalario.count({
+     *   where: {
+     *     // ... the filter for the AdiantamentoSalarios we want to count
+     *   }
+     * })
+    **/
+    count<T extends AdiantamentoSalarioCountArgs>(
+      args?: Subset<T, AdiantamentoSalarioCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AdiantamentoSalarioCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AdiantamentoSalario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdiantamentoSalarioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AdiantamentoSalarioAggregateArgs>(args: Subset<T, AdiantamentoSalarioAggregateArgs>): Prisma.PrismaPromise<GetAdiantamentoSalarioAggregateType<T>>
+
+    /**
+     * Group by AdiantamentoSalario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdiantamentoSalarioGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AdiantamentoSalarioGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AdiantamentoSalarioGroupByArgs['orderBy'] }
+        : { orderBy?: AdiantamentoSalarioGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AdiantamentoSalarioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdiantamentoSalarioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AdiantamentoSalario model
+   */
+  readonly fields: AdiantamentoSalarioFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AdiantamentoSalario.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AdiantamentoSalarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    funcionario<T extends FuncionarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FuncionarioDefaultArgs<ExtArgs>>): Prisma__FuncionarioClient<$Result.GetResult<Prisma.$FuncionarioPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AdiantamentoSalario model
+   */ 
+  interface AdiantamentoSalarioFieldRefs {
+    readonly id: FieldRef<"AdiantamentoSalario", 'String'>
+    readonly funcionarioId: FieldRef<"AdiantamentoSalario", 'String'>
+    readonly valor: FieldRef<"AdiantamentoSalario", 'Decimal'>
+    readonly data_solicitacao: FieldRef<"AdiantamentoSalario", 'DateTime'>
+    readonly motivo: FieldRef<"AdiantamentoSalario", 'String'>
+    readonly status: FieldRef<"AdiantamentoSalario", 'String'>
+    readonly mes_referencia: FieldRef<"AdiantamentoSalario", 'Int'>
+    readonly ano_referencia: FieldRef<"AdiantamentoSalario", 'Int'>
+    readonly observacao: FieldRef<"AdiantamentoSalario", 'String'>
+    readonly createdAt: FieldRef<"AdiantamentoSalario", 'DateTime'>
+    readonly updatedAt: FieldRef<"AdiantamentoSalario", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AdiantamentoSalario findUnique
+   */
+  export type AdiantamentoSalarioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdiantamentoSalario
+     */
+    select?: AdiantamentoSalarioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdiantamentoSalarioInclude<ExtArgs> | null
+    /**
+     * Filter, which AdiantamentoSalario to fetch.
+     */
+    where: AdiantamentoSalarioWhereUniqueInput
+  }
+
+  /**
+   * AdiantamentoSalario findUniqueOrThrow
+   */
+  export type AdiantamentoSalarioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdiantamentoSalario
+     */
+    select?: AdiantamentoSalarioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdiantamentoSalarioInclude<ExtArgs> | null
+    /**
+     * Filter, which AdiantamentoSalario to fetch.
+     */
+    where: AdiantamentoSalarioWhereUniqueInput
+  }
+
+  /**
+   * AdiantamentoSalario findFirst
+   */
+  export type AdiantamentoSalarioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdiantamentoSalario
+     */
+    select?: AdiantamentoSalarioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdiantamentoSalarioInclude<ExtArgs> | null
+    /**
+     * Filter, which AdiantamentoSalario to fetch.
+     */
+    where?: AdiantamentoSalarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdiantamentoSalarios to fetch.
+     */
+    orderBy?: AdiantamentoSalarioOrderByWithRelationInput | AdiantamentoSalarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdiantamentoSalarios.
+     */
+    cursor?: AdiantamentoSalarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdiantamentoSalarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdiantamentoSalarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdiantamentoSalarios.
+     */
+    distinct?: AdiantamentoSalarioScalarFieldEnum | AdiantamentoSalarioScalarFieldEnum[]
+  }
+
+  /**
+   * AdiantamentoSalario findFirstOrThrow
+   */
+  export type AdiantamentoSalarioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdiantamentoSalario
+     */
+    select?: AdiantamentoSalarioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdiantamentoSalarioInclude<ExtArgs> | null
+    /**
+     * Filter, which AdiantamentoSalario to fetch.
+     */
+    where?: AdiantamentoSalarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdiantamentoSalarios to fetch.
+     */
+    orderBy?: AdiantamentoSalarioOrderByWithRelationInput | AdiantamentoSalarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdiantamentoSalarios.
+     */
+    cursor?: AdiantamentoSalarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdiantamentoSalarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdiantamentoSalarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdiantamentoSalarios.
+     */
+    distinct?: AdiantamentoSalarioScalarFieldEnum | AdiantamentoSalarioScalarFieldEnum[]
+  }
+
+  /**
+   * AdiantamentoSalario findMany
+   */
+  export type AdiantamentoSalarioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdiantamentoSalario
+     */
+    select?: AdiantamentoSalarioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdiantamentoSalarioInclude<ExtArgs> | null
+    /**
+     * Filter, which AdiantamentoSalarios to fetch.
+     */
+    where?: AdiantamentoSalarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdiantamentoSalarios to fetch.
+     */
+    orderBy?: AdiantamentoSalarioOrderByWithRelationInput | AdiantamentoSalarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AdiantamentoSalarios.
+     */
+    cursor?: AdiantamentoSalarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdiantamentoSalarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdiantamentoSalarios.
+     */
+    skip?: number
+    distinct?: AdiantamentoSalarioScalarFieldEnum | AdiantamentoSalarioScalarFieldEnum[]
+  }
+
+  /**
+   * AdiantamentoSalario create
+   */
+  export type AdiantamentoSalarioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdiantamentoSalario
+     */
+    select?: AdiantamentoSalarioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdiantamentoSalarioInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AdiantamentoSalario.
+     */
+    data: XOR<AdiantamentoSalarioCreateInput, AdiantamentoSalarioUncheckedCreateInput>
+  }
+
+  /**
+   * AdiantamentoSalario createMany
+   */
+  export type AdiantamentoSalarioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AdiantamentoSalarios.
+     */
+    data: AdiantamentoSalarioCreateManyInput | AdiantamentoSalarioCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AdiantamentoSalario update
+   */
+  export type AdiantamentoSalarioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdiantamentoSalario
+     */
+    select?: AdiantamentoSalarioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdiantamentoSalarioInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AdiantamentoSalario.
+     */
+    data: XOR<AdiantamentoSalarioUpdateInput, AdiantamentoSalarioUncheckedUpdateInput>
+    /**
+     * Choose, which AdiantamentoSalario to update.
+     */
+    where: AdiantamentoSalarioWhereUniqueInput
+  }
+
+  /**
+   * AdiantamentoSalario updateMany
+   */
+  export type AdiantamentoSalarioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AdiantamentoSalarios.
+     */
+    data: XOR<AdiantamentoSalarioUpdateManyMutationInput, AdiantamentoSalarioUncheckedUpdateManyInput>
+    /**
+     * Filter which AdiantamentoSalarios to update
+     */
+    where?: AdiantamentoSalarioWhereInput
+  }
+
+  /**
+   * AdiantamentoSalario upsert
+   */
+  export type AdiantamentoSalarioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdiantamentoSalario
+     */
+    select?: AdiantamentoSalarioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdiantamentoSalarioInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AdiantamentoSalario to update in case it exists.
+     */
+    where: AdiantamentoSalarioWhereUniqueInput
+    /**
+     * In case the AdiantamentoSalario found by the `where` argument doesn't exist, create a new AdiantamentoSalario with this data.
+     */
+    create: XOR<AdiantamentoSalarioCreateInput, AdiantamentoSalarioUncheckedCreateInput>
+    /**
+     * In case the AdiantamentoSalario was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AdiantamentoSalarioUpdateInput, AdiantamentoSalarioUncheckedUpdateInput>
+  }
+
+  /**
+   * AdiantamentoSalario delete
+   */
+  export type AdiantamentoSalarioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdiantamentoSalario
+     */
+    select?: AdiantamentoSalarioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdiantamentoSalarioInclude<ExtArgs> | null
+    /**
+     * Filter which AdiantamentoSalario to delete.
+     */
+    where: AdiantamentoSalarioWhereUniqueInput
+  }
+
+  /**
+   * AdiantamentoSalario deleteMany
+   */
+  export type AdiantamentoSalarioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdiantamentoSalarios to delete
+     */
+    where?: AdiantamentoSalarioWhereInput
+  }
+
+  /**
+   * AdiantamentoSalario without action
+   */
+  export type AdiantamentoSalarioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdiantamentoSalario
+     */
+    select?: AdiantamentoSalarioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdiantamentoSalarioInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -27570,6 +28687,7 @@ export namespace Prisma {
     base_irt: 'base_irt',
     irt_devido: 'irt_devido',
     outros_descontos: 'outros_descontos',
+    total_adiantamentos: 'total_adiantamentos',
     liquido_receber: 'liquido_receber',
     status: 'status',
     createdAt: 'createdAt',
@@ -27626,6 +28744,23 @@ export namespace Prisma {
   };
 
   export type EmpresaScalarFieldEnum = (typeof EmpresaScalarFieldEnum)[keyof typeof EmpresaScalarFieldEnum]
+
+
+  export const AdiantamentoSalarioScalarFieldEnum: {
+    id: 'id',
+    funcionarioId: 'funcionarioId',
+    valor: 'valor',
+    data_solicitacao: 'data_solicitacao',
+    motivo: 'motivo',
+    status: 'status',
+    mes_referencia: 'mes_referencia',
+    ano_referencia: 'ano_referencia',
+    observacao: 'observacao',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AdiantamentoSalarioScalarFieldEnum = (typeof AdiantamentoSalarioScalarFieldEnum)[keyof typeof AdiantamentoSalarioScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -29108,6 +30243,7 @@ export namespace Prisma {
     presencas?: PresencaHRListRelationFilter
     folhas?: FolhaPagamentoListRelationFilter
     ferias?: FeriasSolicitacaoListRelationFilter
+    adiantamentos?: AdiantamentoSalarioListRelationFilter
     documentos?: DocumentoListRelationFilter
   }
 
@@ -29139,6 +30275,7 @@ export namespace Prisma {
     presencas?: PresencaHROrderByRelationAggregateInput
     folhas?: FolhaPagamentoOrderByRelationAggregateInput
     ferias?: FeriasSolicitacaoOrderByRelationAggregateInput
+    adiantamentos?: AdiantamentoSalarioOrderByRelationAggregateInput
     documentos?: DocumentoOrderByRelationAggregateInput
   }
 
@@ -29173,6 +30310,7 @@ export namespace Prisma {
     presencas?: PresencaHRListRelationFilter
     folhas?: FolhaPagamentoListRelationFilter
     ferias?: FeriasSolicitacaoListRelationFilter
+    adiantamentos?: AdiantamentoSalarioListRelationFilter
     documentos?: DocumentoListRelationFilter
   }, "id" | "bi_documento" | "email" | "nif" | "numero_inss" | "userId">
 
@@ -29449,6 +30587,7 @@ export namespace Prisma {
     base_irt?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     irt_devido?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     outros_descontos?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     liquido_receber?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     status?: StringFilter<"FolhaPagamento"> | string
     createdAt?: DateTimeFilter<"FolhaPagamento"> | Date | string
@@ -29474,6 +30613,7 @@ export namespace Prisma {
     base_irt?: SortOrder
     irt_devido?: SortOrder
     outros_descontos?: SortOrder
+    total_adiantamentos?: SortOrder
     liquido_receber?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -29503,6 +30643,7 @@ export namespace Prisma {
     base_irt?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     irt_devido?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     outros_descontos?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     liquido_receber?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     status?: StringFilter<"FolhaPagamento"> | string
     createdAt?: DateTimeFilter<"FolhaPagamento"> | Date | string
@@ -29528,6 +30669,7 @@ export namespace Prisma {
     base_irt?: SortOrder
     irt_devido?: SortOrder
     outros_descontos?: SortOrder
+    total_adiantamentos?: SortOrder
     liquido_receber?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -29560,6 +30702,7 @@ export namespace Prisma {
     base_irt?: DecimalWithAggregatesFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     irt_devido?: DecimalWithAggregatesFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     outros_descontos?: DecimalWithAggregatesFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalWithAggregatesFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     liquido_receber?: DecimalWithAggregatesFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     status?: StringWithAggregatesFilter<"FolhaPagamento"> | string
     createdAt?: DateTimeWithAggregatesFilter<"FolhaPagamento"> | Date | string
@@ -29807,6 +30950,93 @@ export namespace Prisma {
     pais?: StringNullableWithAggregatesFilter<"Empresa"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Empresa"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Empresa"> | Date | string
+  }
+
+  export type AdiantamentoSalarioWhereInput = {
+    AND?: AdiantamentoSalarioWhereInput | AdiantamentoSalarioWhereInput[]
+    OR?: AdiantamentoSalarioWhereInput[]
+    NOT?: AdiantamentoSalarioWhereInput | AdiantamentoSalarioWhereInput[]
+    id?: StringFilter<"AdiantamentoSalario"> | string
+    funcionarioId?: StringFilter<"AdiantamentoSalario"> | string
+    valor?: DecimalFilter<"AdiantamentoSalario"> | Decimal | DecimalJsLike | number | string
+    data_solicitacao?: DateTimeFilter<"AdiantamentoSalario"> | Date | string
+    motivo?: StringNullableFilter<"AdiantamentoSalario"> | string | null
+    status?: StringFilter<"AdiantamentoSalario"> | string
+    mes_referencia?: IntFilter<"AdiantamentoSalario"> | number
+    ano_referencia?: IntFilter<"AdiantamentoSalario"> | number
+    observacao?: StringNullableFilter<"AdiantamentoSalario"> | string | null
+    createdAt?: DateTimeFilter<"AdiantamentoSalario"> | Date | string
+    updatedAt?: DateTimeFilter<"AdiantamentoSalario"> | Date | string
+    funcionario?: XOR<FuncionarioRelationFilter, FuncionarioWhereInput>
+  }
+
+  export type AdiantamentoSalarioOrderByWithRelationInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    valor?: SortOrder
+    data_solicitacao?: SortOrder
+    motivo?: SortOrderInput | SortOrder
+    status?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+    observacao?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    funcionario?: FuncionarioOrderByWithRelationInput
+  }
+
+  export type AdiantamentoSalarioWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AdiantamentoSalarioWhereInput | AdiantamentoSalarioWhereInput[]
+    OR?: AdiantamentoSalarioWhereInput[]
+    NOT?: AdiantamentoSalarioWhereInput | AdiantamentoSalarioWhereInput[]
+    funcionarioId?: StringFilter<"AdiantamentoSalario"> | string
+    valor?: DecimalFilter<"AdiantamentoSalario"> | Decimal | DecimalJsLike | number | string
+    data_solicitacao?: DateTimeFilter<"AdiantamentoSalario"> | Date | string
+    motivo?: StringNullableFilter<"AdiantamentoSalario"> | string | null
+    status?: StringFilter<"AdiantamentoSalario"> | string
+    mes_referencia?: IntFilter<"AdiantamentoSalario"> | number
+    ano_referencia?: IntFilter<"AdiantamentoSalario"> | number
+    observacao?: StringNullableFilter<"AdiantamentoSalario"> | string | null
+    createdAt?: DateTimeFilter<"AdiantamentoSalario"> | Date | string
+    updatedAt?: DateTimeFilter<"AdiantamentoSalario"> | Date | string
+    funcionario?: XOR<FuncionarioRelationFilter, FuncionarioWhereInput>
+  }, "id">
+
+  export type AdiantamentoSalarioOrderByWithAggregationInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    valor?: SortOrder
+    data_solicitacao?: SortOrder
+    motivo?: SortOrderInput | SortOrder
+    status?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+    observacao?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AdiantamentoSalarioCountOrderByAggregateInput
+    _avg?: AdiantamentoSalarioAvgOrderByAggregateInput
+    _max?: AdiantamentoSalarioMaxOrderByAggregateInput
+    _min?: AdiantamentoSalarioMinOrderByAggregateInput
+    _sum?: AdiantamentoSalarioSumOrderByAggregateInput
+  }
+
+  export type AdiantamentoSalarioScalarWhereWithAggregatesInput = {
+    AND?: AdiantamentoSalarioScalarWhereWithAggregatesInput | AdiantamentoSalarioScalarWhereWithAggregatesInput[]
+    OR?: AdiantamentoSalarioScalarWhereWithAggregatesInput[]
+    NOT?: AdiantamentoSalarioScalarWhereWithAggregatesInput | AdiantamentoSalarioScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AdiantamentoSalario"> | string
+    funcionarioId?: StringWithAggregatesFilter<"AdiantamentoSalario"> | string
+    valor?: DecimalWithAggregatesFilter<"AdiantamentoSalario"> | Decimal | DecimalJsLike | number | string
+    data_solicitacao?: DateTimeWithAggregatesFilter<"AdiantamentoSalario"> | Date | string
+    motivo?: StringNullableWithAggregatesFilter<"AdiantamentoSalario"> | string | null
+    status?: StringWithAggregatesFilter<"AdiantamentoSalario"> | string
+    mes_referencia?: IntWithAggregatesFilter<"AdiantamentoSalario"> | number
+    ano_referencia?: IntWithAggregatesFilter<"AdiantamentoSalario"> | number
+    observacao?: StringNullableWithAggregatesFilter<"AdiantamentoSalario"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"AdiantamentoSalario"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AdiantamentoSalario"> | Date | string
   }
 
   export type AlunoCreateInput = {
@@ -31335,6 +32565,7 @@ export namespace Prisma {
     presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -31363,6 +32594,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -31391,6 +32623,7 @@ export namespace Prisma {
     presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -31419,6 +32652,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -31734,6 +32968,7 @@ export namespace Prisma {
     base_irt: Decimal | DecimalJsLike | number | string
     irt_devido: Decimal | DecimalJsLike | number | string
     outros_descontos?: Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: Decimal | DecimalJsLike | number | string
     liquido_receber: Decimal | DecimalJsLike | number | string
     status?: string
     createdAt?: Date | string
@@ -31759,6 +32994,7 @@ export namespace Prisma {
     base_irt: Decimal | DecimalJsLike | number | string
     irt_devido: Decimal | DecimalJsLike | number | string
     outros_descontos?: Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: Decimal | DecimalJsLike | number | string
     liquido_receber: Decimal | DecimalJsLike | number | string
     status?: string
     createdAt?: Date | string
@@ -31782,6 +33018,7 @@ export namespace Prisma {
     base_irt?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     irt_devido?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     outros_descontos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     liquido_receber?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31807,6 +33044,7 @@ export namespace Prisma {
     base_irt?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     irt_devido?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     outros_descontos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     liquido_receber?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31831,6 +33069,7 @@ export namespace Prisma {
     base_irt: Decimal | DecimalJsLike | number | string
     irt_devido: Decimal | DecimalJsLike | number | string
     outros_descontos?: Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: Decimal | DecimalJsLike | number | string
     liquido_receber: Decimal | DecimalJsLike | number | string
     status?: string
     createdAt?: Date | string
@@ -31854,6 +33093,7 @@ export namespace Prisma {
     base_irt?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     irt_devido?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     outros_descontos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     liquido_receber?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31878,6 +33118,7 @@ export namespace Prisma {
     base_irt?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     irt_devido?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     outros_descontos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     liquido_receber?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32159,6 +33400,103 @@ export namespace Prisma {
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     cidade?: NullableStringFieldUpdateOperationsInput | string | null
     pais?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdiantamentoSalarioCreateInput = {
+    id?: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_solicitacao?: Date | string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    funcionario: FuncionarioCreateNestedOneWithoutAdiantamentosInput
+  }
+
+  export type AdiantamentoSalarioUncheckedCreateInput = {
+    id?: string
+    funcionarioId: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_solicitacao?: Date | string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdiantamentoSalarioUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_solicitacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    funcionario?: FuncionarioUpdateOneRequiredWithoutAdiantamentosNestedInput
+  }
+
+  export type AdiantamentoSalarioUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    funcionarioId?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_solicitacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdiantamentoSalarioCreateManyInput = {
+    id?: string
+    funcionarioId: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_solicitacao?: Date | string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdiantamentoSalarioUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_solicitacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdiantamentoSalarioUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    funcionarioId?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_solicitacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -33328,6 +34666,12 @@ export namespace Prisma {
     none?: FeriasSolicitacaoWhereInput
   }
 
+  export type AdiantamentoSalarioListRelationFilter = {
+    every?: AdiantamentoSalarioWhereInput
+    some?: AdiantamentoSalarioWhereInput
+    none?: AdiantamentoSalarioWhereInput
+  }
+
   export type ContratoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -33341,6 +34685,10 @@ export namespace Prisma {
   }
 
   export type FeriasSolicitacaoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AdiantamentoSalarioOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -33576,6 +34924,7 @@ export namespace Prisma {
     base_irt?: SortOrder
     irt_devido?: SortOrder
     outros_descontos?: SortOrder
+    total_adiantamentos?: SortOrder
     liquido_receber?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -33597,6 +34946,7 @@ export namespace Prisma {
     base_irt?: SortOrder
     irt_devido?: SortOrder
     outros_descontos?: SortOrder
+    total_adiantamentos?: SortOrder
     liquido_receber?: SortOrder
   }
 
@@ -33618,6 +34968,7 @@ export namespace Prisma {
     base_irt?: SortOrder
     irt_devido?: SortOrder
     outros_descontos?: SortOrder
+    total_adiantamentos?: SortOrder
     liquido_receber?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -33642,6 +34993,7 @@ export namespace Prisma {
     base_irt?: SortOrder
     irt_devido?: SortOrder
     outros_descontos?: SortOrder
+    total_adiantamentos?: SortOrder
     liquido_receber?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -33663,6 +35015,7 @@ export namespace Prisma {
     base_irt?: SortOrder
     irt_devido?: SortOrder
     outros_descontos?: SortOrder
+    total_adiantamentos?: SortOrder
     liquido_receber?: SortOrder
   }
 
@@ -33837,6 +35190,60 @@ export namespace Prisma {
     pais?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type AdiantamentoSalarioCountOrderByAggregateInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    valor?: SortOrder
+    data_solicitacao?: SortOrder
+    motivo?: SortOrder
+    status?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+    observacao?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdiantamentoSalarioAvgOrderByAggregateInput = {
+    valor?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+  }
+
+  export type AdiantamentoSalarioMaxOrderByAggregateInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    valor?: SortOrder
+    data_solicitacao?: SortOrder
+    motivo?: SortOrder
+    status?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+    observacao?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdiantamentoSalarioMinOrderByAggregateInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    valor?: SortOrder
+    data_solicitacao?: SortOrder
+    motivo?: SortOrder
+    status?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+    observacao?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdiantamentoSalarioSumOrderByAggregateInput = {
+    valor?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
   }
 
   export type MatriculaCreateNestedManyWithoutAlunoInput = {
@@ -35383,6 +36790,13 @@ export namespace Prisma {
     connect?: FeriasSolicitacaoWhereUniqueInput | FeriasSolicitacaoWhereUniqueInput[]
   }
 
+  export type AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput = {
+    create?: XOR<AdiantamentoSalarioCreateWithoutFuncionarioInput, AdiantamentoSalarioUncheckedCreateWithoutFuncionarioInput> | AdiantamentoSalarioCreateWithoutFuncionarioInput[] | AdiantamentoSalarioUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: AdiantamentoSalarioCreateOrConnectWithoutFuncionarioInput | AdiantamentoSalarioCreateOrConnectWithoutFuncionarioInput[]
+    createMany?: AdiantamentoSalarioCreateManyFuncionarioInputEnvelope
+    connect?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
+  }
+
   export type DocumentoCreateNestedManyWithoutFuncionarioInput = {
     create?: XOR<DocumentoCreateWithoutFuncionarioInput, DocumentoUncheckedCreateWithoutFuncionarioInput> | DocumentoCreateWithoutFuncionarioInput[] | DocumentoUncheckedCreateWithoutFuncionarioInput[]
     connectOrCreate?: DocumentoCreateOrConnectWithoutFuncionarioInput | DocumentoCreateOrConnectWithoutFuncionarioInput[]
@@ -35416,6 +36830,13 @@ export namespace Prisma {
     connectOrCreate?: FeriasSolicitacaoCreateOrConnectWithoutFuncionarioInput | FeriasSolicitacaoCreateOrConnectWithoutFuncionarioInput[]
     createMany?: FeriasSolicitacaoCreateManyFuncionarioInputEnvelope
     connect?: FeriasSolicitacaoWhereUniqueInput | FeriasSolicitacaoWhereUniqueInput[]
+  }
+
+  export type AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput = {
+    create?: XOR<AdiantamentoSalarioCreateWithoutFuncionarioInput, AdiantamentoSalarioUncheckedCreateWithoutFuncionarioInput> | AdiantamentoSalarioCreateWithoutFuncionarioInput[] | AdiantamentoSalarioUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: AdiantamentoSalarioCreateOrConnectWithoutFuncionarioInput | AdiantamentoSalarioCreateOrConnectWithoutFuncionarioInput[]
+    createMany?: AdiantamentoSalarioCreateManyFuncionarioInputEnvelope
+    connect?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
   }
 
   export type DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput = {
@@ -35511,6 +36932,20 @@ export namespace Prisma {
     deleteMany?: FeriasSolicitacaoScalarWhereInput | FeriasSolicitacaoScalarWhereInput[]
   }
 
+  export type AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput = {
+    create?: XOR<AdiantamentoSalarioCreateWithoutFuncionarioInput, AdiantamentoSalarioUncheckedCreateWithoutFuncionarioInput> | AdiantamentoSalarioCreateWithoutFuncionarioInput[] | AdiantamentoSalarioUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: AdiantamentoSalarioCreateOrConnectWithoutFuncionarioInput | AdiantamentoSalarioCreateOrConnectWithoutFuncionarioInput[]
+    upsert?: AdiantamentoSalarioUpsertWithWhereUniqueWithoutFuncionarioInput | AdiantamentoSalarioUpsertWithWhereUniqueWithoutFuncionarioInput[]
+    createMany?: AdiantamentoSalarioCreateManyFuncionarioInputEnvelope
+    set?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
+    disconnect?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
+    delete?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
+    connect?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
+    update?: AdiantamentoSalarioUpdateWithWhereUniqueWithoutFuncionarioInput | AdiantamentoSalarioUpdateWithWhereUniqueWithoutFuncionarioInput[]
+    updateMany?: AdiantamentoSalarioUpdateManyWithWhereWithoutFuncionarioInput | AdiantamentoSalarioUpdateManyWithWhereWithoutFuncionarioInput[]
+    deleteMany?: AdiantamentoSalarioScalarWhereInput | AdiantamentoSalarioScalarWhereInput[]
+  }
+
   export type DocumentoUpdateManyWithoutFuncionarioNestedInput = {
     create?: XOR<DocumentoCreateWithoutFuncionarioInput, DocumentoUncheckedCreateWithoutFuncionarioInput> | DocumentoCreateWithoutFuncionarioInput[] | DocumentoUncheckedCreateWithoutFuncionarioInput[]
     connectOrCreate?: DocumentoCreateOrConnectWithoutFuncionarioInput | DocumentoCreateOrConnectWithoutFuncionarioInput[]
@@ -35579,6 +37014,20 @@ export namespace Prisma {
     update?: FeriasSolicitacaoUpdateWithWhereUniqueWithoutFuncionarioInput | FeriasSolicitacaoUpdateWithWhereUniqueWithoutFuncionarioInput[]
     updateMany?: FeriasSolicitacaoUpdateManyWithWhereWithoutFuncionarioInput | FeriasSolicitacaoUpdateManyWithWhereWithoutFuncionarioInput[]
     deleteMany?: FeriasSolicitacaoScalarWhereInput | FeriasSolicitacaoScalarWhereInput[]
+  }
+
+  export type AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput = {
+    create?: XOR<AdiantamentoSalarioCreateWithoutFuncionarioInput, AdiantamentoSalarioUncheckedCreateWithoutFuncionarioInput> | AdiantamentoSalarioCreateWithoutFuncionarioInput[] | AdiantamentoSalarioUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: AdiantamentoSalarioCreateOrConnectWithoutFuncionarioInput | AdiantamentoSalarioCreateOrConnectWithoutFuncionarioInput[]
+    upsert?: AdiantamentoSalarioUpsertWithWhereUniqueWithoutFuncionarioInput | AdiantamentoSalarioUpsertWithWhereUniqueWithoutFuncionarioInput[]
+    createMany?: AdiantamentoSalarioCreateManyFuncionarioInputEnvelope
+    set?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
+    disconnect?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
+    delete?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
+    connect?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
+    update?: AdiantamentoSalarioUpdateWithWhereUniqueWithoutFuncionarioInput | AdiantamentoSalarioUpdateWithWhereUniqueWithoutFuncionarioInput[]
+    updateMany?: AdiantamentoSalarioUpdateManyWithWhereWithoutFuncionarioInput | AdiantamentoSalarioUpdateManyWithWhereWithoutFuncionarioInput[]
+    deleteMany?: AdiantamentoSalarioScalarWhereInput | AdiantamentoSalarioScalarWhereInput[]
   }
 
   export type DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput = {
@@ -35657,6 +37106,20 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type FuncionarioCreateNestedOneWithoutAdiantamentosInput = {
+    create?: XOR<FuncionarioCreateWithoutAdiantamentosInput, FuncionarioUncheckedCreateWithoutAdiantamentosInput>
+    connectOrCreate?: FuncionarioCreateOrConnectWithoutAdiantamentosInput
+    connect?: FuncionarioWhereUniqueInput
+  }
+
+  export type FuncionarioUpdateOneRequiredWithoutAdiantamentosNestedInput = {
+    create?: XOR<FuncionarioCreateWithoutAdiantamentosInput, FuncionarioUncheckedCreateWithoutAdiantamentosInput>
+    connectOrCreate?: FuncionarioCreateOrConnectWithoutAdiantamentosInput
+    upsert?: FuncionarioUpsertWithoutAdiantamentosInput
+    connect?: FuncionarioWhereUniqueInput
+    update?: XOR<XOR<FuncionarioUpdateToOneWithWhereWithoutAdiantamentosInput, FuncionarioUpdateWithoutAdiantamentosInput>, FuncionarioUncheckedUpdateWithoutAdiantamentosInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -36521,6 +37984,7 @@ export namespace Prisma {
     presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutDocumentosInput = {
@@ -36548,6 +38012,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutDocumentosInput = {
@@ -36642,6 +38107,7 @@ export namespace Prisma {
     presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutDocumentosInput = {
@@ -36669,6 +38135,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type CertificateTemplateCreateWithoutCursosInput = {
@@ -38091,6 +39558,7 @@ export namespace Prisma {
     presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -38118,6 +39586,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -38395,6 +39864,7 @@ export namespace Prisma {
     presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -38422,6 +39892,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -39358,6 +40829,7 @@ export namespace Prisma {
     presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -39385,6 +40857,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -39523,6 +40996,7 @@ export namespace Prisma {
     presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -39550,6 +41024,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -39823,6 +41298,7 @@ export namespace Prisma {
     base_irt: Decimal | DecimalJsLike | number | string
     irt_devido: Decimal | DecimalJsLike | number | string
     outros_descontos?: Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: Decimal | DecimalJsLike | number | string
     liquido_receber: Decimal | DecimalJsLike | number | string
     status?: string
     createdAt?: Date | string
@@ -39846,6 +41322,7 @@ export namespace Prisma {
     base_irt: Decimal | DecimalJsLike | number | string
     irt_devido: Decimal | DecimalJsLike | number | string
     outros_descontos?: Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: Decimal | DecimalJsLike | number | string
     liquido_receber: Decimal | DecimalJsLike | number | string
     status?: string
     createdAt?: Date | string
@@ -39895,6 +41372,42 @@ export namespace Prisma {
 
   export type FeriasSolicitacaoCreateManyFuncionarioInputEnvelope = {
     data: FeriasSolicitacaoCreateManyFuncionarioInput | FeriasSolicitacaoCreateManyFuncionarioInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AdiantamentoSalarioCreateWithoutFuncionarioInput = {
+    id?: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_solicitacao?: Date | string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdiantamentoSalarioUncheckedCreateWithoutFuncionarioInput = {
+    id?: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_solicitacao?: Date | string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdiantamentoSalarioCreateOrConnectWithoutFuncionarioInput = {
+    where: AdiantamentoSalarioWhereUniqueInput
+    create: XOR<AdiantamentoSalarioCreateWithoutFuncionarioInput, AdiantamentoSalarioUncheckedCreateWithoutFuncionarioInput>
+  }
+
+  export type AdiantamentoSalarioCreateManyFuncionarioInputEnvelope = {
+    data: AdiantamentoSalarioCreateManyFuncionarioInput | AdiantamentoSalarioCreateManyFuncionarioInput[]
     skipDuplicates?: boolean
   }
 
@@ -40145,6 +41658,7 @@ export namespace Prisma {
     base_irt?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     irt_devido?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     outros_descontos?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     liquido_receber?: DecimalFilter<"FolhaPagamento"> | Decimal | DecimalJsLike | number | string
     status?: StringFilter<"FolhaPagamento"> | string
     createdAt?: DateTimeFilter<"FolhaPagamento"> | Date | string
@@ -40182,6 +41696,39 @@ export namespace Prisma {
     observacao?: StringNullableFilter<"FeriasSolicitacao"> | string | null
     createdAt?: DateTimeFilter<"FeriasSolicitacao"> | Date | string
     updatedAt?: DateTimeFilter<"FeriasSolicitacao"> | Date | string
+  }
+
+  export type AdiantamentoSalarioUpsertWithWhereUniqueWithoutFuncionarioInput = {
+    where: AdiantamentoSalarioWhereUniqueInput
+    update: XOR<AdiantamentoSalarioUpdateWithoutFuncionarioInput, AdiantamentoSalarioUncheckedUpdateWithoutFuncionarioInput>
+    create: XOR<AdiantamentoSalarioCreateWithoutFuncionarioInput, AdiantamentoSalarioUncheckedCreateWithoutFuncionarioInput>
+  }
+
+  export type AdiantamentoSalarioUpdateWithWhereUniqueWithoutFuncionarioInput = {
+    where: AdiantamentoSalarioWhereUniqueInput
+    data: XOR<AdiantamentoSalarioUpdateWithoutFuncionarioInput, AdiantamentoSalarioUncheckedUpdateWithoutFuncionarioInput>
+  }
+
+  export type AdiantamentoSalarioUpdateManyWithWhereWithoutFuncionarioInput = {
+    where: AdiantamentoSalarioScalarWhereInput
+    data: XOR<AdiantamentoSalarioUpdateManyMutationInput, AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioInput>
+  }
+
+  export type AdiantamentoSalarioScalarWhereInput = {
+    AND?: AdiantamentoSalarioScalarWhereInput | AdiantamentoSalarioScalarWhereInput[]
+    OR?: AdiantamentoSalarioScalarWhereInput[]
+    NOT?: AdiantamentoSalarioScalarWhereInput | AdiantamentoSalarioScalarWhereInput[]
+    id?: StringFilter<"AdiantamentoSalario"> | string
+    funcionarioId?: StringFilter<"AdiantamentoSalario"> | string
+    valor?: DecimalFilter<"AdiantamentoSalario"> | Decimal | DecimalJsLike | number | string
+    data_solicitacao?: DateTimeFilter<"AdiantamentoSalario"> | Date | string
+    motivo?: StringNullableFilter<"AdiantamentoSalario"> | string | null
+    status?: StringFilter<"AdiantamentoSalario"> | string
+    mes_referencia?: IntFilter<"AdiantamentoSalario"> | number
+    ano_referencia?: IntFilter<"AdiantamentoSalario"> | number
+    observacao?: StringNullableFilter<"AdiantamentoSalario"> | string | null
+    createdAt?: DateTimeFilter<"AdiantamentoSalario"> | Date | string
+    updatedAt?: DateTimeFilter<"AdiantamentoSalario"> | Date | string
   }
 
   export type DocumentoUpsertWithWhereUniqueWithoutFuncionarioInput = {
@@ -40224,6 +41771,7 @@ export namespace Prisma {
     presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -40251,6 +41799,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -40294,6 +41843,7 @@ export namespace Prisma {
     presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -40321,6 +41871,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -40348,6 +41899,7 @@ export namespace Prisma {
     contratos?: ContratoCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -40375,6 +41927,7 @@ export namespace Prisma {
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -40418,6 +41971,7 @@ export namespace Prisma {
     contratos?: ContratoUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -40445,6 +41999,7 @@ export namespace Prisma {
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -40472,6 +42027,7 @@ export namespace Prisma {
     contratos?: ContratoCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -40499,6 +42055,7 @@ export namespace Prisma {
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -40542,6 +42099,7 @@ export namespace Prisma {
     contratos?: ContratoUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -40569,6 +42127,7 @@ export namespace Prisma {
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -40596,6 +42155,7 @@ export namespace Prisma {
     contratos?: ContratoCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -40623,6 +42183,7 @@ export namespace Prisma {
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -40666,6 +42227,7 @@ export namespace Prisma {
     contratos?: ContratoUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -40693,6 +42255,135 @@ export namespace Prisma {
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
+    documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+  }
+
+  export type FuncionarioCreateWithoutAdiantamentosInput = {
+    id?: string
+    nome: string
+    bi_documento: string
+    email?: string | null
+    telefone?: string | null
+    data_nascimento?: Date | string | null
+    genero?: string | null
+    nif?: string | null
+    iban?: string | null
+    numero_inss?: string | null
+    hora_entrada?: string | null
+    hora_saida?: string | null
+    dias_trabalho?: string | null
+    data_admissao: Date | string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cargo?: CargoCreateNestedOneWithoutFuncionariosInput
+    departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
+    user?: UserCreateNestedOneWithoutFuncionarioInput
+    contratos?: ContratoCreateNestedManyWithoutFuncionarioInput
+    presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
+    folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
+    ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+  }
+
+  export type FuncionarioUncheckedCreateWithoutAdiantamentosInput = {
+    id?: string
+    nome: string
+    bi_documento: string
+    email?: string | null
+    telefone?: string | null
+    data_nascimento?: Date | string | null
+    genero?: string | null
+    nif?: string | null
+    iban?: string | null
+    numero_inss?: string | null
+    hora_entrada?: string | null
+    hora_saida?: string | null
+    dias_trabalho?: string | null
+    cargoId?: string | null
+    departamentoId?: string | null
+    data_admissao: Date | string
+    status?: string
+    userId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
+    presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
+    folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+  }
+
+  export type FuncionarioCreateOrConnectWithoutAdiantamentosInput = {
+    where: FuncionarioWhereUniqueInput
+    create: XOR<FuncionarioCreateWithoutAdiantamentosInput, FuncionarioUncheckedCreateWithoutAdiantamentosInput>
+  }
+
+  export type FuncionarioUpsertWithoutAdiantamentosInput = {
+    update: XOR<FuncionarioUpdateWithoutAdiantamentosInput, FuncionarioUncheckedUpdateWithoutAdiantamentosInput>
+    create: XOR<FuncionarioCreateWithoutAdiantamentosInput, FuncionarioUncheckedCreateWithoutAdiantamentosInput>
+    where?: FuncionarioWhereInput
+  }
+
+  export type FuncionarioUpdateToOneWithWhereWithoutAdiantamentosInput = {
+    where?: FuncionarioWhereInput
+    data: XOR<FuncionarioUpdateWithoutAdiantamentosInput, FuncionarioUncheckedUpdateWithoutAdiantamentosInput>
+  }
+
+  export type FuncionarioUpdateWithoutAdiantamentosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    bi_documento?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    data_nascimento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    genero?: NullableStringFieldUpdateOperationsInput | string | null
+    nif?: NullableStringFieldUpdateOperationsInput | string | null
+    iban?: NullableStringFieldUpdateOperationsInput | string | null
+    numero_inss?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_entrada?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_saida?: NullableStringFieldUpdateOperationsInput | string | null
+    dias_trabalho?: NullableStringFieldUpdateOperationsInput | string | null
+    data_admissao?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
+    departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
+    user?: UserUpdateOneWithoutFuncionarioNestedInput
+    contratos?: ContratoUpdateManyWithoutFuncionarioNestedInput
+    presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
+    folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
+    ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+  }
+
+  export type FuncionarioUncheckedUpdateWithoutAdiantamentosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    bi_documento?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    data_nascimento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    genero?: NullableStringFieldUpdateOperationsInput | string | null
+    nif?: NullableStringFieldUpdateOperationsInput | string | null
+    iban?: NullableStringFieldUpdateOperationsInput | string | null
+    numero_inss?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_entrada?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_saida?: NullableStringFieldUpdateOperationsInput | string | null
+    dias_trabalho?: NullableStringFieldUpdateOperationsInput | string | null
+    cargoId?: NullableStringFieldUpdateOperationsInput | string | null
+    departamentoId?: NullableStringFieldUpdateOperationsInput | string | null
+    data_admissao?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
+    folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -41843,6 +43534,7 @@ export namespace Prisma {
     presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -41870,6 +43562,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -41970,6 +43663,7 @@ export namespace Prisma {
     presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -41997,6 +43691,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -42070,6 +43765,7 @@ export namespace Prisma {
     base_irt: Decimal | DecimalJsLike | number | string
     irt_devido: Decimal | DecimalJsLike | number | string
     outros_descontos?: Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: Decimal | DecimalJsLike | number | string
     liquido_receber: Decimal | DecimalJsLike | number | string
     status?: string
     createdAt?: Date | string
@@ -42084,6 +43780,19 @@ export namespace Prisma {
     ano_referencia: number
     tipo?: string
     status?: string
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdiantamentoSalarioCreateManyFuncionarioInput = {
+    id?: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_solicitacao?: Date | string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
     observacao?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -42208,6 +43917,7 @@ export namespace Prisma {
     base_irt?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     irt_devido?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     outros_descontos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     liquido_receber?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42231,6 +43941,7 @@ export namespace Prisma {
     base_irt?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     irt_devido?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     outros_descontos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     liquido_receber?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42254,6 +43965,7 @@ export namespace Prisma {
     base_irt?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     irt_devido?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     outros_descontos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     liquido_receber?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42294,6 +44006,45 @@ export namespace Prisma {
     ano_referencia?: IntFieldUpdateOperationsInput | number
     tipo?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdiantamentoSalarioUpdateWithoutFuncionarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_solicitacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdiantamentoSalarioUncheckedUpdateWithoutFuncionarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_solicitacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_solicitacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
     observacao?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42475,6 +44226,10 @@ export namespace Prisma {
      * @deprecated Use EmpresaDefaultArgs instead
      */
     export type EmpresaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = EmpresaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use AdiantamentoSalarioDefaultArgs instead
+     */
+    export type AdiantamentoSalarioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AdiantamentoSalarioDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

@@ -331,10 +331,11 @@ model Funcionario {
     userId String? @unique
     user   User?   @relation(fields: [userId], references: [id])
 
-    contratos Contrato[]
-    presencas PresencaHR[]
-    folhas    FolhaPagamento[]
-    ferias    FeriasSolicitacao[]
+    contratos     Contrato[]
+    presencas     PresencaHR[]
+    folhas        FolhaPagamento[]
+    ferias        FeriasSolicitacao[]
+    adiantamentos AdiantamentoSalario[]
 
     createdAt  DateTime    @default(now())
     updatedAt  DateTime    @updatedAt
@@ -412,8 +413,9 @@ model FolhaPagamento {
     base_irt   Decimal @db.Decimal(18, 2)
     irt_devido Decimal @db.Decimal(18, 2)
 
-    outros_descontos Decimal @default(0) @db.Decimal(18, 2)
-    liquido_receber  Decimal @db.Decimal(18, 2)
+    outros_descontos    Decimal @default(0) @db.Decimal(18, 2)
+    total_adiantamentos Decimal @default(0) @db.Decimal(18, 2)
+    liquido_receber     Decimal @db.Decimal(18, 2)
 
     status    String   @default("RASCUNHO") // RASCUNHO, PROCESSADO, PAGO
     createdAt DateTime @default(now())
@@ -473,4 +475,21 @@ model Empresa {
     updatedAt DateTime @updatedAt
 
     @@map("empresa_config")
+}
+
+model AdiantamentoSalario {
+    id               String      @id @default(uuid())
+    funcionarioId    String
+    funcionario      Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+    valor            Decimal     @db.Decimal(18, 2)
+    data_solicitacao DateTime    @default(now())
+    motivo           String?     @db.Text
+    status           String      @default("PENDENTE") // PENDENTE, APROVADO, REJEITADO, PROCESSADO
+    mes_referencia   Int
+    ano_referencia   Int
+    observacao       String?     @db.Text
+    createdAt        DateTime    @default(now())
+    updatedAt        DateTime    @updatedAt
+
+    @@map("rh_adiantamentos")
 }

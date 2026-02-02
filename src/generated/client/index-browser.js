@@ -399,6 +399,7 @@ exports.Prisma.FolhaPagamentoScalarFieldEnum = {
   base_irt: 'base_irt',
   irt_devido: 'irt_devido',
   outros_descontos: 'outros_descontos',
+  total_adiantamentos: 'total_adiantamentos',
   liquido_receber: 'liquido_receber',
   status: 'status',
   createdAt: 'createdAt',
@@ -445,6 +446,20 @@ exports.Prisma.EmpresaScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.AdiantamentoSalarioScalarFieldEnum = {
+  id: 'id',
+  funcionarioId: 'funcionarioId',
+  valor: 'valor',
+  data_solicitacao: 'data_solicitacao',
+  motivo: 'motivo',
+  status: 'status',
+  mes_referencia: 'mes_referencia',
+  ano_referencia: 'ano_referencia',
+  observacao: 'observacao',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -480,7 +495,8 @@ exports.Prisma.ModelName = {
   FolhaPagamento: 'FolhaPagamento',
   FeriasSolicitacao: 'FeriasSolicitacao',
   ConfigRH: 'ConfigRH',
-  Empresa: 'Empresa'
+  Empresa: 'Empresa',
+  AdiantamentoSalario: 'AdiantamentoSalario'
 };
 
 /**

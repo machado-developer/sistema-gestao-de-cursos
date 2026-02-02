@@ -23,7 +23,7 @@ export function Paystub({ data }: PaystubProps) {
 
     if (!data) return null;
 
-    const { funcionario, mes, ano, salario_base, total_subsidios_tributaveis, total_subsidios_isentos, total_horas_extras, total_faltas, inss_trabalhador, irt_devido, liquido_receber } = data;
+    const { funcionario, mes, ano, salario_base, total_subsidios_tributaveis, total_subsidios_isentos, total_horas_extras, total_faltas, inss_trabalhador, irt_devido, liquido_receber, total_adiantamentos } = data;
 
     const meses = ["", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -32,9 +32,9 @@ export function Paystub({ data }: PaystubProps) {
     const companyEmail = empresa?.email || "RH@SGRH.CO.AO";
 
     return (
-        <div className="bg-white dark:bg-zinc-900 p-8 rounded-lg border shadow-sm max-w-4xl mx-auto print:border-0 print:shadow-none print:p-0 print:m-0" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' } as any}>
+        <div className="bg-white dark:bg-zinc-900 p-4 sm:p-8 rounded-lg border shadow-sm max-w-4xl mx-auto print:border-0 print:shadow-none print:p-0 print:m-0" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' } as any}>
             {/* Cabecalho */}
-            <div className="flex justify-between items-start border-b-2 border-slate-900 pb-6 mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start border-b-2 border-slate-900 pb-6 mb-6 gap-4">
                 <div className="flex items-center gap-4">
                     <div className="h-16 w-16 bg-blue-600 rounded-lg flex items-center justify-center text-white">
                         <Building2 size={32} />
@@ -48,7 +48,7 @@ export function Paystub({ data }: PaystubProps) {
                         </div>
                     </div>
                 </div>
-                <div className="text-right">
+                <div className="text-left sm:text-right w-full sm:w-auto">
                     <div className="inline-block bg-blue-600 text-white px-4 py-2 rounded-sm mb-2 shadow-sm">
                         <h1 className="text-sm font-black uppercase tracking-widest">Recibo de Salário</h1>
                     </div>
@@ -57,14 +57,14 @@ export function Paystub({ data }: PaystubProps) {
             </div>
 
             {/* Dados Colaborador */}
-            <div className="grid grid-cols-2 gap-8 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
                 <div className="space-y-1">
                     <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">Colaborador</p>
                     <p className="text-sm font-black uppercase text-blue-600">{funcionario.nome}</p>
                     <p className="text-[10px] font-bold text-slate-600 uppercase">BI: {funcionario.bi_documento}</p>
                     <p className="text-[10px] font-bold text-slate-600 uppercase">NIF: {funcionario.nif || '---'}</p>
                 </div>
-                <div className="space-y-1 text-right">
+                <div className="space-y-1 text-left sm:text-right">
                     <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">Departamento / Cargo</p>
                     <p className="text-[10px] font-black uppercase">{funcionario.departamento?.nome || 'GERAL'}</p>
                     <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{funcionario.cargo?.nome || 'OPERACIONAL'}</p>
@@ -73,8 +73,8 @@ export function Paystub({ data }: PaystubProps) {
             </div>
 
             {/* Tabela de Vencimentos */}
-            <div className="border-2 border-slate-900 dark:border-zinc-700 overflow-hidden rounded-sm mb-8">
-                <table className="w-full text-left text-[10px]">
+            <div className="border-2 border-slate-900 dark:border-zinc-700 overflow-hidden rounded-sm mb-8 overflow-x-auto">
+                <table className="w-full text-left text-[10px] min-w-[300px]">
                     <thead className="bg-[#1e293b] text-white uppercase font-black tracking-widest">
                         <tr>
                             <th className="py-2 px-4">Descrição dos Rendimentos e Descontos</th>
@@ -122,6 +122,14 @@ export function Paystub({ data }: PaystubProps) {
                                 <td className="py-3 px-4 text-right font-bold text-rose-600">({formatCurrency(Number(total_faltas))})</td>
                             </tr>
                         )}
+                        {Number(total_adiantamentos) > 0 && (
+                            <tr>
+                                <td className="py-3 px-4 font-bold uppercase text-amber-600">Adiantamentos Salariais</td>
+                                <td className="py-3 px-4 text-center">---</td>
+                                <td className="py-3 px-4 text-right text-slate-300">---</td>
+                                <td className="py-3 px-4 text-right font-bold text-amber-600">({formatCurrency(Number(total_adiantamentos))})</td>
+                            </tr>
+                        )}
                         <tr>
                             <td className="py-3 px-4 font-bold uppercase text-amber-600">S. Social Angola (INSS 3%)</td>
                             <td className="py-3 px-4 text-center">3%</td>
@@ -147,7 +155,7 @@ export function Paystub({ data }: PaystubProps) {
             </div>
 
             {/* Rodapé Informativo */}
-            <div className="grid grid-cols-2 gap-12 mt-12 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 mt-12 mb-8">
                 <div className="border-t-2 border-slate-200 pt-4 text-center">
                     <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-8">Pelo Empregador</p>
                     <div className="h-0.5 w-32 bg-slate-200 mx-auto my-4" />

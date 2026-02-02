@@ -90,6 +90,7 @@ export function processarSalarioMensal(dados: {
     horasExtrasDescanso?: number;  // Horas em fins de semana/feriados
     horasNoturnas?: number;        // Horas noturnas (21h-06h, +20%)
     faltasNaoJustificadas?: number;
+    totalAdiantamentos?: number;
 }): ResultadoProcessamento {
     const {
         salarioBase,
@@ -98,7 +99,8 @@ export function processarSalarioMensal(dados: {
         horasExtrasNormais = 0,
         horasExtrasDescanso = 0,
         horasNoturnas = 0,
-        faltasNaoJustificadas = 0
+        faltasNaoJustificadas = 0,
+        totalAdiantamentos = 0
     } = dados;
 
     const valorHora = salarioBase / ((44 / 6) * 30);
@@ -123,9 +125,8 @@ export function processarSalarioMensal(dados: {
     const irtValue = calcularIRT(baseIrt);
 
     // 6. Líquido
-    const liquido = Math.round((baseIrt - irtValue + subsidiosIsentos) * 100) / 100;
-
-
+    // Subtrair adiantamentos do líquido final
+    const liquido = Math.round((baseIrt - irtValue + subsidiosIsentos - totalAdiantamentos) * 100) / 100;
 
     return {
         salarioBase,
