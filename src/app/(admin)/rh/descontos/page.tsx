@@ -9,13 +9,14 @@ import { StatCard } from "@/components/dashboard/StatCard";
 import {
     Plus,
     Search,
-    Banknote,
+    TrendingDown,
     CheckCircle,
     XCircle,
     Clock,
     User,
     Calendar,
-    FileText
+    FileText,
+    AlertCircle
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/utils";
@@ -23,8 +24,8 @@ import { Select } from "@/components/ui/Select";
 import { Modal } from "@/components/ui/Modal";
 import { CurrencyInput } from "@/components/ui/CurrencyInput";
 
-export default function AdiantamentosPage() {
-    const [adiantamentos, setAdiantamentos] = useState<any[]>([]);
+export default function DescontosPage() {
+    const [descontos, setDescontos] = useState<any[]>([]);
     const [funcionarios, setFuncionarios] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,43 +41,35 @@ export default function AdiantamentosPage() {
         valor: 0,
         mes_referencia: new Date().getMonth() + 1,
         ano_referencia: new Date().getFullYear(),
+        tipo: "OUTRO",
         motivo: ""
     });
 
     const fetchData = async () => {
         setLoading(true);
         try {
-            const [adiantamentosRes, funcionariosRes] = await Promise.all([
-                fetch("/api/rh/adiantamentos"),
+            const [descontosRes, funcionariosRes] = await Promise.all([
+                fetch("/api/rh/descontos"),
                 fetch("/api/rh/funcionarios")
             ]);
 
-            let adiantamentosData = [];
+            let descontosData = [];
             let funcionariosData = [];
 
-            if (adiantamentosRes.ok) {
-                adiantamentosData = await adiantamentosRes.json();
-            } else {
-                console.error("Erro na API de adiantamentos:", adiantamentosRes.status, adiantamentosRes.statusText);
+            if (descontosRes.ok) {
+                descontosData = await descontosRes.json();
             }
 
             if (funcionariosRes.ok) {
                 funcionariosData = await funcionariosRes.json();
-            } else {
-                console.error("Erro na API de funcionarios:", funcionariosRes.status, funcionariosRes.statusText);
             }
 
-            if (Array.isArray(adiantamentosData)) {
-                setAdiantamentos(adiantamentosData);
-            } else {
-                setAdiantamentos([]);
-                console.error("Dados de adiantamentos inválidos:", adiantamentosData);
+            if (Array.isArray(descontosData)) {
+                setDescontos(descontosData);
             }
 
             if (Array.isArray(funcionariosData)) {
                 setFuncionarios(funcionariosData.filter((f: any) => f.status === "ATIVO"));
-            } else {
-                setFuncionarios([]);
             }
         } catch (error) {
             toast.error("Erro ao carregar dados");
@@ -97,7 +90,7 @@ export default function AdiantamentosPage() {
 
         setSubmitting(true);
         try {
-            const res = await fetch("/api/rh/adiantamentos", {
+            const res = await fetch("/api/rh/descontos", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
@@ -105,18 +98,19 @@ export default function AdiantamentosPage() {
 
             if (!res.ok) throw new Error();
 
-            toast.success("Adiantamento solicitado com sucesso");
+            toast.success("Desconto registado com sucesso");
             setIsModalOpen(false);
             setFormData({
                 funcionarioId: "",
                 valor: 0,
                 mes_referencia: new Date().getMonth() + 1,
                 ano_referencia: new Date().getFullYear(),
+                tipo: "OUTRO",
                 motivo: ""
             });
             fetchData();
         } catch (error) {
-            toast.error("Erro ao solicitar adiantamento");
+            toast.error("Erro ao registar desconto");
         } finally {
             setSubmitting(false);
         }
@@ -124,7 +118,7 @@ export default function AdiantamentosPage() {
 
     const handleStatusUpdate = async (id: string, status: string) => {
         try {
-            const res = await fetch(`/api/rh/adiantamentos/${id}`, {
+            const res = await fetch(`/api/rh/descontos/${id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ status })
@@ -132,7 +126,7 @@ export default function AdiantamentosPage() {
 
             if (!res.ok) throw new Error();
 
-            toast.success(`Solicitação ${status.toLowerCase()} com sucesso`);
+            toast.success(`Desconto ${status.toLowerCase()} com sucesso`);
             fetchData();
         } catch (error) {
             toast.error("Erro ao atualizar status");
@@ -145,22 +139,27 @@ export default function AdiantamentosPage() {
             header: "Colaborador",
             render: (item) => (
                 <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-lg bg-[var(--surface-color)] flex items-center justify-center text-[var(--accent-primary)] border border-[var(--border-color)]">
+                    <div className="h-8 w-8 rounded-lg bg-[var(--surface-color)] flex items-center justify-center text-rose-500 border border-[var(--border-color)]">
                         <User size={16} />
                     </div>
                     <div>
                         <p className="font-semibold text-sm text-[var(--text-primary)]">{item.funcionario?.nome}</p>
-                        <p className="text-xs text-slate-500">{item.funcionario?.cargo?.nome || 'N/A'}</p>
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs text-slate-500">{item.tipo}</span>
+                            {item.observacao === "GERADO_AUTOMATICAMENTE" && (
+                                <span className="text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-100 font-bold uppercase tracking-tighter">Automático</span>
+                            )}
+                        </div>
                     </div>
                 </div>
             ),
         },
         {
             key: "valor",
-            header: "Valor Solicitado",
+            header: "Valor do Desconto",
             render: (item) => (
-                <div className="font-semibold text-[var(--text-primary)]">
-                    {formatCurrency(Number(item.valor))}
+                <div className="font-semibold text-rose-600 dark:text-rose-400">
+                    -{formatCurrency(Number(item.valor))}
                 </div>
             ),
         },
@@ -209,14 +208,23 @@ export default function AdiantamentosPage() {
             }
         },
         {
+            key: "motivo",
+            header: "Motivo",
+            render: (item) => (
+                <div className="text-sm text-slate-500 max-w-[200px] truncate" title={item.motivo}>
+                    {item.motivo || '---'}
+                </div>
+            ),
+        },
+        {
             key: "acoes",
             header: "",
             render: (item) => (
-                item.status === "PENDENTE" && (
+                item.status === "PENDENTE" && item.observacao !== "GERADO_AUTOMATICAMENTE" && (
                     <div className="flex justify-end gap-2">
                         <Button
                             size="sm"
-                            className="bg-emerald-300 text-emerald-600 hover:bg-emerald-200 border-emerald-200 h-7"
+                            className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border-emerald-200 h-7"
                             onClick={() => handleStatusUpdate(item.id, "APROVADO")}
                             title="Aprovar"
                         >
@@ -224,7 +232,7 @@ export default function AdiantamentosPage() {
                         </Button>
                         <Button
                             size="sm"
-                            className="bg-rose-300 text-rose-600 hover:bg-rose-200 border-rose-200 h-7"
+                            className="bg-rose-50 text-rose-600 hover:bg-rose-100 border-rose-200 h-7"
                             onClick={() => handleStatusUpdate(item.id, "REJEITADO")}
                             title="Rejeitar"
                         >
@@ -237,14 +245,11 @@ export default function AdiantamentosPage() {
         }
     ];
 
-    const filteredData = adiantamentos.filter((a: any) => {
+    const filteredData = descontos.filter((a: any) => {
         const matchesSearch = a.funcionario?.nome.toLowerCase().includes(search.toLowerCase());
         const matchesStatus = !statusFilter || a.status === statusFilter;
         return matchesSearch && matchesStatus;
     });
-
-    const totalPendentes = adiantamentos.filter(a => a.status === "PENDENTE").reduce((acc, curr) => acc + Number(curr.valor), 0);
-    const totalAprovados = adiantamentos.filter(a => a.status === "APROVADO").reduce((acc, curr) => acc + Number(curr.valor), 0);
 
     return (
         <div className="p-4 space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -252,38 +257,38 @@ export default function AdiantamentosPage() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-white/5 pb-4">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-                        <Banknote className="text-[var(--accent-primary)]" />
-                        Adiantamentos Salariais
+                        <TrendingDown className="text-rose-500" />
+                        Descontos Salariais
                     </h1>
-                    <p className="text-sm text-slate-500">Gestão de solicitações e descontos em folha</p>
+                    <p className="text-sm text-slate-500">Gestão de faltas, danos e sanções disciplinares</p>
                 </div>
                 <Button
-                    className="bg-[var(--accent-primary)] text-white shadow-lg shadow-blue-500/20"
+                    className="bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-500/20"
                     onClick={() => setIsModalOpen(true)}
                 >
-                    <Plus size={18} className="mr-2" /> Novo Adiantamento
+                    <Plus size={18} className="mr-2" /> Registar Desconto
                 </Button>
             </div>
 
             {/* Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <StatCard
-                    title="Total Solicitado (Pendente)"
-                    value={formatCurrency(totalPendentes)}
+                    title="Total em Pendente"
+                    value={formatCurrency(descontos.filter(a => a.status === "PENDENTE").reduce((acc, curr) => acc + Number(curr.valor), 0))}
                     icon={Clock}
                     variant="orange"
-                    subStats={[{ label: 'Pedidos', value: adiantamentos.filter(a => a.status === 'PENDENTE').length }]}
+                    subStats={[{ label: 'Aguardando', value: descontos.filter(a => a.status === 'PENDENTE').length }]}
                 />
                 <StatCard
-                    title="Aprovado este Mês"
-                    value={formatCurrency(totalAprovados)}
-                    icon={CheckCircle}
-                    variant="green"
-                    subStats={[{ label: 'Pedidos', value: adiantamentos.filter(a => a.status === 'APROVADO').length }]}
+                    title="Descontos este Mês"
+                    value={formatCurrency(descontos.filter(a => a.status === "APROVADO").reduce((acc, curr) => acc + Number(curr.valor), 0))}
+                    icon={AlertCircle}
+                    variant="red"
+                    subStats={[{ label: 'Aprovados', value: descontos.filter(a => a.status === 'APROVADO').length }]}
                 />
                 <StatCard
                     title="Total Processado"
-                    value={formatCurrency(adiantamentos.filter(a => a.status === 'PROCESSADO').reduce((acc, curr) => acc + Number(curr.valor), 0))}
+                    value={formatCurrency(descontos.filter(a => a.status === "PROCESSADO").reduce((acc, curr) => acc + Number(curr.valor), 0))}
                     icon={FileText}
                     variant="blue"
                     subStats={[{ label: 'Histórico', value: 'Global' }]}
@@ -326,8 +331,8 @@ export default function AdiantamentosPage() {
                 loading={loading}
                 emptyState={
                     <div className="py-12 flex flex-col items-center justify-center text-slate-400">
-                        <Banknote size={48} className="opacity-20 mb-4" />
-                        <p>Nenhuma solicitação encontrada</p>
+                        <TrendingDown size={48} className="opacity-20 mb-4" />
+                        <p>Nenhum desconto registado</p>
                     </div>
                 }
             />
@@ -336,7 +341,7 @@ export default function AdiantamentosPage() {
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                title="Novo Adiantamento"
+                title="Registar Novo Desconto"
             >
                 <div className="space-y-4">
                     <Select
@@ -347,11 +352,24 @@ export default function AdiantamentosPage() {
                         placeholder="Selecione o colaborador"
                     />
 
-                    <CurrencyInput
-                        label="Valor do Adiantamento"
-                        value={formData.valor}
-                        onChange={(val) => setFormData({ ...formData, valor: val })}
-                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <Select
+                            label="Tipo de Desconto"
+                            value={formData.tipo}
+                            onChange={(val) => setFormData({ ...formData, tipo: val })}
+                            options={[
+                                { value: "FALTA", label: "Faltas" },
+                                { value: "DISCIPLINAR", label: "Sancção Disciplinar" },
+                                { value: "DANO", label: "Dano Material" },
+                                { value: "OUTRO", label: "Outro" }
+                            ]}
+                        />
+                        <CurrencyInput
+                            label="Valor do Desconto"
+                            value={formData.valor}
+                            onChange={(val) => setFormData({ ...formData, valor: val })}
+                        />
+                    </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Input
@@ -370,19 +388,20 @@ export default function AdiantamentosPage() {
                     </div>
 
                     <Input
-                        label="Motivo (Opcional)"
+                        label="Motivo/Descrição"
                         value={formData.motivo}
                         onChange={(e) => setFormData({ ...formData, motivo: e.target.value })}
+                        placeholder="Ex: Falta dia 15 sem justiticação"
                     />
 
                     <div className="pt-4 flex justify-end gap-2">
                         <Button variant="ghost" onClick={() => setIsModalOpen(false)}>Cancelar</Button>
                         <Button
-                            className="bg-[var(--accent-primary)] text-white"
+                            className="bg-rose-600 text-white"
                             onClick={handleCreate}
                             disabled={submitting}
                         >
-                            {submitting ? "Processando..." : "Confirmar Solicitação"}
+                            {submitting ? "Processando..." : "Registar Desconto"}
                         </Button>
                     </div>
                 </div>

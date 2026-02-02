@@ -138,6 +138,11 @@ export type Empresa = $Result.DefaultSelection<Prisma.$EmpresaPayload>
  * 
  */
 export type AdiantamentoSalario = $Result.DefaultSelection<Prisma.$AdiantamentoSalarioPayload>
+/**
+ * Model Desconto
+ * 
+ */
+export type Desconto = $Result.DefaultSelection<Prisma.$DescontoPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -511,6 +516,16 @@ export class PrismaClient<
     * ```
     */
   get adiantamentoSalario(): Prisma.AdiantamentoSalarioDelegate<ExtArgs>;
+
+  /**
+   * `prisma.desconto`: Exposes CRUD operations for the **Desconto** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Descontos
+    * const descontos = await prisma.desconto.findMany()
+    * ```
+    */
+  get desconto(): Prisma.DescontoDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -976,7 +991,8 @@ export namespace Prisma {
     FeriasSolicitacao: 'FeriasSolicitacao',
     ConfigRH: 'ConfigRH',
     Empresa: 'Empresa',
-    AdiantamentoSalario: 'AdiantamentoSalario'
+    AdiantamentoSalario: 'AdiantamentoSalario',
+    Desconto: 'Desconto'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -992,7 +1008,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "aluno" | "empresaCliente" | "documento" | "curso" | "instrutor" | "turma" | "matricula" | "pagamento" | "user" | "auditLog" | "certificateTemplate" | "certificate" | "aula" | "presenca" | "avaliacao" | "departamento" | "cargo" | "funcionario" | "contrato" | "presencaHR" | "folhaPagamento" | "feriasSolicitacao" | "configRH" | "empresa" | "adiantamentoSalario"
+      modelProps: "aluno" | "empresaCliente" | "documento" | "curso" | "instrutor" | "turma" | "matricula" | "pagamento" | "user" | "auditLog" | "certificateTemplate" | "certificate" | "aula" | "presenca" | "avaliacao" | "departamento" | "cargo" | "funcionario" | "contrato" | "presencaHR" | "folhaPagamento" | "feriasSolicitacao" | "configRH" | "empresa" | "adiantamentoSalario" | "desconto"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2646,6 +2662,72 @@ export namespace Prisma {
           }
         }
       }
+      Desconto: {
+        payload: Prisma.$DescontoPayload<ExtArgs>
+        fields: Prisma.DescontoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DescontoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescontoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DescontoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescontoPayload>
+          }
+          findFirst: {
+            args: Prisma.DescontoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescontoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DescontoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescontoPayload>
+          }
+          findMany: {
+            args: Prisma.DescontoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescontoPayload>[]
+          }
+          create: {
+            args: Prisma.DescontoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescontoPayload>
+          }
+          createMany: {
+            args: Prisma.DescontoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.DescontoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescontoPayload>
+          }
+          update: {
+            args: Prisma.DescontoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescontoPayload>
+          }
+          deleteMany: {
+            args: Prisma.DescontoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DescontoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DescontoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescontoPayload>
+          }
+          aggregate: {
+            args: Prisma.DescontoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDesconto>
+          }
+          groupBy: {
+            args: Prisma.DescontoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DescontoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DescontoCountArgs<ExtArgs>
+            result: $Utils.Optional<DescontoCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3270,6 +3352,7 @@ export namespace Prisma {
     folhas: number
     ferias: number
     adiantamentos: number
+    descontos: number
     documentos: number
   }
 
@@ -3279,6 +3362,7 @@ export namespace Prisma {
     folhas?: boolean | FuncionarioCountOutputTypeCountFolhasArgs
     ferias?: boolean | FuncionarioCountOutputTypeCountFeriasArgs
     adiantamentos?: boolean | FuncionarioCountOutputTypeCountAdiantamentosArgs
+    descontos?: boolean | FuncionarioCountOutputTypeCountDescontosArgs
     documentos?: boolean | FuncionarioCountOutputTypeCountDocumentosArgs
   }
 
@@ -3326,6 +3410,13 @@ export namespace Prisma {
    */
   export type FuncionarioCountOutputTypeCountAdiantamentosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AdiantamentoSalarioWhereInput
+  }
+
+  /**
+   * FuncionarioCountOutputType without action
+   */
+  export type FuncionarioCountOutputTypeCountDescontosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DescontoWhereInput
   }
 
   /**
@@ -20390,6 +20481,7 @@ export namespace Prisma {
     folhas?: boolean | Funcionario$folhasArgs<ExtArgs>
     ferias?: boolean | Funcionario$feriasArgs<ExtArgs>
     adiantamentos?: boolean | Funcionario$adiantamentosArgs<ExtArgs>
+    descontos?: boolean | Funcionario$descontosArgs<ExtArgs>
     documentos?: boolean | Funcionario$documentosArgs<ExtArgs>
     _count?: boolean | FuncionarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["funcionario"]>
@@ -20427,6 +20519,7 @@ export namespace Prisma {
     folhas?: boolean | Funcionario$folhasArgs<ExtArgs>
     ferias?: boolean | Funcionario$feriasArgs<ExtArgs>
     adiantamentos?: boolean | Funcionario$adiantamentosArgs<ExtArgs>
+    descontos?: boolean | Funcionario$descontosArgs<ExtArgs>
     documentos?: boolean | Funcionario$documentosArgs<ExtArgs>
     _count?: boolean | FuncionarioCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -20442,6 +20535,7 @@ export namespace Prisma {
       folhas: Prisma.$FolhaPagamentoPayload<ExtArgs>[]
       ferias: Prisma.$FeriasSolicitacaoPayload<ExtArgs>[]
       adiantamentos: Prisma.$AdiantamentoSalarioPayload<ExtArgs>[]
+      descontos: Prisma.$DescontoPayload<ExtArgs>[]
       documentos: Prisma.$DocumentoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -20813,6 +20907,7 @@ export namespace Prisma {
     folhas<T extends Funcionario$folhasArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$folhasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolhaPagamentoPayload<ExtArgs>, T, "findMany"> | Null>
     ferias<T extends Funcionario$feriasArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$feriasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeriasSolicitacaoPayload<ExtArgs>, T, "findMany"> | Null>
     adiantamentos<T extends Funcionario$adiantamentosArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$adiantamentosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "findMany"> | Null>
+    descontos<T extends Funcionario$descontosArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$descontosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DescontoPayload<ExtArgs>, T, "findMany"> | Null>
     documentos<T extends Funcionario$documentosArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$documentosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentoPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -21304,6 +21399,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AdiantamentoSalarioScalarFieldEnum | AdiantamentoSalarioScalarFieldEnum[]
+  }
+
+  /**
+   * Funcionario.descontos
+   */
+  export type Funcionario$descontosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Desconto
+     */
+    select?: DescontoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DescontoInclude<ExtArgs> | null
+    where?: DescontoWhereInput
+    orderBy?: DescontoOrderByWithRelationInput | DescontoOrderByWithRelationInput[]
+    cursor?: DescontoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DescontoScalarFieldEnum | DescontoScalarFieldEnum[]
   }
 
   /**
@@ -28337,6 +28452,1004 @@ export namespace Prisma {
 
 
   /**
+   * Model Desconto
+   */
+
+  export type AggregateDesconto = {
+    _count: DescontoCountAggregateOutputType | null
+    _avg: DescontoAvgAggregateOutputType | null
+    _sum: DescontoSumAggregateOutputType | null
+    _min: DescontoMinAggregateOutputType | null
+    _max: DescontoMaxAggregateOutputType | null
+  }
+
+  export type DescontoAvgAggregateOutputType = {
+    valor: Decimal | null
+    mes_referencia: number | null
+    ano_referencia: number | null
+  }
+
+  export type DescontoSumAggregateOutputType = {
+    valor: Decimal | null
+    mes_referencia: number | null
+    ano_referencia: number | null
+  }
+
+  export type DescontoMinAggregateOutputType = {
+    id: string | null
+    funcionarioId: string | null
+    valor: Decimal | null
+    data_registro: Date | null
+    tipo: string | null
+    motivo: string | null
+    status: string | null
+    mes_referencia: number | null
+    ano_referencia: number | null
+    observacao: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DescontoMaxAggregateOutputType = {
+    id: string | null
+    funcionarioId: string | null
+    valor: Decimal | null
+    data_registro: Date | null
+    tipo: string | null
+    motivo: string | null
+    status: string | null
+    mes_referencia: number | null
+    ano_referencia: number | null
+    observacao: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DescontoCountAggregateOutputType = {
+    id: number
+    funcionarioId: number
+    valor: number
+    data_registro: number
+    tipo: number
+    motivo: number
+    status: number
+    mes_referencia: number
+    ano_referencia: number
+    observacao: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DescontoAvgAggregateInputType = {
+    valor?: true
+    mes_referencia?: true
+    ano_referencia?: true
+  }
+
+  export type DescontoSumAggregateInputType = {
+    valor?: true
+    mes_referencia?: true
+    ano_referencia?: true
+  }
+
+  export type DescontoMinAggregateInputType = {
+    id?: true
+    funcionarioId?: true
+    valor?: true
+    data_registro?: true
+    tipo?: true
+    motivo?: true
+    status?: true
+    mes_referencia?: true
+    ano_referencia?: true
+    observacao?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DescontoMaxAggregateInputType = {
+    id?: true
+    funcionarioId?: true
+    valor?: true
+    data_registro?: true
+    tipo?: true
+    motivo?: true
+    status?: true
+    mes_referencia?: true
+    ano_referencia?: true
+    observacao?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DescontoCountAggregateInputType = {
+    id?: true
+    funcionarioId?: true
+    valor?: true
+    data_registro?: true
+    tipo?: true
+    motivo?: true
+    status?: true
+    mes_referencia?: true
+    ano_referencia?: true
+    observacao?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DescontoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Desconto to aggregate.
+     */
+    where?: DescontoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descontos to fetch.
+     */
+    orderBy?: DescontoOrderByWithRelationInput | DescontoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DescontoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descontos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descontos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Descontos
+    **/
+    _count?: true | DescontoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DescontoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DescontoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DescontoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DescontoMaxAggregateInputType
+  }
+
+  export type GetDescontoAggregateType<T extends DescontoAggregateArgs> = {
+        [P in keyof T & keyof AggregateDesconto]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDesconto[P]>
+      : GetScalarType<T[P], AggregateDesconto[P]>
+  }
+
+
+
+
+  export type DescontoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DescontoWhereInput
+    orderBy?: DescontoOrderByWithAggregationInput | DescontoOrderByWithAggregationInput[]
+    by: DescontoScalarFieldEnum[] | DescontoScalarFieldEnum
+    having?: DescontoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DescontoCountAggregateInputType | true
+    _avg?: DescontoAvgAggregateInputType
+    _sum?: DescontoSumAggregateInputType
+    _min?: DescontoMinAggregateInputType
+    _max?: DescontoMaxAggregateInputType
+  }
+
+  export type DescontoGroupByOutputType = {
+    id: string
+    funcionarioId: string
+    valor: Decimal
+    data_registro: Date
+    tipo: string
+    motivo: string | null
+    status: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: DescontoCountAggregateOutputType | null
+    _avg: DescontoAvgAggregateOutputType | null
+    _sum: DescontoSumAggregateOutputType | null
+    _min: DescontoMinAggregateOutputType | null
+    _max: DescontoMaxAggregateOutputType | null
+  }
+
+  type GetDescontoGroupByPayload<T extends DescontoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DescontoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DescontoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DescontoGroupByOutputType[P]>
+            : GetScalarType<T[P], DescontoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DescontoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    funcionarioId?: boolean
+    valor?: boolean
+    data_registro?: boolean
+    tipo?: boolean
+    motivo?: boolean
+    status?: boolean
+    mes_referencia?: boolean
+    ano_referencia?: boolean
+    observacao?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    funcionario?: boolean | FuncionarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["desconto"]>
+
+
+  export type DescontoSelectScalar = {
+    id?: boolean
+    funcionarioId?: boolean
+    valor?: boolean
+    data_registro?: boolean
+    tipo?: boolean
+    motivo?: boolean
+    status?: boolean
+    mes_referencia?: boolean
+    ano_referencia?: boolean
+    observacao?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DescontoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    funcionario?: boolean | FuncionarioDefaultArgs<ExtArgs>
+  }
+
+  export type $DescontoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Desconto"
+    objects: {
+      funcionario: Prisma.$FuncionarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      funcionarioId: string
+      valor: Prisma.Decimal
+      data_registro: Date
+      tipo: string
+      motivo: string | null
+      status: string
+      mes_referencia: number
+      ano_referencia: number
+      observacao: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["desconto"]>
+    composites: {}
+  }
+
+  type DescontoGetPayload<S extends boolean | null | undefined | DescontoDefaultArgs> = $Result.GetResult<Prisma.$DescontoPayload, S>
+
+  type DescontoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DescontoFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: DescontoCountAggregateInputType | true
+    }
+
+  export interface DescontoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Desconto'], meta: { name: 'Desconto' } }
+    /**
+     * Find zero or one Desconto that matches the filter.
+     * @param {DescontoFindUniqueArgs} args - Arguments to find a Desconto
+     * @example
+     * // Get one Desconto
+     * const desconto = await prisma.desconto.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DescontoFindUniqueArgs>(args: SelectSubset<T, DescontoFindUniqueArgs<ExtArgs>>): Prisma__DescontoClient<$Result.GetResult<Prisma.$DescontoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Desconto that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DescontoFindUniqueOrThrowArgs} args - Arguments to find a Desconto
+     * @example
+     * // Get one Desconto
+     * const desconto = await prisma.desconto.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DescontoFindUniqueOrThrowArgs>(args: SelectSubset<T, DescontoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DescontoClient<$Result.GetResult<Prisma.$DescontoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Desconto that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescontoFindFirstArgs} args - Arguments to find a Desconto
+     * @example
+     * // Get one Desconto
+     * const desconto = await prisma.desconto.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DescontoFindFirstArgs>(args?: SelectSubset<T, DescontoFindFirstArgs<ExtArgs>>): Prisma__DescontoClient<$Result.GetResult<Prisma.$DescontoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Desconto that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescontoFindFirstOrThrowArgs} args - Arguments to find a Desconto
+     * @example
+     * // Get one Desconto
+     * const desconto = await prisma.desconto.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DescontoFindFirstOrThrowArgs>(args?: SelectSubset<T, DescontoFindFirstOrThrowArgs<ExtArgs>>): Prisma__DescontoClient<$Result.GetResult<Prisma.$DescontoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Descontos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescontoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Descontos
+     * const descontos = await prisma.desconto.findMany()
+     * 
+     * // Get first 10 Descontos
+     * const descontos = await prisma.desconto.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const descontoWithIdOnly = await prisma.desconto.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DescontoFindManyArgs>(args?: SelectSubset<T, DescontoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DescontoPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Desconto.
+     * @param {DescontoCreateArgs} args - Arguments to create a Desconto.
+     * @example
+     * // Create one Desconto
+     * const Desconto = await prisma.desconto.create({
+     *   data: {
+     *     // ... data to create a Desconto
+     *   }
+     * })
+     * 
+     */
+    create<T extends DescontoCreateArgs>(args: SelectSubset<T, DescontoCreateArgs<ExtArgs>>): Prisma__DescontoClient<$Result.GetResult<Prisma.$DescontoPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Descontos.
+     * @param {DescontoCreateManyArgs} args - Arguments to create many Descontos.
+     * @example
+     * // Create many Descontos
+     * const desconto = await prisma.desconto.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DescontoCreateManyArgs>(args?: SelectSubset<T, DescontoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Desconto.
+     * @param {DescontoDeleteArgs} args - Arguments to delete one Desconto.
+     * @example
+     * // Delete one Desconto
+     * const Desconto = await prisma.desconto.delete({
+     *   where: {
+     *     // ... filter to delete one Desconto
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DescontoDeleteArgs>(args: SelectSubset<T, DescontoDeleteArgs<ExtArgs>>): Prisma__DescontoClient<$Result.GetResult<Prisma.$DescontoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Desconto.
+     * @param {DescontoUpdateArgs} args - Arguments to update one Desconto.
+     * @example
+     * // Update one Desconto
+     * const desconto = await prisma.desconto.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DescontoUpdateArgs>(args: SelectSubset<T, DescontoUpdateArgs<ExtArgs>>): Prisma__DescontoClient<$Result.GetResult<Prisma.$DescontoPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Descontos.
+     * @param {DescontoDeleteManyArgs} args - Arguments to filter Descontos to delete.
+     * @example
+     * // Delete a few Descontos
+     * const { count } = await prisma.desconto.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DescontoDeleteManyArgs>(args?: SelectSubset<T, DescontoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Descontos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescontoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Descontos
+     * const desconto = await prisma.desconto.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DescontoUpdateManyArgs>(args: SelectSubset<T, DescontoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Desconto.
+     * @param {DescontoUpsertArgs} args - Arguments to update or create a Desconto.
+     * @example
+     * // Update or create a Desconto
+     * const desconto = await prisma.desconto.upsert({
+     *   create: {
+     *     // ... data to create a Desconto
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Desconto we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DescontoUpsertArgs>(args: SelectSubset<T, DescontoUpsertArgs<ExtArgs>>): Prisma__DescontoClient<$Result.GetResult<Prisma.$DescontoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Descontos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescontoCountArgs} args - Arguments to filter Descontos to count.
+     * @example
+     * // Count the number of Descontos
+     * const count = await prisma.desconto.count({
+     *   where: {
+     *     // ... the filter for the Descontos we want to count
+     *   }
+     * })
+    **/
+    count<T extends DescontoCountArgs>(
+      args?: Subset<T, DescontoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DescontoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Desconto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescontoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DescontoAggregateArgs>(args: Subset<T, DescontoAggregateArgs>): Prisma.PrismaPromise<GetDescontoAggregateType<T>>
+
+    /**
+     * Group by Desconto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescontoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DescontoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DescontoGroupByArgs['orderBy'] }
+        : { orderBy?: DescontoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DescontoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDescontoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Desconto model
+   */
+  readonly fields: DescontoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Desconto.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DescontoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    funcionario<T extends FuncionarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FuncionarioDefaultArgs<ExtArgs>>): Prisma__FuncionarioClient<$Result.GetResult<Prisma.$FuncionarioPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Desconto model
+   */ 
+  interface DescontoFieldRefs {
+    readonly id: FieldRef<"Desconto", 'String'>
+    readonly funcionarioId: FieldRef<"Desconto", 'String'>
+    readonly valor: FieldRef<"Desconto", 'Decimal'>
+    readonly data_registro: FieldRef<"Desconto", 'DateTime'>
+    readonly tipo: FieldRef<"Desconto", 'String'>
+    readonly motivo: FieldRef<"Desconto", 'String'>
+    readonly status: FieldRef<"Desconto", 'String'>
+    readonly mes_referencia: FieldRef<"Desconto", 'Int'>
+    readonly ano_referencia: FieldRef<"Desconto", 'Int'>
+    readonly observacao: FieldRef<"Desconto", 'String'>
+    readonly createdAt: FieldRef<"Desconto", 'DateTime'>
+    readonly updatedAt: FieldRef<"Desconto", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Desconto findUnique
+   */
+  export type DescontoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Desconto
+     */
+    select?: DescontoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DescontoInclude<ExtArgs> | null
+    /**
+     * Filter, which Desconto to fetch.
+     */
+    where: DescontoWhereUniqueInput
+  }
+
+  /**
+   * Desconto findUniqueOrThrow
+   */
+  export type DescontoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Desconto
+     */
+    select?: DescontoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DescontoInclude<ExtArgs> | null
+    /**
+     * Filter, which Desconto to fetch.
+     */
+    where: DescontoWhereUniqueInput
+  }
+
+  /**
+   * Desconto findFirst
+   */
+  export type DescontoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Desconto
+     */
+    select?: DescontoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DescontoInclude<ExtArgs> | null
+    /**
+     * Filter, which Desconto to fetch.
+     */
+    where?: DescontoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descontos to fetch.
+     */
+    orderBy?: DescontoOrderByWithRelationInput | DescontoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Descontos.
+     */
+    cursor?: DescontoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descontos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descontos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Descontos.
+     */
+    distinct?: DescontoScalarFieldEnum | DescontoScalarFieldEnum[]
+  }
+
+  /**
+   * Desconto findFirstOrThrow
+   */
+  export type DescontoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Desconto
+     */
+    select?: DescontoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DescontoInclude<ExtArgs> | null
+    /**
+     * Filter, which Desconto to fetch.
+     */
+    where?: DescontoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descontos to fetch.
+     */
+    orderBy?: DescontoOrderByWithRelationInput | DescontoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Descontos.
+     */
+    cursor?: DescontoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descontos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descontos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Descontos.
+     */
+    distinct?: DescontoScalarFieldEnum | DescontoScalarFieldEnum[]
+  }
+
+  /**
+   * Desconto findMany
+   */
+  export type DescontoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Desconto
+     */
+    select?: DescontoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DescontoInclude<ExtArgs> | null
+    /**
+     * Filter, which Descontos to fetch.
+     */
+    where?: DescontoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descontos to fetch.
+     */
+    orderBy?: DescontoOrderByWithRelationInput | DescontoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Descontos.
+     */
+    cursor?: DescontoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descontos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descontos.
+     */
+    skip?: number
+    distinct?: DescontoScalarFieldEnum | DescontoScalarFieldEnum[]
+  }
+
+  /**
+   * Desconto create
+   */
+  export type DescontoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Desconto
+     */
+    select?: DescontoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DescontoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Desconto.
+     */
+    data: XOR<DescontoCreateInput, DescontoUncheckedCreateInput>
+  }
+
+  /**
+   * Desconto createMany
+   */
+  export type DescontoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Descontos.
+     */
+    data: DescontoCreateManyInput | DescontoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Desconto update
+   */
+  export type DescontoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Desconto
+     */
+    select?: DescontoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DescontoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Desconto.
+     */
+    data: XOR<DescontoUpdateInput, DescontoUncheckedUpdateInput>
+    /**
+     * Choose, which Desconto to update.
+     */
+    where: DescontoWhereUniqueInput
+  }
+
+  /**
+   * Desconto updateMany
+   */
+  export type DescontoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Descontos.
+     */
+    data: XOR<DescontoUpdateManyMutationInput, DescontoUncheckedUpdateManyInput>
+    /**
+     * Filter which Descontos to update
+     */
+    where?: DescontoWhereInput
+  }
+
+  /**
+   * Desconto upsert
+   */
+  export type DescontoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Desconto
+     */
+    select?: DescontoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DescontoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Desconto to update in case it exists.
+     */
+    where: DescontoWhereUniqueInput
+    /**
+     * In case the Desconto found by the `where` argument doesn't exist, create a new Desconto with this data.
+     */
+    create: XOR<DescontoCreateInput, DescontoUncheckedCreateInput>
+    /**
+     * In case the Desconto was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DescontoUpdateInput, DescontoUncheckedUpdateInput>
+  }
+
+  /**
+   * Desconto delete
+   */
+  export type DescontoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Desconto
+     */
+    select?: DescontoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DescontoInclude<ExtArgs> | null
+    /**
+     * Filter which Desconto to delete.
+     */
+    where: DescontoWhereUniqueInput
+  }
+
+  /**
+   * Desconto deleteMany
+   */
+  export type DescontoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Descontos to delete
+     */
+    where?: DescontoWhereInput
+  }
+
+  /**
+   * Desconto without action
+   */
+  export type DescontoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Desconto
+     */
+    select?: DescontoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DescontoInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -28761,6 +29874,24 @@ export namespace Prisma {
   };
 
   export type AdiantamentoSalarioScalarFieldEnum = (typeof AdiantamentoSalarioScalarFieldEnum)[keyof typeof AdiantamentoSalarioScalarFieldEnum]
+
+
+  export const DescontoScalarFieldEnum: {
+    id: 'id',
+    funcionarioId: 'funcionarioId',
+    valor: 'valor',
+    data_registro: 'data_registro',
+    tipo: 'tipo',
+    motivo: 'motivo',
+    status: 'status',
+    mes_referencia: 'mes_referencia',
+    ano_referencia: 'ano_referencia',
+    observacao: 'observacao',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DescontoScalarFieldEnum = (typeof DescontoScalarFieldEnum)[keyof typeof DescontoScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -30244,6 +31375,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoListRelationFilter
     ferias?: FeriasSolicitacaoListRelationFilter
     adiantamentos?: AdiantamentoSalarioListRelationFilter
+    descontos?: DescontoListRelationFilter
     documentos?: DocumentoListRelationFilter
   }
 
@@ -30276,6 +31408,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoOrderByRelationAggregateInput
     ferias?: FeriasSolicitacaoOrderByRelationAggregateInput
     adiantamentos?: AdiantamentoSalarioOrderByRelationAggregateInput
+    descontos?: DescontoOrderByRelationAggregateInput
     documentos?: DocumentoOrderByRelationAggregateInput
   }
 
@@ -30311,6 +31444,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoListRelationFilter
     ferias?: FeriasSolicitacaoListRelationFilter
     adiantamentos?: AdiantamentoSalarioListRelationFilter
+    descontos?: DescontoListRelationFilter
     documentos?: DocumentoListRelationFilter
   }, "id" | "bi_documento" | "email" | "nif" | "numero_inss" | "userId">
 
@@ -31037,6 +32171,98 @@ export namespace Prisma {
     observacao?: StringNullableWithAggregatesFilter<"AdiantamentoSalario"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"AdiantamentoSalario"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"AdiantamentoSalario"> | Date | string
+  }
+
+  export type DescontoWhereInput = {
+    AND?: DescontoWhereInput | DescontoWhereInput[]
+    OR?: DescontoWhereInput[]
+    NOT?: DescontoWhereInput | DescontoWhereInput[]
+    id?: StringFilter<"Desconto"> | string
+    funcionarioId?: StringFilter<"Desconto"> | string
+    valor?: DecimalFilter<"Desconto"> | Decimal | DecimalJsLike | number | string
+    data_registro?: DateTimeFilter<"Desconto"> | Date | string
+    tipo?: StringFilter<"Desconto"> | string
+    motivo?: StringNullableFilter<"Desconto"> | string | null
+    status?: StringFilter<"Desconto"> | string
+    mes_referencia?: IntFilter<"Desconto"> | number
+    ano_referencia?: IntFilter<"Desconto"> | number
+    observacao?: StringNullableFilter<"Desconto"> | string | null
+    createdAt?: DateTimeFilter<"Desconto"> | Date | string
+    updatedAt?: DateTimeFilter<"Desconto"> | Date | string
+    funcionario?: XOR<FuncionarioRelationFilter, FuncionarioWhereInput>
+  }
+
+  export type DescontoOrderByWithRelationInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    valor?: SortOrder
+    data_registro?: SortOrder
+    tipo?: SortOrder
+    motivo?: SortOrderInput | SortOrder
+    status?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+    observacao?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    funcionario?: FuncionarioOrderByWithRelationInput
+  }
+
+  export type DescontoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DescontoWhereInput | DescontoWhereInput[]
+    OR?: DescontoWhereInput[]
+    NOT?: DescontoWhereInput | DescontoWhereInput[]
+    funcionarioId?: StringFilter<"Desconto"> | string
+    valor?: DecimalFilter<"Desconto"> | Decimal | DecimalJsLike | number | string
+    data_registro?: DateTimeFilter<"Desconto"> | Date | string
+    tipo?: StringFilter<"Desconto"> | string
+    motivo?: StringNullableFilter<"Desconto"> | string | null
+    status?: StringFilter<"Desconto"> | string
+    mes_referencia?: IntFilter<"Desconto"> | number
+    ano_referencia?: IntFilter<"Desconto"> | number
+    observacao?: StringNullableFilter<"Desconto"> | string | null
+    createdAt?: DateTimeFilter<"Desconto"> | Date | string
+    updatedAt?: DateTimeFilter<"Desconto"> | Date | string
+    funcionario?: XOR<FuncionarioRelationFilter, FuncionarioWhereInput>
+  }, "id">
+
+  export type DescontoOrderByWithAggregationInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    valor?: SortOrder
+    data_registro?: SortOrder
+    tipo?: SortOrder
+    motivo?: SortOrderInput | SortOrder
+    status?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+    observacao?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DescontoCountOrderByAggregateInput
+    _avg?: DescontoAvgOrderByAggregateInput
+    _max?: DescontoMaxOrderByAggregateInput
+    _min?: DescontoMinOrderByAggregateInput
+    _sum?: DescontoSumOrderByAggregateInput
+  }
+
+  export type DescontoScalarWhereWithAggregatesInput = {
+    AND?: DescontoScalarWhereWithAggregatesInput | DescontoScalarWhereWithAggregatesInput[]
+    OR?: DescontoScalarWhereWithAggregatesInput[]
+    NOT?: DescontoScalarWhereWithAggregatesInput | DescontoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Desconto"> | string
+    funcionarioId?: StringWithAggregatesFilter<"Desconto"> | string
+    valor?: DecimalWithAggregatesFilter<"Desconto"> | Decimal | DecimalJsLike | number | string
+    data_registro?: DateTimeWithAggregatesFilter<"Desconto"> | Date | string
+    tipo?: StringWithAggregatesFilter<"Desconto"> | string
+    motivo?: StringNullableWithAggregatesFilter<"Desconto"> | string | null
+    status?: StringWithAggregatesFilter<"Desconto"> | string
+    mes_referencia?: IntWithAggregatesFilter<"Desconto"> | number
+    ano_referencia?: IntWithAggregatesFilter<"Desconto"> | number
+    observacao?: StringNullableWithAggregatesFilter<"Desconto"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Desconto"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Desconto"> | Date | string
   }
 
   export type AlunoCreateInput = {
@@ -32566,6 +33792,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -32595,6 +33822,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -32624,6 +33852,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -32653,6 +33882,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -33492,6 +34722,110 @@ export namespace Prisma {
     funcionarioId?: StringFieldUpdateOperationsInput | string
     valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     data_solicitacao?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DescontoCreateInput = {
+    id?: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_registro?: Date | string
+    tipo?: string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    funcionario: FuncionarioCreateNestedOneWithoutDescontosInput
+  }
+
+  export type DescontoUncheckedCreateInput = {
+    id?: string
+    funcionarioId: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_registro?: Date | string
+    tipo?: string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DescontoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    funcionario?: FuncionarioUpdateOneRequiredWithoutDescontosNestedInput
+  }
+
+  export type DescontoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    funcionarioId?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DescontoCreateManyInput = {
+    id?: string
+    funcionarioId: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_registro?: Date | string
+    tipo?: string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DescontoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DescontoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    funcionarioId?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
     motivo?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     mes_referencia?: IntFieldUpdateOperationsInput | number
@@ -34672,6 +36006,12 @@ export namespace Prisma {
     none?: AdiantamentoSalarioWhereInput
   }
 
+  export type DescontoListRelationFilter = {
+    every?: DescontoWhereInput
+    some?: DescontoWhereInput
+    none?: DescontoWhereInput
+  }
+
   export type ContratoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -34689,6 +36029,10 @@ export namespace Prisma {
   }
 
   export type AdiantamentoSalarioOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DescontoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -35241,6 +36585,63 @@ export namespace Prisma {
   }
 
   export type AdiantamentoSalarioSumOrderByAggregateInput = {
+    valor?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+  }
+
+  export type DescontoCountOrderByAggregateInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    valor?: SortOrder
+    data_registro?: SortOrder
+    tipo?: SortOrder
+    motivo?: SortOrder
+    status?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+    observacao?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DescontoAvgOrderByAggregateInput = {
+    valor?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+  }
+
+  export type DescontoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    valor?: SortOrder
+    data_registro?: SortOrder
+    tipo?: SortOrder
+    motivo?: SortOrder
+    status?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+    observacao?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DescontoMinOrderByAggregateInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    valor?: SortOrder
+    data_registro?: SortOrder
+    tipo?: SortOrder
+    motivo?: SortOrder
+    status?: SortOrder
+    mes_referencia?: SortOrder
+    ano_referencia?: SortOrder
+    observacao?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DescontoSumOrderByAggregateInput = {
     valor?: SortOrder
     mes_referencia?: SortOrder
     ano_referencia?: SortOrder
@@ -36797,6 +38198,13 @@ export namespace Prisma {
     connect?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
   }
 
+  export type DescontoCreateNestedManyWithoutFuncionarioInput = {
+    create?: XOR<DescontoCreateWithoutFuncionarioInput, DescontoUncheckedCreateWithoutFuncionarioInput> | DescontoCreateWithoutFuncionarioInput[] | DescontoUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: DescontoCreateOrConnectWithoutFuncionarioInput | DescontoCreateOrConnectWithoutFuncionarioInput[]
+    createMany?: DescontoCreateManyFuncionarioInputEnvelope
+    connect?: DescontoWhereUniqueInput | DescontoWhereUniqueInput[]
+  }
+
   export type DocumentoCreateNestedManyWithoutFuncionarioInput = {
     create?: XOR<DocumentoCreateWithoutFuncionarioInput, DocumentoUncheckedCreateWithoutFuncionarioInput> | DocumentoCreateWithoutFuncionarioInput[] | DocumentoUncheckedCreateWithoutFuncionarioInput[]
     connectOrCreate?: DocumentoCreateOrConnectWithoutFuncionarioInput | DocumentoCreateOrConnectWithoutFuncionarioInput[]
@@ -36837,6 +38245,13 @@ export namespace Prisma {
     connectOrCreate?: AdiantamentoSalarioCreateOrConnectWithoutFuncionarioInput | AdiantamentoSalarioCreateOrConnectWithoutFuncionarioInput[]
     createMany?: AdiantamentoSalarioCreateManyFuncionarioInputEnvelope
     connect?: AdiantamentoSalarioWhereUniqueInput | AdiantamentoSalarioWhereUniqueInput[]
+  }
+
+  export type DescontoUncheckedCreateNestedManyWithoutFuncionarioInput = {
+    create?: XOR<DescontoCreateWithoutFuncionarioInput, DescontoUncheckedCreateWithoutFuncionarioInput> | DescontoCreateWithoutFuncionarioInput[] | DescontoUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: DescontoCreateOrConnectWithoutFuncionarioInput | DescontoCreateOrConnectWithoutFuncionarioInput[]
+    createMany?: DescontoCreateManyFuncionarioInputEnvelope
+    connect?: DescontoWhereUniqueInput | DescontoWhereUniqueInput[]
   }
 
   export type DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput = {
@@ -36946,6 +38361,20 @@ export namespace Prisma {
     deleteMany?: AdiantamentoSalarioScalarWhereInput | AdiantamentoSalarioScalarWhereInput[]
   }
 
+  export type DescontoUpdateManyWithoutFuncionarioNestedInput = {
+    create?: XOR<DescontoCreateWithoutFuncionarioInput, DescontoUncheckedCreateWithoutFuncionarioInput> | DescontoCreateWithoutFuncionarioInput[] | DescontoUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: DescontoCreateOrConnectWithoutFuncionarioInput | DescontoCreateOrConnectWithoutFuncionarioInput[]
+    upsert?: DescontoUpsertWithWhereUniqueWithoutFuncionarioInput | DescontoUpsertWithWhereUniqueWithoutFuncionarioInput[]
+    createMany?: DescontoCreateManyFuncionarioInputEnvelope
+    set?: DescontoWhereUniqueInput | DescontoWhereUniqueInput[]
+    disconnect?: DescontoWhereUniqueInput | DescontoWhereUniqueInput[]
+    delete?: DescontoWhereUniqueInput | DescontoWhereUniqueInput[]
+    connect?: DescontoWhereUniqueInput | DescontoWhereUniqueInput[]
+    update?: DescontoUpdateWithWhereUniqueWithoutFuncionarioInput | DescontoUpdateWithWhereUniqueWithoutFuncionarioInput[]
+    updateMany?: DescontoUpdateManyWithWhereWithoutFuncionarioInput | DescontoUpdateManyWithWhereWithoutFuncionarioInput[]
+    deleteMany?: DescontoScalarWhereInput | DescontoScalarWhereInput[]
+  }
+
   export type DocumentoUpdateManyWithoutFuncionarioNestedInput = {
     create?: XOR<DocumentoCreateWithoutFuncionarioInput, DocumentoUncheckedCreateWithoutFuncionarioInput> | DocumentoCreateWithoutFuncionarioInput[] | DocumentoUncheckedCreateWithoutFuncionarioInput[]
     connectOrCreate?: DocumentoCreateOrConnectWithoutFuncionarioInput | DocumentoCreateOrConnectWithoutFuncionarioInput[]
@@ -37028,6 +38457,20 @@ export namespace Prisma {
     update?: AdiantamentoSalarioUpdateWithWhereUniqueWithoutFuncionarioInput | AdiantamentoSalarioUpdateWithWhereUniqueWithoutFuncionarioInput[]
     updateMany?: AdiantamentoSalarioUpdateManyWithWhereWithoutFuncionarioInput | AdiantamentoSalarioUpdateManyWithWhereWithoutFuncionarioInput[]
     deleteMany?: AdiantamentoSalarioScalarWhereInput | AdiantamentoSalarioScalarWhereInput[]
+  }
+
+  export type DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput = {
+    create?: XOR<DescontoCreateWithoutFuncionarioInput, DescontoUncheckedCreateWithoutFuncionarioInput> | DescontoCreateWithoutFuncionarioInput[] | DescontoUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: DescontoCreateOrConnectWithoutFuncionarioInput | DescontoCreateOrConnectWithoutFuncionarioInput[]
+    upsert?: DescontoUpsertWithWhereUniqueWithoutFuncionarioInput | DescontoUpsertWithWhereUniqueWithoutFuncionarioInput[]
+    createMany?: DescontoCreateManyFuncionarioInputEnvelope
+    set?: DescontoWhereUniqueInput | DescontoWhereUniqueInput[]
+    disconnect?: DescontoWhereUniqueInput | DescontoWhereUniqueInput[]
+    delete?: DescontoWhereUniqueInput | DescontoWhereUniqueInput[]
+    connect?: DescontoWhereUniqueInput | DescontoWhereUniqueInput[]
+    update?: DescontoUpdateWithWhereUniqueWithoutFuncionarioInput | DescontoUpdateWithWhereUniqueWithoutFuncionarioInput[]
+    updateMany?: DescontoUpdateManyWithWhereWithoutFuncionarioInput | DescontoUpdateManyWithWhereWithoutFuncionarioInput[]
+    deleteMany?: DescontoScalarWhereInput | DescontoScalarWhereInput[]
   }
 
   export type DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput = {
@@ -37120,6 +38563,20 @@ export namespace Prisma {
     upsert?: FuncionarioUpsertWithoutAdiantamentosInput
     connect?: FuncionarioWhereUniqueInput
     update?: XOR<XOR<FuncionarioUpdateToOneWithWhereWithoutAdiantamentosInput, FuncionarioUpdateWithoutAdiantamentosInput>, FuncionarioUncheckedUpdateWithoutAdiantamentosInput>
+  }
+
+  export type FuncionarioCreateNestedOneWithoutDescontosInput = {
+    create?: XOR<FuncionarioCreateWithoutDescontosInput, FuncionarioUncheckedCreateWithoutDescontosInput>
+    connectOrCreate?: FuncionarioCreateOrConnectWithoutDescontosInput
+    connect?: FuncionarioWhereUniqueInput
+  }
+
+  export type FuncionarioUpdateOneRequiredWithoutDescontosNestedInput = {
+    create?: XOR<FuncionarioCreateWithoutDescontosInput, FuncionarioUncheckedCreateWithoutDescontosInput>
+    connectOrCreate?: FuncionarioCreateOrConnectWithoutDescontosInput
+    upsert?: FuncionarioUpsertWithoutDescontosInput
+    connect?: FuncionarioWhereUniqueInput
+    update?: XOR<XOR<FuncionarioUpdateToOneWithWhereWithoutDescontosInput, FuncionarioUpdateWithoutDescontosInput>, FuncionarioUncheckedUpdateWithoutDescontosInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -37985,6 +39442,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutDocumentosInput = {
@@ -38013,6 +39471,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutDocumentosInput = {
@@ -38108,6 +39567,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutDocumentosInput = {
@@ -38136,6 +39596,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type CertificateTemplateCreateWithoutCursosInput = {
@@ -39559,6 +41020,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -39587,6 +41049,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -39865,6 +41328,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -39893,6 +41357,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -40830,6 +42295,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -40858,6 +42324,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -40997,6 +42464,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -41025,6 +42493,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -41411,6 +42880,44 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type DescontoCreateWithoutFuncionarioInput = {
+    id?: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_registro?: Date | string
+    tipo?: string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DescontoUncheckedCreateWithoutFuncionarioInput = {
+    id?: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_registro?: Date | string
+    tipo?: string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DescontoCreateOrConnectWithoutFuncionarioInput = {
+    where: DescontoWhereUniqueInput
+    create: XOR<DescontoCreateWithoutFuncionarioInput, DescontoUncheckedCreateWithoutFuncionarioInput>
+  }
+
+  export type DescontoCreateManyFuncionarioInputEnvelope = {
+    data: DescontoCreateManyFuncionarioInput | DescontoCreateManyFuncionarioInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DocumentoCreateWithoutFuncionarioInput = {
     id?: string
     tipo: string
@@ -41731,6 +43238,40 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"AdiantamentoSalario"> | Date | string
   }
 
+  export type DescontoUpsertWithWhereUniqueWithoutFuncionarioInput = {
+    where: DescontoWhereUniqueInput
+    update: XOR<DescontoUpdateWithoutFuncionarioInput, DescontoUncheckedUpdateWithoutFuncionarioInput>
+    create: XOR<DescontoCreateWithoutFuncionarioInput, DescontoUncheckedCreateWithoutFuncionarioInput>
+  }
+
+  export type DescontoUpdateWithWhereUniqueWithoutFuncionarioInput = {
+    where: DescontoWhereUniqueInput
+    data: XOR<DescontoUpdateWithoutFuncionarioInput, DescontoUncheckedUpdateWithoutFuncionarioInput>
+  }
+
+  export type DescontoUpdateManyWithWhereWithoutFuncionarioInput = {
+    where: DescontoScalarWhereInput
+    data: XOR<DescontoUpdateManyMutationInput, DescontoUncheckedUpdateManyWithoutFuncionarioInput>
+  }
+
+  export type DescontoScalarWhereInput = {
+    AND?: DescontoScalarWhereInput | DescontoScalarWhereInput[]
+    OR?: DescontoScalarWhereInput[]
+    NOT?: DescontoScalarWhereInput | DescontoScalarWhereInput[]
+    id?: StringFilter<"Desconto"> | string
+    funcionarioId?: StringFilter<"Desconto"> | string
+    valor?: DecimalFilter<"Desconto"> | Decimal | DecimalJsLike | number | string
+    data_registro?: DateTimeFilter<"Desconto"> | Date | string
+    tipo?: StringFilter<"Desconto"> | string
+    motivo?: StringNullableFilter<"Desconto"> | string | null
+    status?: StringFilter<"Desconto"> | string
+    mes_referencia?: IntFilter<"Desconto"> | number
+    ano_referencia?: IntFilter<"Desconto"> | number
+    observacao?: StringNullableFilter<"Desconto"> | string | null
+    createdAt?: DateTimeFilter<"Desconto"> | Date | string
+    updatedAt?: DateTimeFilter<"Desconto"> | Date | string
+  }
+
   export type DocumentoUpsertWithWhereUniqueWithoutFuncionarioInput = {
     where: DocumentoWhereUniqueInput
     update: XOR<DocumentoUpdateWithoutFuncionarioInput, DocumentoUncheckedUpdateWithoutFuncionarioInput>
@@ -41772,6 +43313,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -41800,6 +43342,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -41844,6 +43387,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -41872,6 +43416,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -41900,6 +43445,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -41928,6 +43474,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -41972,6 +43519,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -42000,6 +43548,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -42028,6 +43577,7 @@ export namespace Prisma {
     presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -42056,6 +43606,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -42100,6 +43651,7 @@ export namespace Prisma {
     presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -42128,6 +43680,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -42156,6 +43709,7 @@ export namespace Prisma {
     presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -42184,6 +43738,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -42228,6 +43783,7 @@ export namespace Prisma {
     presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -42256,6 +43812,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -42284,6 +43841,7 @@ export namespace Prisma {
     presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -42312,6 +43870,7 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
@@ -42356,6 +43915,7 @@ export namespace Prisma {
     presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -42384,6 +43944,139 @@ export namespace Prisma {
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+  }
+
+  export type FuncionarioCreateWithoutDescontosInput = {
+    id?: string
+    nome: string
+    bi_documento: string
+    email?: string | null
+    telefone?: string | null
+    data_nascimento?: Date | string | null
+    genero?: string | null
+    nif?: string | null
+    iban?: string | null
+    numero_inss?: string | null
+    hora_entrada?: string | null
+    hora_saida?: string | null
+    dias_trabalho?: string | null
+    data_admissao: Date | string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cargo?: CargoCreateNestedOneWithoutFuncionariosInput
+    departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
+    user?: UserCreateNestedOneWithoutFuncionarioInput
+    contratos?: ContratoCreateNestedManyWithoutFuncionarioInput
+    presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
+    folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
+    ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
+    documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+  }
+
+  export type FuncionarioUncheckedCreateWithoutDescontosInput = {
+    id?: string
+    nome: string
+    bi_documento: string
+    email?: string | null
+    telefone?: string | null
+    data_nascimento?: Date | string | null
+    genero?: string | null
+    nif?: string | null
+    iban?: string | null
+    numero_inss?: string | null
+    hora_entrada?: string | null
+    hora_saida?: string | null
+    dias_trabalho?: string | null
+    cargoId?: string | null
+    departamentoId?: string | null
+    data_admissao: Date | string
+    status?: string
+    userId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
+    presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
+    folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
+    documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+  }
+
+  export type FuncionarioCreateOrConnectWithoutDescontosInput = {
+    where: FuncionarioWhereUniqueInput
+    create: XOR<FuncionarioCreateWithoutDescontosInput, FuncionarioUncheckedCreateWithoutDescontosInput>
+  }
+
+  export type FuncionarioUpsertWithoutDescontosInput = {
+    update: XOR<FuncionarioUpdateWithoutDescontosInput, FuncionarioUncheckedUpdateWithoutDescontosInput>
+    create: XOR<FuncionarioCreateWithoutDescontosInput, FuncionarioUncheckedCreateWithoutDescontosInput>
+    where?: FuncionarioWhereInput
+  }
+
+  export type FuncionarioUpdateToOneWithWhereWithoutDescontosInput = {
+    where?: FuncionarioWhereInput
+    data: XOR<FuncionarioUpdateWithoutDescontosInput, FuncionarioUncheckedUpdateWithoutDescontosInput>
+  }
+
+  export type FuncionarioUpdateWithoutDescontosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    bi_documento?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    data_nascimento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    genero?: NullableStringFieldUpdateOperationsInput | string | null
+    nif?: NullableStringFieldUpdateOperationsInput | string | null
+    iban?: NullableStringFieldUpdateOperationsInput | string | null
+    numero_inss?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_entrada?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_saida?: NullableStringFieldUpdateOperationsInput | string | null
+    dias_trabalho?: NullableStringFieldUpdateOperationsInput | string | null
+    data_admissao?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
+    departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
+    user?: UserUpdateOneWithoutFuncionarioNestedInput
+    contratos?: ContratoUpdateManyWithoutFuncionarioNestedInput
+    presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
+    folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
+    ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
+    documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+  }
+
+  export type FuncionarioUncheckedUpdateWithoutDescontosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    bi_documento?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    data_nascimento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    genero?: NullableStringFieldUpdateOperationsInput | string | null
+    nif?: NullableStringFieldUpdateOperationsInput | string | null
+    iban?: NullableStringFieldUpdateOperationsInput | string | null
+    numero_inss?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_entrada?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_saida?: NullableStringFieldUpdateOperationsInput | string | null
+    dias_trabalho?: NullableStringFieldUpdateOperationsInput | string | null
+    cargoId?: NullableStringFieldUpdateOperationsInput | string | null
+    departamentoId?: NullableStringFieldUpdateOperationsInput | string | null
+    data_admissao?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
+    folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -43535,6 +45228,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -43563,6 +45257,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -43664,6 +45359,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -43692,6 +45388,7 @@ export namespace Prisma {
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
@@ -43789,6 +45486,20 @@ export namespace Prisma {
     id?: string
     valor: Decimal | DecimalJsLike | number | string
     data_solicitacao?: Date | string
+    motivo?: string | null
+    status?: string
+    mes_referencia: number
+    ano_referencia: number
+    observacao?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DescontoCreateManyFuncionarioInput = {
+    id?: string
+    valor: Decimal | DecimalJsLike | number | string
+    data_registro?: Date | string
+    tipo?: string
     motivo?: string | null
     status?: string
     mes_referencia: number
@@ -44050,6 +45761,48 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DescontoUpdateWithoutFuncionarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DescontoUncheckedUpdateWithoutFuncionarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DescontoUncheckedUpdateManyWithoutFuncionarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    data_registro?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    mes_referencia?: IntFieldUpdateOperationsInput | number
+    ano_referencia?: IntFieldUpdateOperationsInput | number
+    observacao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type DocumentoUpdateWithoutFuncionarioInput = {
     id?: StringFieldUpdateOperationsInput | string
     tipo?: StringFieldUpdateOperationsInput | string
@@ -44230,6 +45983,10 @@ export namespace Prisma {
      * @deprecated Use AdiantamentoSalarioDefaultArgs instead
      */
     export type AdiantamentoSalarioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AdiantamentoSalarioDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DescontoDefaultArgs instead
+     */
+    export type DescontoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DescontoDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

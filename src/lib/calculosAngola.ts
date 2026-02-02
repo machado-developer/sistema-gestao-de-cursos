@@ -15,6 +15,8 @@ export interface ResultadoProcessamento {
     inssEmpresa: number;     // 8%
     baseIrt: number;
     irt: number;
+    totalAdiantamentos: number;
+    outrosDescontos: number;
     liquido: number;
 }
 
@@ -91,6 +93,7 @@ export function processarSalarioMensal(dados: {
     horasNoturnas?: number;        // Horas noturnas (21h-06h, +20%)
     faltasNaoJustificadas?: number;
     totalAdiantamentos?: number;
+    outrosDescontos?: number;
 }): ResultadoProcessamento {
     const {
         salarioBase,
@@ -100,7 +103,8 @@ export function processarSalarioMensal(dados: {
         horasExtrasDescanso = 0,
         horasNoturnas = 0,
         faltasNaoJustificadas = 0,
-        totalAdiantamentos = 0
+        totalAdiantamentos = 0,
+        outrosDescontos = 0
     } = dados;
 
     const valorHora = salarioBase / ((44 / 6) * 30);
@@ -125,8 +129,8 @@ export function processarSalarioMensal(dados: {
     const irtValue = calcularIRT(baseIrt);
 
     // 6. Líquido
-    // Subtrair adiantamentos do líquido final
-    const liquido = Math.round((baseIrt - irtValue + subsidiosIsentos - totalAdiantamentos) * 100) / 100;
+    // Subtrair adiantamentos e outros descontos do líquido final
+    const liquido = Math.round((baseIrt - irtValue + subsidiosIsentos - totalAdiantamentos - outrosDescontos) * 100) / 100;
 
     return {
         salarioBase,
@@ -140,6 +144,8 @@ export function processarSalarioMensal(dados: {
         inssEmpresa: inss.empresa,
         baseIrt,
         irt: irtValue,
+        totalAdiantamentos,
+        outrosDescontos,
         liquido
     };
 }

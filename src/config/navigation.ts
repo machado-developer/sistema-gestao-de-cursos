@@ -17,7 +17,8 @@ import {
     Building2,
     Briefcase,
     Banknote,
-    UserCog
+    UserCog,
+    TrendingDown
 } from 'lucide-react'
 
 export interface NavigationItem {
@@ -117,6 +118,7 @@ export const getNavigation = (t: (key: string) => string): NavigationModule[] =>
                     { name: 'Presenças', href: '/rh/presencas', icon: ClipboardList },
                     { name: 'Processamento', href: '/rh/processamento', icon: Calculator },
                     { name: 'Adiantamentos', href: '/rh/adiantamentos', icon: Banknote },
+                    { name: 'Descontos', href: '/rh/descontos', icon: TrendingDown },
                     { name: 'Relatórios Legais', href: '/rh/relatorios', icon: BarChart3 },
                     { name: 'Férias e Licenças', href: '/rh/ferias', icon: Umbrella },
                 ]

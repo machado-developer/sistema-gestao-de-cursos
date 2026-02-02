@@ -258,7 +258,7 @@ export class RHService {
         horas_extras_50?: number;
         horas_extras_100?: number;
     }) {
-        return await prisma.presencaHR.upsert({
+        const res = await prisma.presencaHR.upsert({
             where: {
                 funcionarioId_data: {
                     funcionarioId: dados.funcionarioId,
@@ -268,6 +268,72 @@ export class RHService {
             update: dados,
             create: dados
         });
+
+        // Sincronizar descontos automáticos se for falta
+        const data = new Date(dados.data);
+        await this.sincronizarDescontosFaltas(dados.funcionarioId, data.getUTCMonth() + 1, data.getUTCFullYear());
+
+        return res;
+    }
+
+    static async sincronizarDescontosFaltas(funcionarioId: string, mes: number, ano: number) {
+        const presencas = await prisma.presencaHR.findMany({
+            where: {
+                funcionarioId,
+                data: {
+                    gte: new Date(ano, mes - 1, 1),
+                    lte: new Date(ano, mes, 0)
+                },
+                status: "FALTA_I"
+            }
+        });
+
+        const totalFaltas = presencas.length;
+        const contrato = await prisma.contrato.findFirst({
+            where: { funcionarioId, status: "VIGENTE" }
+        });
+
+        // Procurar desconto automático existente
+        const descontoAuto = await prisma.desconto.findFirst({
+            where: {
+                funcionarioId,
+                mes_referencia: mes,
+                ano_referencia: ano,
+                tipo: "FALTA",
+                observacao: "GERADO_AUTOMATICAMENTE"
+            }
+        });
+
+        if (!contrato || totalFaltas === 0) {
+            if (descontoAuto) await prisma.desconto.delete({ where: { id: descontoAuto.id } });
+            return;
+        }
+
+        const valorFalta = (Number(contrato.salario_base) / 30) * totalFaltas;
+
+        if (descontoAuto) {
+            await prisma.desconto.update({
+                where: { id: descontoAuto.id },
+                data: {
+                    valor: valorFalta,
+                    motivo: `[AUTO] Presenças - Faltas Injustificadas (${totalFaltas} dias)`,
+                    status: "APROVADO"
+                }
+            });
+        } else {
+            await prisma.desconto.create({
+                data: {
+                    funcionarioId,
+                    valor: valorFalta,
+                    mes_referencia: mes,
+                    ano_referencia: ano,
+                    tipo: "FALTA",
+                    motivo: `[AUTO] Presenças - Faltas Injustificadas (${totalFaltas} dias)`,
+                    status: "APROVADO",
+                    observacao: "GERADO_AUTOMATICAMENTE"
+                }
+            });
+        }
     }
 
     static async listarPresencasPorData(data: Date) {
@@ -419,6 +485,19 @@ export class RHService {
 
             const totalAdiantamentos = adiantamentos.reduce((acc: number, curr: { valor: any; }) => acc + Number(curr.valor), 0);
 
+            // Buscar descontos aprovados (Excluir os automáticos pois já são processados no total_faltas da folha)
+            const descontos = await prisma.desconto.findMany({
+                where: {
+                    funcionarioId: func.id,
+                    mes_referencia: mes,
+                    ano_referencia: ano,
+                    status: "APROVADO",
+                    observacao: { not: "GERADO_AUTOMATICAMENTE" }
+                }
+            });
+
+            const totalDescontos = descontos.reduce((acc: number, curr: { valor: any; }) => acc + Number(curr.valor), 0);
+
             // Executar cálculo angolano (Lei 12/23)
             const calc = processarSalarioMensal({
                 salarioBase: Number(contrato.salario_base),
@@ -428,7 +507,8 @@ export class RHService {
                 horasExtrasDescanso: totalHEDescanso,
                 horasNoturnas: totalNoturnas,
                 faltasNaoJustificadas: totalFaltas,
-                totalAdiantamentos
+                totalAdiantamentos,
+                outrosDescontos: totalDescontos
             });
 
             // Persistir folha
@@ -454,6 +534,7 @@ export class RHService {
                     irt_devido: calc.irt,
                     liquido_receber: calc.liquido,
                     total_adiantamentos: totalAdiantamentos,
+                    outros_descontos: totalDescontos,
                     status: "PROCESSADO"
                 },
                 create: {
@@ -473,6 +554,7 @@ export class RHService {
                     irt_devido: calc.irt,
                     liquido_receber: calc.liquido,
                     total_adiantamentos: totalAdiantamentos,
+                    outros_descontos: totalDescontos,
                     status: "PROCESSADO"
                 }
             });
@@ -485,6 +567,14 @@ export class RHService {
                 });
             }
 
+            // Atualizar status dos descontos para PROCESSADO
+            if (totalDescontos > 0) {
+                await prisma.desconto.updateMany({
+                    where: { id: { in: descontos.map((d: { id: any; }) => d.id) } },
+                    data: { status: "PROCESSADO" }
+                });
+            }
+
             resultados.push(folha);
         }
 
@@ -492,7 +582,7 @@ export class RHService {
     }
 
     static async obterFolhaPorId(id: string) {
-        return await prisma.folhaPagamento.findUnique({
+        const folha = await prisma.folhaPagamento.findUnique({
             where: { id },
             include: {
                 funcionario: {
@@ -503,6 +593,35 @@ export class RHService {
                 }
             }
         });
+
+        if (!folha) return null;
+
+        // Buscar detalhes de adiantamentos e descontos para o comprovante
+        const [adiantamentos, descontos] = await Promise.all([
+            prisma.adiantamentoSalario.findMany({
+                where: {
+                    funcionarioId: folha.funcionarioId,
+                    mes_referencia: folha.mes,
+                    ano_referencia: folha.ano,
+                    status: "PROCESSADO"
+                }
+            }),
+            prisma.desconto.findMany({
+                where: {
+                    funcionarioId: folha.funcionarioId,
+                    mes_referencia: folha.mes,
+                    ano_referencia: folha.ano,
+                    status: "PROCESSADO",
+                    observacao: { not: "GERADO_AUTOMATICAMENTE" }
+                }
+            })
+        ]);
+
+        return {
+            ...folha,
+            detalhesAdiantamentos: adiantamentos,
+            detalhesDescontos: descontos
+        };
     }
 
     static async obterRelatorioMensal(mes: number, ano: number) {
@@ -806,6 +925,58 @@ export class RHService {
 
     static async atualizarStatusAdiantamento(id: string, status: string, observacao?: string) {
         return await prisma.adiantamentoSalario.update({
+            where: { id },
+            data: { status, observacao }
+        });
+    }
+
+    // --- Descontos Salariais ---
+
+    static async registarDesconto(dados: {
+        funcionarioId: string;
+        valor: number;
+        mes_referencia: number;
+        ano_referencia: number;
+        tipo?: string;
+        motivo?: string;
+    }) {
+        return await prisma.desconto.create({
+            data: {
+                ...dados,
+                valor: Number(dados.valor)
+            }
+        });
+    }
+
+    static async listarDescontos(filtros?: {
+        funcionarioId?: string;
+        status?: string;
+        mes?: number;
+        ano?: number;
+    }) {
+        const where: any = {};
+        if (filtros?.funcionarioId) where.funcionarioId = filtros.funcionarioId;
+        if (filtros?.status) where.status = filtros.status;
+        if (filtros?.mes) where.mes_referencia = filtros.mes;
+        if (filtros?.ano) where.ano_referencia = filtros.ano;
+
+        return await prisma.desconto.findMany({
+            where,
+            include: {
+                funcionario: {
+                    select: {
+                        nome: true,
+                        cargo: { select: { nome: true } },
+                        departamento: { select: { nome: true } }
+                    }
+                }
+            },
+            orderBy: { createdAt: 'desc' }
+        });
+    }
+
+    static async atualizarStatusDesconto(id: string, status: string, observacao?: string) {
+        return await prisma.desconto.update({
             where: { id },
             data: { status, observacao }
         });

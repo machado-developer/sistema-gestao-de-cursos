@@ -460,6 +460,21 @@ exports.Prisma.AdiantamentoSalarioScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.DescontoScalarFieldEnum = {
+  id: 'id',
+  funcionarioId: 'funcionarioId',
+  valor: 'valor',
+  data_registro: 'data_registro',
+  tipo: 'tipo',
+  motivo: 'motivo',
+  status: 'status',
+  mes_referencia: 'mes_referencia',
+  ano_referencia: 'ano_referencia',
+  observacao: 'observacao',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -496,7 +511,8 @@ exports.Prisma.ModelName = {
   FeriasSolicitacao: 'FeriasSolicitacao',
   ConfigRH: 'ConfigRH',
   Empresa: 'Empresa',
-  AdiantamentoSalario: 'AdiantamentoSalario'
+  AdiantamentoSalario: 'AdiantamentoSalario',
+  Desconto: 'Desconto'
 };
 
 /**

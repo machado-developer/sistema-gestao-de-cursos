@@ -21,11 +21,16 @@ import {
     FileSpreadsheet,
     Calculator,
     Banknote,
-    Eye
+    TrendingDown,
+    Eye,
+    Plus
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/utils";
 import { Select } from "@/components/ui/Select";
+import { Modal } from "@/components/ui/Modal";
+import { Input } from "@/components/ui/Input";
+import { CurrencyInput } from "@/components/ui/CurrencyInput";
 import Link from "next/link";
 import { DocumentService, DocumentType, ExportFormat } from "@/services/DocumentService";
 
@@ -35,6 +40,16 @@ export default function ProcessamentoPage() {
     const [loading, setLoading] = useState(false);
     const [relatorio, setRelatorio] = useState<any>(null);
     const [empresa, setEmpresa] = useState<any>(null);
+
+    // Quick Deduction State
+    const [isDeductionModalOpen, setIsDeductionModalOpen] = useState(false);
+    const [selectedFuncionario, setSelectedFuncionario] = useState<any>(null);
+    const [submittingDeduction, setSubmittingDeduction] = useState(false);
+    const [deductionData, setDeductionData] = useState({
+        valor: 0,
+        tipo: "OUTRO",
+        motivo: ""
+    });
 
     useEffect(() => {
         fetch('/api/configuracoes/empresa').then(res => res.json()).then(setEmpresa);
@@ -126,6 +141,41 @@ export default function ProcessamentoPage() {
         }
     };
 
+    const handleQuickDeduction = async () => {
+        if (!selectedFuncionario || deductionData.valor <= 0) {
+            toast.error("Preencha o valor do desconto");
+            return;
+        }
+
+        setSubmittingDeduction(true);
+        try {
+            const res = await fetch("/api/rh/descontos", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    funcionarioId: selectedFuncionario.id,
+                    valor: deductionData.valor,
+                    mes_referencia: mes,
+                    ano_referencia: ano,
+                    tipo: deductionData.tipo,
+                    motivo: deductionData.motivo,
+                    status: "APROVADO" // Auto-aprovado via quick action
+                })
+            });
+
+            if (!res.ok) throw new Error();
+
+            toast.success("Desconto aplicado com sucesso");
+            setIsDeductionModalOpen(false);
+            setDeductionData({ valor: 0, tipo: "OUTRO", motivo: "" });
+            fetchRelatorio();
+        } catch (error) {
+            toast.error("Erro ao aplicar desconto");
+        } finally {
+            setSubmittingDeduction(false);
+        }
+    };
+
 
 
     const columns: Column<any>[] = [
@@ -180,15 +230,27 @@ export default function ProcessamentoPage() {
             key: "acoes",
             header: "",
             render: (item) => (
-                <div className="flex justify-end gap-2 pr-2">
+                <div className="flex justify-end gap-1 px-1">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20"
+                        title="Registar Desconto Ágil"
+                        onClick={() => {
+                            setSelectedFuncionario(item.funcionario);
+                            setIsDeductionModalOpen(true);
+                        }}
+                    >
+                        <TrendingDown size={18} />
+                    </Button>
                     <Link href={`/rh/processamento/recibo/${item.id}`}>
-                        <Button variant="outline" size="sm" className="h-10 w-10 p-0 bg-blue-50/50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 shadow-sm" title="Ver Recibo">
-                            <Eye size={22} className="text-blue-600 dark:text-blue-400" />
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/20" title="Ver Recibo">
+                            <Eye size={18} />
                         </Button>
                     </Link>
                 </div>
             ),
-            className: "w-28"
+            className: "w-24"
         }
     ];
 
@@ -288,6 +350,52 @@ export default function ProcessamentoPage() {
                     }
                 />
             </Card>
+
+            {/* Quick Deduction Modal */}
+            <Modal
+                isOpen={isDeductionModalOpen}
+                onClose={() => setIsDeductionModalOpen(false)}
+                title={`Desconto Rápido: ${selectedFuncionario?.nome}`}
+            >
+                <div className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <Select
+                            label="Tipo de Desconto"
+                            value={deductionData.tipo}
+                            onChange={(val) => setDeductionData({ ...deductionData, tipo: val })}
+                            options={[
+                                { value: "FALTA", label: "Faltas" },
+                                { value: "DISCIPLINAR", label: "Sancção Disciplinar" },
+                                { value: "DANO", label: "Dano Material" },
+                                { value: "OUTRO", label: "Outro" }
+                            ]}
+                        />
+                        <CurrencyInput
+                            label="Valor do Desconto"
+                            value={deductionData.valor}
+                            onChange={(val) => setDeductionData({ ...deductionData, valor: val })}
+                        />
+                    </div>
+
+                    <Input
+                        label="Motivo / Descrição"
+                        value={deductionData.motivo}
+                        onChange={(e) => setDeductionData({ ...deductionData, motivo: e.target.value })}
+                        placeholder="Ex: Atraso recorrente, Dano em equipamento..."
+                    />
+
+                    <div className="pt-4 flex justify-end gap-2">
+                        <Button variant="ghost" onClick={() => setIsDeductionModalOpen(false)}>Cancelar</Button>
+                        <Button
+                            className="bg-rose-600 text-white"
+                            onClick={handleQuickDeduction}
+                            disabled={submittingDeduction}
+                        >
+                            {submittingDeduction ? "Processando..." : "Confirmar Desconto"}
+                        </Button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }

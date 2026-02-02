@@ -380,14 +380,29 @@ export class DocumentService {
         doc.text((funcionario.cargo?.nome || '---').toUpperCase(), 135, startY + 29);
 
         // Table Data
-        const tableBody = [
+        const tableBody: any[][] = [
             ["Salário Base Mensal", "30 D", formatCurrency(Number(salario_base)), "---"],
         ];
 
         if (Number(total_subsidios_tributaveis) > 0) tableBody.push(["Subsídios Tributáveis", "1", formatCurrency(Number(total_subsidios_tributaveis)), "---"]);
         if (Number(total_subsidios_isentos) > 0) tableBody.push(["Subsídios Isentos", "1", formatCurrency(Number(total_subsidios_isentos)), "---"]);
         if (Number(total_horas_extras) > 0) tableBody.push(["Horas Extras / Ajustes", "---", formatCurrency(Number(total_horas_extras)), "---"]);
-        if (Number(total_faltas) > 0) tableBody.push(["Faltas Injustificadas", "---", "---", `(${formatCurrency(Number(total_faltas))})`]);
+        if (Number(total_faltas) > 0) tableBody.push([`Faltas Injustificadas (${data.faltas_count || 0} D)`, "---", "---", `(${formatCurrency(Number(total_faltas))})`]);
+
+        // Adicionar Adiantamentos detalhados
+        if (data.detalhesAdiantamentos && data.detalhesAdiantamentos.length > 0) {
+            data.detalhesAdiantamentos.forEach((a: any) => {
+                tableBody.push([`Adiantamento: ${a.motivo || 'Solicitado'}`, "---", "---", `(${formatCurrency(Number(a.valor))})`]);
+            });
+        }
+
+        // Adicionar Descontos detalhados
+        if (data.detalhesDescontos && data.detalhesDescontos.length > 0) {
+            data.detalhesDescontos.forEach((d: any) => {
+                const tipoDesc = d.tipo === 'DISCIPLINAR' ? 'Desc. Disciplinar' : d.tipo === 'FALTA' ? 'Desc. Faltas' : d.tipo === 'DANO' ? 'Desc. Danos' : 'Outro Desconto';
+                tableBody.push([`${tipoDesc}: ${d.motivo || 'Registado'}`, "---", "---", `(${formatCurrency(Number(d.valor))})`]);
+            });
+        }
 
         tableBody.push(["Segurança Social (3%)", "3%", "---", formatCurrency(Number(inss_trabalhador))]);
         tableBody.push(["Imposto IRT", "Var.", "---", formatCurrency(Number(irt_devido))]);
@@ -485,7 +500,22 @@ export class DocumentService {
         if (Number(total_subsidios_tributaveis) > 0) addDataRow("Subsídios Tributáveis", "1", Number(total_subsidios_tributaveis), 0);
         if (Number(total_subsidios_isentos) > 0) addDataRow("Subsídios Isentos", "1", Number(total_subsidios_isentos), 0);
         if (Number(total_horas_extras) > 0) addDataRow("Horas Extras / Ajustes", "---", Number(total_horas_extras), 0);
-        if (Number(total_faltas) > 0) addDataRow("Faltas Injustificadas", "---", 0, Number(total_faltas), 'FFE11D48');
+        if (Number(total_faltas) > 0) addDataRow(`Faltas Injustificadas (${data.faltas_count || 0} D)`, "---", 0, Number(total_faltas), 'FFE11D48');
+
+        // Adicionar Adiantamentos detalhados (Excel)
+        if (data.detalhesAdiantamentos && data.detalhesAdiantamentos.length > 0) {
+            data.detalhesAdiantamentos.forEach((a: any) => {
+                addDataRow(`Adiantamento: ${a.motivo || 'Solicitado'}`, "---", 0, Number(a.valor), 'FFE11D48');
+            });
+        }
+
+        // Adicionar Descontos detalhados (Excel)
+        if (data.detalhesDescontos && data.detalhesDescontos.length > 0) {
+            data.detalhesDescontos.forEach((d: any) => {
+                const tipoDesc = d.tipo === 'DISCIPLINAR' ? 'Desc. Disciplinar' : d.tipo === 'FALTA' ? 'Desc. Faltas' : d.tipo === 'DANO' ? 'Desc. Danos' : 'Outro Desconto';
+                addDataRow(`${tipoDesc}: ${d.motivo || 'Registado'}`, "---", 0, Number(d.valor), 'FFE11D48');
+            });
+        }
 
         addDataRow("Segurança Social (3%)", "3%", 0, Number(inss_trabalhador), 'FFD97706');
         addDataRow("Imposto IRT", "Var.", 0, Number(irt_devido), 'FFE11D48');
@@ -617,12 +647,35 @@ export class DocumentService {
                             })] : []),
                             ...(Number(total_faltas) > 0 ? [new TableRow({
                                 children: [
-                                    createTableCell("Faltas Injustificadas", { textOptions: { color: "E11D48" } }),
+                                    createTableCell(`Faltas Injustificadas (${data.faltas_count || 0} D)`, { textOptions: { color: "E11D48" } }),
                                     createTableCell("---", { alignment: AlignmentType.CENTER }),
                                     createTableCell("---", { alignment: AlignmentType.RIGHT, textOptions: { color: "CBD5E1" } }),
                                     createTableCell(`(${formatCurrency(Number(total_faltas))})`, { alignment: AlignmentType.RIGHT, textOptions: { color: "E11D48", bold: true } }),
                                 ]
                             })] : []),
+
+                            // Adicionar Adiantamentos detalhados (Word)
+                            ...(data.detalhesAdiantamentos || []).map((a: any) => new TableRow({
+                                children: [
+                                    createTableCell(`Adiantamento: ${a.motivo || 'Solicitado'}`),
+                                    createTableCell("---", { alignment: AlignmentType.CENTER }),
+                                    createTableCell("---", { alignment: AlignmentType.RIGHT, textOptions: { color: "CBD5E1" } }),
+                                    createTableCell(`(${formatCurrency(Number(a.valor))})`, { alignment: AlignmentType.RIGHT, textOptions: { color: "E11D48", bold: true } }),
+                                ]
+                            })),
+
+                            // Adicionar Descontos detalhados (Word)
+                            ...(data.detalhesDescontos || []).map((d: any) => {
+                                const tipoDesc = d.tipo === 'DISCIPLINAR' ? 'Desc. Disciplinar' : d.tipo === 'FALTA' ? 'Desc. Faltas' : d.tipo === 'DANO' ? 'Desc. Danos' : 'Outro Desconto';
+                                return new TableRow({
+                                    children: [
+                                        createTableCell(`${tipoDesc}: ${d.motivo || 'Registado'}`),
+                                        createTableCell("---", { alignment: AlignmentType.CENTER }),
+                                        createTableCell("---", { alignment: AlignmentType.RIGHT, textOptions: { color: "CBD5E1" } }),
+                                        createTableCell(`(${formatCurrency(Number(d.valor))})`, { alignment: AlignmentType.RIGHT, textOptions: { color: "E11D48", bold: true } }),
+                                    ]
+                                });
+                            }),
 
                             new TableRow({
                                 children: [
