@@ -30,7 +30,7 @@ jobs:
           tar -czf deployment.tar.gz \
             package.json \
             package-lock.json \
-            next.config.js \
+            next.config.ts \
             .next \
             public \
             prisma
