@@ -44,6 +44,7 @@ jobs:
           port: ${{ secrets.SSH_PORT || '22' }}
           source: "deployment.tar.gz"
           target: "/root/gestao/"
+
           overwrite: true
 
       - name: 🚀 Deploy on server
