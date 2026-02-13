@@ -43,6 +43,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: "deployment.tar.gz"
+
           target: "/root/gestao/"
 
           overwrite: true
