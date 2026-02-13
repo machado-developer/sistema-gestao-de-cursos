@@ -29,7 +29,9 @@ export enum DocumentType {
     STUDENT_FINANCIAL_EXTRACT = "STUDENT_FINANCIAL_EXTRACT",
     EMPLOYEE_LIST = "EMPLOYEE_LIST",
     VACATION_MAP = "VACATION_MAP",
-    ABSENCE_REPORT = "ABSENCE_REPORT"
+    ABSENCE_REPORT = "ABSENCE_REPORT",
+    COURSE_LIST = "COURSE_LIST",
+    COURSE_DETAIL = "COURSE_DETAIL"
 }
 
 /**
@@ -156,6 +158,10 @@ export class DocumentService {
                 return this.handleMatriculaConfirmation(data, company);
             case DocumentType.STUDENT_FINANCIAL_EXTRACT:
                 return this.handleStudentFinancialExtract(data, company);
+            case DocumentType.COURSE_LIST:
+                return this.handleTableExport(type, format, data, options, company);
+            case DocumentType.COURSE_DETAIL:
+                return this.handleCourseDetail(data, company);
             default:
                 throw new Error("Tipo de documento não suportado.");
         }
@@ -231,6 +237,53 @@ export class DocumentService {
         });
 
         doc.save(`Extrato_${data.aluno.nome_completo.replace(/\s+/g, '_')}.pdf`);
+    }
+
+    private static async handleCourseDetail(data: any, company: any) {
+        const doc = new jsPDF();
+        const startY = await this.drawStandardHeader(doc, company, "FICHA TÉCNICA DO CURSO");
+
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold");
+        doc.text(data.nome.toUpperCase(), 14, startY + 5);
+
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(100);
+        doc.text(`Carga Horária: ${data.carga_horaria}h`, 14, startY + 12);
+        doc.text(`Preço Base: ${formatCurrency(Number(data.preco_base))}`, 14, startY + 18);
+
+        doc.setTextColor(0);
+        doc.setFont("helvetica", "bold");
+        doc.text("DESCRIÇÃO", 14, startY + 28);
+        doc.setFont("helvetica", "normal");
+        const splitDescription = doc.splitTextToSize(data.descricao || "Sem descrição disponível.", 180);
+        doc.text(splitDescription, 14, startY + 34);
+
+        if (data.turmas && data.turmas.length > 0) {
+            const tableY = startY + 34 + (splitDescription.length * 5) + 10;
+            doc.setFont("helvetica", "bold");
+            doc.text("TURMAS VINCULADAS", 14, tableY - 5);
+
+            autoTable(doc, {
+                startY: tableY,
+                head: [['Código', 'Data Início', 'Status', 'Alunos']],
+                body: data.turmas.map((t: any) => [
+                    t.codigo_turma,
+                    new Date(t.data_inicio).toLocaleDateString(),
+                    t.status,
+                    t._count?.matriculas || t.matriculas?.length || 0
+                ]),
+                theme: 'striped',
+                headStyles: { fillColor: [30, 41, 59] }
+            });
+        }
+
+        doc.setFontSize(8);
+        doc.setTextColor(150);
+        doc.text(`Documento gerado em: ${new Date().toLocaleString('pt-AO')}`, 14, 285);
+
+        doc.save(`Ficha_Curso_${data.nome.replace(/\s+/g, '_')}.pdf`);
     }
 
     private static async renderReactPDF(document: React.ReactElement<any>, filename: string) {

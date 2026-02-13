@@ -48,9 +48,9 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     }
 
     const filteredModules = modules.filter(module => {
-        const requiredPermission = MODULE_PERMISSION_MAP[module.id]
-        if (!requiredPermission) return true // Módulos sem permissão mapeada (como dashboard) são públicos
-        return hasPermission(userRole, requiredPermission)
+        const moduleKey = MODULE_PERMISSION_MAP[module.id]
+        if (!moduleKey) return true // Módulos sem permissão mapeada (como dashboard) são públicos
+        return hasPermission(session?.user?.permissions, moduleKey, 'read')
     })
 
     useEffect(() => {

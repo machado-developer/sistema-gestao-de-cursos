@@ -80,4 +80,31 @@ export class AcademicService {
             }
         });
     }
+
+    static async getGeneralStudentList() {
+        return prisma.aluno.findMany({
+            include: {
+                matriculas: {
+                    include: {
+                        turma: {
+                            include: { curso: true }
+                        }
+                    }
+                }
+            },
+            orderBy: { nome_completo: 'asc' }
+        });
+    }
+
+    static async getEnrollmentMap() {
+        return prisma.matricula.findMany({
+            include: {
+                aluno: true,
+                turma: {
+                    include: { curso: true }
+                }
+            },
+            orderBy: { createdAt: 'desc' }
+        });
+    }
 }

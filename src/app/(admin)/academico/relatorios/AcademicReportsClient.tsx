@@ -18,7 +18,7 @@ import {
 } from 'lucide-react'
 import { DocumentService, DocumentType, ExportFormat } from '@/services/DocumentService'
 import { formatCurrency } from '@/lib/utils'
-import { getTurmaForReport } from './actions'
+import { getTurmaForReport, getGeneralStudentList, getEnrollmentMap } from './actions'
 import { toast } from 'sonner'
 
 interface AcademicReportsClientProps {
@@ -65,6 +65,49 @@ export function AcademicReportsClient({ data }: AcademicReportsClientProps) {
         }
     }
 
+    const handleGeneralListExport = async (format: ExportFormat) => {
+        try {
+            const students = await getGeneralStudentList();
+            const tableRows = students.map((s: any) => [
+                s.nome_completo.toUpperCase(),
+                s.bi_documento,
+                s.email || 'N/A',
+                s.telefone || 'N/A'
+            ]);
+
+            await DocumentService.generate(DocumentType.STUDENT_LIST, format, tableRows, {
+                title: "LISTA GERAL DE ALUNOS",
+                columns: ["NOME", "BI", "EMAIL", "TELEFONE"],
+                filename: "Lista_Geral_Alunos"
+            });
+            toast.success("Lista geral gerada!");
+        } catch (e) {
+            toast.error("Erro ao gerar lista geral");
+        }
+    }
+
+    const handleEnrollmentExport = async (format: ExportFormat) => {
+        try {
+            const enrollments = await getEnrollmentMap();
+            const tableRows = enrollments.map((m: any) => [
+                new Date(m.createdAt).toLocaleDateString(),
+                m.aluno.nome_completo.toUpperCase(),
+                m.turma.curso.nome.toUpperCase(),
+                m.turma.codigo_turma,
+                formatCurrency(Number(m.valor_pago || 0))
+            ]);
+
+            await DocumentService.generate(DocumentType.ENROLLMENT_LIST, format, tableRows, {
+                title: "MAPA CONSOLIDADO DE INSCRIÇÕES",
+                columns: ["DATA", "ALUNO", "CURSO", "TURMA", "VALOR"],
+                filename: "Mapa_Inscricoes"
+            });
+            toast.success("Mapa de inscrições gerado!");
+        } catch (e) {
+            toast.error("Erro ao gerar mapa de inscrições");
+        }
+    }
+
     return (
         <div className="p-1 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
             {/* Header */}
@@ -96,25 +139,20 @@ export function AcademicReportsClient({ data }: AcademicReportsClientProps) {
                     title="Lista Geral de Alunos"
                     desc="Exportar todos os alunos por curso ou data."
                     icon={Users}
-                    onExport={(format: any) => {
-                        // This would need a specific Documentservice handler
-                        console.log('Export general list', format);
-                    }}
+                    onExport={handleGeneralListExport}
                 />
                 <ReportActionCard
                     title="Mapa de Inscrições"
                     desc="Consolidado de matrículas por período."
                     icon={Calendar}
-                    onExport={(format: any) => {
-                        console.log('Export enrollment map', format);
-                    }}
+                    onExport={handleEnrollmentExport}
                 />
                 <ReportActionCard
                     title="Emissão de Diplomas"
                     desc="Relatório de aprovados e certificação."
                     icon={Award}
                     onExport={(format: any) => {
-                        console.log('Export diplomas map', format);
+                        toast.info("Funcionalidade de Diplomas em lote em desenvolvimento.");
                     }}
                 />
             </div>

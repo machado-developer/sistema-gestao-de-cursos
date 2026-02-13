@@ -228,7 +228,8 @@
         "menu": {
             "company": "Company Data",
             "administrator": "Administrator",
-            "appearance": "Appearance"
+            "appearance": "Appearance",
+            "profiles": "Access Profiles"
         },
         "company": {
             "title": "Company Data",

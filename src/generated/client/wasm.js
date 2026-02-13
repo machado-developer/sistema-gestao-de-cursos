@@ -241,6 +241,74 @@ exports.Prisma.UserScalarFieldEnum = {
   resetToken: 'resetToken',
   resetTokenExpires: 'resetTokenExpires',
   createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  profileId: 'profileId'
+};
+
+exports.Prisma.ProfileScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ModuleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  key: 'key',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProfilePermissionScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  moduleId: 'moduleId',
+  canRead: 'canRead',
+  canWrite: 'canWrite',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserPermissionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  moduleId: 'moduleId',
+  canRead: 'canRead',
+  canWrite: 'canWrite',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ModuleItemScalarFieldEnum = {
+  id: 'id',
+  moduleId: 'moduleId',
+  name: 'name',
+  key: 'key',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProfileItemPermissionScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  moduleItemId: 'moduleItemId',
+  canRead: 'canRead',
+  canWrite: 'canWrite',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserItemPermissionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  moduleItemId: 'moduleItemId',
+  canRead: 'canRead',
+  canWrite: 'canWrite',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
@@ -475,6 +543,21 @@ exports.Prisma.DescontoScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.EmailJobScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  payload: 'payload',
+  status: 'status',
+  attempts: 'attempts',
+  maxAttempts: 'maxAttempts',
+  workerId: 'workerId',
+  lockedUntil: 'lockedUntil',
+  lastError: 'lastError',
+  processedAt: 'processedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -496,6 +579,13 @@ exports.Prisma.ModelName = {
   Matricula: 'Matricula',
   Pagamento: 'Pagamento',
   User: 'User',
+  Profile: 'Profile',
+  Module: 'Module',
+  ProfilePermission: 'ProfilePermission',
+  UserPermission: 'UserPermission',
+  ModuleItem: 'ModuleItem',
+  ProfileItemPermission: 'ProfileItemPermission',
+  UserItemPermission: 'UserItemPermission',
   AuditLog: 'AuditLog',
   CertificateTemplate: 'CertificateTemplate',
   Certificate: 'Certificate',
@@ -512,7 +602,8 @@ exports.Prisma.ModelName = {
   ConfigRH: 'ConfigRH',
   Empresa: 'Empresa',
   AdiantamentoSalario: 'AdiantamentoSalario',
-  Desconto: 'Desconto'
+  Desconto: 'Desconto',
+  EmailJob: 'EmailJob'
 };
 
 /**

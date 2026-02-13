@@ -1,0 +1,97 @@
+name: CI/CD Deploy (Next.js + Prisma + PM2)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js (CI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 📦 Install dependencies & Build (CI)
+        run: |
+          npm install --legacy-peer-deps
+          npm run build
+        env:
+          CI: true
+
+      - name: 📦 Create deployment package
+        run: |
+          tar -czf deployment.tar.gz \
+            package.json \
+            package-lock.json \
+            next.config.js \
+            .next \
+            public \
+            prisma
+
+      - name: 📤 Upload to VPS
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || '22' }}
+          source: "deployment.tar.gz"
+          target: "/root/gestao/"
+          overwrite: true
+
+      - name: 🚀 Deploy on server
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || '22' }}
+          script: |
+            set -e
+
+            # 🔑 CARREGAR NVM (ESSENCIAL)
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+            echo "🔍 Node version:"
+            node -v
+            npm -v
+
+            cd /root/gestao/
+
+            echo "📦 Extraindo arquivos..."
+            tar -xzf deployment.tar.gz
+
+            echo "🧩 Instalando dependências de produção..."
+            npm install --only=production --legacy-peer-deps --no-audit
+
+            echo "🧩 Prisma generate..."
+            npx prisma generate
+
+            echo "🧩 Prisma migrate deploy..."
+            # Tenta rodar a migração. Se falhar, tenta rollback da migração problemática e baseline da nova init.
+            npx prisma migrate deploy || ( echo "⚠️ Falha na migração! Tentando corrigir..." && npx prisma migrate resolve --rolled-back "20260210182348_ni" || true && npx prisma migrate resolve --applied "20260212151100_init" || true && npx prisma migrate deploy )
+
+            echo "⚙️ Gerenciando aplicação PM2..."
+            # Salva o ecossistema atual se existir para garantir que não perderemos configs
+            pm2 save || true
+
+            if pm2 list | grep -q "nextech"; then
+              echo "🔄 Recarregando aplicação..."
+              pm2 reload nextech-front --update-env
+            else
+              echo "🚀 Iniciando aplicação..."
+              pm2 start "npm start" --name "nextech"
+            fi
+
+            pm2 save
+            rm -f deployment.tar.gz
+
+            echo "✅ Deploy concluído com sucesso!"

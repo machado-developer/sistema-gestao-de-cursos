@@ -18,6 +18,8 @@ interface CursoWithTurmas {
 }
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+import { FileText, Download, Printer } from 'lucide-react'
+import { DocumentService, DocumentType, ExportFormat } from '@/services/DocumentService'
 
 interface CursosTableClientProps {
     cursos: CursoWithTurmas[]
@@ -46,8 +48,34 @@ export function CursosTableClient({ cursos, title, subtitle, pagination }: Curso
         router.push(pathname + '?' + createQueryString('page', page.toString()))
     }
 
+    const handleExportList = async (format: ExportFormat) => {
+        const columns = [
+            t('pages.courses.table.course'),
+            t('pages.courses.table.price'),
+            t('pages.courses.table.workload'),
+            t('pages.courses.table.classes')
+        ]
+
+        const data = cursos.map(c => [
+            c.nome,
+            formatCurrency(Number(c.preco_base)),
+            `${c.carga_horaria}h`,
+            c.turmas.length.toString()
+        ])
+
+        await DocumentService.generate(DocumentType.COURSE_LIST, format, data, {
+            title: t('pages.courses.title'),
+            columns,
+            filename: 'lista_cursos'
+        })
+    }
+
+    const handleExportCourseDetail = async (curso: CursoWithTurmas) => {
+        await DocumentService.generate(DocumentType.COURSE_DETAIL, ExportFormat.PDF, curso)
+    }
 
     const filters: FilterConfig[] = [
+        // ... filters remain same
         {
             key: 'q',
             label: t('common.search'),
@@ -119,8 +147,12 @@ export function CursosTableClient({ cursos, title, subtitle, pagination }: Curso
             className: 'text-right',
             render: (curso) => (
                 <div className="flex justify-end gap-2">
-                    <Button variant="secondary" className="text-xs h-8 px-3">
-                        {t('pages.courses.view_details')}
+                    <Button
+                        variant="secondary"
+                        className="text-xs h-8 px-3 gap-2"
+                        onClick={() => handleExportCourseDetail(curso)}
+                    >
+                        <FileText size={14} /> {t('pages.courses.view_details')}
                     </Button>
                     <Link href={`/cursos/${curso.id}/editar`}>
                         <Button variant="ghost" className="text-xs h-8 px-3">
@@ -139,11 +171,33 @@ export function CursosTableClient({ cursos, title, subtitle, pagination }: Curso
                     <h1 className="text-3xl font-bold">{title}</h1>
                     <p className="text-zinc-400">{subtitle}</p>
                 </div>
-                <Link href="/cursos/novo">
-                    <Button className="gap-2">
-                        <BookOpen size={18} /> {t('pages.courses.new')}
-                    </Button>
-                </Link>
+                <div className="flex gap-3">
+                    <div className="flex bg-zinc-800 p-1 rounded-md border border-zinc-700">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 text-[10px] font-bold uppercase tracking-wider gap-2 px-3 hover:bg-zinc-700"
+                            onClick={() => handleExportList(ExportFormat.PDF)}
+                        >
+                            <FileText size={14} className="text-blue-400" /> PDF
+                        </Button>
+                        <div className="w-[1px] bg-zinc-700 mx-1" />
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 text-[10px] font-bold uppercase tracking-wider gap-2 px-3 hover:bg-zinc-700"
+                            onClick={() => handleExportList(ExportFormat.XLSX)}
+                        >
+                            <Download size={14} className="text-emerald-400" /> Excel
+                        </Button>
+                    </div>
+
+                    <Link href="/cursos/novo">
+                        <Button className="gap-2">
+                            <BookOpen size={18} /> {t('pages.courses.new')}
+                        </Button>
+                    </Link>
+                </div>
             </div>
 
             <TableFilters filters={filters} />

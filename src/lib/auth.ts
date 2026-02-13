@@ -17,6 +17,22 @@ export const authOptions: NextAuthOptions = {
                 const user = await prisma.user.findUnique({
                     where: { email: credentials.email },
                     include: {
+                        profile: {
+                            include: {
+                                permissions: {
+                                    include: { module: true }
+                                },
+                                itemPermissions: {
+                                    include: { moduleItem: true }
+                                }
+                            }
+                        },
+                        permissions: {
+                            include: { module: true }
+                        },
+                        itemPermissions: {
+                            include: { moduleItem: true }
+                        },
                         funcionario: {
                             include: {
                                 documentos: {
@@ -34,11 +50,55 @@ export const authOptions: NextAuthOptions = {
                 const isValid = await bcrypt.compare(credentials.password, user.password)
                 if (!isValid) return null
 
+                // Mesclar permissões do perfil com as específicas do usuário (overrides)
+                const permsMap = new Map<string, any>()
+                const itemPermsMap = new Map<string, any>()
+
+                // 1. Permissões do Perfil
+                user.profile?.permissions.forEach(p => {
+                    permsMap.set(p.module.key, {
+                        key: p.module.key,
+                        canRead: p.canRead,
+                        canWrite: p.canWrite
+                    })
+                })
+                user.profile?.itemPermissions.forEach(p => {
+                    itemPermsMap.set(p.moduleItem.key, {
+                        key: p.moduleItem.key,
+                        canRead: p.canRead,
+                        canWrite: p.canWrite
+                    })
+                })
+
+                // 2. Overrides do Usuário
+                user.permissions.forEach(p => {
+                    permsMap.set(p.module.key, {
+                        key: p.module.key,
+                        canRead: p.canRead,
+                        canWrite: p.canWrite
+                    })
+                })
+                user.itemPermissions.forEach(p => {
+                    itemPermsMap.set(p.moduleItem.key, {
+                        key: p.moduleItem.key,
+                        canRead: p.canRead,
+                        canWrite: p.canWrite
+                    })
+                })
+
+                // 3. Admin sempre tem acesso total
+                if (user.role === 'ADMIN') {
+                    permsMap.set('*', { key: '*', canRead: true, canWrite: true })
+                    itemPermsMap.set('*', { key: '*', canRead: true, canWrite: true })
+                }
+
                 return {
                     id: user.id,
                     name: user.name,
                     email: user.email,
                     role: user.role,
+                    permissions: Array.from(permsMap.values()),
+                    itemPermissions: Array.from(itemPermsMap.values()),
                     image: user.funcionario?.documentos[0]?.url || null
                 }
             }
@@ -51,6 +111,8 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user }: any) {
             if (user) {
                 token.role = user.role
+                token.permissions = user.permissions
+                token.itemPermissions = user.itemPermissions
                 token.image = user.image
             }
             return token
@@ -58,6 +120,8 @@ export const authOptions: NextAuthOptions = {
         async session({ session, token }: any) {
             if (session.user) {
                 session.user.role = token.role
+                session.user.permissions = token.permissions
+                session.user.itemPermissions = token.itemPermissions
                 session.user.image = token.image
             }
             return session

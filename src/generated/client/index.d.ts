@@ -59,6 +59,41 @@ export type Pagamento = $Result.DefaultSelection<Prisma.$PagamentoPayload>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Profile
+ * 
+ */
+export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>
+/**
+ * Model Module
+ * 
+ */
+export type Module = $Result.DefaultSelection<Prisma.$ModulePayload>
+/**
+ * Model ProfilePermission
+ * 
+ */
+export type ProfilePermission = $Result.DefaultSelection<Prisma.$ProfilePermissionPayload>
+/**
+ * Model UserPermission
+ * 
+ */
+export type UserPermission = $Result.DefaultSelection<Prisma.$UserPermissionPayload>
+/**
+ * Model ModuleItem
+ * 
+ */
+export type ModuleItem = $Result.DefaultSelection<Prisma.$ModuleItemPayload>
+/**
+ * Model ProfileItemPermission
+ * 
+ */
+export type ProfileItemPermission = $Result.DefaultSelection<Prisma.$ProfileItemPermissionPayload>
+/**
+ * Model UserItemPermission
+ * 
+ */
+export type UserItemPermission = $Result.DefaultSelection<Prisma.$UserItemPermissionPayload>
+/**
  * Model AuditLog
  * 
  */
@@ -143,6 +178,11 @@ export type AdiantamentoSalario = $Result.DefaultSelection<Prisma.$AdiantamentoS
  * 
  */
 export type Desconto = $Result.DefaultSelection<Prisma.$DescontoPayload>
+/**
+ * Model EmailJob
+ * 
+ */
+export type EmailJob = $Result.DefaultSelection<Prisma.$EmailJobPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -358,6 +398,76 @@ export class PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs>;
 
   /**
+   * `prisma.profile`: Exposes CRUD operations for the **Profile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Profiles
+    * const profiles = await prisma.profile.findMany()
+    * ```
+    */
+  get profile(): Prisma.ProfileDelegate<ExtArgs>;
+
+  /**
+   * `prisma.module`: Exposes CRUD operations for the **Module** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Modules
+    * const modules = await prisma.module.findMany()
+    * ```
+    */
+  get module(): Prisma.ModuleDelegate<ExtArgs>;
+
+  /**
+   * `prisma.profilePermission`: Exposes CRUD operations for the **ProfilePermission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProfilePermissions
+    * const profilePermissions = await prisma.profilePermission.findMany()
+    * ```
+    */
+  get profilePermission(): Prisma.ProfilePermissionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.userPermission`: Exposes CRUD operations for the **UserPermission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserPermissions
+    * const userPermissions = await prisma.userPermission.findMany()
+    * ```
+    */
+  get userPermission(): Prisma.UserPermissionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.moduleItem`: Exposes CRUD operations for the **ModuleItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ModuleItems
+    * const moduleItems = await prisma.moduleItem.findMany()
+    * ```
+    */
+  get moduleItem(): Prisma.ModuleItemDelegate<ExtArgs>;
+
+  /**
+   * `prisma.profileItemPermission`: Exposes CRUD operations for the **ProfileItemPermission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProfileItemPermissions
+    * const profileItemPermissions = await prisma.profileItemPermission.findMany()
+    * ```
+    */
+  get profileItemPermission(): Prisma.ProfileItemPermissionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.userItemPermission`: Exposes CRUD operations for the **UserItemPermission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserItemPermissions
+    * const userItemPermissions = await prisma.userItemPermission.findMany()
+    * ```
+    */
+  get userItemPermission(): Prisma.UserItemPermissionDelegate<ExtArgs>;
+
+  /**
    * `prisma.auditLog`: Exposes CRUD operations for the **AuditLog** model.
     * Example usage:
     * ```ts
@@ -526,6 +636,16 @@ export class PrismaClient<
     * ```
     */
   get desconto(): Prisma.DescontoDelegate<ExtArgs>;
+
+  /**
+   * `prisma.emailJob`: Exposes CRUD operations for the **EmailJob** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EmailJobs
+    * const emailJobs = await prisma.emailJob.findMany()
+    * ```
+    */
+  get emailJob(): Prisma.EmailJobDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -976,6 +1096,13 @@ export namespace Prisma {
     Matricula: 'Matricula',
     Pagamento: 'Pagamento',
     User: 'User',
+    Profile: 'Profile',
+    Module: 'Module',
+    ProfilePermission: 'ProfilePermission',
+    UserPermission: 'UserPermission',
+    ModuleItem: 'ModuleItem',
+    ProfileItemPermission: 'ProfileItemPermission',
+    UserItemPermission: 'UserItemPermission',
     AuditLog: 'AuditLog',
     CertificateTemplate: 'CertificateTemplate',
     Certificate: 'Certificate',
@@ -992,7 +1119,8 @@ export namespace Prisma {
     ConfigRH: 'ConfigRH',
     Empresa: 'Empresa',
     AdiantamentoSalario: 'AdiantamentoSalario',
-    Desconto: 'Desconto'
+    Desconto: 'Desconto',
+    EmailJob: 'EmailJob'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1008,7 +1136,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "aluno" | "empresaCliente" | "documento" | "curso" | "instrutor" | "turma" | "matricula" | "pagamento" | "user" | "auditLog" | "certificateTemplate" | "certificate" | "aula" | "presenca" | "avaliacao" | "departamento" | "cargo" | "funcionario" | "contrato" | "presencaHR" | "folhaPagamento" | "feriasSolicitacao" | "configRH" | "empresa" | "adiantamentoSalario" | "desconto"
+      modelProps: "aluno" | "empresaCliente" | "documento" | "curso" | "instrutor" | "turma" | "matricula" | "pagamento" | "user" | "profile" | "module" | "profilePermission" | "userPermission" | "moduleItem" | "profileItemPermission" | "userItemPermission" | "auditLog" | "certificateTemplate" | "certificate" | "aula" | "presenca" | "avaliacao" | "departamento" | "cargo" | "funcionario" | "contrato" | "presencaHR" | "folhaPagamento" | "feriasSolicitacao" | "configRH" | "empresa" | "adiantamentoSalario" | "desconto" | "emailJob"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1603,6 +1731,468 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Profile: {
+        payload: Prisma.$ProfilePayload<ExtArgs>
+        fields: Prisma.ProfileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProfileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProfileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          findFirst: {
+            args: Prisma.ProfileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProfileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          findMany: {
+            args: Prisma.ProfileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>[]
+          }
+          create: {
+            args: Prisma.ProfileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          createMany: {
+            args: Prisma.ProfileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ProfileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          update: {
+            args: Prisma.ProfileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          deleteMany: {
+            args: Prisma.ProfileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProfileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ProfileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          aggregate: {
+            args: Prisma.ProfileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProfile>
+          }
+          groupBy: {
+            args: Prisma.ProfileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProfileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProfileCountArgs<ExtArgs>
+            result: $Utils.Optional<ProfileCountAggregateOutputType> | number
+          }
+        }
+      }
+      Module: {
+        payload: Prisma.$ModulePayload<ExtArgs>
+        fields: Prisma.ModuleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ModuleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModulePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ModuleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModulePayload>
+          }
+          findFirst: {
+            args: Prisma.ModuleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModulePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ModuleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModulePayload>
+          }
+          findMany: {
+            args: Prisma.ModuleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModulePayload>[]
+          }
+          create: {
+            args: Prisma.ModuleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModulePayload>
+          }
+          createMany: {
+            args: Prisma.ModuleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ModuleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModulePayload>
+          }
+          update: {
+            args: Prisma.ModuleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModulePayload>
+          }
+          deleteMany: {
+            args: Prisma.ModuleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ModuleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ModuleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModulePayload>
+          }
+          aggregate: {
+            args: Prisma.ModuleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateModule>
+          }
+          groupBy: {
+            args: Prisma.ModuleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ModuleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ModuleCountArgs<ExtArgs>
+            result: $Utils.Optional<ModuleCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProfilePermission: {
+        payload: Prisma.$ProfilePermissionPayload<ExtArgs>
+        fields: Prisma.ProfilePermissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProfilePermissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePermissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProfilePermissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePermissionPayload>
+          }
+          findFirst: {
+            args: Prisma.ProfilePermissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePermissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProfilePermissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePermissionPayload>
+          }
+          findMany: {
+            args: Prisma.ProfilePermissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePermissionPayload>[]
+          }
+          create: {
+            args: Prisma.ProfilePermissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePermissionPayload>
+          }
+          createMany: {
+            args: Prisma.ProfilePermissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ProfilePermissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePermissionPayload>
+          }
+          update: {
+            args: Prisma.ProfilePermissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePermissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProfilePermissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProfilePermissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ProfilePermissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePermissionPayload>
+          }
+          aggregate: {
+            args: Prisma.ProfilePermissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProfilePermission>
+          }
+          groupBy: {
+            args: Prisma.ProfilePermissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProfilePermissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProfilePermissionCountArgs<ExtArgs>
+            result: $Utils.Optional<ProfilePermissionCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserPermission: {
+        payload: Prisma.$UserPermissionPayload<ExtArgs>
+        fields: Prisma.UserPermissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserPermissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPermissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserPermissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPermissionPayload>
+          }
+          findFirst: {
+            args: Prisma.UserPermissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPermissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserPermissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPermissionPayload>
+          }
+          findMany: {
+            args: Prisma.UserPermissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPermissionPayload>[]
+          }
+          create: {
+            args: Prisma.UserPermissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPermissionPayload>
+          }
+          createMany: {
+            args: Prisma.UserPermissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.UserPermissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPermissionPayload>
+          }
+          update: {
+            args: Prisma.UserPermissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPermissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserPermissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserPermissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserPermissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPermissionPayload>
+          }
+          aggregate: {
+            args: Prisma.UserPermissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserPermission>
+          }
+          groupBy: {
+            args: Prisma.UserPermissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserPermissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserPermissionCountArgs<ExtArgs>
+            result: $Utils.Optional<UserPermissionCountAggregateOutputType> | number
+          }
+        }
+      }
+      ModuleItem: {
+        payload: Prisma.$ModuleItemPayload<ExtArgs>
+        fields: Prisma.ModuleItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ModuleItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ModuleItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleItemPayload>
+          }
+          findFirst: {
+            args: Prisma.ModuleItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ModuleItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleItemPayload>
+          }
+          findMany: {
+            args: Prisma.ModuleItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleItemPayload>[]
+          }
+          create: {
+            args: Prisma.ModuleItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleItemPayload>
+          }
+          createMany: {
+            args: Prisma.ModuleItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ModuleItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleItemPayload>
+          }
+          update: {
+            args: Prisma.ModuleItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.ModuleItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ModuleItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ModuleItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleItemPayload>
+          }
+          aggregate: {
+            args: Prisma.ModuleItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateModuleItem>
+          }
+          groupBy: {
+            args: Prisma.ModuleItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ModuleItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ModuleItemCountArgs<ExtArgs>
+            result: $Utils.Optional<ModuleItemCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProfileItemPermission: {
+        payload: Prisma.$ProfileItemPermissionPayload<ExtArgs>
+        fields: Prisma.ProfileItemPermissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProfileItemPermissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileItemPermissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProfileItemPermissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileItemPermissionPayload>
+          }
+          findFirst: {
+            args: Prisma.ProfileItemPermissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileItemPermissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProfileItemPermissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileItemPermissionPayload>
+          }
+          findMany: {
+            args: Prisma.ProfileItemPermissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileItemPermissionPayload>[]
+          }
+          create: {
+            args: Prisma.ProfileItemPermissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileItemPermissionPayload>
+          }
+          createMany: {
+            args: Prisma.ProfileItemPermissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ProfileItemPermissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileItemPermissionPayload>
+          }
+          update: {
+            args: Prisma.ProfileItemPermissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileItemPermissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProfileItemPermissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProfileItemPermissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ProfileItemPermissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileItemPermissionPayload>
+          }
+          aggregate: {
+            args: Prisma.ProfileItemPermissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProfileItemPermission>
+          }
+          groupBy: {
+            args: Prisma.ProfileItemPermissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProfileItemPermissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProfileItemPermissionCountArgs<ExtArgs>
+            result: $Utils.Optional<ProfileItemPermissionCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserItemPermission: {
+        payload: Prisma.$UserItemPermissionPayload<ExtArgs>
+        fields: Prisma.UserItemPermissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserItemPermissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserItemPermissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserItemPermissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserItemPermissionPayload>
+          }
+          findFirst: {
+            args: Prisma.UserItemPermissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserItemPermissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserItemPermissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserItemPermissionPayload>
+          }
+          findMany: {
+            args: Prisma.UserItemPermissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserItemPermissionPayload>[]
+          }
+          create: {
+            args: Prisma.UserItemPermissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserItemPermissionPayload>
+          }
+          createMany: {
+            args: Prisma.UserItemPermissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.UserItemPermissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserItemPermissionPayload>
+          }
+          update: {
+            args: Prisma.UserItemPermissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserItemPermissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserItemPermissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserItemPermissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserItemPermissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserItemPermissionPayload>
+          }
+          aggregate: {
+            args: Prisma.UserItemPermissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserItemPermission>
+          }
+          groupBy: {
+            args: Prisma.UserItemPermissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserItemPermissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserItemPermissionCountArgs<ExtArgs>
+            result: $Utils.Optional<UserItemPermissionCountAggregateOutputType> | number
           }
         }
       }
@@ -2728,6 +3318,72 @@ export namespace Prisma {
           }
         }
       }
+      EmailJob: {
+        payload: Prisma.$EmailJobPayload<ExtArgs>
+        fields: Prisma.EmailJobFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EmailJobFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailJobPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EmailJobFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailJobPayload>
+          }
+          findFirst: {
+            args: Prisma.EmailJobFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailJobPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EmailJobFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailJobPayload>
+          }
+          findMany: {
+            args: Prisma.EmailJobFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailJobPayload>[]
+          }
+          create: {
+            args: Prisma.EmailJobCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailJobPayload>
+          }
+          createMany: {
+            args: Prisma.EmailJobCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.EmailJobDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailJobPayload>
+          }
+          update: {
+            args: Prisma.EmailJobUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailJobPayload>
+          }
+          deleteMany: {
+            args: Prisma.EmailJobDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EmailJobUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.EmailJobUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailJobPayload>
+          }
+          aggregate: {
+            args: Prisma.EmailJobAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEmailJob>
+          }
+          groupBy: {
+            args: Prisma.EmailJobGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EmailJobGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EmailJobCountArgs<ExtArgs>
+            result: $Utils.Optional<EmailJobCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3135,6 +3791,8 @@ export namespace Prisma {
     certificados: number
     turmas: number
     cursos: number
+    permissions: number
+    itemPermissions: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3144,6 +3802,8 @@ export namespace Prisma {
     certificados?: boolean | UserCountOutputTypeCountCertificadosArgs
     turmas?: boolean | UserCountOutputTypeCountTurmasArgs
     cursos?: boolean | UserCountOutputTypeCountCursosArgs
+    permissions?: boolean | UserCountOutputTypeCountPermissionsArgs
+    itemPermissions?: boolean | UserCountOutputTypeCountItemPermissionsArgs
   }
 
   // Custom InputTypes
@@ -3197,6 +3857,158 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCursosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CursoWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserPermissionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountItemPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserItemPermissionWhereInput
+  }
+
+
+  /**
+   * Count Type ProfileCountOutputType
+   */
+
+  export type ProfileCountOutputType = {
+    permissions: number
+    itemPermissions: number
+    users: number
+  }
+
+  export type ProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    permissions?: boolean | ProfileCountOutputTypeCountPermissionsArgs
+    itemPermissions?: boolean | ProfileCountOutputTypeCountItemPermissionsArgs
+    users?: boolean | ProfileCountOutputTypeCountUsersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileCountOutputType
+     */
+    select?: ProfileCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfilePermissionWhereInput
+  }
+
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountItemPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfileItemPermissionWhereInput
+  }
+
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+  }
+
+
+  /**
+   * Count Type ModuleCountOutputType
+   */
+
+  export type ModuleCountOutputType = {
+    items: number
+    profilePermissions: number
+    userPermissions: number
+  }
+
+  export type ModuleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | ModuleCountOutputTypeCountItemsArgs
+    profilePermissions?: boolean | ModuleCountOutputTypeCountProfilePermissionsArgs
+    userPermissions?: boolean | ModuleCountOutputTypeCountUserPermissionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ModuleCountOutputType without action
+   */
+  export type ModuleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleCountOutputType
+     */
+    select?: ModuleCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ModuleCountOutputType without action
+   */
+  export type ModuleCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ModuleItemWhereInput
+  }
+
+  /**
+   * ModuleCountOutputType without action
+   */
+  export type ModuleCountOutputTypeCountProfilePermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfilePermissionWhereInput
+  }
+
+  /**
+   * ModuleCountOutputType without action
+   */
+  export type ModuleCountOutputTypeCountUserPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserPermissionWhereInput
+  }
+
+
+  /**
+   * Count Type ModuleItemCountOutputType
+   */
+
+  export type ModuleItemCountOutputType = {
+    profileItemPermissions: number
+    userItemPermissions: number
+  }
+
+  export type ModuleItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    profileItemPermissions?: boolean | ModuleItemCountOutputTypeCountProfileItemPermissionsArgs
+    userItemPermissions?: boolean | ModuleItemCountOutputTypeCountUserItemPermissionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ModuleItemCountOutputType without action
+   */
+  export type ModuleItemCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItemCountOutputType
+     */
+    select?: ModuleItemCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ModuleItemCountOutputType without action
+   */
+  export type ModuleItemCountOutputTypeCountProfileItemPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfileItemPermissionWhereInput
+  }
+
+  /**
+   * ModuleItemCountOutputType without action
+   */
+  export type ModuleItemCountOutputTypeCountUserItemPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserItemPermissionWhereInput
   }
 
 
@@ -11641,6 +12453,7 @@ export namespace Prisma {
     resetTokenExpires: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    profileId: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -11655,6 +12468,7 @@ export namespace Prisma {
     resetTokenExpires: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    profileId: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -11669,6 +12483,7 @@ export namespace Prisma {
     resetTokenExpires: number
     createdAt: number
     updatedAt: number
+    profileId: number
     _all: number
   }
 
@@ -11685,6 +12500,7 @@ export namespace Prisma {
     resetTokenExpires?: true
     createdAt?: true
     updatedAt?: true
+    profileId?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -11699,6 +12515,7 @@ export namespace Prisma {
     resetTokenExpires?: true
     createdAt?: true
     updatedAt?: true
+    profileId?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -11713,6 +12530,7 @@ export namespace Prisma {
     resetTokenExpires?: true
     createdAt?: true
     updatedAt?: true
+    profileId?: true
     _all?: true
   }
 
@@ -11800,6 +12618,7 @@ export namespace Prisma {
     resetTokenExpires: Date | null
     createdAt: Date
     updatedAt: Date
+    profileId: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -11831,6 +12650,7 @@ export namespace Prisma {
     resetTokenExpires?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    profileId?: boolean
     funcionario?: boolean | User$funcionarioArgs<ExtArgs>
     alunos?: boolean | User$alunosArgs<ExtArgs>
     matriculas?: boolean | User$matriculasArgs<ExtArgs>
@@ -11838,6 +12658,9 @@ export namespace Prisma {
     certificados?: boolean | User$certificadosArgs<ExtArgs>
     turmas?: boolean | User$turmasArgs<ExtArgs>
     cursos?: boolean | User$cursosArgs<ExtArgs>
+    profile?: boolean | User$profileArgs<ExtArgs>
+    permissions?: boolean | User$permissionsArgs<ExtArgs>
+    itemPermissions?: boolean | User$itemPermissionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -11854,6 +12677,7 @@ export namespace Prisma {
     resetTokenExpires?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    profileId?: boolean
   }
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11864,6 +12688,9 @@ export namespace Prisma {
     certificados?: boolean | User$certificadosArgs<ExtArgs>
     turmas?: boolean | User$turmasArgs<ExtArgs>
     cursos?: boolean | User$cursosArgs<ExtArgs>
+    profile?: boolean | User$profileArgs<ExtArgs>
+    permissions?: boolean | User$permissionsArgs<ExtArgs>
+    itemPermissions?: boolean | User$itemPermissionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -11877,6 +12704,9 @@ export namespace Prisma {
       certificados: Prisma.$CertificatePayload<ExtArgs>[]
       turmas: Prisma.$TurmaPayload<ExtArgs>[]
       cursos: Prisma.$CursoPayload<ExtArgs>[]
+      profile: Prisma.$ProfilePayload<ExtArgs> | null
+      permissions: Prisma.$UserPermissionPayload<ExtArgs>[]
+      itemPermissions: Prisma.$UserItemPermissionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11890,6 +12720,7 @@ export namespace Prisma {
       resetTokenExpires: Date | null
       createdAt: Date
       updatedAt: Date
+      profileId: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -12237,6 +13068,9 @@ export namespace Prisma {
     certificados<T extends User$certificadosArgs<ExtArgs> = {}>(args?: Subset<T, User$certificadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany"> | Null>
     turmas<T extends User$turmasArgs<ExtArgs> = {}>(args?: Subset<T, User$turmasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TurmaPayload<ExtArgs>, T, "findMany"> | Null>
     cursos<T extends User$cursosArgs<ExtArgs> = {}>(args?: Subset<T, User$cursosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CursoPayload<ExtArgs>, T, "findMany"> | Null>
+    profile<T extends User$profileArgs<ExtArgs> = {}>(args?: Subset<T, User$profileArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    permissions<T extends User$permissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "findMany"> | Null>
+    itemPermissions<T extends User$itemPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$itemPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12277,6 +13111,7 @@ export namespace Prisma {
     readonly resetTokenExpires: FieldRef<"User", 'DateTime'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly profileId: FieldRef<"User", 'String'>
   }
     
 
@@ -12711,6 +13546,61 @@ export namespace Prisma {
   }
 
   /**
+   * User.profile
+   */
+  export type User$profileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    where?: ProfileWhereInput
+  }
+
+  /**
+   * User.permissions
+   */
+  export type User$permissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+    where?: UserPermissionWhereInput
+    orderBy?: UserPermissionOrderByWithRelationInput | UserPermissionOrderByWithRelationInput[]
+    cursor?: UserPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserPermissionScalarFieldEnum | UserPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * User.itemPermissions
+   */
+  export type User$itemPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
+    where?: UserItemPermissionWhereInput
+    orderBy?: UserItemPermissionOrderByWithRelationInput | UserItemPermissionOrderByWithRelationInput[]
+    cursor?: UserItemPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserItemPermissionScalarFieldEnum | UserItemPermissionScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12722,6 +13612,6486 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Profile
+   */
+
+  export type AggregateProfile = {
+    _count: ProfileCountAggregateOutputType | null
+    _min: ProfileMinAggregateOutputType | null
+    _max: ProfileMaxAggregateOutputType | null
+  }
+
+  export type ProfileMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProfileMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProfileCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProfileMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProfileMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProfileCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProfileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Profile to aggregate.
+     */
+    where?: ProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Profiles to fetch.
+     */
+    orderBy?: ProfileOrderByWithRelationInput | ProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Profiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Profiles
+    **/
+    _count?: true | ProfileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProfileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProfileMaxAggregateInputType
+  }
+
+  export type GetProfileAggregateType<T extends ProfileAggregateArgs> = {
+        [P in keyof T & keyof AggregateProfile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProfile[P]>
+      : GetScalarType<T[P], AggregateProfile[P]>
+  }
+
+
+
+
+  export type ProfileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfileWhereInput
+    orderBy?: ProfileOrderByWithAggregationInput | ProfileOrderByWithAggregationInput[]
+    by: ProfileScalarFieldEnum[] | ProfileScalarFieldEnum
+    having?: ProfileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProfileCountAggregateInputType | true
+    _min?: ProfileMinAggregateInputType
+    _max?: ProfileMaxAggregateInputType
+  }
+
+  export type ProfileGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ProfileCountAggregateOutputType | null
+    _min: ProfileMinAggregateOutputType | null
+    _max: ProfileMaxAggregateOutputType | null
+  }
+
+  type GetProfileGroupByPayload<T extends ProfileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProfileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProfileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProfileGroupByOutputType[P]>
+            : GetScalarType<T[P], ProfileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    permissions?: boolean | Profile$permissionsArgs<ExtArgs>
+    itemPermissions?: boolean | Profile$itemPermissionsArgs<ExtArgs>
+    users?: boolean | Profile$usersArgs<ExtArgs>
+    _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["profile"]>
+
+
+  export type ProfileSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    permissions?: boolean | Profile$permissionsArgs<ExtArgs>
+    itemPermissions?: boolean | Profile$itemPermissionsArgs<ExtArgs>
+    users?: boolean | Profile$usersArgs<ExtArgs>
+    _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $ProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Profile"
+    objects: {
+      permissions: Prisma.$ProfilePermissionPayload<ExtArgs>[]
+      itemPermissions: Prisma.$ProfileItemPermissionPayload<ExtArgs>[]
+      users: Prisma.$UserPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["profile"]>
+    composites: {}
+  }
+
+  type ProfileGetPayload<S extends boolean | null | undefined | ProfileDefaultArgs> = $Result.GetResult<Prisma.$ProfilePayload, S>
+
+  type ProfileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ProfileFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ProfileCountAggregateInputType | true
+    }
+
+  export interface ProfileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Profile'], meta: { name: 'Profile' } }
+    /**
+     * Find zero or one Profile that matches the filter.
+     * @param {ProfileFindUniqueArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProfileFindUniqueArgs>(args: SelectSubset<T, ProfileFindUniqueArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Profile that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ProfileFindUniqueOrThrowArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProfileFindUniqueOrThrowArgs>(args: SelectSubset<T, ProfileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Profile that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileFindFirstArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProfileFindFirstArgs>(args?: SelectSubset<T, ProfileFindFirstArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Profile that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileFindFirstOrThrowArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProfileFindFirstOrThrowArgs>(args?: SelectSubset<T, ProfileFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Profiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Profiles
+     * const profiles = await prisma.profile.findMany()
+     * 
+     * // Get first 10 Profiles
+     * const profiles = await prisma.profile.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const profileWithIdOnly = await prisma.profile.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProfileFindManyArgs>(args?: SelectSubset<T, ProfileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Profile.
+     * @param {ProfileCreateArgs} args - Arguments to create a Profile.
+     * @example
+     * // Create one Profile
+     * const Profile = await prisma.profile.create({
+     *   data: {
+     *     // ... data to create a Profile
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProfileCreateArgs>(args: SelectSubset<T, ProfileCreateArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Profiles.
+     * @param {ProfileCreateManyArgs} args - Arguments to create many Profiles.
+     * @example
+     * // Create many Profiles
+     * const profile = await prisma.profile.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProfileCreateManyArgs>(args?: SelectSubset<T, ProfileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Profile.
+     * @param {ProfileDeleteArgs} args - Arguments to delete one Profile.
+     * @example
+     * // Delete one Profile
+     * const Profile = await prisma.profile.delete({
+     *   where: {
+     *     // ... filter to delete one Profile
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProfileDeleteArgs>(args: SelectSubset<T, ProfileDeleteArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Profile.
+     * @param {ProfileUpdateArgs} args - Arguments to update one Profile.
+     * @example
+     * // Update one Profile
+     * const profile = await prisma.profile.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProfileUpdateArgs>(args: SelectSubset<T, ProfileUpdateArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Profiles.
+     * @param {ProfileDeleteManyArgs} args - Arguments to filter Profiles to delete.
+     * @example
+     * // Delete a few Profiles
+     * const { count } = await prisma.profile.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProfileDeleteManyArgs>(args?: SelectSubset<T, ProfileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Profiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Profiles
+     * const profile = await prisma.profile.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProfileUpdateManyArgs>(args: SelectSubset<T, ProfileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Profile.
+     * @param {ProfileUpsertArgs} args - Arguments to update or create a Profile.
+     * @example
+     * // Update or create a Profile
+     * const profile = await prisma.profile.upsert({
+     *   create: {
+     *     // ... data to create a Profile
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Profile we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProfileUpsertArgs>(args: SelectSubset<T, ProfileUpsertArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Profiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileCountArgs} args - Arguments to filter Profiles to count.
+     * @example
+     * // Count the number of Profiles
+     * const count = await prisma.profile.count({
+     *   where: {
+     *     // ... the filter for the Profiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProfileCountArgs>(
+      args?: Subset<T, ProfileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProfileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Profile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProfileAggregateArgs>(args: Subset<T, ProfileAggregateArgs>): Prisma.PrismaPromise<GetProfileAggregateType<T>>
+
+    /**
+     * Group by Profile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProfileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProfileGroupByArgs['orderBy'] }
+        : { orderBy?: ProfileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Profile model
+   */
+  readonly fields: ProfileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Profile.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    permissions<T extends Profile$permissionsArgs<ExtArgs> = {}>(args?: Subset<T, Profile$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfilePermissionPayload<ExtArgs>, T, "findMany"> | Null>
+    itemPermissions<T extends Profile$itemPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, Profile$itemPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfileItemPermissionPayload<ExtArgs>, T, "findMany"> | Null>
+    users<T extends Profile$usersArgs<ExtArgs> = {}>(args?: Subset<T, Profile$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Profile model
+   */ 
+  interface ProfileFieldRefs {
+    readonly id: FieldRef<"Profile", 'String'>
+    readonly name: FieldRef<"Profile", 'String'>
+    readonly description: FieldRef<"Profile", 'String'>
+    readonly createdAt: FieldRef<"Profile", 'DateTime'>
+    readonly updatedAt: FieldRef<"Profile", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Profile findUnique
+   */
+  export type ProfileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which Profile to fetch.
+     */
+    where: ProfileWhereUniqueInput
+  }
+
+  /**
+   * Profile findUniqueOrThrow
+   */
+  export type ProfileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which Profile to fetch.
+     */
+    where: ProfileWhereUniqueInput
+  }
+
+  /**
+   * Profile findFirst
+   */
+  export type ProfileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which Profile to fetch.
+     */
+    where?: ProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Profiles to fetch.
+     */
+    orderBy?: ProfileOrderByWithRelationInput | ProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Profiles.
+     */
+    cursor?: ProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Profiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Profiles.
+     */
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
+  }
+
+  /**
+   * Profile findFirstOrThrow
+   */
+  export type ProfileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which Profile to fetch.
+     */
+    where?: ProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Profiles to fetch.
+     */
+    orderBy?: ProfileOrderByWithRelationInput | ProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Profiles.
+     */
+    cursor?: ProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Profiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Profiles.
+     */
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
+  }
+
+  /**
+   * Profile findMany
+   */
+  export type ProfileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which Profiles to fetch.
+     */
+    where?: ProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Profiles to fetch.
+     */
+    orderBy?: ProfileOrderByWithRelationInput | ProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Profiles.
+     */
+    cursor?: ProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Profiles.
+     */
+    skip?: number
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
+  }
+
+  /**
+   * Profile create
+   */
+  export type ProfileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Profile.
+     */
+    data: XOR<ProfileCreateInput, ProfileUncheckedCreateInput>
+  }
+
+  /**
+   * Profile createMany
+   */
+  export type ProfileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Profiles.
+     */
+    data: ProfileCreateManyInput | ProfileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Profile update
+   */
+  export type ProfileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Profile.
+     */
+    data: XOR<ProfileUpdateInput, ProfileUncheckedUpdateInput>
+    /**
+     * Choose, which Profile to update.
+     */
+    where: ProfileWhereUniqueInput
+  }
+
+  /**
+   * Profile updateMany
+   */
+  export type ProfileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Profiles.
+     */
+    data: XOR<ProfileUpdateManyMutationInput, ProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which Profiles to update
+     */
+    where?: ProfileWhereInput
+  }
+
+  /**
+   * Profile upsert
+   */
+  export type ProfileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Profile to update in case it exists.
+     */
+    where: ProfileWhereUniqueInput
+    /**
+     * In case the Profile found by the `where` argument doesn't exist, create a new Profile with this data.
+     */
+    create: XOR<ProfileCreateInput, ProfileUncheckedCreateInput>
+    /**
+     * In case the Profile was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProfileUpdateInput, ProfileUncheckedUpdateInput>
+  }
+
+  /**
+   * Profile delete
+   */
+  export type ProfileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter which Profile to delete.
+     */
+    where: ProfileWhereUniqueInput
+  }
+
+  /**
+   * Profile deleteMany
+   */
+  export type ProfileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Profiles to delete
+     */
+    where?: ProfileWhereInput
+  }
+
+  /**
+   * Profile.permissions
+   */
+  export type Profile$permissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+    where?: ProfilePermissionWhereInput
+    orderBy?: ProfilePermissionOrderByWithRelationInput | ProfilePermissionOrderByWithRelationInput[]
+    cursor?: ProfilePermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProfilePermissionScalarFieldEnum | ProfilePermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Profile.itemPermissions
+   */
+  export type Profile$itemPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+    where?: ProfileItemPermissionWhereInput
+    orderBy?: ProfileItemPermissionOrderByWithRelationInput | ProfileItemPermissionOrderByWithRelationInput[]
+    cursor?: ProfileItemPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProfileItemPermissionScalarFieldEnum | ProfileItemPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Profile.users
+   */
+  export type Profile$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * Profile without action
+   */
+  export type ProfileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Module
+   */
+
+  export type AggregateModule = {
+    _count: ModuleCountAggregateOutputType | null
+    _min: ModuleMinAggregateOutputType | null
+    _max: ModuleMaxAggregateOutputType | null
+  }
+
+  export type ModuleMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    key: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ModuleMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    key: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ModuleCountAggregateOutputType = {
+    id: number
+    name: number
+    key: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ModuleMinAggregateInputType = {
+    id?: true
+    name?: true
+    key?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ModuleMaxAggregateInputType = {
+    id?: true
+    name?: true
+    key?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ModuleCountAggregateInputType = {
+    id?: true
+    name?: true
+    key?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ModuleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Module to aggregate.
+     */
+    where?: ModuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Modules to fetch.
+     */
+    orderBy?: ModuleOrderByWithRelationInput | ModuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ModuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Modules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Modules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Modules
+    **/
+    _count?: true | ModuleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ModuleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ModuleMaxAggregateInputType
+  }
+
+  export type GetModuleAggregateType<T extends ModuleAggregateArgs> = {
+        [P in keyof T & keyof AggregateModule]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateModule[P]>
+      : GetScalarType<T[P], AggregateModule[P]>
+  }
+
+
+
+
+  export type ModuleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ModuleWhereInput
+    orderBy?: ModuleOrderByWithAggregationInput | ModuleOrderByWithAggregationInput[]
+    by: ModuleScalarFieldEnum[] | ModuleScalarFieldEnum
+    having?: ModuleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ModuleCountAggregateInputType | true
+    _min?: ModuleMinAggregateInputType
+    _max?: ModuleMaxAggregateInputType
+  }
+
+  export type ModuleGroupByOutputType = {
+    id: string
+    name: string
+    key: string
+    description: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ModuleCountAggregateOutputType | null
+    _min: ModuleMinAggregateOutputType | null
+    _max: ModuleMaxAggregateOutputType | null
+  }
+
+  type GetModuleGroupByPayload<T extends ModuleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ModuleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ModuleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ModuleGroupByOutputType[P]>
+            : GetScalarType<T[P], ModuleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ModuleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    key?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    items?: boolean | Module$itemsArgs<ExtArgs>
+    profilePermissions?: boolean | Module$profilePermissionsArgs<ExtArgs>
+    userPermissions?: boolean | Module$userPermissionsArgs<ExtArgs>
+    _count?: boolean | ModuleCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["module"]>
+
+
+  export type ModuleSelectScalar = {
+    id?: boolean
+    name?: boolean
+    key?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ModuleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | Module$itemsArgs<ExtArgs>
+    profilePermissions?: boolean | Module$profilePermissionsArgs<ExtArgs>
+    userPermissions?: boolean | Module$userPermissionsArgs<ExtArgs>
+    _count?: boolean | ModuleCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $ModulePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Module"
+    objects: {
+      items: Prisma.$ModuleItemPayload<ExtArgs>[]
+      profilePermissions: Prisma.$ProfilePermissionPayload<ExtArgs>[]
+      userPermissions: Prisma.$UserPermissionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      key: string
+      description: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["module"]>
+    composites: {}
+  }
+
+  type ModuleGetPayload<S extends boolean | null | undefined | ModuleDefaultArgs> = $Result.GetResult<Prisma.$ModulePayload, S>
+
+  type ModuleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ModuleFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ModuleCountAggregateInputType | true
+    }
+
+  export interface ModuleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Module'], meta: { name: 'Module' } }
+    /**
+     * Find zero or one Module that matches the filter.
+     * @param {ModuleFindUniqueArgs} args - Arguments to find a Module
+     * @example
+     * // Get one Module
+     * const module = await prisma.module.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ModuleFindUniqueArgs>(args: SelectSubset<T, ModuleFindUniqueArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Module that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ModuleFindUniqueOrThrowArgs} args - Arguments to find a Module
+     * @example
+     * // Get one Module
+     * const module = await prisma.module.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ModuleFindUniqueOrThrowArgs>(args: SelectSubset<T, ModuleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Module that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleFindFirstArgs} args - Arguments to find a Module
+     * @example
+     * // Get one Module
+     * const module = await prisma.module.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ModuleFindFirstArgs>(args?: SelectSubset<T, ModuleFindFirstArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Module that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleFindFirstOrThrowArgs} args - Arguments to find a Module
+     * @example
+     * // Get one Module
+     * const module = await prisma.module.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ModuleFindFirstOrThrowArgs>(args?: SelectSubset<T, ModuleFindFirstOrThrowArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Modules that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Modules
+     * const modules = await prisma.module.findMany()
+     * 
+     * // Get first 10 Modules
+     * const modules = await prisma.module.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const moduleWithIdOnly = await prisma.module.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ModuleFindManyArgs>(args?: SelectSubset<T, ModuleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Module.
+     * @param {ModuleCreateArgs} args - Arguments to create a Module.
+     * @example
+     * // Create one Module
+     * const Module = await prisma.module.create({
+     *   data: {
+     *     // ... data to create a Module
+     *   }
+     * })
+     * 
+     */
+    create<T extends ModuleCreateArgs>(args: SelectSubset<T, ModuleCreateArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Modules.
+     * @param {ModuleCreateManyArgs} args - Arguments to create many Modules.
+     * @example
+     * // Create many Modules
+     * const module = await prisma.module.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ModuleCreateManyArgs>(args?: SelectSubset<T, ModuleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Module.
+     * @param {ModuleDeleteArgs} args - Arguments to delete one Module.
+     * @example
+     * // Delete one Module
+     * const Module = await prisma.module.delete({
+     *   where: {
+     *     // ... filter to delete one Module
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ModuleDeleteArgs>(args: SelectSubset<T, ModuleDeleteArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Module.
+     * @param {ModuleUpdateArgs} args - Arguments to update one Module.
+     * @example
+     * // Update one Module
+     * const module = await prisma.module.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ModuleUpdateArgs>(args: SelectSubset<T, ModuleUpdateArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Modules.
+     * @param {ModuleDeleteManyArgs} args - Arguments to filter Modules to delete.
+     * @example
+     * // Delete a few Modules
+     * const { count } = await prisma.module.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ModuleDeleteManyArgs>(args?: SelectSubset<T, ModuleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Modules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Modules
+     * const module = await prisma.module.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ModuleUpdateManyArgs>(args: SelectSubset<T, ModuleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Module.
+     * @param {ModuleUpsertArgs} args - Arguments to update or create a Module.
+     * @example
+     * // Update or create a Module
+     * const module = await prisma.module.upsert({
+     *   create: {
+     *     // ... data to create a Module
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Module we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ModuleUpsertArgs>(args: SelectSubset<T, ModuleUpsertArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Modules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleCountArgs} args - Arguments to filter Modules to count.
+     * @example
+     * // Count the number of Modules
+     * const count = await prisma.module.count({
+     *   where: {
+     *     // ... the filter for the Modules we want to count
+     *   }
+     * })
+    **/
+    count<T extends ModuleCountArgs>(
+      args?: Subset<T, ModuleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ModuleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Module.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ModuleAggregateArgs>(args: Subset<T, ModuleAggregateArgs>): Prisma.PrismaPromise<GetModuleAggregateType<T>>
+
+    /**
+     * Group by Module.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ModuleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ModuleGroupByArgs['orderBy'] }
+        : { orderBy?: ModuleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ModuleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetModuleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Module model
+   */
+  readonly fields: ModuleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Module.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ModuleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    items<T extends Module$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Module$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "findMany"> | Null>
+    profilePermissions<T extends Module$profilePermissionsArgs<ExtArgs> = {}>(args?: Subset<T, Module$profilePermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfilePermissionPayload<ExtArgs>, T, "findMany"> | Null>
+    userPermissions<T extends Module$userPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, Module$userPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Module model
+   */ 
+  interface ModuleFieldRefs {
+    readonly id: FieldRef<"Module", 'String'>
+    readonly name: FieldRef<"Module", 'String'>
+    readonly key: FieldRef<"Module", 'String'>
+    readonly description: FieldRef<"Module", 'String'>
+    readonly createdAt: FieldRef<"Module", 'DateTime'>
+    readonly updatedAt: FieldRef<"Module", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Module findUnique
+   */
+  export type ModuleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Module
+     */
+    select?: ModuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleInclude<ExtArgs> | null
+    /**
+     * Filter, which Module to fetch.
+     */
+    where: ModuleWhereUniqueInput
+  }
+
+  /**
+   * Module findUniqueOrThrow
+   */
+  export type ModuleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Module
+     */
+    select?: ModuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleInclude<ExtArgs> | null
+    /**
+     * Filter, which Module to fetch.
+     */
+    where: ModuleWhereUniqueInput
+  }
+
+  /**
+   * Module findFirst
+   */
+  export type ModuleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Module
+     */
+    select?: ModuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleInclude<ExtArgs> | null
+    /**
+     * Filter, which Module to fetch.
+     */
+    where?: ModuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Modules to fetch.
+     */
+    orderBy?: ModuleOrderByWithRelationInput | ModuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Modules.
+     */
+    cursor?: ModuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Modules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Modules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Modules.
+     */
+    distinct?: ModuleScalarFieldEnum | ModuleScalarFieldEnum[]
+  }
+
+  /**
+   * Module findFirstOrThrow
+   */
+  export type ModuleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Module
+     */
+    select?: ModuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleInclude<ExtArgs> | null
+    /**
+     * Filter, which Module to fetch.
+     */
+    where?: ModuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Modules to fetch.
+     */
+    orderBy?: ModuleOrderByWithRelationInput | ModuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Modules.
+     */
+    cursor?: ModuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Modules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Modules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Modules.
+     */
+    distinct?: ModuleScalarFieldEnum | ModuleScalarFieldEnum[]
+  }
+
+  /**
+   * Module findMany
+   */
+  export type ModuleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Module
+     */
+    select?: ModuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleInclude<ExtArgs> | null
+    /**
+     * Filter, which Modules to fetch.
+     */
+    where?: ModuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Modules to fetch.
+     */
+    orderBy?: ModuleOrderByWithRelationInput | ModuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Modules.
+     */
+    cursor?: ModuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Modules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Modules.
+     */
+    skip?: number
+    distinct?: ModuleScalarFieldEnum | ModuleScalarFieldEnum[]
+  }
+
+  /**
+   * Module create
+   */
+  export type ModuleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Module
+     */
+    select?: ModuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Module.
+     */
+    data: XOR<ModuleCreateInput, ModuleUncheckedCreateInput>
+  }
+
+  /**
+   * Module createMany
+   */
+  export type ModuleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Modules.
+     */
+    data: ModuleCreateManyInput | ModuleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Module update
+   */
+  export type ModuleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Module
+     */
+    select?: ModuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Module.
+     */
+    data: XOR<ModuleUpdateInput, ModuleUncheckedUpdateInput>
+    /**
+     * Choose, which Module to update.
+     */
+    where: ModuleWhereUniqueInput
+  }
+
+  /**
+   * Module updateMany
+   */
+  export type ModuleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Modules.
+     */
+    data: XOR<ModuleUpdateManyMutationInput, ModuleUncheckedUpdateManyInput>
+    /**
+     * Filter which Modules to update
+     */
+    where?: ModuleWhereInput
+  }
+
+  /**
+   * Module upsert
+   */
+  export type ModuleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Module
+     */
+    select?: ModuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Module to update in case it exists.
+     */
+    where: ModuleWhereUniqueInput
+    /**
+     * In case the Module found by the `where` argument doesn't exist, create a new Module with this data.
+     */
+    create: XOR<ModuleCreateInput, ModuleUncheckedCreateInput>
+    /**
+     * In case the Module was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ModuleUpdateInput, ModuleUncheckedUpdateInput>
+  }
+
+  /**
+   * Module delete
+   */
+  export type ModuleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Module
+     */
+    select?: ModuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleInclude<ExtArgs> | null
+    /**
+     * Filter which Module to delete.
+     */
+    where: ModuleWhereUniqueInput
+  }
+
+  /**
+   * Module deleteMany
+   */
+  export type ModuleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Modules to delete
+     */
+    where?: ModuleWhereInput
+  }
+
+  /**
+   * Module.items
+   */
+  export type Module$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItem
+     */
+    select?: ModuleItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleItemInclude<ExtArgs> | null
+    where?: ModuleItemWhereInput
+    orderBy?: ModuleItemOrderByWithRelationInput | ModuleItemOrderByWithRelationInput[]
+    cursor?: ModuleItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ModuleItemScalarFieldEnum | ModuleItemScalarFieldEnum[]
+  }
+
+  /**
+   * Module.profilePermissions
+   */
+  export type Module$profilePermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+    where?: ProfilePermissionWhereInput
+    orderBy?: ProfilePermissionOrderByWithRelationInput | ProfilePermissionOrderByWithRelationInput[]
+    cursor?: ProfilePermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProfilePermissionScalarFieldEnum | ProfilePermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Module.userPermissions
+   */
+  export type Module$userPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+    where?: UserPermissionWhereInput
+    orderBy?: UserPermissionOrderByWithRelationInput | UserPermissionOrderByWithRelationInput[]
+    cursor?: UserPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserPermissionScalarFieldEnum | UserPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Module without action
+   */
+  export type ModuleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Module
+     */
+    select?: ModuleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProfilePermission
+   */
+
+  export type AggregateProfilePermission = {
+    _count: ProfilePermissionCountAggregateOutputType | null
+    _min: ProfilePermissionMinAggregateOutputType | null
+    _max: ProfilePermissionMaxAggregateOutputType | null
+  }
+
+  export type ProfilePermissionMinAggregateOutputType = {
+    id: string | null
+    profileId: string | null
+    moduleId: string | null
+    canRead: boolean | null
+    canWrite: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProfilePermissionMaxAggregateOutputType = {
+    id: string | null
+    profileId: string | null
+    moduleId: string | null
+    canRead: boolean | null
+    canWrite: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProfilePermissionCountAggregateOutputType = {
+    id: number
+    profileId: number
+    moduleId: number
+    canRead: number
+    canWrite: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProfilePermissionMinAggregateInputType = {
+    id?: true
+    profileId?: true
+    moduleId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProfilePermissionMaxAggregateInputType = {
+    id?: true
+    profileId?: true
+    moduleId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProfilePermissionCountAggregateInputType = {
+    id?: true
+    profileId?: true
+    moduleId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProfilePermissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProfilePermission to aggregate.
+     */
+    where?: ProfilePermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfilePermissions to fetch.
+     */
+    orderBy?: ProfilePermissionOrderByWithRelationInput | ProfilePermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProfilePermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfilePermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfilePermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProfilePermissions
+    **/
+    _count?: true | ProfilePermissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProfilePermissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProfilePermissionMaxAggregateInputType
+  }
+
+  export type GetProfilePermissionAggregateType<T extends ProfilePermissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateProfilePermission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProfilePermission[P]>
+      : GetScalarType<T[P], AggregateProfilePermission[P]>
+  }
+
+
+
+
+  export type ProfilePermissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfilePermissionWhereInput
+    orderBy?: ProfilePermissionOrderByWithAggregationInput | ProfilePermissionOrderByWithAggregationInput[]
+    by: ProfilePermissionScalarFieldEnum[] | ProfilePermissionScalarFieldEnum
+    having?: ProfilePermissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProfilePermissionCountAggregateInputType | true
+    _min?: ProfilePermissionMinAggregateInputType
+    _max?: ProfilePermissionMaxAggregateInputType
+  }
+
+  export type ProfilePermissionGroupByOutputType = {
+    id: string
+    profileId: string
+    moduleId: string
+    canRead: boolean
+    canWrite: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: ProfilePermissionCountAggregateOutputType | null
+    _min: ProfilePermissionMinAggregateOutputType | null
+    _max: ProfilePermissionMaxAggregateOutputType | null
+  }
+
+  type GetProfilePermissionGroupByPayload<T extends ProfilePermissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProfilePermissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProfilePermissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProfilePermissionGroupByOutputType[P]>
+            : GetScalarType<T[P], ProfilePermissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProfilePermissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    profileId?: boolean
+    moduleId?: boolean
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["profilePermission"]>
+
+
+  export type ProfilePermissionSelectScalar = {
+    id?: boolean
+    profileId?: boolean
+    moduleId?: boolean
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProfilePermissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }
+
+  export type $ProfilePermissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProfilePermission"
+    objects: {
+      profile: Prisma.$ProfilePayload<ExtArgs>
+      module: Prisma.$ModulePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      profileId: string
+      moduleId: string
+      canRead: boolean
+      canWrite: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["profilePermission"]>
+    composites: {}
+  }
+
+  type ProfilePermissionGetPayload<S extends boolean | null | undefined | ProfilePermissionDefaultArgs> = $Result.GetResult<Prisma.$ProfilePermissionPayload, S>
+
+  type ProfilePermissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ProfilePermissionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ProfilePermissionCountAggregateInputType | true
+    }
+
+  export interface ProfilePermissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProfilePermission'], meta: { name: 'ProfilePermission' } }
+    /**
+     * Find zero or one ProfilePermission that matches the filter.
+     * @param {ProfilePermissionFindUniqueArgs} args - Arguments to find a ProfilePermission
+     * @example
+     * // Get one ProfilePermission
+     * const profilePermission = await prisma.profilePermission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProfilePermissionFindUniqueArgs>(args: SelectSubset<T, ProfilePermissionFindUniqueArgs<ExtArgs>>): Prisma__ProfilePermissionClient<$Result.GetResult<Prisma.$ProfilePermissionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ProfilePermission that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ProfilePermissionFindUniqueOrThrowArgs} args - Arguments to find a ProfilePermission
+     * @example
+     * // Get one ProfilePermission
+     * const profilePermission = await prisma.profilePermission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProfilePermissionFindUniqueOrThrowArgs>(args: SelectSubset<T, ProfilePermissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProfilePermissionClient<$Result.GetResult<Prisma.$ProfilePermissionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ProfilePermission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfilePermissionFindFirstArgs} args - Arguments to find a ProfilePermission
+     * @example
+     * // Get one ProfilePermission
+     * const profilePermission = await prisma.profilePermission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProfilePermissionFindFirstArgs>(args?: SelectSubset<T, ProfilePermissionFindFirstArgs<ExtArgs>>): Prisma__ProfilePermissionClient<$Result.GetResult<Prisma.$ProfilePermissionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ProfilePermission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfilePermissionFindFirstOrThrowArgs} args - Arguments to find a ProfilePermission
+     * @example
+     * // Get one ProfilePermission
+     * const profilePermission = await prisma.profilePermission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProfilePermissionFindFirstOrThrowArgs>(args?: SelectSubset<T, ProfilePermissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProfilePermissionClient<$Result.GetResult<Prisma.$ProfilePermissionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ProfilePermissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfilePermissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProfilePermissions
+     * const profilePermissions = await prisma.profilePermission.findMany()
+     * 
+     * // Get first 10 ProfilePermissions
+     * const profilePermissions = await prisma.profilePermission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const profilePermissionWithIdOnly = await prisma.profilePermission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProfilePermissionFindManyArgs>(args?: SelectSubset<T, ProfilePermissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfilePermissionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ProfilePermission.
+     * @param {ProfilePermissionCreateArgs} args - Arguments to create a ProfilePermission.
+     * @example
+     * // Create one ProfilePermission
+     * const ProfilePermission = await prisma.profilePermission.create({
+     *   data: {
+     *     // ... data to create a ProfilePermission
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProfilePermissionCreateArgs>(args: SelectSubset<T, ProfilePermissionCreateArgs<ExtArgs>>): Prisma__ProfilePermissionClient<$Result.GetResult<Prisma.$ProfilePermissionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ProfilePermissions.
+     * @param {ProfilePermissionCreateManyArgs} args - Arguments to create many ProfilePermissions.
+     * @example
+     * // Create many ProfilePermissions
+     * const profilePermission = await prisma.profilePermission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProfilePermissionCreateManyArgs>(args?: SelectSubset<T, ProfilePermissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ProfilePermission.
+     * @param {ProfilePermissionDeleteArgs} args - Arguments to delete one ProfilePermission.
+     * @example
+     * // Delete one ProfilePermission
+     * const ProfilePermission = await prisma.profilePermission.delete({
+     *   where: {
+     *     // ... filter to delete one ProfilePermission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProfilePermissionDeleteArgs>(args: SelectSubset<T, ProfilePermissionDeleteArgs<ExtArgs>>): Prisma__ProfilePermissionClient<$Result.GetResult<Prisma.$ProfilePermissionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ProfilePermission.
+     * @param {ProfilePermissionUpdateArgs} args - Arguments to update one ProfilePermission.
+     * @example
+     * // Update one ProfilePermission
+     * const profilePermission = await prisma.profilePermission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProfilePermissionUpdateArgs>(args: SelectSubset<T, ProfilePermissionUpdateArgs<ExtArgs>>): Prisma__ProfilePermissionClient<$Result.GetResult<Prisma.$ProfilePermissionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ProfilePermissions.
+     * @param {ProfilePermissionDeleteManyArgs} args - Arguments to filter ProfilePermissions to delete.
+     * @example
+     * // Delete a few ProfilePermissions
+     * const { count } = await prisma.profilePermission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProfilePermissionDeleteManyArgs>(args?: SelectSubset<T, ProfilePermissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProfilePermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfilePermissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProfilePermissions
+     * const profilePermission = await prisma.profilePermission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProfilePermissionUpdateManyArgs>(args: SelectSubset<T, ProfilePermissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ProfilePermission.
+     * @param {ProfilePermissionUpsertArgs} args - Arguments to update or create a ProfilePermission.
+     * @example
+     * // Update or create a ProfilePermission
+     * const profilePermission = await prisma.profilePermission.upsert({
+     *   create: {
+     *     // ... data to create a ProfilePermission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProfilePermission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProfilePermissionUpsertArgs>(args: SelectSubset<T, ProfilePermissionUpsertArgs<ExtArgs>>): Prisma__ProfilePermissionClient<$Result.GetResult<Prisma.$ProfilePermissionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ProfilePermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfilePermissionCountArgs} args - Arguments to filter ProfilePermissions to count.
+     * @example
+     * // Count the number of ProfilePermissions
+     * const count = await prisma.profilePermission.count({
+     *   where: {
+     *     // ... the filter for the ProfilePermissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProfilePermissionCountArgs>(
+      args?: Subset<T, ProfilePermissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProfilePermissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProfilePermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfilePermissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProfilePermissionAggregateArgs>(args: Subset<T, ProfilePermissionAggregateArgs>): Prisma.PrismaPromise<GetProfilePermissionAggregateType<T>>
+
+    /**
+     * Group by ProfilePermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfilePermissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProfilePermissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProfilePermissionGroupByArgs['orderBy'] }
+        : { orderBy?: ProfilePermissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProfilePermissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProfilePermissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProfilePermission model
+   */
+  readonly fields: ProfilePermissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProfilePermission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProfilePermissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    profile<T extends ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProfileDefaultArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    module<T extends ModuleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ModuleDefaultArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProfilePermission model
+   */ 
+  interface ProfilePermissionFieldRefs {
+    readonly id: FieldRef<"ProfilePermission", 'String'>
+    readonly profileId: FieldRef<"ProfilePermission", 'String'>
+    readonly moduleId: FieldRef<"ProfilePermission", 'String'>
+    readonly canRead: FieldRef<"ProfilePermission", 'Boolean'>
+    readonly canWrite: FieldRef<"ProfilePermission", 'Boolean'>
+    readonly createdAt: FieldRef<"ProfilePermission", 'DateTime'>
+    readonly updatedAt: FieldRef<"ProfilePermission", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProfilePermission findUnique
+   */
+  export type ProfilePermissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfilePermission to fetch.
+     */
+    where: ProfilePermissionWhereUniqueInput
+  }
+
+  /**
+   * ProfilePermission findUniqueOrThrow
+   */
+  export type ProfilePermissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfilePermission to fetch.
+     */
+    where: ProfilePermissionWhereUniqueInput
+  }
+
+  /**
+   * ProfilePermission findFirst
+   */
+  export type ProfilePermissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfilePermission to fetch.
+     */
+    where?: ProfilePermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfilePermissions to fetch.
+     */
+    orderBy?: ProfilePermissionOrderByWithRelationInput | ProfilePermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProfilePermissions.
+     */
+    cursor?: ProfilePermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfilePermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfilePermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProfilePermissions.
+     */
+    distinct?: ProfilePermissionScalarFieldEnum | ProfilePermissionScalarFieldEnum[]
+  }
+
+  /**
+   * ProfilePermission findFirstOrThrow
+   */
+  export type ProfilePermissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfilePermission to fetch.
+     */
+    where?: ProfilePermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfilePermissions to fetch.
+     */
+    orderBy?: ProfilePermissionOrderByWithRelationInput | ProfilePermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProfilePermissions.
+     */
+    cursor?: ProfilePermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfilePermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfilePermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProfilePermissions.
+     */
+    distinct?: ProfilePermissionScalarFieldEnum | ProfilePermissionScalarFieldEnum[]
+  }
+
+  /**
+   * ProfilePermission findMany
+   */
+  export type ProfilePermissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfilePermissions to fetch.
+     */
+    where?: ProfilePermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfilePermissions to fetch.
+     */
+    orderBy?: ProfilePermissionOrderByWithRelationInput | ProfilePermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProfilePermissions.
+     */
+    cursor?: ProfilePermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfilePermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfilePermissions.
+     */
+    skip?: number
+    distinct?: ProfilePermissionScalarFieldEnum | ProfilePermissionScalarFieldEnum[]
+  }
+
+  /**
+   * ProfilePermission create
+   */
+  export type ProfilePermissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProfilePermission.
+     */
+    data: XOR<ProfilePermissionCreateInput, ProfilePermissionUncheckedCreateInput>
+  }
+
+  /**
+   * ProfilePermission createMany
+   */
+  export type ProfilePermissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProfilePermissions.
+     */
+    data: ProfilePermissionCreateManyInput | ProfilePermissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProfilePermission update
+   */
+  export type ProfilePermissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProfilePermission.
+     */
+    data: XOR<ProfilePermissionUpdateInput, ProfilePermissionUncheckedUpdateInput>
+    /**
+     * Choose, which ProfilePermission to update.
+     */
+    where: ProfilePermissionWhereUniqueInput
+  }
+
+  /**
+   * ProfilePermission updateMany
+   */
+  export type ProfilePermissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProfilePermissions.
+     */
+    data: XOR<ProfilePermissionUpdateManyMutationInput, ProfilePermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which ProfilePermissions to update
+     */
+    where?: ProfilePermissionWhereInput
+  }
+
+  /**
+   * ProfilePermission upsert
+   */
+  export type ProfilePermissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProfilePermission to update in case it exists.
+     */
+    where: ProfilePermissionWhereUniqueInput
+    /**
+     * In case the ProfilePermission found by the `where` argument doesn't exist, create a new ProfilePermission with this data.
+     */
+    create: XOR<ProfilePermissionCreateInput, ProfilePermissionUncheckedCreateInput>
+    /**
+     * In case the ProfilePermission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProfilePermissionUpdateInput, ProfilePermissionUncheckedUpdateInput>
+  }
+
+  /**
+   * ProfilePermission delete
+   */
+  export type ProfilePermissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+    /**
+     * Filter which ProfilePermission to delete.
+     */
+    where: ProfilePermissionWhereUniqueInput
+  }
+
+  /**
+   * ProfilePermission deleteMany
+   */
+  export type ProfilePermissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProfilePermissions to delete
+     */
+    where?: ProfilePermissionWhereInput
+  }
+
+  /**
+   * ProfilePermission without action
+   */
+  export type ProfilePermissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfilePermission
+     */
+    select?: ProfilePermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfilePermissionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserPermission
+   */
+
+  export type AggregateUserPermission = {
+    _count: UserPermissionCountAggregateOutputType | null
+    _min: UserPermissionMinAggregateOutputType | null
+    _max: UserPermissionMaxAggregateOutputType | null
+  }
+
+  export type UserPermissionMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    moduleId: string | null
+    canRead: boolean | null
+    canWrite: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserPermissionMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    moduleId: string | null
+    canRead: boolean | null
+    canWrite: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserPermissionCountAggregateOutputType = {
+    id: number
+    userId: number
+    moduleId: number
+    canRead: number
+    canWrite: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserPermissionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    moduleId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserPermissionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    moduleId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserPermissionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    moduleId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserPermissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserPermission to aggregate.
+     */
+    where?: UserPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserPermissions to fetch.
+     */
+    orderBy?: UserPermissionOrderByWithRelationInput | UserPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserPermissions
+    **/
+    _count?: true | UserPermissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserPermissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserPermissionMaxAggregateInputType
+  }
+
+  export type GetUserPermissionAggregateType<T extends UserPermissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserPermission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserPermission[P]>
+      : GetScalarType<T[P], AggregateUserPermission[P]>
+  }
+
+
+
+
+  export type UserPermissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserPermissionWhereInput
+    orderBy?: UserPermissionOrderByWithAggregationInput | UserPermissionOrderByWithAggregationInput[]
+    by: UserPermissionScalarFieldEnum[] | UserPermissionScalarFieldEnum
+    having?: UserPermissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserPermissionCountAggregateInputType | true
+    _min?: UserPermissionMinAggregateInputType
+    _max?: UserPermissionMaxAggregateInputType
+  }
+
+  export type UserPermissionGroupByOutputType = {
+    id: string
+    userId: string
+    moduleId: string
+    canRead: boolean
+    canWrite: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: UserPermissionCountAggregateOutputType | null
+    _min: UserPermissionMinAggregateOutputType | null
+    _max: UserPermissionMaxAggregateOutputType | null
+  }
+
+  type GetUserPermissionGroupByPayload<T extends UserPermissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserPermissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserPermissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserPermissionGroupByOutputType[P]>
+            : GetScalarType<T[P], UserPermissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserPermissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    moduleId?: boolean
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userPermission"]>
+
+
+  export type UserPermissionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    moduleId?: boolean
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UserPermissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }
+
+  export type $UserPermissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserPermission"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      module: Prisma.$ModulePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      moduleId: string
+      canRead: boolean
+      canWrite: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["userPermission"]>
+    composites: {}
+  }
+
+  type UserPermissionGetPayload<S extends boolean | null | undefined | UserPermissionDefaultArgs> = $Result.GetResult<Prisma.$UserPermissionPayload, S>
+
+  type UserPermissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UserPermissionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: UserPermissionCountAggregateInputType | true
+    }
+
+  export interface UserPermissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserPermission'], meta: { name: 'UserPermission' } }
+    /**
+     * Find zero or one UserPermission that matches the filter.
+     * @param {UserPermissionFindUniqueArgs} args - Arguments to find a UserPermission
+     * @example
+     * // Get one UserPermission
+     * const userPermission = await prisma.userPermission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserPermissionFindUniqueArgs>(args: SelectSubset<T, UserPermissionFindUniqueArgs<ExtArgs>>): Prisma__UserPermissionClient<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one UserPermission that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {UserPermissionFindUniqueOrThrowArgs} args - Arguments to find a UserPermission
+     * @example
+     * // Get one UserPermission
+     * const userPermission = await prisma.userPermission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserPermissionFindUniqueOrThrowArgs>(args: SelectSubset<T, UserPermissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserPermissionClient<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first UserPermission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPermissionFindFirstArgs} args - Arguments to find a UserPermission
+     * @example
+     * // Get one UserPermission
+     * const userPermission = await prisma.userPermission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserPermissionFindFirstArgs>(args?: SelectSubset<T, UserPermissionFindFirstArgs<ExtArgs>>): Prisma__UserPermissionClient<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first UserPermission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPermissionFindFirstOrThrowArgs} args - Arguments to find a UserPermission
+     * @example
+     * // Get one UserPermission
+     * const userPermission = await prisma.userPermission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserPermissionFindFirstOrThrowArgs>(args?: SelectSubset<T, UserPermissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserPermissionClient<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more UserPermissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPermissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserPermissions
+     * const userPermissions = await prisma.userPermission.findMany()
+     * 
+     * // Get first 10 UserPermissions
+     * const userPermissions = await prisma.userPermission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userPermissionWithIdOnly = await prisma.userPermission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserPermissionFindManyArgs>(args?: SelectSubset<T, UserPermissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a UserPermission.
+     * @param {UserPermissionCreateArgs} args - Arguments to create a UserPermission.
+     * @example
+     * // Create one UserPermission
+     * const UserPermission = await prisma.userPermission.create({
+     *   data: {
+     *     // ... data to create a UserPermission
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserPermissionCreateArgs>(args: SelectSubset<T, UserPermissionCreateArgs<ExtArgs>>): Prisma__UserPermissionClient<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many UserPermissions.
+     * @param {UserPermissionCreateManyArgs} args - Arguments to create many UserPermissions.
+     * @example
+     * // Create many UserPermissions
+     * const userPermission = await prisma.userPermission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserPermissionCreateManyArgs>(args?: SelectSubset<T, UserPermissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a UserPermission.
+     * @param {UserPermissionDeleteArgs} args - Arguments to delete one UserPermission.
+     * @example
+     * // Delete one UserPermission
+     * const UserPermission = await prisma.userPermission.delete({
+     *   where: {
+     *     // ... filter to delete one UserPermission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserPermissionDeleteArgs>(args: SelectSubset<T, UserPermissionDeleteArgs<ExtArgs>>): Prisma__UserPermissionClient<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one UserPermission.
+     * @param {UserPermissionUpdateArgs} args - Arguments to update one UserPermission.
+     * @example
+     * // Update one UserPermission
+     * const userPermission = await prisma.userPermission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserPermissionUpdateArgs>(args: SelectSubset<T, UserPermissionUpdateArgs<ExtArgs>>): Prisma__UserPermissionClient<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more UserPermissions.
+     * @param {UserPermissionDeleteManyArgs} args - Arguments to filter UserPermissions to delete.
+     * @example
+     * // Delete a few UserPermissions
+     * const { count } = await prisma.userPermission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserPermissionDeleteManyArgs>(args?: SelectSubset<T, UserPermissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPermissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserPermissions
+     * const userPermission = await prisma.userPermission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserPermissionUpdateManyArgs>(args: SelectSubset<T, UserPermissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserPermission.
+     * @param {UserPermissionUpsertArgs} args - Arguments to update or create a UserPermission.
+     * @example
+     * // Update or create a UserPermission
+     * const userPermission = await prisma.userPermission.upsert({
+     *   create: {
+     *     // ... data to create a UserPermission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserPermission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserPermissionUpsertArgs>(args: SelectSubset<T, UserPermissionUpsertArgs<ExtArgs>>): Prisma__UserPermissionClient<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of UserPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPermissionCountArgs} args - Arguments to filter UserPermissions to count.
+     * @example
+     * // Count the number of UserPermissions
+     * const count = await prisma.userPermission.count({
+     *   where: {
+     *     // ... the filter for the UserPermissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserPermissionCountArgs>(
+      args?: Subset<T, UserPermissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserPermissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPermissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserPermissionAggregateArgs>(args: Subset<T, UserPermissionAggregateArgs>): Prisma.PrismaPromise<GetUserPermissionAggregateType<T>>
+
+    /**
+     * Group by UserPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserPermissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserPermissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserPermissionGroupByArgs['orderBy'] }
+        : { orderBy?: UserPermissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserPermissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserPermissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserPermission model
+   */
+  readonly fields: UserPermissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserPermission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserPermissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    module<T extends ModuleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ModuleDefaultArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserPermission model
+   */ 
+  interface UserPermissionFieldRefs {
+    readonly id: FieldRef<"UserPermission", 'String'>
+    readonly userId: FieldRef<"UserPermission", 'String'>
+    readonly moduleId: FieldRef<"UserPermission", 'String'>
+    readonly canRead: FieldRef<"UserPermission", 'Boolean'>
+    readonly canWrite: FieldRef<"UserPermission", 'Boolean'>
+    readonly createdAt: FieldRef<"UserPermission", 'DateTime'>
+    readonly updatedAt: FieldRef<"UserPermission", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserPermission findUnique
+   */
+  export type UserPermissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserPermission to fetch.
+     */
+    where: UserPermissionWhereUniqueInput
+  }
+
+  /**
+   * UserPermission findUniqueOrThrow
+   */
+  export type UserPermissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserPermission to fetch.
+     */
+    where: UserPermissionWhereUniqueInput
+  }
+
+  /**
+   * UserPermission findFirst
+   */
+  export type UserPermissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserPermission to fetch.
+     */
+    where?: UserPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserPermissions to fetch.
+     */
+    orderBy?: UserPermissionOrderByWithRelationInput | UserPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserPermissions.
+     */
+    cursor?: UserPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserPermissions.
+     */
+    distinct?: UserPermissionScalarFieldEnum | UserPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * UserPermission findFirstOrThrow
+   */
+  export type UserPermissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserPermission to fetch.
+     */
+    where?: UserPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserPermissions to fetch.
+     */
+    orderBy?: UserPermissionOrderByWithRelationInput | UserPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserPermissions.
+     */
+    cursor?: UserPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserPermissions.
+     */
+    distinct?: UserPermissionScalarFieldEnum | UserPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * UserPermission findMany
+   */
+  export type UserPermissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserPermissions to fetch.
+     */
+    where?: UserPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserPermissions to fetch.
+     */
+    orderBy?: UserPermissionOrderByWithRelationInput | UserPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserPermissions.
+     */
+    cursor?: UserPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserPermissions.
+     */
+    skip?: number
+    distinct?: UserPermissionScalarFieldEnum | UserPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * UserPermission create
+   */
+  export type UserPermissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserPermission.
+     */
+    data: XOR<UserPermissionCreateInput, UserPermissionUncheckedCreateInput>
+  }
+
+  /**
+   * UserPermission createMany
+   */
+  export type UserPermissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserPermissions.
+     */
+    data: UserPermissionCreateManyInput | UserPermissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserPermission update
+   */
+  export type UserPermissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserPermission.
+     */
+    data: XOR<UserPermissionUpdateInput, UserPermissionUncheckedUpdateInput>
+    /**
+     * Choose, which UserPermission to update.
+     */
+    where: UserPermissionWhereUniqueInput
+  }
+
+  /**
+   * UserPermission updateMany
+   */
+  export type UserPermissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserPermissions.
+     */
+    data: XOR<UserPermissionUpdateManyMutationInput, UserPermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which UserPermissions to update
+     */
+    where?: UserPermissionWhereInput
+  }
+
+  /**
+   * UserPermission upsert
+   */
+  export type UserPermissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserPermission to update in case it exists.
+     */
+    where: UserPermissionWhereUniqueInput
+    /**
+     * In case the UserPermission found by the `where` argument doesn't exist, create a new UserPermission with this data.
+     */
+    create: XOR<UserPermissionCreateInput, UserPermissionUncheckedCreateInput>
+    /**
+     * In case the UserPermission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserPermissionUpdateInput, UserPermissionUncheckedUpdateInput>
+  }
+
+  /**
+   * UserPermission delete
+   */
+  export type UserPermissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+    /**
+     * Filter which UserPermission to delete.
+     */
+    where: UserPermissionWhereUniqueInput
+  }
+
+  /**
+   * UserPermission deleteMany
+   */
+  export type UserPermissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserPermissions to delete
+     */
+    where?: UserPermissionWhereInput
+  }
+
+  /**
+   * UserPermission without action
+   */
+  export type UserPermissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserPermission
+     */
+    select?: UserPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserPermissionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ModuleItem
+   */
+
+  export type AggregateModuleItem = {
+    _count: ModuleItemCountAggregateOutputType | null
+    _min: ModuleItemMinAggregateOutputType | null
+    _max: ModuleItemMaxAggregateOutputType | null
+  }
+
+  export type ModuleItemMinAggregateOutputType = {
+    id: string | null
+    moduleId: string | null
+    name: string | null
+    key: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ModuleItemMaxAggregateOutputType = {
+    id: string | null
+    moduleId: string | null
+    name: string | null
+    key: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ModuleItemCountAggregateOutputType = {
+    id: number
+    moduleId: number
+    name: number
+    key: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ModuleItemMinAggregateInputType = {
+    id?: true
+    moduleId?: true
+    name?: true
+    key?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ModuleItemMaxAggregateInputType = {
+    id?: true
+    moduleId?: true
+    name?: true
+    key?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ModuleItemCountAggregateInputType = {
+    id?: true
+    moduleId?: true
+    name?: true
+    key?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ModuleItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ModuleItem to aggregate.
+     */
+    where?: ModuleItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ModuleItems to fetch.
+     */
+    orderBy?: ModuleItemOrderByWithRelationInput | ModuleItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ModuleItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ModuleItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ModuleItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ModuleItems
+    **/
+    _count?: true | ModuleItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ModuleItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ModuleItemMaxAggregateInputType
+  }
+
+  export type GetModuleItemAggregateType<T extends ModuleItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateModuleItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateModuleItem[P]>
+      : GetScalarType<T[P], AggregateModuleItem[P]>
+  }
+
+
+
+
+  export type ModuleItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ModuleItemWhereInput
+    orderBy?: ModuleItemOrderByWithAggregationInput | ModuleItemOrderByWithAggregationInput[]
+    by: ModuleItemScalarFieldEnum[] | ModuleItemScalarFieldEnum
+    having?: ModuleItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ModuleItemCountAggregateInputType | true
+    _min?: ModuleItemMinAggregateInputType
+    _max?: ModuleItemMaxAggregateInputType
+  }
+
+  export type ModuleItemGroupByOutputType = {
+    id: string
+    moduleId: string
+    name: string
+    key: string
+    description: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ModuleItemCountAggregateOutputType | null
+    _min: ModuleItemMinAggregateOutputType | null
+    _max: ModuleItemMaxAggregateOutputType | null
+  }
+
+  type GetModuleItemGroupByPayload<T extends ModuleItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ModuleItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ModuleItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ModuleItemGroupByOutputType[P]>
+            : GetScalarType<T[P], ModuleItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ModuleItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    moduleId?: boolean
+    name?: boolean
+    key?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+    profileItemPermissions?: boolean | ModuleItem$profileItemPermissionsArgs<ExtArgs>
+    userItemPermissions?: boolean | ModuleItem$userItemPermissionsArgs<ExtArgs>
+    _count?: boolean | ModuleItemCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["moduleItem"]>
+
+
+  export type ModuleItemSelectScalar = {
+    id?: boolean
+    moduleId?: boolean
+    name?: boolean
+    key?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ModuleItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+    profileItemPermissions?: boolean | ModuleItem$profileItemPermissionsArgs<ExtArgs>
+    userItemPermissions?: boolean | ModuleItem$userItemPermissionsArgs<ExtArgs>
+    _count?: boolean | ModuleItemCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $ModuleItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ModuleItem"
+    objects: {
+      module: Prisma.$ModulePayload<ExtArgs>
+      profileItemPermissions: Prisma.$ProfileItemPermissionPayload<ExtArgs>[]
+      userItemPermissions: Prisma.$UserItemPermissionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      moduleId: string
+      name: string
+      key: string
+      description: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["moduleItem"]>
+    composites: {}
+  }
+
+  type ModuleItemGetPayload<S extends boolean | null | undefined | ModuleItemDefaultArgs> = $Result.GetResult<Prisma.$ModuleItemPayload, S>
+
+  type ModuleItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ModuleItemFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ModuleItemCountAggregateInputType | true
+    }
+
+  export interface ModuleItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ModuleItem'], meta: { name: 'ModuleItem' } }
+    /**
+     * Find zero or one ModuleItem that matches the filter.
+     * @param {ModuleItemFindUniqueArgs} args - Arguments to find a ModuleItem
+     * @example
+     * // Get one ModuleItem
+     * const moduleItem = await prisma.moduleItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ModuleItemFindUniqueArgs>(args: SelectSubset<T, ModuleItemFindUniqueArgs<ExtArgs>>): Prisma__ModuleItemClient<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ModuleItem that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ModuleItemFindUniqueOrThrowArgs} args - Arguments to find a ModuleItem
+     * @example
+     * // Get one ModuleItem
+     * const moduleItem = await prisma.moduleItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ModuleItemFindUniqueOrThrowArgs>(args: SelectSubset<T, ModuleItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ModuleItemClient<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ModuleItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleItemFindFirstArgs} args - Arguments to find a ModuleItem
+     * @example
+     * // Get one ModuleItem
+     * const moduleItem = await prisma.moduleItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ModuleItemFindFirstArgs>(args?: SelectSubset<T, ModuleItemFindFirstArgs<ExtArgs>>): Prisma__ModuleItemClient<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ModuleItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleItemFindFirstOrThrowArgs} args - Arguments to find a ModuleItem
+     * @example
+     * // Get one ModuleItem
+     * const moduleItem = await prisma.moduleItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ModuleItemFindFirstOrThrowArgs>(args?: SelectSubset<T, ModuleItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__ModuleItemClient<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ModuleItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ModuleItems
+     * const moduleItems = await prisma.moduleItem.findMany()
+     * 
+     * // Get first 10 ModuleItems
+     * const moduleItems = await prisma.moduleItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const moduleItemWithIdOnly = await prisma.moduleItem.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ModuleItemFindManyArgs>(args?: SelectSubset<T, ModuleItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ModuleItem.
+     * @param {ModuleItemCreateArgs} args - Arguments to create a ModuleItem.
+     * @example
+     * // Create one ModuleItem
+     * const ModuleItem = await prisma.moduleItem.create({
+     *   data: {
+     *     // ... data to create a ModuleItem
+     *   }
+     * })
+     * 
+     */
+    create<T extends ModuleItemCreateArgs>(args: SelectSubset<T, ModuleItemCreateArgs<ExtArgs>>): Prisma__ModuleItemClient<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ModuleItems.
+     * @param {ModuleItemCreateManyArgs} args - Arguments to create many ModuleItems.
+     * @example
+     * // Create many ModuleItems
+     * const moduleItem = await prisma.moduleItem.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ModuleItemCreateManyArgs>(args?: SelectSubset<T, ModuleItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ModuleItem.
+     * @param {ModuleItemDeleteArgs} args - Arguments to delete one ModuleItem.
+     * @example
+     * // Delete one ModuleItem
+     * const ModuleItem = await prisma.moduleItem.delete({
+     *   where: {
+     *     // ... filter to delete one ModuleItem
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ModuleItemDeleteArgs>(args: SelectSubset<T, ModuleItemDeleteArgs<ExtArgs>>): Prisma__ModuleItemClient<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ModuleItem.
+     * @param {ModuleItemUpdateArgs} args - Arguments to update one ModuleItem.
+     * @example
+     * // Update one ModuleItem
+     * const moduleItem = await prisma.moduleItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ModuleItemUpdateArgs>(args: SelectSubset<T, ModuleItemUpdateArgs<ExtArgs>>): Prisma__ModuleItemClient<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ModuleItems.
+     * @param {ModuleItemDeleteManyArgs} args - Arguments to filter ModuleItems to delete.
+     * @example
+     * // Delete a few ModuleItems
+     * const { count } = await prisma.moduleItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ModuleItemDeleteManyArgs>(args?: SelectSubset<T, ModuleItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ModuleItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ModuleItems
+     * const moduleItem = await prisma.moduleItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ModuleItemUpdateManyArgs>(args: SelectSubset<T, ModuleItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ModuleItem.
+     * @param {ModuleItemUpsertArgs} args - Arguments to update or create a ModuleItem.
+     * @example
+     * // Update or create a ModuleItem
+     * const moduleItem = await prisma.moduleItem.upsert({
+     *   create: {
+     *     // ... data to create a ModuleItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ModuleItem we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ModuleItemUpsertArgs>(args: SelectSubset<T, ModuleItemUpsertArgs<ExtArgs>>): Prisma__ModuleItemClient<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ModuleItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleItemCountArgs} args - Arguments to filter ModuleItems to count.
+     * @example
+     * // Count the number of ModuleItems
+     * const count = await prisma.moduleItem.count({
+     *   where: {
+     *     // ... the filter for the ModuleItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends ModuleItemCountArgs>(
+      args?: Subset<T, ModuleItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ModuleItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ModuleItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ModuleItemAggregateArgs>(args: Subset<T, ModuleItemAggregateArgs>): Prisma.PrismaPromise<GetModuleItemAggregateType<T>>
+
+    /**
+     * Group by ModuleItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ModuleItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ModuleItemGroupByArgs['orderBy'] }
+        : { orderBy?: ModuleItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ModuleItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetModuleItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ModuleItem model
+   */
+  readonly fields: ModuleItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ModuleItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ModuleItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    module<T extends ModuleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ModuleDefaultArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    profileItemPermissions<T extends ModuleItem$profileItemPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, ModuleItem$profileItemPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfileItemPermissionPayload<ExtArgs>, T, "findMany"> | Null>
+    userItemPermissions<T extends ModuleItem$userItemPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, ModuleItem$userItemPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ModuleItem model
+   */ 
+  interface ModuleItemFieldRefs {
+    readonly id: FieldRef<"ModuleItem", 'String'>
+    readonly moduleId: FieldRef<"ModuleItem", 'String'>
+    readonly name: FieldRef<"ModuleItem", 'String'>
+    readonly key: FieldRef<"ModuleItem", 'String'>
+    readonly description: FieldRef<"ModuleItem", 'String'>
+    readonly createdAt: FieldRef<"ModuleItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"ModuleItem", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ModuleItem findUnique
+   */
+  export type ModuleItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItem
+     */
+    select?: ModuleItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleItemInclude<ExtArgs> | null
+    /**
+     * Filter, which ModuleItem to fetch.
+     */
+    where: ModuleItemWhereUniqueInput
+  }
+
+  /**
+   * ModuleItem findUniqueOrThrow
+   */
+  export type ModuleItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItem
+     */
+    select?: ModuleItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleItemInclude<ExtArgs> | null
+    /**
+     * Filter, which ModuleItem to fetch.
+     */
+    where: ModuleItemWhereUniqueInput
+  }
+
+  /**
+   * ModuleItem findFirst
+   */
+  export type ModuleItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItem
+     */
+    select?: ModuleItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleItemInclude<ExtArgs> | null
+    /**
+     * Filter, which ModuleItem to fetch.
+     */
+    where?: ModuleItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ModuleItems to fetch.
+     */
+    orderBy?: ModuleItemOrderByWithRelationInput | ModuleItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ModuleItems.
+     */
+    cursor?: ModuleItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ModuleItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ModuleItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ModuleItems.
+     */
+    distinct?: ModuleItemScalarFieldEnum | ModuleItemScalarFieldEnum[]
+  }
+
+  /**
+   * ModuleItem findFirstOrThrow
+   */
+  export type ModuleItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItem
+     */
+    select?: ModuleItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleItemInclude<ExtArgs> | null
+    /**
+     * Filter, which ModuleItem to fetch.
+     */
+    where?: ModuleItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ModuleItems to fetch.
+     */
+    orderBy?: ModuleItemOrderByWithRelationInput | ModuleItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ModuleItems.
+     */
+    cursor?: ModuleItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ModuleItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ModuleItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ModuleItems.
+     */
+    distinct?: ModuleItemScalarFieldEnum | ModuleItemScalarFieldEnum[]
+  }
+
+  /**
+   * ModuleItem findMany
+   */
+  export type ModuleItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItem
+     */
+    select?: ModuleItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleItemInclude<ExtArgs> | null
+    /**
+     * Filter, which ModuleItems to fetch.
+     */
+    where?: ModuleItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ModuleItems to fetch.
+     */
+    orderBy?: ModuleItemOrderByWithRelationInput | ModuleItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ModuleItems.
+     */
+    cursor?: ModuleItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ModuleItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ModuleItems.
+     */
+    skip?: number
+    distinct?: ModuleItemScalarFieldEnum | ModuleItemScalarFieldEnum[]
+  }
+
+  /**
+   * ModuleItem create
+   */
+  export type ModuleItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItem
+     */
+    select?: ModuleItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ModuleItem.
+     */
+    data: XOR<ModuleItemCreateInput, ModuleItemUncheckedCreateInput>
+  }
+
+  /**
+   * ModuleItem createMany
+   */
+  export type ModuleItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ModuleItems.
+     */
+    data: ModuleItemCreateManyInput | ModuleItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ModuleItem update
+   */
+  export type ModuleItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItem
+     */
+    select?: ModuleItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ModuleItem.
+     */
+    data: XOR<ModuleItemUpdateInput, ModuleItemUncheckedUpdateInput>
+    /**
+     * Choose, which ModuleItem to update.
+     */
+    where: ModuleItemWhereUniqueInput
+  }
+
+  /**
+   * ModuleItem updateMany
+   */
+  export type ModuleItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ModuleItems.
+     */
+    data: XOR<ModuleItemUpdateManyMutationInput, ModuleItemUncheckedUpdateManyInput>
+    /**
+     * Filter which ModuleItems to update
+     */
+    where?: ModuleItemWhereInput
+  }
+
+  /**
+   * ModuleItem upsert
+   */
+  export type ModuleItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItem
+     */
+    select?: ModuleItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ModuleItem to update in case it exists.
+     */
+    where: ModuleItemWhereUniqueInput
+    /**
+     * In case the ModuleItem found by the `where` argument doesn't exist, create a new ModuleItem with this data.
+     */
+    create: XOR<ModuleItemCreateInput, ModuleItemUncheckedCreateInput>
+    /**
+     * In case the ModuleItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ModuleItemUpdateInput, ModuleItemUncheckedUpdateInput>
+  }
+
+  /**
+   * ModuleItem delete
+   */
+  export type ModuleItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItem
+     */
+    select?: ModuleItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleItemInclude<ExtArgs> | null
+    /**
+     * Filter which ModuleItem to delete.
+     */
+    where: ModuleItemWhereUniqueInput
+  }
+
+  /**
+   * ModuleItem deleteMany
+   */
+  export type ModuleItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ModuleItems to delete
+     */
+    where?: ModuleItemWhereInput
+  }
+
+  /**
+   * ModuleItem.profileItemPermissions
+   */
+  export type ModuleItem$profileItemPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+    where?: ProfileItemPermissionWhereInput
+    orderBy?: ProfileItemPermissionOrderByWithRelationInput | ProfileItemPermissionOrderByWithRelationInput[]
+    cursor?: ProfileItemPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProfileItemPermissionScalarFieldEnum | ProfileItemPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * ModuleItem.userItemPermissions
+   */
+  export type ModuleItem$userItemPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
+    where?: UserItemPermissionWhereInput
+    orderBy?: UserItemPermissionOrderByWithRelationInput | UserItemPermissionOrderByWithRelationInput[]
+    cursor?: UserItemPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserItemPermissionScalarFieldEnum | UserItemPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * ModuleItem without action
+   */
+  export type ModuleItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleItem
+     */
+    select?: ModuleItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModuleItemInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProfileItemPermission
+   */
+
+  export type AggregateProfileItemPermission = {
+    _count: ProfileItemPermissionCountAggregateOutputType | null
+    _min: ProfileItemPermissionMinAggregateOutputType | null
+    _max: ProfileItemPermissionMaxAggregateOutputType | null
+  }
+
+  export type ProfileItemPermissionMinAggregateOutputType = {
+    id: string | null
+    profileId: string | null
+    moduleItemId: string | null
+    canRead: boolean | null
+    canWrite: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProfileItemPermissionMaxAggregateOutputType = {
+    id: string | null
+    profileId: string | null
+    moduleItemId: string | null
+    canRead: boolean | null
+    canWrite: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProfileItemPermissionCountAggregateOutputType = {
+    id: number
+    profileId: number
+    moduleItemId: number
+    canRead: number
+    canWrite: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProfileItemPermissionMinAggregateInputType = {
+    id?: true
+    profileId?: true
+    moduleItemId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProfileItemPermissionMaxAggregateInputType = {
+    id?: true
+    profileId?: true
+    moduleItemId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProfileItemPermissionCountAggregateInputType = {
+    id?: true
+    profileId?: true
+    moduleItemId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProfileItemPermissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProfileItemPermission to aggregate.
+     */
+    where?: ProfileItemPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfileItemPermissions to fetch.
+     */
+    orderBy?: ProfileItemPermissionOrderByWithRelationInput | ProfileItemPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProfileItemPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfileItemPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfileItemPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProfileItemPermissions
+    **/
+    _count?: true | ProfileItemPermissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProfileItemPermissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProfileItemPermissionMaxAggregateInputType
+  }
+
+  export type GetProfileItemPermissionAggregateType<T extends ProfileItemPermissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateProfileItemPermission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProfileItemPermission[P]>
+      : GetScalarType<T[P], AggregateProfileItemPermission[P]>
+  }
+
+
+
+
+  export type ProfileItemPermissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfileItemPermissionWhereInput
+    orderBy?: ProfileItemPermissionOrderByWithAggregationInput | ProfileItemPermissionOrderByWithAggregationInput[]
+    by: ProfileItemPermissionScalarFieldEnum[] | ProfileItemPermissionScalarFieldEnum
+    having?: ProfileItemPermissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProfileItemPermissionCountAggregateInputType | true
+    _min?: ProfileItemPermissionMinAggregateInputType
+    _max?: ProfileItemPermissionMaxAggregateInputType
+  }
+
+  export type ProfileItemPermissionGroupByOutputType = {
+    id: string
+    profileId: string
+    moduleItemId: string
+    canRead: boolean
+    canWrite: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: ProfileItemPermissionCountAggregateOutputType | null
+    _min: ProfileItemPermissionMinAggregateOutputType | null
+    _max: ProfileItemPermissionMaxAggregateOutputType | null
+  }
+
+  type GetProfileItemPermissionGroupByPayload<T extends ProfileItemPermissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProfileItemPermissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProfileItemPermissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProfileItemPermissionGroupByOutputType[P]>
+            : GetScalarType<T[P], ProfileItemPermissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProfileItemPermissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    profileId?: boolean
+    moduleItemId?: boolean
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>
+    moduleItem?: boolean | ModuleItemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["profileItemPermission"]>
+
+
+  export type ProfileItemPermissionSelectScalar = {
+    id?: boolean
+    profileId?: boolean
+    moduleItemId?: boolean
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProfileItemPermissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>
+    moduleItem?: boolean | ModuleItemDefaultArgs<ExtArgs>
+  }
+
+  export type $ProfileItemPermissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProfileItemPermission"
+    objects: {
+      profile: Prisma.$ProfilePayload<ExtArgs>
+      moduleItem: Prisma.$ModuleItemPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      profileId: string
+      moduleItemId: string
+      canRead: boolean
+      canWrite: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["profileItemPermission"]>
+    composites: {}
+  }
+
+  type ProfileItemPermissionGetPayload<S extends boolean | null | undefined | ProfileItemPermissionDefaultArgs> = $Result.GetResult<Prisma.$ProfileItemPermissionPayload, S>
+
+  type ProfileItemPermissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ProfileItemPermissionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ProfileItemPermissionCountAggregateInputType | true
+    }
+
+  export interface ProfileItemPermissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProfileItemPermission'], meta: { name: 'ProfileItemPermission' } }
+    /**
+     * Find zero or one ProfileItemPermission that matches the filter.
+     * @param {ProfileItemPermissionFindUniqueArgs} args - Arguments to find a ProfileItemPermission
+     * @example
+     * // Get one ProfileItemPermission
+     * const profileItemPermission = await prisma.profileItemPermission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProfileItemPermissionFindUniqueArgs>(args: SelectSubset<T, ProfileItemPermissionFindUniqueArgs<ExtArgs>>): Prisma__ProfileItemPermissionClient<$Result.GetResult<Prisma.$ProfileItemPermissionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ProfileItemPermission that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ProfileItemPermissionFindUniqueOrThrowArgs} args - Arguments to find a ProfileItemPermission
+     * @example
+     * // Get one ProfileItemPermission
+     * const profileItemPermission = await prisma.profileItemPermission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProfileItemPermissionFindUniqueOrThrowArgs>(args: SelectSubset<T, ProfileItemPermissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProfileItemPermissionClient<$Result.GetResult<Prisma.$ProfileItemPermissionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ProfileItemPermission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileItemPermissionFindFirstArgs} args - Arguments to find a ProfileItemPermission
+     * @example
+     * // Get one ProfileItemPermission
+     * const profileItemPermission = await prisma.profileItemPermission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProfileItemPermissionFindFirstArgs>(args?: SelectSubset<T, ProfileItemPermissionFindFirstArgs<ExtArgs>>): Prisma__ProfileItemPermissionClient<$Result.GetResult<Prisma.$ProfileItemPermissionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ProfileItemPermission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileItemPermissionFindFirstOrThrowArgs} args - Arguments to find a ProfileItemPermission
+     * @example
+     * // Get one ProfileItemPermission
+     * const profileItemPermission = await prisma.profileItemPermission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProfileItemPermissionFindFirstOrThrowArgs>(args?: SelectSubset<T, ProfileItemPermissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProfileItemPermissionClient<$Result.GetResult<Prisma.$ProfileItemPermissionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ProfileItemPermissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileItemPermissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProfileItemPermissions
+     * const profileItemPermissions = await prisma.profileItemPermission.findMany()
+     * 
+     * // Get first 10 ProfileItemPermissions
+     * const profileItemPermissions = await prisma.profileItemPermission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const profileItemPermissionWithIdOnly = await prisma.profileItemPermission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProfileItemPermissionFindManyArgs>(args?: SelectSubset<T, ProfileItemPermissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfileItemPermissionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ProfileItemPermission.
+     * @param {ProfileItemPermissionCreateArgs} args - Arguments to create a ProfileItemPermission.
+     * @example
+     * // Create one ProfileItemPermission
+     * const ProfileItemPermission = await prisma.profileItemPermission.create({
+     *   data: {
+     *     // ... data to create a ProfileItemPermission
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProfileItemPermissionCreateArgs>(args: SelectSubset<T, ProfileItemPermissionCreateArgs<ExtArgs>>): Prisma__ProfileItemPermissionClient<$Result.GetResult<Prisma.$ProfileItemPermissionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ProfileItemPermissions.
+     * @param {ProfileItemPermissionCreateManyArgs} args - Arguments to create many ProfileItemPermissions.
+     * @example
+     * // Create many ProfileItemPermissions
+     * const profileItemPermission = await prisma.profileItemPermission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProfileItemPermissionCreateManyArgs>(args?: SelectSubset<T, ProfileItemPermissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ProfileItemPermission.
+     * @param {ProfileItemPermissionDeleteArgs} args - Arguments to delete one ProfileItemPermission.
+     * @example
+     * // Delete one ProfileItemPermission
+     * const ProfileItemPermission = await prisma.profileItemPermission.delete({
+     *   where: {
+     *     // ... filter to delete one ProfileItemPermission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProfileItemPermissionDeleteArgs>(args: SelectSubset<T, ProfileItemPermissionDeleteArgs<ExtArgs>>): Prisma__ProfileItemPermissionClient<$Result.GetResult<Prisma.$ProfileItemPermissionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ProfileItemPermission.
+     * @param {ProfileItemPermissionUpdateArgs} args - Arguments to update one ProfileItemPermission.
+     * @example
+     * // Update one ProfileItemPermission
+     * const profileItemPermission = await prisma.profileItemPermission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProfileItemPermissionUpdateArgs>(args: SelectSubset<T, ProfileItemPermissionUpdateArgs<ExtArgs>>): Prisma__ProfileItemPermissionClient<$Result.GetResult<Prisma.$ProfileItemPermissionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ProfileItemPermissions.
+     * @param {ProfileItemPermissionDeleteManyArgs} args - Arguments to filter ProfileItemPermissions to delete.
+     * @example
+     * // Delete a few ProfileItemPermissions
+     * const { count } = await prisma.profileItemPermission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProfileItemPermissionDeleteManyArgs>(args?: SelectSubset<T, ProfileItemPermissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProfileItemPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileItemPermissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProfileItemPermissions
+     * const profileItemPermission = await prisma.profileItemPermission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProfileItemPermissionUpdateManyArgs>(args: SelectSubset<T, ProfileItemPermissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ProfileItemPermission.
+     * @param {ProfileItemPermissionUpsertArgs} args - Arguments to update or create a ProfileItemPermission.
+     * @example
+     * // Update or create a ProfileItemPermission
+     * const profileItemPermission = await prisma.profileItemPermission.upsert({
+     *   create: {
+     *     // ... data to create a ProfileItemPermission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProfileItemPermission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProfileItemPermissionUpsertArgs>(args: SelectSubset<T, ProfileItemPermissionUpsertArgs<ExtArgs>>): Prisma__ProfileItemPermissionClient<$Result.GetResult<Prisma.$ProfileItemPermissionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ProfileItemPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileItemPermissionCountArgs} args - Arguments to filter ProfileItemPermissions to count.
+     * @example
+     * // Count the number of ProfileItemPermissions
+     * const count = await prisma.profileItemPermission.count({
+     *   where: {
+     *     // ... the filter for the ProfileItemPermissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProfileItemPermissionCountArgs>(
+      args?: Subset<T, ProfileItemPermissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProfileItemPermissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProfileItemPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileItemPermissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProfileItemPermissionAggregateArgs>(args: Subset<T, ProfileItemPermissionAggregateArgs>): Prisma.PrismaPromise<GetProfileItemPermissionAggregateType<T>>
+
+    /**
+     * Group by ProfileItemPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileItemPermissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProfileItemPermissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProfileItemPermissionGroupByArgs['orderBy'] }
+        : { orderBy?: ProfileItemPermissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProfileItemPermissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProfileItemPermissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProfileItemPermission model
+   */
+  readonly fields: ProfileItemPermissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProfileItemPermission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProfileItemPermissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    profile<T extends ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProfileDefaultArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    moduleItem<T extends ModuleItemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ModuleItemDefaultArgs<ExtArgs>>): Prisma__ModuleItemClient<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProfileItemPermission model
+   */ 
+  interface ProfileItemPermissionFieldRefs {
+    readonly id: FieldRef<"ProfileItemPermission", 'String'>
+    readonly profileId: FieldRef<"ProfileItemPermission", 'String'>
+    readonly moduleItemId: FieldRef<"ProfileItemPermission", 'String'>
+    readonly canRead: FieldRef<"ProfileItemPermission", 'Boolean'>
+    readonly canWrite: FieldRef<"ProfileItemPermission", 'Boolean'>
+    readonly createdAt: FieldRef<"ProfileItemPermission", 'DateTime'>
+    readonly updatedAt: FieldRef<"ProfileItemPermission", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProfileItemPermission findUnique
+   */
+  export type ProfileItemPermissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfileItemPermission to fetch.
+     */
+    where: ProfileItemPermissionWhereUniqueInput
+  }
+
+  /**
+   * ProfileItemPermission findUniqueOrThrow
+   */
+  export type ProfileItemPermissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfileItemPermission to fetch.
+     */
+    where: ProfileItemPermissionWhereUniqueInput
+  }
+
+  /**
+   * ProfileItemPermission findFirst
+   */
+  export type ProfileItemPermissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfileItemPermission to fetch.
+     */
+    where?: ProfileItemPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfileItemPermissions to fetch.
+     */
+    orderBy?: ProfileItemPermissionOrderByWithRelationInput | ProfileItemPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProfileItemPermissions.
+     */
+    cursor?: ProfileItemPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfileItemPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfileItemPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProfileItemPermissions.
+     */
+    distinct?: ProfileItemPermissionScalarFieldEnum | ProfileItemPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * ProfileItemPermission findFirstOrThrow
+   */
+  export type ProfileItemPermissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfileItemPermission to fetch.
+     */
+    where?: ProfileItemPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfileItemPermissions to fetch.
+     */
+    orderBy?: ProfileItemPermissionOrderByWithRelationInput | ProfileItemPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProfileItemPermissions.
+     */
+    cursor?: ProfileItemPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfileItemPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfileItemPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProfileItemPermissions.
+     */
+    distinct?: ProfileItemPermissionScalarFieldEnum | ProfileItemPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * ProfileItemPermission findMany
+   */
+  export type ProfileItemPermissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfileItemPermissions to fetch.
+     */
+    where?: ProfileItemPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfileItemPermissions to fetch.
+     */
+    orderBy?: ProfileItemPermissionOrderByWithRelationInput | ProfileItemPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProfileItemPermissions.
+     */
+    cursor?: ProfileItemPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfileItemPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfileItemPermissions.
+     */
+    skip?: number
+    distinct?: ProfileItemPermissionScalarFieldEnum | ProfileItemPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * ProfileItemPermission create
+   */
+  export type ProfileItemPermissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProfileItemPermission.
+     */
+    data: XOR<ProfileItemPermissionCreateInput, ProfileItemPermissionUncheckedCreateInput>
+  }
+
+  /**
+   * ProfileItemPermission createMany
+   */
+  export type ProfileItemPermissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProfileItemPermissions.
+     */
+    data: ProfileItemPermissionCreateManyInput | ProfileItemPermissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProfileItemPermission update
+   */
+  export type ProfileItemPermissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProfileItemPermission.
+     */
+    data: XOR<ProfileItemPermissionUpdateInput, ProfileItemPermissionUncheckedUpdateInput>
+    /**
+     * Choose, which ProfileItemPermission to update.
+     */
+    where: ProfileItemPermissionWhereUniqueInput
+  }
+
+  /**
+   * ProfileItemPermission updateMany
+   */
+  export type ProfileItemPermissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProfileItemPermissions.
+     */
+    data: XOR<ProfileItemPermissionUpdateManyMutationInput, ProfileItemPermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which ProfileItemPermissions to update
+     */
+    where?: ProfileItemPermissionWhereInput
+  }
+
+  /**
+   * ProfileItemPermission upsert
+   */
+  export type ProfileItemPermissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProfileItemPermission to update in case it exists.
+     */
+    where: ProfileItemPermissionWhereUniqueInput
+    /**
+     * In case the ProfileItemPermission found by the `where` argument doesn't exist, create a new ProfileItemPermission with this data.
+     */
+    create: XOR<ProfileItemPermissionCreateInput, ProfileItemPermissionUncheckedCreateInput>
+    /**
+     * In case the ProfileItemPermission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProfileItemPermissionUpdateInput, ProfileItemPermissionUncheckedUpdateInput>
+  }
+
+  /**
+   * ProfileItemPermission delete
+   */
+  export type ProfileItemPermissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter which ProfileItemPermission to delete.
+     */
+    where: ProfileItemPermissionWhereUniqueInput
+  }
+
+  /**
+   * ProfileItemPermission deleteMany
+   */
+  export type ProfileItemPermissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProfileItemPermissions to delete
+     */
+    where?: ProfileItemPermissionWhereInput
+  }
+
+  /**
+   * ProfileItemPermission without action
+   */
+  export type ProfileItemPermissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileItemPermission
+     */
+    select?: ProfileItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileItemPermissionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserItemPermission
+   */
+
+  export type AggregateUserItemPermission = {
+    _count: UserItemPermissionCountAggregateOutputType | null
+    _min: UserItemPermissionMinAggregateOutputType | null
+    _max: UserItemPermissionMaxAggregateOutputType | null
+  }
+
+  export type UserItemPermissionMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    moduleItemId: string | null
+    canRead: boolean | null
+    canWrite: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserItemPermissionMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    moduleItemId: string | null
+    canRead: boolean | null
+    canWrite: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserItemPermissionCountAggregateOutputType = {
+    id: number
+    userId: number
+    moduleItemId: number
+    canRead: number
+    canWrite: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserItemPermissionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    moduleItemId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserItemPermissionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    moduleItemId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserItemPermissionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    moduleItemId?: true
+    canRead?: true
+    canWrite?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserItemPermissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserItemPermission to aggregate.
+     */
+    where?: UserItemPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserItemPermissions to fetch.
+     */
+    orderBy?: UserItemPermissionOrderByWithRelationInput | UserItemPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserItemPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserItemPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserItemPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserItemPermissions
+    **/
+    _count?: true | UserItemPermissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserItemPermissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserItemPermissionMaxAggregateInputType
+  }
+
+  export type GetUserItemPermissionAggregateType<T extends UserItemPermissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserItemPermission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserItemPermission[P]>
+      : GetScalarType<T[P], AggregateUserItemPermission[P]>
+  }
+
+
+
+
+  export type UserItemPermissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserItemPermissionWhereInput
+    orderBy?: UserItemPermissionOrderByWithAggregationInput | UserItemPermissionOrderByWithAggregationInput[]
+    by: UserItemPermissionScalarFieldEnum[] | UserItemPermissionScalarFieldEnum
+    having?: UserItemPermissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserItemPermissionCountAggregateInputType | true
+    _min?: UserItemPermissionMinAggregateInputType
+    _max?: UserItemPermissionMaxAggregateInputType
+  }
+
+  export type UserItemPermissionGroupByOutputType = {
+    id: string
+    userId: string
+    moduleItemId: string
+    canRead: boolean
+    canWrite: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: UserItemPermissionCountAggregateOutputType | null
+    _min: UserItemPermissionMinAggregateOutputType | null
+    _max: UserItemPermissionMaxAggregateOutputType | null
+  }
+
+  type GetUserItemPermissionGroupByPayload<T extends UserItemPermissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserItemPermissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserItemPermissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserItemPermissionGroupByOutputType[P]>
+            : GetScalarType<T[P], UserItemPermissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserItemPermissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    moduleItemId?: boolean
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    moduleItem?: boolean | ModuleItemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userItemPermission"]>
+
+
+  export type UserItemPermissionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    moduleItemId?: boolean
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UserItemPermissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    moduleItem?: boolean | ModuleItemDefaultArgs<ExtArgs>
+  }
+
+  export type $UserItemPermissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserItemPermission"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      moduleItem: Prisma.$ModuleItemPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      moduleItemId: string
+      canRead: boolean
+      canWrite: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["userItemPermission"]>
+    composites: {}
+  }
+
+  type UserItemPermissionGetPayload<S extends boolean | null | undefined | UserItemPermissionDefaultArgs> = $Result.GetResult<Prisma.$UserItemPermissionPayload, S>
+
+  type UserItemPermissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UserItemPermissionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: UserItemPermissionCountAggregateInputType | true
+    }
+
+  export interface UserItemPermissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserItemPermission'], meta: { name: 'UserItemPermission' } }
+    /**
+     * Find zero or one UserItemPermission that matches the filter.
+     * @param {UserItemPermissionFindUniqueArgs} args - Arguments to find a UserItemPermission
+     * @example
+     * // Get one UserItemPermission
+     * const userItemPermission = await prisma.userItemPermission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserItemPermissionFindUniqueArgs>(args: SelectSubset<T, UserItemPermissionFindUniqueArgs<ExtArgs>>): Prisma__UserItemPermissionClient<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one UserItemPermission that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {UserItemPermissionFindUniqueOrThrowArgs} args - Arguments to find a UserItemPermission
+     * @example
+     * // Get one UserItemPermission
+     * const userItemPermission = await prisma.userItemPermission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserItemPermissionFindUniqueOrThrowArgs>(args: SelectSubset<T, UserItemPermissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserItemPermissionClient<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first UserItemPermission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserItemPermissionFindFirstArgs} args - Arguments to find a UserItemPermission
+     * @example
+     * // Get one UserItemPermission
+     * const userItemPermission = await prisma.userItemPermission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserItemPermissionFindFirstArgs>(args?: SelectSubset<T, UserItemPermissionFindFirstArgs<ExtArgs>>): Prisma__UserItemPermissionClient<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first UserItemPermission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserItemPermissionFindFirstOrThrowArgs} args - Arguments to find a UserItemPermission
+     * @example
+     * // Get one UserItemPermission
+     * const userItemPermission = await prisma.userItemPermission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserItemPermissionFindFirstOrThrowArgs>(args?: SelectSubset<T, UserItemPermissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserItemPermissionClient<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more UserItemPermissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserItemPermissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserItemPermissions
+     * const userItemPermissions = await prisma.userItemPermission.findMany()
+     * 
+     * // Get first 10 UserItemPermissions
+     * const userItemPermissions = await prisma.userItemPermission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userItemPermissionWithIdOnly = await prisma.userItemPermission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserItemPermissionFindManyArgs>(args?: SelectSubset<T, UserItemPermissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a UserItemPermission.
+     * @param {UserItemPermissionCreateArgs} args - Arguments to create a UserItemPermission.
+     * @example
+     * // Create one UserItemPermission
+     * const UserItemPermission = await prisma.userItemPermission.create({
+     *   data: {
+     *     // ... data to create a UserItemPermission
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserItemPermissionCreateArgs>(args: SelectSubset<T, UserItemPermissionCreateArgs<ExtArgs>>): Prisma__UserItemPermissionClient<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many UserItemPermissions.
+     * @param {UserItemPermissionCreateManyArgs} args - Arguments to create many UserItemPermissions.
+     * @example
+     * // Create many UserItemPermissions
+     * const userItemPermission = await prisma.userItemPermission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserItemPermissionCreateManyArgs>(args?: SelectSubset<T, UserItemPermissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a UserItemPermission.
+     * @param {UserItemPermissionDeleteArgs} args - Arguments to delete one UserItemPermission.
+     * @example
+     * // Delete one UserItemPermission
+     * const UserItemPermission = await prisma.userItemPermission.delete({
+     *   where: {
+     *     // ... filter to delete one UserItemPermission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserItemPermissionDeleteArgs>(args: SelectSubset<T, UserItemPermissionDeleteArgs<ExtArgs>>): Prisma__UserItemPermissionClient<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one UserItemPermission.
+     * @param {UserItemPermissionUpdateArgs} args - Arguments to update one UserItemPermission.
+     * @example
+     * // Update one UserItemPermission
+     * const userItemPermission = await prisma.userItemPermission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserItemPermissionUpdateArgs>(args: SelectSubset<T, UserItemPermissionUpdateArgs<ExtArgs>>): Prisma__UserItemPermissionClient<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more UserItemPermissions.
+     * @param {UserItemPermissionDeleteManyArgs} args - Arguments to filter UserItemPermissions to delete.
+     * @example
+     * // Delete a few UserItemPermissions
+     * const { count } = await prisma.userItemPermission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserItemPermissionDeleteManyArgs>(args?: SelectSubset<T, UserItemPermissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserItemPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserItemPermissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserItemPermissions
+     * const userItemPermission = await prisma.userItemPermission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserItemPermissionUpdateManyArgs>(args: SelectSubset<T, UserItemPermissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserItemPermission.
+     * @param {UserItemPermissionUpsertArgs} args - Arguments to update or create a UserItemPermission.
+     * @example
+     * // Update or create a UserItemPermission
+     * const userItemPermission = await prisma.userItemPermission.upsert({
+     *   create: {
+     *     // ... data to create a UserItemPermission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserItemPermission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserItemPermissionUpsertArgs>(args: SelectSubset<T, UserItemPermissionUpsertArgs<ExtArgs>>): Prisma__UserItemPermissionClient<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of UserItemPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserItemPermissionCountArgs} args - Arguments to filter UserItemPermissions to count.
+     * @example
+     * // Count the number of UserItemPermissions
+     * const count = await prisma.userItemPermission.count({
+     *   where: {
+     *     // ... the filter for the UserItemPermissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserItemPermissionCountArgs>(
+      args?: Subset<T, UserItemPermissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserItemPermissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserItemPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserItemPermissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserItemPermissionAggregateArgs>(args: Subset<T, UserItemPermissionAggregateArgs>): Prisma.PrismaPromise<GetUserItemPermissionAggregateType<T>>
+
+    /**
+     * Group by UserItemPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserItemPermissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserItemPermissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserItemPermissionGroupByArgs['orderBy'] }
+        : { orderBy?: UserItemPermissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserItemPermissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserItemPermissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserItemPermission model
+   */
+  readonly fields: UserItemPermissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserItemPermission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserItemPermissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    moduleItem<T extends ModuleItemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ModuleItemDefaultArgs<ExtArgs>>): Prisma__ModuleItemClient<$Result.GetResult<Prisma.$ModuleItemPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserItemPermission model
+   */ 
+  interface UserItemPermissionFieldRefs {
+    readonly id: FieldRef<"UserItemPermission", 'String'>
+    readonly userId: FieldRef<"UserItemPermission", 'String'>
+    readonly moduleItemId: FieldRef<"UserItemPermission", 'String'>
+    readonly canRead: FieldRef<"UserItemPermission", 'Boolean'>
+    readonly canWrite: FieldRef<"UserItemPermission", 'Boolean'>
+    readonly createdAt: FieldRef<"UserItemPermission", 'DateTime'>
+    readonly updatedAt: FieldRef<"UserItemPermission", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserItemPermission findUnique
+   */
+  export type UserItemPermissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserItemPermission to fetch.
+     */
+    where: UserItemPermissionWhereUniqueInput
+  }
+
+  /**
+   * UserItemPermission findUniqueOrThrow
+   */
+  export type UserItemPermissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserItemPermission to fetch.
+     */
+    where: UserItemPermissionWhereUniqueInput
+  }
+
+  /**
+   * UserItemPermission findFirst
+   */
+  export type UserItemPermissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserItemPermission to fetch.
+     */
+    where?: UserItemPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserItemPermissions to fetch.
+     */
+    orderBy?: UserItemPermissionOrderByWithRelationInput | UserItemPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserItemPermissions.
+     */
+    cursor?: UserItemPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserItemPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserItemPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserItemPermissions.
+     */
+    distinct?: UserItemPermissionScalarFieldEnum | UserItemPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * UserItemPermission findFirstOrThrow
+   */
+  export type UserItemPermissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserItemPermission to fetch.
+     */
+    where?: UserItemPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserItemPermissions to fetch.
+     */
+    orderBy?: UserItemPermissionOrderByWithRelationInput | UserItemPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserItemPermissions.
+     */
+    cursor?: UserItemPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserItemPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserItemPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserItemPermissions.
+     */
+    distinct?: UserItemPermissionScalarFieldEnum | UserItemPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * UserItemPermission findMany
+   */
+  export type UserItemPermissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserItemPermissions to fetch.
+     */
+    where?: UserItemPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserItemPermissions to fetch.
+     */
+    orderBy?: UserItemPermissionOrderByWithRelationInput | UserItemPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserItemPermissions.
+     */
+    cursor?: UserItemPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserItemPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserItemPermissions.
+     */
+    skip?: number
+    distinct?: UserItemPermissionScalarFieldEnum | UserItemPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * UserItemPermission create
+   */
+  export type UserItemPermissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserItemPermission.
+     */
+    data: XOR<UserItemPermissionCreateInput, UserItemPermissionUncheckedCreateInput>
+  }
+
+  /**
+   * UserItemPermission createMany
+   */
+  export type UserItemPermissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserItemPermissions.
+     */
+    data: UserItemPermissionCreateManyInput | UserItemPermissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserItemPermission update
+   */
+  export type UserItemPermissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserItemPermission.
+     */
+    data: XOR<UserItemPermissionUpdateInput, UserItemPermissionUncheckedUpdateInput>
+    /**
+     * Choose, which UserItemPermission to update.
+     */
+    where: UserItemPermissionWhereUniqueInput
+  }
+
+  /**
+   * UserItemPermission updateMany
+   */
+  export type UserItemPermissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserItemPermissions.
+     */
+    data: XOR<UserItemPermissionUpdateManyMutationInput, UserItemPermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which UserItemPermissions to update
+     */
+    where?: UserItemPermissionWhereInput
+  }
+
+  /**
+   * UserItemPermission upsert
+   */
+  export type UserItemPermissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserItemPermission to update in case it exists.
+     */
+    where: UserItemPermissionWhereUniqueInput
+    /**
+     * In case the UserItemPermission found by the `where` argument doesn't exist, create a new UserItemPermission with this data.
+     */
+    create: XOR<UserItemPermissionCreateInput, UserItemPermissionUncheckedCreateInput>
+    /**
+     * In case the UserItemPermission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserItemPermissionUpdateInput, UserItemPermissionUncheckedUpdateInput>
+  }
+
+  /**
+   * UserItemPermission delete
+   */
+  export type UserItemPermissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
+    /**
+     * Filter which UserItemPermission to delete.
+     */
+    where: UserItemPermissionWhereUniqueInput
+  }
+
+  /**
+   * UserItemPermission deleteMany
+   */
+  export type UserItemPermissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserItemPermissions to delete
+     */
+    where?: UserItemPermissionWhereInput
+  }
+
+  /**
+   * UserItemPermission without action
+   */
+  export type UserItemPermissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserItemPermission
+     */
+    select?: UserItemPermissionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserItemPermissionInclude<ExtArgs> | null
   }
 
 
@@ -29450,6 +36820,953 @@ export namespace Prisma {
 
 
   /**
+   * Model EmailJob
+   */
+
+  export type AggregateEmailJob = {
+    _count: EmailJobCountAggregateOutputType | null
+    _avg: EmailJobAvgAggregateOutputType | null
+    _sum: EmailJobSumAggregateOutputType | null
+    _min: EmailJobMinAggregateOutputType | null
+    _max: EmailJobMaxAggregateOutputType | null
+  }
+
+  export type EmailJobAvgAggregateOutputType = {
+    attempts: number | null
+    maxAttempts: number | null
+  }
+
+  export type EmailJobSumAggregateOutputType = {
+    attempts: number | null
+    maxAttempts: number | null
+  }
+
+  export type EmailJobMinAggregateOutputType = {
+    id: string | null
+    type: string | null
+    payload: string | null
+    status: string | null
+    attempts: number | null
+    maxAttempts: number | null
+    workerId: string | null
+    lockedUntil: Date | null
+    lastError: string | null
+    processedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type EmailJobMaxAggregateOutputType = {
+    id: string | null
+    type: string | null
+    payload: string | null
+    status: string | null
+    attempts: number | null
+    maxAttempts: number | null
+    workerId: string | null
+    lockedUntil: Date | null
+    lastError: string | null
+    processedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type EmailJobCountAggregateOutputType = {
+    id: number
+    type: number
+    payload: number
+    status: number
+    attempts: number
+    maxAttempts: number
+    workerId: number
+    lockedUntil: number
+    lastError: number
+    processedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type EmailJobAvgAggregateInputType = {
+    attempts?: true
+    maxAttempts?: true
+  }
+
+  export type EmailJobSumAggregateInputType = {
+    attempts?: true
+    maxAttempts?: true
+  }
+
+  export type EmailJobMinAggregateInputType = {
+    id?: true
+    type?: true
+    payload?: true
+    status?: true
+    attempts?: true
+    maxAttempts?: true
+    workerId?: true
+    lockedUntil?: true
+    lastError?: true
+    processedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type EmailJobMaxAggregateInputType = {
+    id?: true
+    type?: true
+    payload?: true
+    status?: true
+    attempts?: true
+    maxAttempts?: true
+    workerId?: true
+    lockedUntil?: true
+    lastError?: true
+    processedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type EmailJobCountAggregateInputType = {
+    id?: true
+    type?: true
+    payload?: true
+    status?: true
+    attempts?: true
+    maxAttempts?: true
+    workerId?: true
+    lockedUntil?: true
+    lastError?: true
+    processedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type EmailJobAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EmailJob to aggregate.
+     */
+    where?: EmailJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailJobs to fetch.
+     */
+    orderBy?: EmailJobOrderByWithRelationInput | EmailJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EmailJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailJobs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned EmailJobs
+    **/
+    _count?: true | EmailJobCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EmailJobAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EmailJobSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EmailJobMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EmailJobMaxAggregateInputType
+  }
+
+  export type GetEmailJobAggregateType<T extends EmailJobAggregateArgs> = {
+        [P in keyof T & keyof AggregateEmailJob]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEmailJob[P]>
+      : GetScalarType<T[P], AggregateEmailJob[P]>
+  }
+
+
+
+
+  export type EmailJobGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EmailJobWhereInput
+    orderBy?: EmailJobOrderByWithAggregationInput | EmailJobOrderByWithAggregationInput[]
+    by: EmailJobScalarFieldEnum[] | EmailJobScalarFieldEnum
+    having?: EmailJobScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EmailJobCountAggregateInputType | true
+    _avg?: EmailJobAvgAggregateInputType
+    _sum?: EmailJobSumAggregateInputType
+    _min?: EmailJobMinAggregateInputType
+    _max?: EmailJobMaxAggregateInputType
+  }
+
+  export type EmailJobGroupByOutputType = {
+    id: string
+    type: string
+    payload: string
+    status: string
+    attempts: number
+    maxAttempts: number
+    workerId: string | null
+    lockedUntil: Date | null
+    lastError: string | null
+    processedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: EmailJobCountAggregateOutputType | null
+    _avg: EmailJobAvgAggregateOutputType | null
+    _sum: EmailJobSumAggregateOutputType | null
+    _min: EmailJobMinAggregateOutputType | null
+    _max: EmailJobMaxAggregateOutputType | null
+  }
+
+  type GetEmailJobGroupByPayload<T extends EmailJobGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EmailJobGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EmailJobGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EmailJobGroupByOutputType[P]>
+            : GetScalarType<T[P], EmailJobGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EmailJobSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    payload?: boolean
+    status?: boolean
+    attempts?: boolean
+    maxAttempts?: boolean
+    workerId?: boolean
+    lockedUntil?: boolean
+    lastError?: boolean
+    processedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["emailJob"]>
+
+
+  export type EmailJobSelectScalar = {
+    id?: boolean
+    type?: boolean
+    payload?: boolean
+    status?: boolean
+    attempts?: boolean
+    maxAttempts?: boolean
+    workerId?: boolean
+    lockedUntil?: boolean
+    lastError?: boolean
+    processedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $EmailJobPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "EmailJob"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      type: string
+      payload: string
+      status: string
+      attempts: number
+      maxAttempts: number
+      workerId: string | null
+      lockedUntil: Date | null
+      lastError: string | null
+      processedAt: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["emailJob"]>
+    composites: {}
+  }
+
+  type EmailJobGetPayload<S extends boolean | null | undefined | EmailJobDefaultArgs> = $Result.GetResult<Prisma.$EmailJobPayload, S>
+
+  type EmailJobCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<EmailJobFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: EmailJobCountAggregateInputType | true
+    }
+
+  export interface EmailJobDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EmailJob'], meta: { name: 'EmailJob' } }
+    /**
+     * Find zero or one EmailJob that matches the filter.
+     * @param {EmailJobFindUniqueArgs} args - Arguments to find a EmailJob
+     * @example
+     * // Get one EmailJob
+     * const emailJob = await prisma.emailJob.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EmailJobFindUniqueArgs>(args: SelectSubset<T, EmailJobFindUniqueArgs<ExtArgs>>): Prisma__EmailJobClient<$Result.GetResult<Prisma.$EmailJobPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one EmailJob that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {EmailJobFindUniqueOrThrowArgs} args - Arguments to find a EmailJob
+     * @example
+     * // Get one EmailJob
+     * const emailJob = await prisma.emailJob.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EmailJobFindUniqueOrThrowArgs>(args: SelectSubset<T, EmailJobFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EmailJobClient<$Result.GetResult<Prisma.$EmailJobPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first EmailJob that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailJobFindFirstArgs} args - Arguments to find a EmailJob
+     * @example
+     * // Get one EmailJob
+     * const emailJob = await prisma.emailJob.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EmailJobFindFirstArgs>(args?: SelectSubset<T, EmailJobFindFirstArgs<ExtArgs>>): Prisma__EmailJobClient<$Result.GetResult<Prisma.$EmailJobPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first EmailJob that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailJobFindFirstOrThrowArgs} args - Arguments to find a EmailJob
+     * @example
+     * // Get one EmailJob
+     * const emailJob = await prisma.emailJob.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EmailJobFindFirstOrThrowArgs>(args?: SelectSubset<T, EmailJobFindFirstOrThrowArgs<ExtArgs>>): Prisma__EmailJobClient<$Result.GetResult<Prisma.$EmailJobPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more EmailJobs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailJobFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EmailJobs
+     * const emailJobs = await prisma.emailJob.findMany()
+     * 
+     * // Get first 10 EmailJobs
+     * const emailJobs = await prisma.emailJob.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const emailJobWithIdOnly = await prisma.emailJob.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends EmailJobFindManyArgs>(args?: SelectSubset<T, EmailJobFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailJobPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a EmailJob.
+     * @param {EmailJobCreateArgs} args - Arguments to create a EmailJob.
+     * @example
+     * // Create one EmailJob
+     * const EmailJob = await prisma.emailJob.create({
+     *   data: {
+     *     // ... data to create a EmailJob
+     *   }
+     * })
+     * 
+     */
+    create<T extends EmailJobCreateArgs>(args: SelectSubset<T, EmailJobCreateArgs<ExtArgs>>): Prisma__EmailJobClient<$Result.GetResult<Prisma.$EmailJobPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many EmailJobs.
+     * @param {EmailJobCreateManyArgs} args - Arguments to create many EmailJobs.
+     * @example
+     * // Create many EmailJobs
+     * const emailJob = await prisma.emailJob.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EmailJobCreateManyArgs>(args?: SelectSubset<T, EmailJobCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a EmailJob.
+     * @param {EmailJobDeleteArgs} args - Arguments to delete one EmailJob.
+     * @example
+     * // Delete one EmailJob
+     * const EmailJob = await prisma.emailJob.delete({
+     *   where: {
+     *     // ... filter to delete one EmailJob
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EmailJobDeleteArgs>(args: SelectSubset<T, EmailJobDeleteArgs<ExtArgs>>): Prisma__EmailJobClient<$Result.GetResult<Prisma.$EmailJobPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one EmailJob.
+     * @param {EmailJobUpdateArgs} args - Arguments to update one EmailJob.
+     * @example
+     * // Update one EmailJob
+     * const emailJob = await prisma.emailJob.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EmailJobUpdateArgs>(args: SelectSubset<T, EmailJobUpdateArgs<ExtArgs>>): Prisma__EmailJobClient<$Result.GetResult<Prisma.$EmailJobPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more EmailJobs.
+     * @param {EmailJobDeleteManyArgs} args - Arguments to filter EmailJobs to delete.
+     * @example
+     * // Delete a few EmailJobs
+     * const { count } = await prisma.emailJob.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EmailJobDeleteManyArgs>(args?: SelectSubset<T, EmailJobDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EmailJobs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailJobUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EmailJobs
+     * const emailJob = await prisma.emailJob.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EmailJobUpdateManyArgs>(args: SelectSubset<T, EmailJobUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one EmailJob.
+     * @param {EmailJobUpsertArgs} args - Arguments to update or create a EmailJob.
+     * @example
+     * // Update or create a EmailJob
+     * const emailJob = await prisma.emailJob.upsert({
+     *   create: {
+     *     // ... data to create a EmailJob
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EmailJob we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EmailJobUpsertArgs>(args: SelectSubset<T, EmailJobUpsertArgs<ExtArgs>>): Prisma__EmailJobClient<$Result.GetResult<Prisma.$EmailJobPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of EmailJobs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailJobCountArgs} args - Arguments to filter EmailJobs to count.
+     * @example
+     * // Count the number of EmailJobs
+     * const count = await prisma.emailJob.count({
+     *   where: {
+     *     // ... the filter for the EmailJobs we want to count
+     *   }
+     * })
+    **/
+    count<T extends EmailJobCountArgs>(
+      args?: Subset<T, EmailJobCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EmailJobCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a EmailJob.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailJobAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EmailJobAggregateArgs>(args: Subset<T, EmailJobAggregateArgs>): Prisma.PrismaPromise<GetEmailJobAggregateType<T>>
+
+    /**
+     * Group by EmailJob.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailJobGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EmailJobGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EmailJobGroupByArgs['orderBy'] }
+        : { orderBy?: EmailJobGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EmailJobGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEmailJobGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the EmailJob model
+   */
+  readonly fields: EmailJobFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EmailJob.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EmailJobClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the EmailJob model
+   */ 
+  interface EmailJobFieldRefs {
+    readonly id: FieldRef<"EmailJob", 'String'>
+    readonly type: FieldRef<"EmailJob", 'String'>
+    readonly payload: FieldRef<"EmailJob", 'String'>
+    readonly status: FieldRef<"EmailJob", 'String'>
+    readonly attempts: FieldRef<"EmailJob", 'Int'>
+    readonly maxAttempts: FieldRef<"EmailJob", 'Int'>
+    readonly workerId: FieldRef<"EmailJob", 'String'>
+    readonly lockedUntil: FieldRef<"EmailJob", 'DateTime'>
+    readonly lastError: FieldRef<"EmailJob", 'String'>
+    readonly processedAt: FieldRef<"EmailJob", 'DateTime'>
+    readonly createdAt: FieldRef<"EmailJob", 'DateTime'>
+    readonly updatedAt: FieldRef<"EmailJob", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * EmailJob findUnique
+   */
+  export type EmailJobFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailJob
+     */
+    select?: EmailJobSelect<ExtArgs> | null
+    /**
+     * Filter, which EmailJob to fetch.
+     */
+    where: EmailJobWhereUniqueInput
+  }
+
+  /**
+   * EmailJob findUniqueOrThrow
+   */
+  export type EmailJobFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailJob
+     */
+    select?: EmailJobSelect<ExtArgs> | null
+    /**
+     * Filter, which EmailJob to fetch.
+     */
+    where: EmailJobWhereUniqueInput
+  }
+
+  /**
+   * EmailJob findFirst
+   */
+  export type EmailJobFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailJob
+     */
+    select?: EmailJobSelect<ExtArgs> | null
+    /**
+     * Filter, which EmailJob to fetch.
+     */
+    where?: EmailJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailJobs to fetch.
+     */
+    orderBy?: EmailJobOrderByWithRelationInput | EmailJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EmailJobs.
+     */
+    cursor?: EmailJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailJobs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EmailJobs.
+     */
+    distinct?: EmailJobScalarFieldEnum | EmailJobScalarFieldEnum[]
+  }
+
+  /**
+   * EmailJob findFirstOrThrow
+   */
+  export type EmailJobFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailJob
+     */
+    select?: EmailJobSelect<ExtArgs> | null
+    /**
+     * Filter, which EmailJob to fetch.
+     */
+    where?: EmailJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailJobs to fetch.
+     */
+    orderBy?: EmailJobOrderByWithRelationInput | EmailJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EmailJobs.
+     */
+    cursor?: EmailJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailJobs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EmailJobs.
+     */
+    distinct?: EmailJobScalarFieldEnum | EmailJobScalarFieldEnum[]
+  }
+
+  /**
+   * EmailJob findMany
+   */
+  export type EmailJobFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailJob
+     */
+    select?: EmailJobSelect<ExtArgs> | null
+    /**
+     * Filter, which EmailJobs to fetch.
+     */
+    where?: EmailJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailJobs to fetch.
+     */
+    orderBy?: EmailJobOrderByWithRelationInput | EmailJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing EmailJobs.
+     */
+    cursor?: EmailJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailJobs.
+     */
+    skip?: number
+    distinct?: EmailJobScalarFieldEnum | EmailJobScalarFieldEnum[]
+  }
+
+  /**
+   * EmailJob create
+   */
+  export type EmailJobCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailJob
+     */
+    select?: EmailJobSelect<ExtArgs> | null
+    /**
+     * The data needed to create a EmailJob.
+     */
+    data: XOR<EmailJobCreateInput, EmailJobUncheckedCreateInput>
+  }
+
+  /**
+   * EmailJob createMany
+   */
+  export type EmailJobCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many EmailJobs.
+     */
+    data: EmailJobCreateManyInput | EmailJobCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * EmailJob update
+   */
+  export type EmailJobUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailJob
+     */
+    select?: EmailJobSelect<ExtArgs> | null
+    /**
+     * The data needed to update a EmailJob.
+     */
+    data: XOR<EmailJobUpdateInput, EmailJobUncheckedUpdateInput>
+    /**
+     * Choose, which EmailJob to update.
+     */
+    where: EmailJobWhereUniqueInput
+  }
+
+  /**
+   * EmailJob updateMany
+   */
+  export type EmailJobUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update EmailJobs.
+     */
+    data: XOR<EmailJobUpdateManyMutationInput, EmailJobUncheckedUpdateManyInput>
+    /**
+     * Filter which EmailJobs to update
+     */
+    where?: EmailJobWhereInput
+  }
+
+  /**
+   * EmailJob upsert
+   */
+  export type EmailJobUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailJob
+     */
+    select?: EmailJobSelect<ExtArgs> | null
+    /**
+     * The filter to search for the EmailJob to update in case it exists.
+     */
+    where: EmailJobWhereUniqueInput
+    /**
+     * In case the EmailJob found by the `where` argument doesn't exist, create a new EmailJob with this data.
+     */
+    create: XOR<EmailJobCreateInput, EmailJobUncheckedCreateInput>
+    /**
+     * In case the EmailJob was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EmailJobUpdateInput, EmailJobUncheckedUpdateInput>
+  }
+
+  /**
+   * EmailJob delete
+   */
+  export type EmailJobDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailJob
+     */
+    select?: EmailJobSelect<ExtArgs> | null
+    /**
+     * Filter which EmailJob to delete.
+     */
+    where: EmailJobWhereUniqueInput
+  }
+
+  /**
+   * EmailJob deleteMany
+   */
+  export type EmailJobDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EmailJobs to delete
+     */
+    where?: EmailJobWhereInput
+  }
+
+  /**
+   * EmailJob without action
+   */
+  export type EmailJobDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailJob
+     */
+    select?: EmailJobSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -29606,10 +37923,99 @@ export namespace Prisma {
     resetToken: 'resetToken',
     resetTokenExpires: 'resetTokenExpires',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    profileId: 'profileId'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const ProfileScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+  export const ModuleScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    key: 'key',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ModuleScalarFieldEnum = (typeof ModuleScalarFieldEnum)[keyof typeof ModuleScalarFieldEnum]
+
+
+  export const ProfilePermissionScalarFieldEnum: {
+    id: 'id',
+    profileId: 'profileId',
+    moduleId: 'moduleId',
+    canRead: 'canRead',
+    canWrite: 'canWrite',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProfilePermissionScalarFieldEnum = (typeof ProfilePermissionScalarFieldEnum)[keyof typeof ProfilePermissionScalarFieldEnum]
+
+
+  export const UserPermissionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    moduleId: 'moduleId',
+    canRead: 'canRead',
+    canWrite: 'canWrite',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserPermissionScalarFieldEnum = (typeof UserPermissionScalarFieldEnum)[keyof typeof UserPermissionScalarFieldEnum]
+
+
+  export const ModuleItemScalarFieldEnum: {
+    id: 'id',
+    moduleId: 'moduleId',
+    name: 'name',
+    key: 'key',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ModuleItemScalarFieldEnum = (typeof ModuleItemScalarFieldEnum)[keyof typeof ModuleItemScalarFieldEnum]
+
+
+  export const ProfileItemPermissionScalarFieldEnum: {
+    id: 'id',
+    profileId: 'profileId',
+    moduleItemId: 'moduleItemId',
+    canRead: 'canRead',
+    canWrite: 'canWrite',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProfileItemPermissionScalarFieldEnum = (typeof ProfileItemPermissionScalarFieldEnum)[keyof typeof ProfileItemPermissionScalarFieldEnum]
+
+
+  export const UserItemPermissionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    moduleItemId: 'moduleItemId',
+    canRead: 'canRead',
+    canWrite: 'canWrite',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserItemPermissionScalarFieldEnum = (typeof UserItemPermissionScalarFieldEnum)[keyof typeof UserItemPermissionScalarFieldEnum]
 
 
   export const AuditLogScalarFieldEnum: {
@@ -29892,6 +38298,24 @@ export namespace Prisma {
   };
 
   export type DescontoScalarFieldEnum = (typeof DescontoScalarFieldEnum)[keyof typeof DescontoScalarFieldEnum]
+
+
+  export const EmailJobScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    payload: 'payload',
+    status: 'status',
+    attempts: 'attempts',
+    maxAttempts: 'maxAttempts',
+    workerId: 'workerId',
+    lockedUntil: 'lockedUntil',
+    lastError: 'lastError',
+    processedAt: 'processedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type EmailJobScalarFieldEnum = (typeof EmailJobScalarFieldEnum)[keyof typeof EmailJobScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -30703,6 +39127,7 @@ export namespace Prisma {
     resetTokenExpires?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    profileId?: StringNullableFilter<"User"> | string | null
     funcionario?: XOR<FuncionarioNullableRelationFilter, FuncionarioWhereInput> | null
     alunos?: AlunoListRelationFilter
     matriculas?: MatriculaListRelationFilter
@@ -30710,6 +39135,9 @@ export namespace Prisma {
     certificados?: CertificateListRelationFilter
     turmas?: TurmaListRelationFilter
     cursos?: CursoListRelationFilter
+    profile?: XOR<ProfileNullableRelationFilter, ProfileWhereInput> | null
+    permissions?: UserPermissionListRelationFilter
+    itemPermissions?: UserItemPermissionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -30724,6 +39152,7 @@ export namespace Prisma {
     resetTokenExpires?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    profileId?: SortOrderInput | SortOrder
     funcionario?: FuncionarioOrderByWithRelationInput
     alunos?: AlunoOrderByRelationAggregateInput
     matriculas?: MatriculaOrderByRelationAggregateInput
@@ -30731,6 +39160,9 @@ export namespace Prisma {
     certificados?: CertificateOrderByRelationAggregateInput
     turmas?: TurmaOrderByRelationAggregateInput
     cursos?: CursoOrderByRelationAggregateInput
+    profile?: ProfileOrderByWithRelationInput
+    permissions?: UserPermissionOrderByRelationAggregateInput
+    itemPermissions?: UserItemPermissionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -30748,6 +39180,7 @@ export namespace Prisma {
     resetTokenExpires?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    profileId?: StringNullableFilter<"User"> | string | null
     funcionario?: XOR<FuncionarioNullableRelationFilter, FuncionarioWhereInput> | null
     alunos?: AlunoListRelationFilter
     matriculas?: MatriculaListRelationFilter
@@ -30755,6 +39188,9 @@ export namespace Prisma {
     certificados?: CertificateListRelationFilter
     turmas?: TurmaListRelationFilter
     cursos?: CursoListRelationFilter
+    profile?: XOR<ProfileNullableRelationFilter, ProfileWhereInput> | null
+    permissions?: UserPermissionListRelationFilter
+    itemPermissions?: UserItemPermissionListRelationFilter
   }, "id" | "email" | "resetToken">
 
   export type UserOrderByWithAggregationInput = {
@@ -30769,6 +39205,7 @@ export namespace Prisma {
     resetTokenExpires?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    profileId?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -30789,6 +39226,481 @@ export namespace Prisma {
     resetTokenExpires?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    profileId?: StringNullableWithAggregatesFilter<"User"> | string | null
+  }
+
+  export type ProfileWhereInput = {
+    AND?: ProfileWhereInput | ProfileWhereInput[]
+    OR?: ProfileWhereInput[]
+    NOT?: ProfileWhereInput | ProfileWhereInput[]
+    id?: StringFilter<"Profile"> | string
+    name?: StringFilter<"Profile"> | string
+    description?: StringNullableFilter<"Profile"> | string | null
+    createdAt?: DateTimeFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeFilter<"Profile"> | Date | string
+    permissions?: ProfilePermissionListRelationFilter
+    itemPermissions?: ProfileItemPermissionListRelationFilter
+    users?: UserListRelationFilter
+  }
+
+  export type ProfileOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    permissions?: ProfilePermissionOrderByRelationAggregateInput
+    itemPermissions?: ProfileItemPermissionOrderByRelationAggregateInput
+    users?: UserOrderByRelationAggregateInput
+  }
+
+  export type ProfileWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: ProfileWhereInput | ProfileWhereInput[]
+    OR?: ProfileWhereInput[]
+    NOT?: ProfileWhereInput | ProfileWhereInput[]
+    description?: StringNullableFilter<"Profile"> | string | null
+    createdAt?: DateTimeFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeFilter<"Profile"> | Date | string
+    permissions?: ProfilePermissionListRelationFilter
+    itemPermissions?: ProfileItemPermissionListRelationFilter
+    users?: UserListRelationFilter
+  }, "id" | "name">
+
+  export type ProfileOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProfileCountOrderByAggregateInput
+    _max?: ProfileMaxOrderByAggregateInput
+    _min?: ProfileMinOrderByAggregateInput
+  }
+
+  export type ProfileScalarWhereWithAggregatesInput = {
+    AND?: ProfileScalarWhereWithAggregatesInput | ProfileScalarWhereWithAggregatesInput[]
+    OR?: ProfileScalarWhereWithAggregatesInput[]
+    NOT?: ProfileScalarWhereWithAggregatesInput | ProfileScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Profile"> | string
+    name?: StringWithAggregatesFilter<"Profile"> | string
+    description?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
+  }
+
+  export type ModuleWhereInput = {
+    AND?: ModuleWhereInput | ModuleWhereInput[]
+    OR?: ModuleWhereInput[]
+    NOT?: ModuleWhereInput | ModuleWhereInput[]
+    id?: StringFilter<"Module"> | string
+    name?: StringFilter<"Module"> | string
+    key?: StringFilter<"Module"> | string
+    description?: StringNullableFilter<"Module"> | string | null
+    createdAt?: DateTimeFilter<"Module"> | Date | string
+    updatedAt?: DateTimeFilter<"Module"> | Date | string
+    items?: ModuleItemListRelationFilter
+    profilePermissions?: ProfilePermissionListRelationFilter
+    userPermissions?: UserPermissionListRelationFilter
+  }
+
+  export type ModuleOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    items?: ModuleItemOrderByRelationAggregateInput
+    profilePermissions?: ProfilePermissionOrderByRelationAggregateInput
+    userPermissions?: UserPermissionOrderByRelationAggregateInput
+  }
+
+  export type ModuleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    key?: string
+    AND?: ModuleWhereInput | ModuleWhereInput[]
+    OR?: ModuleWhereInput[]
+    NOT?: ModuleWhereInput | ModuleWhereInput[]
+    description?: StringNullableFilter<"Module"> | string | null
+    createdAt?: DateTimeFilter<"Module"> | Date | string
+    updatedAt?: DateTimeFilter<"Module"> | Date | string
+    items?: ModuleItemListRelationFilter
+    profilePermissions?: ProfilePermissionListRelationFilter
+    userPermissions?: UserPermissionListRelationFilter
+  }, "id" | "name" | "key">
+
+  export type ModuleOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ModuleCountOrderByAggregateInput
+    _max?: ModuleMaxOrderByAggregateInput
+    _min?: ModuleMinOrderByAggregateInput
+  }
+
+  export type ModuleScalarWhereWithAggregatesInput = {
+    AND?: ModuleScalarWhereWithAggregatesInput | ModuleScalarWhereWithAggregatesInput[]
+    OR?: ModuleScalarWhereWithAggregatesInput[]
+    NOT?: ModuleScalarWhereWithAggregatesInput | ModuleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Module"> | string
+    name?: StringWithAggregatesFilter<"Module"> | string
+    key?: StringWithAggregatesFilter<"Module"> | string
+    description?: StringNullableWithAggregatesFilter<"Module"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Module"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Module"> | Date | string
+  }
+
+  export type ProfilePermissionWhereInput = {
+    AND?: ProfilePermissionWhereInput | ProfilePermissionWhereInput[]
+    OR?: ProfilePermissionWhereInput[]
+    NOT?: ProfilePermissionWhereInput | ProfilePermissionWhereInput[]
+    id?: StringFilter<"ProfilePermission"> | string
+    profileId?: StringFilter<"ProfilePermission"> | string
+    moduleId?: StringFilter<"ProfilePermission"> | string
+    canRead?: BoolFilter<"ProfilePermission"> | boolean
+    canWrite?: BoolFilter<"ProfilePermission"> | boolean
+    createdAt?: DateTimeFilter<"ProfilePermission"> | Date | string
+    updatedAt?: DateTimeFilter<"ProfilePermission"> | Date | string
+    profile?: XOR<ProfileRelationFilter, ProfileWhereInput>
+    module?: XOR<ModuleRelationFilter, ModuleWhereInput>
+  }
+
+  export type ProfilePermissionOrderByWithRelationInput = {
+    id?: SortOrder
+    profileId?: SortOrder
+    moduleId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    profile?: ProfileOrderByWithRelationInput
+    module?: ModuleOrderByWithRelationInput
+  }
+
+  export type ProfilePermissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    profileId_moduleId?: ProfilePermissionProfileIdModuleIdCompoundUniqueInput
+    AND?: ProfilePermissionWhereInput | ProfilePermissionWhereInput[]
+    OR?: ProfilePermissionWhereInput[]
+    NOT?: ProfilePermissionWhereInput | ProfilePermissionWhereInput[]
+    profileId?: StringFilter<"ProfilePermission"> | string
+    moduleId?: StringFilter<"ProfilePermission"> | string
+    canRead?: BoolFilter<"ProfilePermission"> | boolean
+    canWrite?: BoolFilter<"ProfilePermission"> | boolean
+    createdAt?: DateTimeFilter<"ProfilePermission"> | Date | string
+    updatedAt?: DateTimeFilter<"ProfilePermission"> | Date | string
+    profile?: XOR<ProfileRelationFilter, ProfileWhereInput>
+    module?: XOR<ModuleRelationFilter, ModuleWhereInput>
+  }, "id" | "profileId_moduleId">
+
+  export type ProfilePermissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    profileId?: SortOrder
+    moduleId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProfilePermissionCountOrderByAggregateInput
+    _max?: ProfilePermissionMaxOrderByAggregateInput
+    _min?: ProfilePermissionMinOrderByAggregateInput
+  }
+
+  export type ProfilePermissionScalarWhereWithAggregatesInput = {
+    AND?: ProfilePermissionScalarWhereWithAggregatesInput | ProfilePermissionScalarWhereWithAggregatesInput[]
+    OR?: ProfilePermissionScalarWhereWithAggregatesInput[]
+    NOT?: ProfilePermissionScalarWhereWithAggregatesInput | ProfilePermissionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProfilePermission"> | string
+    profileId?: StringWithAggregatesFilter<"ProfilePermission"> | string
+    moduleId?: StringWithAggregatesFilter<"ProfilePermission"> | string
+    canRead?: BoolWithAggregatesFilter<"ProfilePermission"> | boolean
+    canWrite?: BoolWithAggregatesFilter<"ProfilePermission"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"ProfilePermission"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ProfilePermission"> | Date | string
+  }
+
+  export type UserPermissionWhereInput = {
+    AND?: UserPermissionWhereInput | UserPermissionWhereInput[]
+    OR?: UserPermissionWhereInput[]
+    NOT?: UserPermissionWhereInput | UserPermissionWhereInput[]
+    id?: StringFilter<"UserPermission"> | string
+    userId?: StringFilter<"UserPermission"> | string
+    moduleId?: StringFilter<"UserPermission"> | string
+    canRead?: BoolFilter<"UserPermission"> | boolean
+    canWrite?: BoolFilter<"UserPermission"> | boolean
+    createdAt?: DateTimeFilter<"UserPermission"> | Date | string
+    updatedAt?: DateTimeFilter<"UserPermission"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    module?: XOR<ModuleRelationFilter, ModuleWhereInput>
+  }
+
+  export type UserPermissionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    moduleId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    module?: ModuleOrderByWithRelationInput
+  }
+
+  export type UserPermissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_moduleId?: UserPermissionUserIdModuleIdCompoundUniqueInput
+    AND?: UserPermissionWhereInput | UserPermissionWhereInput[]
+    OR?: UserPermissionWhereInput[]
+    NOT?: UserPermissionWhereInput | UserPermissionWhereInput[]
+    userId?: StringFilter<"UserPermission"> | string
+    moduleId?: StringFilter<"UserPermission"> | string
+    canRead?: BoolFilter<"UserPermission"> | boolean
+    canWrite?: BoolFilter<"UserPermission"> | boolean
+    createdAt?: DateTimeFilter<"UserPermission"> | Date | string
+    updatedAt?: DateTimeFilter<"UserPermission"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    module?: XOR<ModuleRelationFilter, ModuleWhereInput>
+  }, "id" | "userId_moduleId">
+
+  export type UserPermissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    moduleId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserPermissionCountOrderByAggregateInput
+    _max?: UserPermissionMaxOrderByAggregateInput
+    _min?: UserPermissionMinOrderByAggregateInput
+  }
+
+  export type UserPermissionScalarWhereWithAggregatesInput = {
+    AND?: UserPermissionScalarWhereWithAggregatesInput | UserPermissionScalarWhereWithAggregatesInput[]
+    OR?: UserPermissionScalarWhereWithAggregatesInput[]
+    NOT?: UserPermissionScalarWhereWithAggregatesInput | UserPermissionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserPermission"> | string
+    userId?: StringWithAggregatesFilter<"UserPermission"> | string
+    moduleId?: StringWithAggregatesFilter<"UserPermission"> | string
+    canRead?: BoolWithAggregatesFilter<"UserPermission"> | boolean
+    canWrite?: BoolWithAggregatesFilter<"UserPermission"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"UserPermission"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserPermission"> | Date | string
+  }
+
+  export type ModuleItemWhereInput = {
+    AND?: ModuleItemWhereInput | ModuleItemWhereInput[]
+    OR?: ModuleItemWhereInput[]
+    NOT?: ModuleItemWhereInput | ModuleItemWhereInput[]
+    id?: StringFilter<"ModuleItem"> | string
+    moduleId?: StringFilter<"ModuleItem"> | string
+    name?: StringFilter<"ModuleItem"> | string
+    key?: StringFilter<"ModuleItem"> | string
+    description?: StringNullableFilter<"ModuleItem"> | string | null
+    createdAt?: DateTimeFilter<"ModuleItem"> | Date | string
+    updatedAt?: DateTimeFilter<"ModuleItem"> | Date | string
+    module?: XOR<ModuleRelationFilter, ModuleWhereInput>
+    profileItemPermissions?: ProfileItemPermissionListRelationFilter
+    userItemPermissions?: UserItemPermissionListRelationFilter
+  }
+
+  export type ModuleItemOrderByWithRelationInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    module?: ModuleOrderByWithRelationInput
+    profileItemPermissions?: ProfileItemPermissionOrderByRelationAggregateInput
+    userItemPermissions?: UserItemPermissionOrderByRelationAggregateInput
+  }
+
+  export type ModuleItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    key?: string
+    AND?: ModuleItemWhereInput | ModuleItemWhereInput[]
+    OR?: ModuleItemWhereInput[]
+    NOT?: ModuleItemWhereInput | ModuleItemWhereInput[]
+    moduleId?: StringFilter<"ModuleItem"> | string
+    name?: StringFilter<"ModuleItem"> | string
+    description?: StringNullableFilter<"ModuleItem"> | string | null
+    createdAt?: DateTimeFilter<"ModuleItem"> | Date | string
+    updatedAt?: DateTimeFilter<"ModuleItem"> | Date | string
+    module?: XOR<ModuleRelationFilter, ModuleWhereInput>
+    profileItemPermissions?: ProfileItemPermissionListRelationFilter
+    userItemPermissions?: UserItemPermissionListRelationFilter
+  }, "id" | "key">
+
+  export type ModuleItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ModuleItemCountOrderByAggregateInput
+    _max?: ModuleItemMaxOrderByAggregateInput
+    _min?: ModuleItemMinOrderByAggregateInput
+  }
+
+  export type ModuleItemScalarWhereWithAggregatesInput = {
+    AND?: ModuleItemScalarWhereWithAggregatesInput | ModuleItemScalarWhereWithAggregatesInput[]
+    OR?: ModuleItemScalarWhereWithAggregatesInput[]
+    NOT?: ModuleItemScalarWhereWithAggregatesInput | ModuleItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ModuleItem"> | string
+    moduleId?: StringWithAggregatesFilter<"ModuleItem"> | string
+    name?: StringWithAggregatesFilter<"ModuleItem"> | string
+    key?: StringWithAggregatesFilter<"ModuleItem"> | string
+    description?: StringNullableWithAggregatesFilter<"ModuleItem"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ModuleItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ModuleItem"> | Date | string
+  }
+
+  export type ProfileItemPermissionWhereInput = {
+    AND?: ProfileItemPermissionWhereInput | ProfileItemPermissionWhereInput[]
+    OR?: ProfileItemPermissionWhereInput[]
+    NOT?: ProfileItemPermissionWhereInput | ProfileItemPermissionWhereInput[]
+    id?: StringFilter<"ProfileItemPermission"> | string
+    profileId?: StringFilter<"ProfileItemPermission"> | string
+    moduleItemId?: StringFilter<"ProfileItemPermission"> | string
+    canRead?: BoolFilter<"ProfileItemPermission"> | boolean
+    canWrite?: BoolFilter<"ProfileItemPermission"> | boolean
+    createdAt?: DateTimeFilter<"ProfileItemPermission"> | Date | string
+    updatedAt?: DateTimeFilter<"ProfileItemPermission"> | Date | string
+    profile?: XOR<ProfileRelationFilter, ProfileWhereInput>
+    moduleItem?: XOR<ModuleItemRelationFilter, ModuleItemWhereInput>
+  }
+
+  export type ProfileItemPermissionOrderByWithRelationInput = {
+    id?: SortOrder
+    profileId?: SortOrder
+    moduleItemId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    profile?: ProfileOrderByWithRelationInput
+    moduleItem?: ModuleItemOrderByWithRelationInput
+  }
+
+  export type ProfileItemPermissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    profileId_moduleItemId?: ProfileItemPermissionProfileIdModuleItemIdCompoundUniqueInput
+    AND?: ProfileItemPermissionWhereInput | ProfileItemPermissionWhereInput[]
+    OR?: ProfileItemPermissionWhereInput[]
+    NOT?: ProfileItemPermissionWhereInput | ProfileItemPermissionWhereInput[]
+    profileId?: StringFilter<"ProfileItemPermission"> | string
+    moduleItemId?: StringFilter<"ProfileItemPermission"> | string
+    canRead?: BoolFilter<"ProfileItemPermission"> | boolean
+    canWrite?: BoolFilter<"ProfileItemPermission"> | boolean
+    createdAt?: DateTimeFilter<"ProfileItemPermission"> | Date | string
+    updatedAt?: DateTimeFilter<"ProfileItemPermission"> | Date | string
+    profile?: XOR<ProfileRelationFilter, ProfileWhereInput>
+    moduleItem?: XOR<ModuleItemRelationFilter, ModuleItemWhereInput>
+  }, "id" | "profileId_moduleItemId">
+
+  export type ProfileItemPermissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    profileId?: SortOrder
+    moduleItemId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProfileItemPermissionCountOrderByAggregateInput
+    _max?: ProfileItemPermissionMaxOrderByAggregateInput
+    _min?: ProfileItemPermissionMinOrderByAggregateInput
+  }
+
+  export type ProfileItemPermissionScalarWhereWithAggregatesInput = {
+    AND?: ProfileItemPermissionScalarWhereWithAggregatesInput | ProfileItemPermissionScalarWhereWithAggregatesInput[]
+    OR?: ProfileItemPermissionScalarWhereWithAggregatesInput[]
+    NOT?: ProfileItemPermissionScalarWhereWithAggregatesInput | ProfileItemPermissionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProfileItemPermission"> | string
+    profileId?: StringWithAggregatesFilter<"ProfileItemPermission"> | string
+    moduleItemId?: StringWithAggregatesFilter<"ProfileItemPermission"> | string
+    canRead?: BoolWithAggregatesFilter<"ProfileItemPermission"> | boolean
+    canWrite?: BoolWithAggregatesFilter<"ProfileItemPermission"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"ProfileItemPermission"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ProfileItemPermission"> | Date | string
+  }
+
+  export type UserItemPermissionWhereInput = {
+    AND?: UserItemPermissionWhereInput | UserItemPermissionWhereInput[]
+    OR?: UserItemPermissionWhereInput[]
+    NOT?: UserItemPermissionWhereInput | UserItemPermissionWhereInput[]
+    id?: StringFilter<"UserItemPermission"> | string
+    userId?: StringFilter<"UserItemPermission"> | string
+    moduleItemId?: StringFilter<"UserItemPermission"> | string
+    canRead?: BoolFilter<"UserItemPermission"> | boolean
+    canWrite?: BoolFilter<"UserItemPermission"> | boolean
+    createdAt?: DateTimeFilter<"UserItemPermission"> | Date | string
+    updatedAt?: DateTimeFilter<"UserItemPermission"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    moduleItem?: XOR<ModuleItemRelationFilter, ModuleItemWhereInput>
+  }
+
+  export type UserItemPermissionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    moduleItemId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    moduleItem?: ModuleItemOrderByWithRelationInput
+  }
+
+  export type UserItemPermissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_moduleItemId?: UserItemPermissionUserIdModuleItemIdCompoundUniqueInput
+    AND?: UserItemPermissionWhereInput | UserItemPermissionWhereInput[]
+    OR?: UserItemPermissionWhereInput[]
+    NOT?: UserItemPermissionWhereInput | UserItemPermissionWhereInput[]
+    userId?: StringFilter<"UserItemPermission"> | string
+    moduleItemId?: StringFilter<"UserItemPermission"> | string
+    canRead?: BoolFilter<"UserItemPermission"> | boolean
+    canWrite?: BoolFilter<"UserItemPermission"> | boolean
+    createdAt?: DateTimeFilter<"UserItemPermission"> | Date | string
+    updatedAt?: DateTimeFilter<"UserItemPermission"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    moduleItem?: XOR<ModuleItemRelationFilter, ModuleItemWhereInput>
+  }, "id" | "userId_moduleItemId">
+
+  export type UserItemPermissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    moduleItemId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserItemPermissionCountOrderByAggregateInput
+    _max?: UserItemPermissionMaxOrderByAggregateInput
+    _min?: UserItemPermissionMinOrderByAggregateInput
+  }
+
+  export type UserItemPermissionScalarWhereWithAggregatesInput = {
+    AND?: UserItemPermissionScalarWhereWithAggregatesInput | UserItemPermissionScalarWhereWithAggregatesInput[]
+    OR?: UserItemPermissionScalarWhereWithAggregatesInput[]
+    NOT?: UserItemPermissionScalarWhereWithAggregatesInput | UserItemPermissionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserItemPermission"> | string
+    userId?: StringWithAggregatesFilter<"UserItemPermission"> | string
+    moduleItemId?: StringWithAggregatesFilter<"UserItemPermission"> | string
+    canRead?: BoolWithAggregatesFilter<"UserItemPermission"> | boolean
+    canWrite?: BoolWithAggregatesFilter<"UserItemPermission"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"UserItemPermission"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserItemPermission"> | Date | string
   }
 
   export type AuditLogWhereInput = {
@@ -32265,6 +41177,95 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Desconto"> | Date | string
   }
 
+  export type EmailJobWhereInput = {
+    AND?: EmailJobWhereInput | EmailJobWhereInput[]
+    OR?: EmailJobWhereInput[]
+    NOT?: EmailJobWhereInput | EmailJobWhereInput[]
+    id?: StringFilter<"EmailJob"> | string
+    type?: StringFilter<"EmailJob"> | string
+    payload?: StringFilter<"EmailJob"> | string
+    status?: StringFilter<"EmailJob"> | string
+    attempts?: IntFilter<"EmailJob"> | number
+    maxAttempts?: IntFilter<"EmailJob"> | number
+    workerId?: StringNullableFilter<"EmailJob"> | string | null
+    lockedUntil?: DateTimeNullableFilter<"EmailJob"> | Date | string | null
+    lastError?: StringNullableFilter<"EmailJob"> | string | null
+    processedAt?: DateTimeNullableFilter<"EmailJob"> | Date | string | null
+    createdAt?: DateTimeFilter<"EmailJob"> | Date | string
+    updatedAt?: DateTimeFilter<"EmailJob"> | Date | string
+  }
+
+  export type EmailJobOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    payload?: SortOrder
+    status?: SortOrder
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+    workerId?: SortOrderInput | SortOrder
+    lockedUntil?: SortOrderInput | SortOrder
+    lastError?: SortOrderInput | SortOrder
+    processedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EmailJobWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: EmailJobWhereInput | EmailJobWhereInput[]
+    OR?: EmailJobWhereInput[]
+    NOT?: EmailJobWhereInput | EmailJobWhereInput[]
+    type?: StringFilter<"EmailJob"> | string
+    payload?: StringFilter<"EmailJob"> | string
+    status?: StringFilter<"EmailJob"> | string
+    attempts?: IntFilter<"EmailJob"> | number
+    maxAttempts?: IntFilter<"EmailJob"> | number
+    workerId?: StringNullableFilter<"EmailJob"> | string | null
+    lockedUntil?: DateTimeNullableFilter<"EmailJob"> | Date | string | null
+    lastError?: StringNullableFilter<"EmailJob"> | string | null
+    processedAt?: DateTimeNullableFilter<"EmailJob"> | Date | string | null
+    createdAt?: DateTimeFilter<"EmailJob"> | Date | string
+    updatedAt?: DateTimeFilter<"EmailJob"> | Date | string
+  }, "id">
+
+  export type EmailJobOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    payload?: SortOrder
+    status?: SortOrder
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+    workerId?: SortOrderInput | SortOrder
+    lockedUntil?: SortOrderInput | SortOrder
+    lastError?: SortOrderInput | SortOrder
+    processedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: EmailJobCountOrderByAggregateInput
+    _avg?: EmailJobAvgOrderByAggregateInput
+    _max?: EmailJobMaxOrderByAggregateInput
+    _min?: EmailJobMinOrderByAggregateInput
+    _sum?: EmailJobSumOrderByAggregateInput
+  }
+
+  export type EmailJobScalarWhereWithAggregatesInput = {
+    AND?: EmailJobScalarWhereWithAggregatesInput | EmailJobScalarWhereWithAggregatesInput[]
+    OR?: EmailJobScalarWhereWithAggregatesInput[]
+    NOT?: EmailJobScalarWhereWithAggregatesInput | EmailJobScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"EmailJob"> | string
+    type?: StringWithAggregatesFilter<"EmailJob"> | string
+    payload?: StringWithAggregatesFilter<"EmailJob"> | string
+    status?: StringWithAggregatesFilter<"EmailJob"> | string
+    attempts?: IntWithAggregatesFilter<"EmailJob"> | number
+    maxAttempts?: IntWithAggregatesFilter<"EmailJob"> | number
+    workerId?: StringNullableWithAggregatesFilter<"EmailJob"> | string | null
+    lockedUntil?: DateTimeNullableWithAggregatesFilter<"EmailJob"> | Date | string | null
+    lastError?: StringNullableWithAggregatesFilter<"EmailJob"> | string | null
+    processedAt?: DateTimeNullableWithAggregatesFilter<"EmailJob"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"EmailJob"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"EmailJob"> | Date | string
+  }
+
   export type AlunoCreateInput = {
     id?: string
     nome_completo: string
@@ -33077,6 +42078,9 @@ export namespace Prisma {
     certificados?: CertificateCreateNestedManyWithoutUserInput
     turmas?: TurmaCreateNestedManyWithoutUserInput
     cursos?: CursoCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -33091,6 +42095,7 @@ export namespace Prisma {
     resetTokenExpires?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    profileId?: string | null
     funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
     alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
     matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
@@ -33098,6 +42103,8 @@ export namespace Prisma {
     certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
     turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -33119,6 +42126,9 @@ export namespace Prisma {
     certificados?: CertificateUpdateManyWithoutUserNestedInput
     turmas?: TurmaUpdateManyWithoutUserNestedInput
     cursos?: CursoUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -33133,6 +42143,7 @@ export namespace Prisma {
     resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
     alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
     matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
@@ -33140,6 +42151,8 @@ export namespace Prisma {
     certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
     turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -33154,6 +42167,7 @@ export namespace Prisma {
     resetTokenExpires?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    profileId?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -33180,6 +42194,499 @@ export namespace Prisma {
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ProfileCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    permissions?: ProfilePermissionCreateNestedManyWithoutProfileInput
+    itemPermissions?: ProfileItemPermissionCreateNestedManyWithoutProfileInput
+    users?: UserCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    permissions?: ProfilePermissionUncheckedCreateNestedManyWithoutProfileInput
+    itemPermissions?: ProfileItemPermissionUncheckedCreateNestedManyWithoutProfileInput
+    users?: UserUncheckedCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: ProfilePermissionUpdateManyWithoutProfileNestedInput
+    itemPermissions?: ProfileItemPermissionUpdateManyWithoutProfileNestedInput
+    users?: UserUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ProfileUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: ProfilePermissionUncheckedUpdateManyWithoutProfileNestedInput
+    itemPermissions?: ProfileItemPermissionUncheckedUpdateManyWithoutProfileNestedInput
+    users?: UserUncheckedUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ProfileCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfileUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ModuleCreateInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: ModuleItemCreateNestedManyWithoutModuleInput
+    profilePermissions?: ProfilePermissionCreateNestedManyWithoutModuleInput
+    userPermissions?: UserPermissionCreateNestedManyWithoutModuleInput
+  }
+
+  export type ModuleUncheckedCreateInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: ModuleItemUncheckedCreateNestedManyWithoutModuleInput
+    profilePermissions?: ProfilePermissionUncheckedCreateNestedManyWithoutModuleInput
+    userPermissions?: UserPermissionUncheckedCreateNestedManyWithoutModuleInput
+  }
+
+  export type ModuleUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: ModuleItemUpdateManyWithoutModuleNestedInput
+    profilePermissions?: ProfilePermissionUpdateManyWithoutModuleNestedInput
+    userPermissions?: UserPermissionUpdateManyWithoutModuleNestedInput
+  }
+
+  export type ModuleUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: ModuleItemUncheckedUpdateManyWithoutModuleNestedInput
+    profilePermissions?: ProfilePermissionUncheckedUpdateManyWithoutModuleNestedInput
+    userPermissions?: UserPermissionUncheckedUpdateManyWithoutModuleNestedInput
+  }
+
+  export type ModuleCreateManyInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ModuleUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ModuleUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfilePermissionCreateInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profile: ProfileCreateNestedOneWithoutPermissionsInput
+    module: ModuleCreateNestedOneWithoutProfilePermissionsInput
+  }
+
+  export type ProfilePermissionUncheckedCreateInput = {
+    id?: string
+    profileId: string
+    moduleId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfilePermissionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUpdateOneRequiredWithoutPermissionsNestedInput
+    module?: ModuleUpdateOneRequiredWithoutProfilePermissionsNestedInput
+  }
+
+  export type ProfilePermissionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    profileId?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfilePermissionCreateManyInput = {
+    id?: string
+    profileId: string
+    moduleId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfilePermissionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfilePermissionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    profileId?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserPermissionCreateInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutPermissionsInput
+    module: ModuleCreateNestedOneWithoutUserPermissionsInput
+  }
+
+  export type UserPermissionUncheckedCreateInput = {
+    id?: string
+    userId: string
+    moduleId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserPermissionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPermissionsNestedInput
+    module?: ModuleUpdateOneRequiredWithoutUserPermissionsNestedInput
+  }
+
+  export type UserPermissionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserPermissionCreateManyInput = {
+    id?: string
+    userId: string
+    moduleId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserPermissionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserPermissionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ModuleItemCreateInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    module: ModuleCreateNestedOneWithoutItemsInput
+    profileItemPermissions?: ProfileItemPermissionCreateNestedManyWithoutModuleItemInput
+    userItemPermissions?: UserItemPermissionCreateNestedManyWithoutModuleItemInput
+  }
+
+  export type ModuleItemUncheckedCreateInput = {
+    id?: string
+    moduleId: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profileItemPermissions?: ProfileItemPermissionUncheckedCreateNestedManyWithoutModuleItemInput
+    userItemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutModuleItemInput
+  }
+
+  export type ModuleItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    module?: ModuleUpdateOneRequiredWithoutItemsNestedInput
+    profileItemPermissions?: ProfileItemPermissionUpdateManyWithoutModuleItemNestedInput
+    userItemPermissions?: UserItemPermissionUpdateManyWithoutModuleItemNestedInput
+  }
+
+  export type ModuleItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileItemPermissions?: ProfileItemPermissionUncheckedUpdateManyWithoutModuleItemNestedInput
+    userItemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutModuleItemNestedInput
+  }
+
+  export type ModuleItemCreateManyInput = {
+    id?: string
+    moduleId: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ModuleItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ModuleItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileItemPermissionCreateInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profile: ProfileCreateNestedOneWithoutItemPermissionsInput
+    moduleItem: ModuleItemCreateNestedOneWithoutProfileItemPermissionsInput
+  }
+
+  export type ProfileItemPermissionUncheckedCreateInput = {
+    id?: string
+    profileId: string
+    moduleItemId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfileItemPermissionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUpdateOneRequiredWithoutItemPermissionsNestedInput
+    moduleItem?: ModuleItemUpdateOneRequiredWithoutProfileItemPermissionsNestedInput
+  }
+
+  export type ProfileItemPermissionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    profileId?: StringFieldUpdateOperationsInput | string
+    moduleItemId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileItemPermissionCreateManyInput = {
+    id?: string
+    profileId: string
+    moduleItemId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfileItemPermissionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileItemPermissionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    profileId?: StringFieldUpdateOperationsInput | string
+    moduleItemId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserItemPermissionCreateInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutItemPermissionsInput
+    moduleItem: ModuleItemCreateNestedOneWithoutUserItemPermissionsInput
+  }
+
+  export type UserItemPermissionUncheckedCreateInput = {
+    id?: string
+    userId: string
+    moduleItemId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserItemPermissionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutItemPermissionsNestedInput
+    moduleItem?: ModuleItemUpdateOneRequiredWithoutUserItemPermissionsNestedInput
+  }
+
+  export type UserItemPermissionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    moduleItemId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserItemPermissionCreateManyInput = {
+    id?: string
+    userId: string
+    moduleItemId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserItemPermissionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserItemPermissionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    moduleItemId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -34835,6 +44342,111 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type EmailJobCreateInput = {
+    id?: string
+    type?: string
+    payload: string
+    status?: string
+    attempts?: number
+    maxAttempts?: number
+    workerId?: string | null
+    lockedUntil?: Date | string | null
+    lastError?: string | null
+    processedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EmailJobUncheckedCreateInput = {
+    id?: string
+    type?: string
+    payload: string
+    status?: string
+    attempts?: number
+    maxAttempts?: number
+    workerId?: string | null
+    lockedUntil?: Date | string | null
+    lastError?: string | null
+    processedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EmailJobUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    payload?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    workerId?: NullableStringFieldUpdateOperationsInput | string | null
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmailJobUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    payload?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    workerId?: NullableStringFieldUpdateOperationsInput | string | null
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmailJobCreateManyInput = {
+    id?: string
+    type?: string
+    payload: string
+    status?: string
+    attempts?: number
+    maxAttempts?: number
+    workerId?: string | null
+    lockedUntil?: Date | string | null
+    lastError?: string | null
+    processedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EmailJobUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    payload?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    workerId?: NullableStringFieldUpdateOperationsInput | string | null
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmailJobUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    payload?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    attempts?: IntFieldUpdateOperationsInput | number
+    maxAttempts?: IntFieldUpdateOperationsInput | number
+    workerId?: NullableStringFieldUpdateOperationsInput | string | null
+    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -35574,11 +45186,36 @@ export namespace Prisma {
     none?: CursoWhereInput
   }
 
+  export type ProfileNullableRelationFilter = {
+    is?: ProfileWhereInput | null
+    isNot?: ProfileWhereInput | null
+  }
+
+  export type UserPermissionListRelationFilter = {
+    every?: UserPermissionWhereInput
+    some?: UserPermissionWhereInput
+    none?: UserPermissionWhereInput
+  }
+
+  export type UserItemPermissionListRelationFilter = {
+    every?: UserItemPermissionWhereInput
+    some?: UserItemPermissionWhereInput
+    none?: UserItemPermissionWhereInput
+  }
+
   export type CertificateOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type CursoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserPermissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserItemPermissionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -35594,6 +45231,7 @@ export namespace Prisma {
     resetTokenExpires?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    profileId?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -35608,6 +45246,7 @@ export namespace Prisma {
     resetTokenExpires?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    profileId?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -35622,6 +45261,7 @@ export namespace Prisma {
     resetTokenExpires?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    profileId?: SortOrder
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -35636,6 +45276,287 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type ProfilePermissionListRelationFilter = {
+    every?: ProfilePermissionWhereInput
+    some?: ProfilePermissionWhereInput
+    none?: ProfilePermissionWhereInput
+  }
+
+  export type ProfileItemPermissionListRelationFilter = {
+    every?: ProfileItemPermissionWhereInput
+    some?: ProfileItemPermissionWhereInput
+    none?: ProfileItemPermissionWhereInput
+  }
+
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
+  }
+
+  export type ProfilePermissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProfileItemPermissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProfileCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProfileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProfileMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ModuleItemListRelationFilter = {
+    every?: ModuleItemWhereInput
+    some?: ModuleItemWhereInput
+    none?: ModuleItemWhereInput
+  }
+
+  export type ModuleItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ModuleCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ModuleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ModuleMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProfileRelationFilter = {
+    is?: ProfileWhereInput
+    isNot?: ProfileWhereInput
+  }
+
+  export type ModuleRelationFilter = {
+    is?: ModuleWhereInput
+    isNot?: ModuleWhereInput
+  }
+
+  export type ProfilePermissionProfileIdModuleIdCompoundUniqueInput = {
+    profileId: string
+    moduleId: string
+  }
+
+  export type ProfilePermissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    profileId?: SortOrder
+    moduleId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProfilePermissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    profileId?: SortOrder
+    moduleId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProfilePermissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    profileId?: SortOrder
+    moduleId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type UserPermissionUserIdModuleIdCompoundUniqueInput = {
+    userId: string
+    moduleId: string
+  }
+
+  export type UserPermissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    moduleId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserPermissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    moduleId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserPermissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    moduleId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ModuleItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ModuleItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ModuleItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ModuleItemRelationFilter = {
+    is?: ModuleItemWhereInput
+    isNot?: ModuleItemWhereInput
+  }
+
+  export type ProfileItemPermissionProfileIdModuleItemIdCompoundUniqueInput = {
+    profileId: string
+    moduleItemId: string
+  }
+
+  export type ProfileItemPermissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    profileId?: SortOrder
+    moduleItemId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProfileItemPermissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    profileId?: SortOrder
+    moduleItemId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProfileItemPermissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    profileId?: SortOrder
+    moduleItemId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserItemPermissionUserIdModuleItemIdCompoundUniqueInput = {
+    userId: string
+    moduleItemId: string
+  }
+
+  export type UserItemPermissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    moduleItemId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserItemPermissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    moduleItemId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserItemPermissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    moduleItemId?: SortOrder
+    canRead?: SortOrder
+    canWrite?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type AuditLogCountOrderByAggregateInput = {
@@ -36647,6 +46568,61 @@ export namespace Prisma {
     ano_referencia?: SortOrder
   }
 
+  export type EmailJobCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    payload?: SortOrder
+    status?: SortOrder
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+    workerId?: SortOrder
+    lockedUntil?: SortOrder
+    lastError?: SortOrder
+    processedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EmailJobAvgOrderByAggregateInput = {
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+  }
+
+  export type EmailJobMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    payload?: SortOrder
+    status?: SortOrder
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+    workerId?: SortOrder
+    lockedUntil?: SortOrder
+    lastError?: SortOrder
+    processedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EmailJobMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    payload?: SortOrder
+    status?: SortOrder
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+    workerId?: SortOrder
+    lockedUntil?: SortOrder
+    lastError?: SortOrder
+    processedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EmailJobSumOrderByAggregateInput = {
+    attempts?: SortOrder
+    maxAttempts?: SortOrder
+  }
+
   export type MatriculaCreateNestedManyWithoutAlunoInput = {
     create?: XOR<MatriculaCreateWithoutAlunoInput, MatriculaUncheckedCreateWithoutAlunoInput> | MatriculaCreateWithoutAlunoInput[] | MatriculaUncheckedCreateWithoutAlunoInput[]
     connectOrCreate?: MatriculaCreateOrConnectWithoutAlunoInput | MatriculaCreateOrConnectWithoutAlunoInput[]
@@ -37511,6 +47487,26 @@ export namespace Prisma {
     connect?: CursoWhereUniqueInput | CursoWhereUniqueInput[]
   }
 
+  export type ProfileCreateNestedOneWithoutUsersInput = {
+    create?: XOR<ProfileCreateWithoutUsersInput, ProfileUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutUsersInput
+    connect?: ProfileWhereUniqueInput
+  }
+
+  export type UserPermissionCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserPermissionCreateWithoutUserInput, UserPermissionUncheckedCreateWithoutUserInput> | UserPermissionCreateWithoutUserInput[] | UserPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserPermissionCreateOrConnectWithoutUserInput | UserPermissionCreateOrConnectWithoutUserInput[]
+    createMany?: UserPermissionCreateManyUserInputEnvelope
+    connect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+  }
+
+  export type UserItemPermissionCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserItemPermissionCreateWithoutUserInput, UserItemPermissionUncheckedCreateWithoutUserInput> | UserItemPermissionCreateWithoutUserInput[] | UserItemPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserItemPermissionCreateOrConnectWithoutUserInput | UserItemPermissionCreateOrConnectWithoutUserInput[]
+    createMany?: UserItemPermissionCreateManyUserInputEnvelope
+    connect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+  }
+
   export type FuncionarioUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<FuncionarioCreateWithoutUserInput, FuncionarioUncheckedCreateWithoutUserInput>
     connectOrCreate?: FuncionarioCreateOrConnectWithoutUserInput
@@ -37557,6 +47553,20 @@ export namespace Prisma {
     connectOrCreate?: CursoCreateOrConnectWithoutUserInput | CursoCreateOrConnectWithoutUserInput[]
     createMany?: CursoCreateManyUserInputEnvelope
     connect?: CursoWhereUniqueInput | CursoWhereUniqueInput[]
+  }
+
+  export type UserPermissionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserPermissionCreateWithoutUserInput, UserPermissionUncheckedCreateWithoutUserInput> | UserPermissionCreateWithoutUserInput[] | UserPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserPermissionCreateOrConnectWithoutUserInput | UserPermissionCreateOrConnectWithoutUserInput[]
+    createMany?: UserPermissionCreateManyUserInputEnvelope
+    connect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+  }
+
+  export type UserItemPermissionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserItemPermissionCreateWithoutUserInput, UserItemPermissionUncheckedCreateWithoutUserInput> | UserItemPermissionCreateWithoutUserInput[] | UserItemPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserItemPermissionCreateOrConnectWithoutUserInput | UserItemPermissionCreateOrConnectWithoutUserInput[]
+    createMany?: UserItemPermissionCreateManyUserInputEnvelope
+    connect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -37657,6 +47667,44 @@ export namespace Prisma {
     deleteMany?: CursoScalarWhereInput | CursoScalarWhereInput[]
   }
 
+  export type ProfileUpdateOneWithoutUsersNestedInput = {
+    create?: XOR<ProfileCreateWithoutUsersInput, ProfileUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutUsersInput
+    upsert?: ProfileUpsertWithoutUsersInput
+    disconnect?: ProfileWhereInput | boolean
+    delete?: ProfileWhereInput | boolean
+    connect?: ProfileWhereUniqueInput
+    update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutUsersInput, ProfileUpdateWithoutUsersInput>, ProfileUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type UserPermissionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserPermissionCreateWithoutUserInput, UserPermissionUncheckedCreateWithoutUserInput> | UserPermissionCreateWithoutUserInput[] | UserPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserPermissionCreateOrConnectWithoutUserInput | UserPermissionCreateOrConnectWithoutUserInput[]
+    upsert?: UserPermissionUpsertWithWhereUniqueWithoutUserInput | UserPermissionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserPermissionCreateManyUserInputEnvelope
+    set?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    disconnect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    delete?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    connect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    update?: UserPermissionUpdateWithWhereUniqueWithoutUserInput | UserPermissionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserPermissionUpdateManyWithWhereWithoutUserInput | UserPermissionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserPermissionScalarWhereInput | UserPermissionScalarWhereInput[]
+  }
+
+  export type UserItemPermissionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserItemPermissionCreateWithoutUserInput, UserItemPermissionUncheckedCreateWithoutUserInput> | UserItemPermissionCreateWithoutUserInput[] | UserItemPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserItemPermissionCreateOrConnectWithoutUserInput | UserItemPermissionCreateOrConnectWithoutUserInput[]
+    upsert?: UserItemPermissionUpsertWithWhereUniqueWithoutUserInput | UserItemPermissionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserItemPermissionCreateManyUserInputEnvelope
+    set?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    disconnect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    delete?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    connect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    update?: UserItemPermissionUpdateWithWhereUniqueWithoutUserInput | UserItemPermissionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserItemPermissionUpdateManyWithWhereWithoutUserInput | UserItemPermissionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserItemPermissionScalarWhereInput | UserItemPermissionScalarWhereInput[]
+  }
+
   export type FuncionarioUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<FuncionarioCreateWithoutUserInput, FuncionarioUncheckedCreateWithoutUserInput>
     connectOrCreate?: FuncionarioCreateOrConnectWithoutUserInput
@@ -37749,6 +47797,496 @@ export namespace Prisma {
     update?: CursoUpdateWithWhereUniqueWithoutUserInput | CursoUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: CursoUpdateManyWithWhereWithoutUserInput | CursoUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: CursoScalarWhereInput | CursoScalarWhereInput[]
+  }
+
+  export type UserPermissionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserPermissionCreateWithoutUserInput, UserPermissionUncheckedCreateWithoutUserInput> | UserPermissionCreateWithoutUserInput[] | UserPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserPermissionCreateOrConnectWithoutUserInput | UserPermissionCreateOrConnectWithoutUserInput[]
+    upsert?: UserPermissionUpsertWithWhereUniqueWithoutUserInput | UserPermissionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserPermissionCreateManyUserInputEnvelope
+    set?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    disconnect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    delete?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    connect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    update?: UserPermissionUpdateWithWhereUniqueWithoutUserInput | UserPermissionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserPermissionUpdateManyWithWhereWithoutUserInput | UserPermissionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserPermissionScalarWhereInput | UserPermissionScalarWhereInput[]
+  }
+
+  export type UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserItemPermissionCreateWithoutUserInput, UserItemPermissionUncheckedCreateWithoutUserInput> | UserItemPermissionCreateWithoutUserInput[] | UserItemPermissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserItemPermissionCreateOrConnectWithoutUserInput | UserItemPermissionCreateOrConnectWithoutUserInput[]
+    upsert?: UserItemPermissionUpsertWithWhereUniqueWithoutUserInput | UserItemPermissionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserItemPermissionCreateManyUserInputEnvelope
+    set?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    disconnect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    delete?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    connect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    update?: UserItemPermissionUpdateWithWhereUniqueWithoutUserInput | UserItemPermissionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserItemPermissionUpdateManyWithWhereWithoutUserInput | UserItemPermissionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserItemPermissionScalarWhereInput | UserItemPermissionScalarWhereInput[]
+  }
+
+  export type ProfilePermissionCreateNestedManyWithoutProfileInput = {
+    create?: XOR<ProfilePermissionCreateWithoutProfileInput, ProfilePermissionUncheckedCreateWithoutProfileInput> | ProfilePermissionCreateWithoutProfileInput[] | ProfilePermissionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: ProfilePermissionCreateOrConnectWithoutProfileInput | ProfilePermissionCreateOrConnectWithoutProfileInput[]
+    createMany?: ProfilePermissionCreateManyProfileInputEnvelope
+    connect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+  }
+
+  export type ProfileItemPermissionCreateNestedManyWithoutProfileInput = {
+    create?: XOR<ProfileItemPermissionCreateWithoutProfileInput, ProfileItemPermissionUncheckedCreateWithoutProfileInput> | ProfileItemPermissionCreateWithoutProfileInput[] | ProfileItemPermissionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: ProfileItemPermissionCreateOrConnectWithoutProfileInput | ProfileItemPermissionCreateOrConnectWithoutProfileInput[]
+    createMany?: ProfileItemPermissionCreateManyProfileInputEnvelope
+    connect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedManyWithoutProfileInput = {
+    create?: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput> | UserCreateWithoutProfileInput[] | UserUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutProfileInput | UserCreateOrConnectWithoutProfileInput[]
+    createMany?: UserCreateManyProfileInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type ProfilePermissionUncheckedCreateNestedManyWithoutProfileInput = {
+    create?: XOR<ProfilePermissionCreateWithoutProfileInput, ProfilePermissionUncheckedCreateWithoutProfileInput> | ProfilePermissionCreateWithoutProfileInput[] | ProfilePermissionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: ProfilePermissionCreateOrConnectWithoutProfileInput | ProfilePermissionCreateOrConnectWithoutProfileInput[]
+    createMany?: ProfilePermissionCreateManyProfileInputEnvelope
+    connect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+  }
+
+  export type ProfileItemPermissionUncheckedCreateNestedManyWithoutProfileInput = {
+    create?: XOR<ProfileItemPermissionCreateWithoutProfileInput, ProfileItemPermissionUncheckedCreateWithoutProfileInput> | ProfileItemPermissionCreateWithoutProfileInput[] | ProfileItemPermissionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: ProfileItemPermissionCreateOrConnectWithoutProfileInput | ProfileItemPermissionCreateOrConnectWithoutProfileInput[]
+    createMany?: ProfileItemPermissionCreateManyProfileInputEnvelope
+    connect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutProfileInput = {
+    create?: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput> | UserCreateWithoutProfileInput[] | UserUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutProfileInput | UserCreateOrConnectWithoutProfileInput[]
+    createMany?: UserCreateManyProfileInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type ProfilePermissionUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<ProfilePermissionCreateWithoutProfileInput, ProfilePermissionUncheckedCreateWithoutProfileInput> | ProfilePermissionCreateWithoutProfileInput[] | ProfilePermissionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: ProfilePermissionCreateOrConnectWithoutProfileInput | ProfilePermissionCreateOrConnectWithoutProfileInput[]
+    upsert?: ProfilePermissionUpsertWithWhereUniqueWithoutProfileInput | ProfilePermissionUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: ProfilePermissionCreateManyProfileInputEnvelope
+    set?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    disconnect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    delete?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    connect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    update?: ProfilePermissionUpdateWithWhereUniqueWithoutProfileInput | ProfilePermissionUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: ProfilePermissionUpdateManyWithWhereWithoutProfileInput | ProfilePermissionUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: ProfilePermissionScalarWhereInput | ProfilePermissionScalarWhereInput[]
+  }
+
+  export type ProfileItemPermissionUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<ProfileItemPermissionCreateWithoutProfileInput, ProfileItemPermissionUncheckedCreateWithoutProfileInput> | ProfileItemPermissionCreateWithoutProfileInput[] | ProfileItemPermissionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: ProfileItemPermissionCreateOrConnectWithoutProfileInput | ProfileItemPermissionCreateOrConnectWithoutProfileInput[]
+    upsert?: ProfileItemPermissionUpsertWithWhereUniqueWithoutProfileInput | ProfileItemPermissionUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: ProfileItemPermissionCreateManyProfileInputEnvelope
+    set?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    disconnect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    delete?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    connect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    update?: ProfileItemPermissionUpdateWithWhereUniqueWithoutProfileInput | ProfileItemPermissionUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: ProfileItemPermissionUpdateManyWithWhereWithoutProfileInput | ProfileItemPermissionUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: ProfileItemPermissionScalarWhereInput | ProfileItemPermissionScalarWhereInput[]
+  }
+
+  export type UserUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput> | UserCreateWithoutProfileInput[] | UserUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutProfileInput | UserCreateOrConnectWithoutProfileInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutProfileInput | UserUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: UserCreateManyProfileInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutProfileInput | UserUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutProfileInput | UserUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ProfilePermissionUncheckedUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<ProfilePermissionCreateWithoutProfileInput, ProfilePermissionUncheckedCreateWithoutProfileInput> | ProfilePermissionCreateWithoutProfileInput[] | ProfilePermissionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: ProfilePermissionCreateOrConnectWithoutProfileInput | ProfilePermissionCreateOrConnectWithoutProfileInput[]
+    upsert?: ProfilePermissionUpsertWithWhereUniqueWithoutProfileInput | ProfilePermissionUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: ProfilePermissionCreateManyProfileInputEnvelope
+    set?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    disconnect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    delete?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    connect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    update?: ProfilePermissionUpdateWithWhereUniqueWithoutProfileInput | ProfilePermissionUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: ProfilePermissionUpdateManyWithWhereWithoutProfileInput | ProfilePermissionUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: ProfilePermissionScalarWhereInput | ProfilePermissionScalarWhereInput[]
+  }
+
+  export type ProfileItemPermissionUncheckedUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<ProfileItemPermissionCreateWithoutProfileInput, ProfileItemPermissionUncheckedCreateWithoutProfileInput> | ProfileItemPermissionCreateWithoutProfileInput[] | ProfileItemPermissionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: ProfileItemPermissionCreateOrConnectWithoutProfileInput | ProfileItemPermissionCreateOrConnectWithoutProfileInput[]
+    upsert?: ProfileItemPermissionUpsertWithWhereUniqueWithoutProfileInput | ProfileItemPermissionUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: ProfileItemPermissionCreateManyProfileInputEnvelope
+    set?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    disconnect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    delete?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    connect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    update?: ProfileItemPermissionUpdateWithWhereUniqueWithoutProfileInput | ProfileItemPermissionUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: ProfileItemPermissionUpdateManyWithWhereWithoutProfileInput | ProfileItemPermissionUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: ProfileItemPermissionScalarWhereInput | ProfileItemPermissionScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput> | UserCreateWithoutProfileInput[] | UserUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutProfileInput | UserCreateOrConnectWithoutProfileInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutProfileInput | UserUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: UserCreateManyProfileInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutProfileInput | UserUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutProfileInput | UserUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ModuleItemCreateNestedManyWithoutModuleInput = {
+    create?: XOR<ModuleItemCreateWithoutModuleInput, ModuleItemUncheckedCreateWithoutModuleInput> | ModuleItemCreateWithoutModuleInput[] | ModuleItemUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ModuleItemCreateOrConnectWithoutModuleInput | ModuleItemCreateOrConnectWithoutModuleInput[]
+    createMany?: ModuleItemCreateManyModuleInputEnvelope
+    connect?: ModuleItemWhereUniqueInput | ModuleItemWhereUniqueInput[]
+  }
+
+  export type ProfilePermissionCreateNestedManyWithoutModuleInput = {
+    create?: XOR<ProfilePermissionCreateWithoutModuleInput, ProfilePermissionUncheckedCreateWithoutModuleInput> | ProfilePermissionCreateWithoutModuleInput[] | ProfilePermissionUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ProfilePermissionCreateOrConnectWithoutModuleInput | ProfilePermissionCreateOrConnectWithoutModuleInput[]
+    createMany?: ProfilePermissionCreateManyModuleInputEnvelope
+    connect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+  }
+
+  export type UserPermissionCreateNestedManyWithoutModuleInput = {
+    create?: XOR<UserPermissionCreateWithoutModuleInput, UserPermissionUncheckedCreateWithoutModuleInput> | UserPermissionCreateWithoutModuleInput[] | UserPermissionUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: UserPermissionCreateOrConnectWithoutModuleInput | UserPermissionCreateOrConnectWithoutModuleInput[]
+    createMany?: UserPermissionCreateManyModuleInputEnvelope
+    connect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+  }
+
+  export type ModuleItemUncheckedCreateNestedManyWithoutModuleInput = {
+    create?: XOR<ModuleItemCreateWithoutModuleInput, ModuleItemUncheckedCreateWithoutModuleInput> | ModuleItemCreateWithoutModuleInput[] | ModuleItemUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ModuleItemCreateOrConnectWithoutModuleInput | ModuleItemCreateOrConnectWithoutModuleInput[]
+    createMany?: ModuleItemCreateManyModuleInputEnvelope
+    connect?: ModuleItemWhereUniqueInput | ModuleItemWhereUniqueInput[]
+  }
+
+  export type ProfilePermissionUncheckedCreateNestedManyWithoutModuleInput = {
+    create?: XOR<ProfilePermissionCreateWithoutModuleInput, ProfilePermissionUncheckedCreateWithoutModuleInput> | ProfilePermissionCreateWithoutModuleInput[] | ProfilePermissionUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ProfilePermissionCreateOrConnectWithoutModuleInput | ProfilePermissionCreateOrConnectWithoutModuleInput[]
+    createMany?: ProfilePermissionCreateManyModuleInputEnvelope
+    connect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+  }
+
+  export type UserPermissionUncheckedCreateNestedManyWithoutModuleInput = {
+    create?: XOR<UserPermissionCreateWithoutModuleInput, UserPermissionUncheckedCreateWithoutModuleInput> | UserPermissionCreateWithoutModuleInput[] | UserPermissionUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: UserPermissionCreateOrConnectWithoutModuleInput | UserPermissionCreateOrConnectWithoutModuleInput[]
+    createMany?: UserPermissionCreateManyModuleInputEnvelope
+    connect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+  }
+
+  export type ModuleItemUpdateManyWithoutModuleNestedInput = {
+    create?: XOR<ModuleItemCreateWithoutModuleInput, ModuleItemUncheckedCreateWithoutModuleInput> | ModuleItemCreateWithoutModuleInput[] | ModuleItemUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ModuleItemCreateOrConnectWithoutModuleInput | ModuleItemCreateOrConnectWithoutModuleInput[]
+    upsert?: ModuleItemUpsertWithWhereUniqueWithoutModuleInput | ModuleItemUpsertWithWhereUniqueWithoutModuleInput[]
+    createMany?: ModuleItemCreateManyModuleInputEnvelope
+    set?: ModuleItemWhereUniqueInput | ModuleItemWhereUniqueInput[]
+    disconnect?: ModuleItemWhereUniqueInput | ModuleItemWhereUniqueInput[]
+    delete?: ModuleItemWhereUniqueInput | ModuleItemWhereUniqueInput[]
+    connect?: ModuleItemWhereUniqueInput | ModuleItemWhereUniqueInput[]
+    update?: ModuleItemUpdateWithWhereUniqueWithoutModuleInput | ModuleItemUpdateWithWhereUniqueWithoutModuleInput[]
+    updateMany?: ModuleItemUpdateManyWithWhereWithoutModuleInput | ModuleItemUpdateManyWithWhereWithoutModuleInput[]
+    deleteMany?: ModuleItemScalarWhereInput | ModuleItemScalarWhereInput[]
+  }
+
+  export type ProfilePermissionUpdateManyWithoutModuleNestedInput = {
+    create?: XOR<ProfilePermissionCreateWithoutModuleInput, ProfilePermissionUncheckedCreateWithoutModuleInput> | ProfilePermissionCreateWithoutModuleInput[] | ProfilePermissionUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ProfilePermissionCreateOrConnectWithoutModuleInput | ProfilePermissionCreateOrConnectWithoutModuleInput[]
+    upsert?: ProfilePermissionUpsertWithWhereUniqueWithoutModuleInput | ProfilePermissionUpsertWithWhereUniqueWithoutModuleInput[]
+    createMany?: ProfilePermissionCreateManyModuleInputEnvelope
+    set?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    disconnect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    delete?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    connect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    update?: ProfilePermissionUpdateWithWhereUniqueWithoutModuleInput | ProfilePermissionUpdateWithWhereUniqueWithoutModuleInput[]
+    updateMany?: ProfilePermissionUpdateManyWithWhereWithoutModuleInput | ProfilePermissionUpdateManyWithWhereWithoutModuleInput[]
+    deleteMany?: ProfilePermissionScalarWhereInput | ProfilePermissionScalarWhereInput[]
+  }
+
+  export type UserPermissionUpdateManyWithoutModuleNestedInput = {
+    create?: XOR<UserPermissionCreateWithoutModuleInput, UserPermissionUncheckedCreateWithoutModuleInput> | UserPermissionCreateWithoutModuleInput[] | UserPermissionUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: UserPermissionCreateOrConnectWithoutModuleInput | UserPermissionCreateOrConnectWithoutModuleInput[]
+    upsert?: UserPermissionUpsertWithWhereUniqueWithoutModuleInput | UserPermissionUpsertWithWhereUniqueWithoutModuleInput[]
+    createMany?: UserPermissionCreateManyModuleInputEnvelope
+    set?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    disconnect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    delete?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    connect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    update?: UserPermissionUpdateWithWhereUniqueWithoutModuleInput | UserPermissionUpdateWithWhereUniqueWithoutModuleInput[]
+    updateMany?: UserPermissionUpdateManyWithWhereWithoutModuleInput | UserPermissionUpdateManyWithWhereWithoutModuleInput[]
+    deleteMany?: UserPermissionScalarWhereInput | UserPermissionScalarWhereInput[]
+  }
+
+  export type ModuleItemUncheckedUpdateManyWithoutModuleNestedInput = {
+    create?: XOR<ModuleItemCreateWithoutModuleInput, ModuleItemUncheckedCreateWithoutModuleInput> | ModuleItemCreateWithoutModuleInput[] | ModuleItemUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ModuleItemCreateOrConnectWithoutModuleInput | ModuleItemCreateOrConnectWithoutModuleInput[]
+    upsert?: ModuleItemUpsertWithWhereUniqueWithoutModuleInput | ModuleItemUpsertWithWhereUniqueWithoutModuleInput[]
+    createMany?: ModuleItemCreateManyModuleInputEnvelope
+    set?: ModuleItemWhereUniqueInput | ModuleItemWhereUniqueInput[]
+    disconnect?: ModuleItemWhereUniqueInput | ModuleItemWhereUniqueInput[]
+    delete?: ModuleItemWhereUniqueInput | ModuleItemWhereUniqueInput[]
+    connect?: ModuleItemWhereUniqueInput | ModuleItemWhereUniqueInput[]
+    update?: ModuleItemUpdateWithWhereUniqueWithoutModuleInput | ModuleItemUpdateWithWhereUniqueWithoutModuleInput[]
+    updateMany?: ModuleItemUpdateManyWithWhereWithoutModuleInput | ModuleItemUpdateManyWithWhereWithoutModuleInput[]
+    deleteMany?: ModuleItemScalarWhereInput | ModuleItemScalarWhereInput[]
+  }
+
+  export type ProfilePermissionUncheckedUpdateManyWithoutModuleNestedInput = {
+    create?: XOR<ProfilePermissionCreateWithoutModuleInput, ProfilePermissionUncheckedCreateWithoutModuleInput> | ProfilePermissionCreateWithoutModuleInput[] | ProfilePermissionUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ProfilePermissionCreateOrConnectWithoutModuleInput | ProfilePermissionCreateOrConnectWithoutModuleInput[]
+    upsert?: ProfilePermissionUpsertWithWhereUniqueWithoutModuleInput | ProfilePermissionUpsertWithWhereUniqueWithoutModuleInput[]
+    createMany?: ProfilePermissionCreateManyModuleInputEnvelope
+    set?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    disconnect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    delete?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    connect?: ProfilePermissionWhereUniqueInput | ProfilePermissionWhereUniqueInput[]
+    update?: ProfilePermissionUpdateWithWhereUniqueWithoutModuleInput | ProfilePermissionUpdateWithWhereUniqueWithoutModuleInput[]
+    updateMany?: ProfilePermissionUpdateManyWithWhereWithoutModuleInput | ProfilePermissionUpdateManyWithWhereWithoutModuleInput[]
+    deleteMany?: ProfilePermissionScalarWhereInput | ProfilePermissionScalarWhereInput[]
+  }
+
+  export type UserPermissionUncheckedUpdateManyWithoutModuleNestedInput = {
+    create?: XOR<UserPermissionCreateWithoutModuleInput, UserPermissionUncheckedCreateWithoutModuleInput> | UserPermissionCreateWithoutModuleInput[] | UserPermissionUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: UserPermissionCreateOrConnectWithoutModuleInput | UserPermissionCreateOrConnectWithoutModuleInput[]
+    upsert?: UserPermissionUpsertWithWhereUniqueWithoutModuleInput | UserPermissionUpsertWithWhereUniqueWithoutModuleInput[]
+    createMany?: UserPermissionCreateManyModuleInputEnvelope
+    set?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    disconnect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    delete?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    connect?: UserPermissionWhereUniqueInput | UserPermissionWhereUniqueInput[]
+    update?: UserPermissionUpdateWithWhereUniqueWithoutModuleInput | UserPermissionUpdateWithWhereUniqueWithoutModuleInput[]
+    updateMany?: UserPermissionUpdateManyWithWhereWithoutModuleInput | UserPermissionUpdateManyWithWhereWithoutModuleInput[]
+    deleteMany?: UserPermissionScalarWhereInput | UserPermissionScalarWhereInput[]
+  }
+
+  export type ProfileCreateNestedOneWithoutPermissionsInput = {
+    create?: XOR<ProfileCreateWithoutPermissionsInput, ProfileUncheckedCreateWithoutPermissionsInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutPermissionsInput
+    connect?: ProfileWhereUniqueInput
+  }
+
+  export type ModuleCreateNestedOneWithoutProfilePermissionsInput = {
+    create?: XOR<ModuleCreateWithoutProfilePermissionsInput, ModuleUncheckedCreateWithoutProfilePermissionsInput>
+    connectOrCreate?: ModuleCreateOrConnectWithoutProfilePermissionsInput
+    connect?: ModuleWhereUniqueInput
+  }
+
+  export type ProfileUpdateOneRequiredWithoutPermissionsNestedInput = {
+    create?: XOR<ProfileCreateWithoutPermissionsInput, ProfileUncheckedCreateWithoutPermissionsInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutPermissionsInput
+    upsert?: ProfileUpsertWithoutPermissionsInput
+    connect?: ProfileWhereUniqueInput
+    update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutPermissionsInput, ProfileUpdateWithoutPermissionsInput>, ProfileUncheckedUpdateWithoutPermissionsInput>
+  }
+
+  export type ModuleUpdateOneRequiredWithoutProfilePermissionsNestedInput = {
+    create?: XOR<ModuleCreateWithoutProfilePermissionsInput, ModuleUncheckedCreateWithoutProfilePermissionsInput>
+    connectOrCreate?: ModuleCreateOrConnectWithoutProfilePermissionsInput
+    upsert?: ModuleUpsertWithoutProfilePermissionsInput
+    connect?: ModuleWhereUniqueInput
+    update?: XOR<XOR<ModuleUpdateToOneWithWhereWithoutProfilePermissionsInput, ModuleUpdateWithoutProfilePermissionsInput>, ModuleUncheckedUpdateWithoutProfilePermissionsInput>
+  }
+
+  export type UserCreateNestedOneWithoutPermissionsInput = {
+    create?: XOR<UserCreateWithoutPermissionsInput, UserUncheckedCreateWithoutPermissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPermissionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ModuleCreateNestedOneWithoutUserPermissionsInput = {
+    create?: XOR<ModuleCreateWithoutUserPermissionsInput, ModuleUncheckedCreateWithoutUserPermissionsInput>
+    connectOrCreate?: ModuleCreateOrConnectWithoutUserPermissionsInput
+    connect?: ModuleWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPermissionsNestedInput = {
+    create?: XOR<UserCreateWithoutPermissionsInput, UserUncheckedCreateWithoutPermissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPermissionsInput
+    upsert?: UserUpsertWithoutPermissionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPermissionsInput, UserUpdateWithoutPermissionsInput>, UserUncheckedUpdateWithoutPermissionsInput>
+  }
+
+  export type ModuleUpdateOneRequiredWithoutUserPermissionsNestedInput = {
+    create?: XOR<ModuleCreateWithoutUserPermissionsInput, ModuleUncheckedCreateWithoutUserPermissionsInput>
+    connectOrCreate?: ModuleCreateOrConnectWithoutUserPermissionsInput
+    upsert?: ModuleUpsertWithoutUserPermissionsInput
+    connect?: ModuleWhereUniqueInput
+    update?: XOR<XOR<ModuleUpdateToOneWithWhereWithoutUserPermissionsInput, ModuleUpdateWithoutUserPermissionsInput>, ModuleUncheckedUpdateWithoutUserPermissionsInput>
+  }
+
+  export type ModuleCreateNestedOneWithoutItemsInput = {
+    create?: XOR<ModuleCreateWithoutItemsInput, ModuleUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: ModuleCreateOrConnectWithoutItemsInput
+    connect?: ModuleWhereUniqueInput
+  }
+
+  export type ProfileItemPermissionCreateNestedManyWithoutModuleItemInput = {
+    create?: XOR<ProfileItemPermissionCreateWithoutModuleItemInput, ProfileItemPermissionUncheckedCreateWithoutModuleItemInput> | ProfileItemPermissionCreateWithoutModuleItemInput[] | ProfileItemPermissionUncheckedCreateWithoutModuleItemInput[]
+    connectOrCreate?: ProfileItemPermissionCreateOrConnectWithoutModuleItemInput | ProfileItemPermissionCreateOrConnectWithoutModuleItemInput[]
+    createMany?: ProfileItemPermissionCreateManyModuleItemInputEnvelope
+    connect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+  }
+
+  export type UserItemPermissionCreateNestedManyWithoutModuleItemInput = {
+    create?: XOR<UserItemPermissionCreateWithoutModuleItemInput, UserItemPermissionUncheckedCreateWithoutModuleItemInput> | UserItemPermissionCreateWithoutModuleItemInput[] | UserItemPermissionUncheckedCreateWithoutModuleItemInput[]
+    connectOrCreate?: UserItemPermissionCreateOrConnectWithoutModuleItemInput | UserItemPermissionCreateOrConnectWithoutModuleItemInput[]
+    createMany?: UserItemPermissionCreateManyModuleItemInputEnvelope
+    connect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+  }
+
+  export type ProfileItemPermissionUncheckedCreateNestedManyWithoutModuleItemInput = {
+    create?: XOR<ProfileItemPermissionCreateWithoutModuleItemInput, ProfileItemPermissionUncheckedCreateWithoutModuleItemInput> | ProfileItemPermissionCreateWithoutModuleItemInput[] | ProfileItemPermissionUncheckedCreateWithoutModuleItemInput[]
+    connectOrCreate?: ProfileItemPermissionCreateOrConnectWithoutModuleItemInput | ProfileItemPermissionCreateOrConnectWithoutModuleItemInput[]
+    createMany?: ProfileItemPermissionCreateManyModuleItemInputEnvelope
+    connect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+  }
+
+  export type UserItemPermissionUncheckedCreateNestedManyWithoutModuleItemInput = {
+    create?: XOR<UserItemPermissionCreateWithoutModuleItemInput, UserItemPermissionUncheckedCreateWithoutModuleItemInput> | UserItemPermissionCreateWithoutModuleItemInput[] | UserItemPermissionUncheckedCreateWithoutModuleItemInput[]
+    connectOrCreate?: UserItemPermissionCreateOrConnectWithoutModuleItemInput | UserItemPermissionCreateOrConnectWithoutModuleItemInput[]
+    createMany?: UserItemPermissionCreateManyModuleItemInputEnvelope
+    connect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+  }
+
+  export type ModuleUpdateOneRequiredWithoutItemsNestedInput = {
+    create?: XOR<ModuleCreateWithoutItemsInput, ModuleUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: ModuleCreateOrConnectWithoutItemsInput
+    upsert?: ModuleUpsertWithoutItemsInput
+    connect?: ModuleWhereUniqueInput
+    update?: XOR<XOR<ModuleUpdateToOneWithWhereWithoutItemsInput, ModuleUpdateWithoutItemsInput>, ModuleUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type ProfileItemPermissionUpdateManyWithoutModuleItemNestedInput = {
+    create?: XOR<ProfileItemPermissionCreateWithoutModuleItemInput, ProfileItemPermissionUncheckedCreateWithoutModuleItemInput> | ProfileItemPermissionCreateWithoutModuleItemInput[] | ProfileItemPermissionUncheckedCreateWithoutModuleItemInput[]
+    connectOrCreate?: ProfileItemPermissionCreateOrConnectWithoutModuleItemInput | ProfileItemPermissionCreateOrConnectWithoutModuleItemInput[]
+    upsert?: ProfileItemPermissionUpsertWithWhereUniqueWithoutModuleItemInput | ProfileItemPermissionUpsertWithWhereUniqueWithoutModuleItemInput[]
+    createMany?: ProfileItemPermissionCreateManyModuleItemInputEnvelope
+    set?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    disconnect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    delete?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    connect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    update?: ProfileItemPermissionUpdateWithWhereUniqueWithoutModuleItemInput | ProfileItemPermissionUpdateWithWhereUniqueWithoutModuleItemInput[]
+    updateMany?: ProfileItemPermissionUpdateManyWithWhereWithoutModuleItemInput | ProfileItemPermissionUpdateManyWithWhereWithoutModuleItemInput[]
+    deleteMany?: ProfileItemPermissionScalarWhereInput | ProfileItemPermissionScalarWhereInput[]
+  }
+
+  export type UserItemPermissionUpdateManyWithoutModuleItemNestedInput = {
+    create?: XOR<UserItemPermissionCreateWithoutModuleItemInput, UserItemPermissionUncheckedCreateWithoutModuleItemInput> | UserItemPermissionCreateWithoutModuleItemInput[] | UserItemPermissionUncheckedCreateWithoutModuleItemInput[]
+    connectOrCreate?: UserItemPermissionCreateOrConnectWithoutModuleItemInput | UserItemPermissionCreateOrConnectWithoutModuleItemInput[]
+    upsert?: UserItemPermissionUpsertWithWhereUniqueWithoutModuleItemInput | UserItemPermissionUpsertWithWhereUniqueWithoutModuleItemInput[]
+    createMany?: UserItemPermissionCreateManyModuleItemInputEnvelope
+    set?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    disconnect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    delete?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    connect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    update?: UserItemPermissionUpdateWithWhereUniqueWithoutModuleItemInput | UserItemPermissionUpdateWithWhereUniqueWithoutModuleItemInput[]
+    updateMany?: UserItemPermissionUpdateManyWithWhereWithoutModuleItemInput | UserItemPermissionUpdateManyWithWhereWithoutModuleItemInput[]
+    deleteMany?: UserItemPermissionScalarWhereInput | UserItemPermissionScalarWhereInput[]
+  }
+
+  export type ProfileItemPermissionUncheckedUpdateManyWithoutModuleItemNestedInput = {
+    create?: XOR<ProfileItemPermissionCreateWithoutModuleItemInput, ProfileItemPermissionUncheckedCreateWithoutModuleItemInput> | ProfileItemPermissionCreateWithoutModuleItemInput[] | ProfileItemPermissionUncheckedCreateWithoutModuleItemInput[]
+    connectOrCreate?: ProfileItemPermissionCreateOrConnectWithoutModuleItemInput | ProfileItemPermissionCreateOrConnectWithoutModuleItemInput[]
+    upsert?: ProfileItemPermissionUpsertWithWhereUniqueWithoutModuleItemInput | ProfileItemPermissionUpsertWithWhereUniqueWithoutModuleItemInput[]
+    createMany?: ProfileItemPermissionCreateManyModuleItemInputEnvelope
+    set?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    disconnect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    delete?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    connect?: ProfileItemPermissionWhereUniqueInput | ProfileItemPermissionWhereUniqueInput[]
+    update?: ProfileItemPermissionUpdateWithWhereUniqueWithoutModuleItemInput | ProfileItemPermissionUpdateWithWhereUniqueWithoutModuleItemInput[]
+    updateMany?: ProfileItemPermissionUpdateManyWithWhereWithoutModuleItemInput | ProfileItemPermissionUpdateManyWithWhereWithoutModuleItemInput[]
+    deleteMany?: ProfileItemPermissionScalarWhereInput | ProfileItemPermissionScalarWhereInput[]
+  }
+
+  export type UserItemPermissionUncheckedUpdateManyWithoutModuleItemNestedInput = {
+    create?: XOR<UserItemPermissionCreateWithoutModuleItemInput, UserItemPermissionUncheckedCreateWithoutModuleItemInput> | UserItemPermissionCreateWithoutModuleItemInput[] | UserItemPermissionUncheckedCreateWithoutModuleItemInput[]
+    connectOrCreate?: UserItemPermissionCreateOrConnectWithoutModuleItemInput | UserItemPermissionCreateOrConnectWithoutModuleItemInput[]
+    upsert?: UserItemPermissionUpsertWithWhereUniqueWithoutModuleItemInput | UserItemPermissionUpsertWithWhereUniqueWithoutModuleItemInput[]
+    createMany?: UserItemPermissionCreateManyModuleItemInputEnvelope
+    set?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    disconnect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    delete?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    connect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+    update?: UserItemPermissionUpdateWithWhereUniqueWithoutModuleItemInput | UserItemPermissionUpdateWithWhereUniqueWithoutModuleItemInput[]
+    updateMany?: UserItemPermissionUpdateManyWithWhereWithoutModuleItemInput | UserItemPermissionUpdateManyWithWhereWithoutModuleItemInput[]
+    deleteMany?: UserItemPermissionScalarWhereInput | UserItemPermissionScalarWhereInput[]
+  }
+
+  export type ProfileCreateNestedOneWithoutItemPermissionsInput = {
+    create?: XOR<ProfileCreateWithoutItemPermissionsInput, ProfileUncheckedCreateWithoutItemPermissionsInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutItemPermissionsInput
+    connect?: ProfileWhereUniqueInput
+  }
+
+  export type ModuleItemCreateNestedOneWithoutProfileItemPermissionsInput = {
+    create?: XOR<ModuleItemCreateWithoutProfileItemPermissionsInput, ModuleItemUncheckedCreateWithoutProfileItemPermissionsInput>
+    connectOrCreate?: ModuleItemCreateOrConnectWithoutProfileItemPermissionsInput
+    connect?: ModuleItemWhereUniqueInput
+  }
+
+  export type ProfileUpdateOneRequiredWithoutItemPermissionsNestedInput = {
+    create?: XOR<ProfileCreateWithoutItemPermissionsInput, ProfileUncheckedCreateWithoutItemPermissionsInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutItemPermissionsInput
+    upsert?: ProfileUpsertWithoutItemPermissionsInput
+    connect?: ProfileWhereUniqueInput
+    update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutItemPermissionsInput, ProfileUpdateWithoutItemPermissionsInput>, ProfileUncheckedUpdateWithoutItemPermissionsInput>
+  }
+
+  export type ModuleItemUpdateOneRequiredWithoutProfileItemPermissionsNestedInput = {
+    create?: XOR<ModuleItemCreateWithoutProfileItemPermissionsInput, ModuleItemUncheckedCreateWithoutProfileItemPermissionsInput>
+    connectOrCreate?: ModuleItemCreateOrConnectWithoutProfileItemPermissionsInput
+    upsert?: ModuleItemUpsertWithoutProfileItemPermissionsInput
+    connect?: ModuleItemWhereUniqueInput
+    update?: XOR<XOR<ModuleItemUpdateToOneWithWhereWithoutProfileItemPermissionsInput, ModuleItemUpdateWithoutProfileItemPermissionsInput>, ModuleItemUncheckedUpdateWithoutProfileItemPermissionsInput>
+  }
+
+  export type UserCreateNestedOneWithoutItemPermissionsInput = {
+    create?: XOR<UserCreateWithoutItemPermissionsInput, UserUncheckedCreateWithoutItemPermissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutItemPermissionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ModuleItemCreateNestedOneWithoutUserItemPermissionsInput = {
+    create?: XOR<ModuleItemCreateWithoutUserItemPermissionsInput, ModuleItemUncheckedCreateWithoutUserItemPermissionsInput>
+    connectOrCreate?: ModuleItemCreateOrConnectWithoutUserItemPermissionsInput
+    connect?: ModuleItemWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutItemPermissionsNestedInput = {
+    create?: XOR<UserCreateWithoutItemPermissionsInput, UserUncheckedCreateWithoutItemPermissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutItemPermissionsInput
+    upsert?: UserUpsertWithoutItemPermissionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutItemPermissionsInput, UserUpdateWithoutItemPermissionsInput>, UserUncheckedUpdateWithoutItemPermissionsInput>
+  }
+
+  export type ModuleItemUpdateOneRequiredWithoutUserItemPermissionsNestedInput = {
+    create?: XOR<ModuleItemCreateWithoutUserItemPermissionsInput, ModuleItemUncheckedCreateWithoutUserItemPermissionsInput>
+    connectOrCreate?: ModuleItemCreateOrConnectWithoutUserItemPermissionsInput
+    upsert?: ModuleItemUpsertWithoutUserItemPermissionsInput
+    connect?: ModuleItemWhereUniqueInput
+    update?: XOR<XOR<ModuleItemUpdateToOneWithWhereWithoutUserItemPermissionsInput, ModuleItemUpdateWithoutUserItemPermissionsInput>, ModuleItemUncheckedUpdateWithoutUserItemPermissionsInput>
   }
 
   export type CursoCreateNestedManyWithoutCertificateTemplateInput = {
@@ -38984,6 +49522,9 @@ export namespace Prisma {
     certificados?: CertificateCreateNestedManyWithoutUserInput
     turmas?: TurmaCreateNestedManyWithoutUserInput
     cursos?: CursoCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAlunosInput = {
@@ -38998,12 +49539,15 @@ export namespace Prisma {
     resetTokenExpires?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    profileId?: string | null
     funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
     matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
     pagamentos?: PagamentoUncheckedCreateNestedManyWithoutUserInput
     certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
     turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAlunosInput = {
@@ -39163,6 +49707,9 @@ export namespace Prisma {
     certificados?: CertificateUpdateManyWithoutUserNestedInput
     turmas?: TurmaUpdateManyWithoutUserNestedInput
     cursos?: CursoUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAlunosInput = {
@@ -39177,12 +49724,15 @@ export namespace Prisma {
     resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
     matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
     pagamentos?: PagamentoUncheckedUpdateManyWithoutUserNestedInput
     certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
     turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type EmpresaClienteUpsertWithoutAlunosInput = {
@@ -39682,6 +50232,9 @@ export namespace Prisma {
     pagamentos?: PagamentoCreateNestedManyWithoutUserInput
     certificados?: CertificateCreateNestedManyWithoutUserInput
     turmas?: TurmaCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCursosInput = {
@@ -39696,12 +50249,15 @@ export namespace Prisma {
     resetTokenExpires?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    profileId?: string | null
     funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
     alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
     matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
     pagamentos?: PagamentoUncheckedCreateNestedManyWithoutUserInput
     certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
     turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCursosInput = {
@@ -39802,6 +50358,9 @@ export namespace Prisma {
     pagamentos?: PagamentoUpdateManyWithoutUserNestedInput
     certificados?: CertificateUpdateManyWithoutUserNestedInput
     turmas?: TurmaUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCursosInput = {
@@ -39816,12 +50375,15 @@ export namespace Prisma {
     resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
     alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
     matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
     pagamentos?: PagamentoUncheckedUpdateManyWithoutUserNestedInput
     certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
     turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TurmaCreateWithoutInstrutorInput = {
@@ -40108,6 +50670,9 @@ export namespace Prisma {
     pagamentos?: PagamentoCreateNestedManyWithoutUserInput
     certificados?: CertificateCreateNestedManyWithoutUserInput
     cursos?: CursoCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTurmasInput = {
@@ -40122,12 +50687,15 @@ export namespace Prisma {
     resetTokenExpires?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    profileId?: string | null
     funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
     alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
     matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
     pagamentos?: PagamentoUncheckedCreateNestedManyWithoutUserInput
     certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTurmasInput = {
@@ -40287,6 +50855,9 @@ export namespace Prisma {
     pagamentos?: PagamentoUpdateManyWithoutUserNestedInput
     certificados?: CertificateUpdateManyWithoutUserNestedInput
     cursos?: CursoUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTurmasInput = {
@@ -40301,12 +50872,15 @@ export namespace Prisma {
     resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
     alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
     matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
     pagamentos?: PagamentoUncheckedUpdateManyWithoutUserNestedInput
     certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AlunoCreateWithoutMatriculasInput = {
@@ -40496,6 +51070,9 @@ export namespace Prisma {
     certificados?: CertificateCreateNestedManyWithoutUserInput
     turmas?: TurmaCreateNestedManyWithoutUserInput
     cursos?: CursoCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMatriculasInput = {
@@ -40510,12 +51087,15 @@ export namespace Prisma {
     resetTokenExpires?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    profileId?: string | null
     funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
     alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
     pagamentos?: PagamentoUncheckedCreateNestedManyWithoutUserInput
     certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
     turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMatriculasInput = {
@@ -40752,6 +51332,9 @@ export namespace Prisma {
     certificados?: CertificateUpdateManyWithoutUserNestedInput
     turmas?: TurmaUpdateManyWithoutUserNestedInput
     cursos?: CursoUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMatriculasInput = {
@@ -40766,12 +51349,15 @@ export namespace Prisma {
     resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
     alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
     pagamentos?: PagamentoUncheckedUpdateManyWithoutUserNestedInput
     certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
     turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type EmpresaClienteUpsertWithoutMatriculasInput = {
@@ -40870,6 +51456,9 @@ export namespace Prisma {
     certificados?: CertificateCreateNestedManyWithoutUserInput
     turmas?: TurmaCreateNestedManyWithoutUserInput
     cursos?: CursoCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPagamentosInput = {
@@ -40884,12 +51473,15 @@ export namespace Prisma {
     resetTokenExpires?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    profileId?: string | null
     funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
     alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
     matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
     certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
     turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPagamentosInput = {
@@ -40973,6 +51565,9 @@ export namespace Prisma {
     certificados?: CertificateUpdateManyWithoutUserNestedInput
     turmas?: TurmaUpdateManyWithoutUserNestedInput
     cursos?: CursoUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPagamentosInput = {
@@ -40987,12 +51582,15 @@ export namespace Prisma {
     resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
     alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
     matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
     certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
     turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FuncionarioCreateWithoutUserInput = {
@@ -41292,6 +51890,87 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ProfileCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    permissions?: ProfilePermissionCreateNestedManyWithoutProfileInput
+    itemPermissions?: ProfileItemPermissionCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileUncheckedCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    permissions?: ProfilePermissionUncheckedCreateNestedManyWithoutProfileInput
+    itemPermissions?: ProfileItemPermissionUncheckedCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileCreateOrConnectWithoutUsersInput = {
+    where: ProfileWhereUniqueInput
+    create: XOR<ProfileCreateWithoutUsersInput, ProfileUncheckedCreateWithoutUsersInput>
+  }
+
+  export type UserPermissionCreateWithoutUserInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    module: ModuleCreateNestedOneWithoutUserPermissionsInput
+  }
+
+  export type UserPermissionUncheckedCreateWithoutUserInput = {
+    id?: string
+    moduleId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserPermissionCreateOrConnectWithoutUserInput = {
+    where: UserPermissionWhereUniqueInput
+    create: XOR<UserPermissionCreateWithoutUserInput, UserPermissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserPermissionCreateManyUserInputEnvelope = {
+    data: UserPermissionCreateManyUserInput | UserPermissionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserItemPermissionCreateWithoutUserInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    moduleItem: ModuleItemCreateNestedOneWithoutUserItemPermissionsInput
+  }
+
+  export type UserItemPermissionUncheckedCreateWithoutUserInput = {
+    id?: string
+    moduleItemId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserItemPermissionCreateOrConnectWithoutUserInput = {
+    where: UserItemPermissionWhereUniqueInput
+    create: XOR<UserItemPermissionCreateWithoutUserInput, UserItemPermissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserItemPermissionCreateManyUserInputEnvelope = {
+    data: UserItemPermissionCreateManyUserInput | UserItemPermissionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type FuncionarioUpsertWithoutUserInput = {
     update: XOR<FuncionarioUpdateWithoutUserInput, FuncionarioUncheckedUpdateWithoutUserInput>
     create: XOR<FuncionarioCreateWithoutUserInput, FuncionarioUncheckedCreateWithoutUserInput>
@@ -41488,6 +52167,1164 @@ export namespace Prisma {
     userId?: StringNullableFilter<"Curso"> | string | null
   }
 
+  export type ProfileUpsertWithoutUsersInput = {
+    update: XOR<ProfileUpdateWithoutUsersInput, ProfileUncheckedUpdateWithoutUsersInput>
+    create: XOR<ProfileCreateWithoutUsersInput, ProfileUncheckedCreateWithoutUsersInput>
+    where?: ProfileWhereInput
+  }
+
+  export type ProfileUpdateToOneWithWhereWithoutUsersInput = {
+    where?: ProfileWhereInput
+    data: XOR<ProfileUpdateWithoutUsersInput, ProfileUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type ProfileUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: ProfilePermissionUpdateManyWithoutProfileNestedInput
+    itemPermissions?: ProfileItemPermissionUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ProfileUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: ProfilePermissionUncheckedUpdateManyWithoutProfileNestedInput
+    itemPermissions?: ProfileItemPermissionUncheckedUpdateManyWithoutProfileNestedInput
+  }
+
+  export type UserPermissionUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserPermissionWhereUniqueInput
+    update: XOR<UserPermissionUpdateWithoutUserInput, UserPermissionUncheckedUpdateWithoutUserInput>
+    create: XOR<UserPermissionCreateWithoutUserInput, UserPermissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserPermissionUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserPermissionWhereUniqueInput
+    data: XOR<UserPermissionUpdateWithoutUserInput, UserPermissionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserPermissionUpdateManyWithWhereWithoutUserInput = {
+    where: UserPermissionScalarWhereInput
+    data: XOR<UserPermissionUpdateManyMutationInput, UserPermissionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserPermissionScalarWhereInput = {
+    AND?: UserPermissionScalarWhereInput | UserPermissionScalarWhereInput[]
+    OR?: UserPermissionScalarWhereInput[]
+    NOT?: UserPermissionScalarWhereInput | UserPermissionScalarWhereInput[]
+    id?: StringFilter<"UserPermission"> | string
+    userId?: StringFilter<"UserPermission"> | string
+    moduleId?: StringFilter<"UserPermission"> | string
+    canRead?: BoolFilter<"UserPermission"> | boolean
+    canWrite?: BoolFilter<"UserPermission"> | boolean
+    createdAt?: DateTimeFilter<"UserPermission"> | Date | string
+    updatedAt?: DateTimeFilter<"UserPermission"> | Date | string
+  }
+
+  export type UserItemPermissionUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserItemPermissionWhereUniqueInput
+    update: XOR<UserItemPermissionUpdateWithoutUserInput, UserItemPermissionUncheckedUpdateWithoutUserInput>
+    create: XOR<UserItemPermissionCreateWithoutUserInput, UserItemPermissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserItemPermissionUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserItemPermissionWhereUniqueInput
+    data: XOR<UserItemPermissionUpdateWithoutUserInput, UserItemPermissionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserItemPermissionUpdateManyWithWhereWithoutUserInput = {
+    where: UserItemPermissionScalarWhereInput
+    data: XOR<UserItemPermissionUpdateManyMutationInput, UserItemPermissionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserItemPermissionScalarWhereInput = {
+    AND?: UserItemPermissionScalarWhereInput | UserItemPermissionScalarWhereInput[]
+    OR?: UserItemPermissionScalarWhereInput[]
+    NOT?: UserItemPermissionScalarWhereInput | UserItemPermissionScalarWhereInput[]
+    id?: StringFilter<"UserItemPermission"> | string
+    userId?: StringFilter<"UserItemPermission"> | string
+    moduleItemId?: StringFilter<"UserItemPermission"> | string
+    canRead?: BoolFilter<"UserItemPermission"> | boolean
+    canWrite?: BoolFilter<"UserItemPermission"> | boolean
+    createdAt?: DateTimeFilter<"UserItemPermission"> | Date | string
+    updatedAt?: DateTimeFilter<"UserItemPermission"> | Date | string
+  }
+
+  export type ProfilePermissionCreateWithoutProfileInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    module: ModuleCreateNestedOneWithoutProfilePermissionsInput
+  }
+
+  export type ProfilePermissionUncheckedCreateWithoutProfileInput = {
+    id?: string
+    moduleId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfilePermissionCreateOrConnectWithoutProfileInput = {
+    where: ProfilePermissionWhereUniqueInput
+    create: XOR<ProfilePermissionCreateWithoutProfileInput, ProfilePermissionUncheckedCreateWithoutProfileInput>
+  }
+
+  export type ProfilePermissionCreateManyProfileInputEnvelope = {
+    data: ProfilePermissionCreateManyProfileInput | ProfilePermissionCreateManyProfileInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProfileItemPermissionCreateWithoutProfileInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    moduleItem: ModuleItemCreateNestedOneWithoutProfileItemPermissionsInput
+  }
+
+  export type ProfileItemPermissionUncheckedCreateWithoutProfileInput = {
+    id?: string
+    moduleItemId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfileItemPermissionCreateOrConnectWithoutProfileInput = {
+    where: ProfileItemPermissionWhereUniqueInput
+    create: XOR<ProfileItemPermissionCreateWithoutProfileInput, ProfileItemPermissionUncheckedCreateWithoutProfileInput>
+  }
+
+  export type ProfileItemPermissionCreateManyProfileInputEnvelope = {
+    data: ProfileItemPermissionCreateManyProfileInput | ProfileItemPermissionCreateManyProfileInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserCreateWithoutProfileInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: string
+    language?: string
+    theme?: string
+    resetToken?: string | null
+    resetTokenExpires?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    funcionario?: FuncionarioCreateNestedOneWithoutUserInput
+    alunos?: AlunoCreateNestedManyWithoutUserInput
+    matriculas?: MatriculaCreateNestedManyWithoutUserInput
+    pagamentos?: PagamentoCreateNestedManyWithoutUserInput
+    certificados?: CertificateCreateNestedManyWithoutUserInput
+    turmas?: TurmaCreateNestedManyWithoutUserInput
+    cursos?: CursoCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutProfileInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: string
+    language?: string
+    theme?: string
+    resetToken?: string | null
+    resetTokenExpires?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
+    alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
+    matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
+    pagamentos?: PagamentoUncheckedCreateNestedManyWithoutUserInput
+    certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
+    turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
+    cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutProfileInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput>
+  }
+
+  export type UserCreateManyProfileInputEnvelope = {
+    data: UserCreateManyProfileInput | UserCreateManyProfileInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProfilePermissionUpsertWithWhereUniqueWithoutProfileInput = {
+    where: ProfilePermissionWhereUniqueInput
+    update: XOR<ProfilePermissionUpdateWithoutProfileInput, ProfilePermissionUncheckedUpdateWithoutProfileInput>
+    create: XOR<ProfilePermissionCreateWithoutProfileInput, ProfilePermissionUncheckedCreateWithoutProfileInput>
+  }
+
+  export type ProfilePermissionUpdateWithWhereUniqueWithoutProfileInput = {
+    where: ProfilePermissionWhereUniqueInput
+    data: XOR<ProfilePermissionUpdateWithoutProfileInput, ProfilePermissionUncheckedUpdateWithoutProfileInput>
+  }
+
+  export type ProfilePermissionUpdateManyWithWhereWithoutProfileInput = {
+    where: ProfilePermissionScalarWhereInput
+    data: XOR<ProfilePermissionUpdateManyMutationInput, ProfilePermissionUncheckedUpdateManyWithoutProfileInput>
+  }
+
+  export type ProfilePermissionScalarWhereInput = {
+    AND?: ProfilePermissionScalarWhereInput | ProfilePermissionScalarWhereInput[]
+    OR?: ProfilePermissionScalarWhereInput[]
+    NOT?: ProfilePermissionScalarWhereInput | ProfilePermissionScalarWhereInput[]
+    id?: StringFilter<"ProfilePermission"> | string
+    profileId?: StringFilter<"ProfilePermission"> | string
+    moduleId?: StringFilter<"ProfilePermission"> | string
+    canRead?: BoolFilter<"ProfilePermission"> | boolean
+    canWrite?: BoolFilter<"ProfilePermission"> | boolean
+    createdAt?: DateTimeFilter<"ProfilePermission"> | Date | string
+    updatedAt?: DateTimeFilter<"ProfilePermission"> | Date | string
+  }
+
+  export type ProfileItemPermissionUpsertWithWhereUniqueWithoutProfileInput = {
+    where: ProfileItemPermissionWhereUniqueInput
+    update: XOR<ProfileItemPermissionUpdateWithoutProfileInput, ProfileItemPermissionUncheckedUpdateWithoutProfileInput>
+    create: XOR<ProfileItemPermissionCreateWithoutProfileInput, ProfileItemPermissionUncheckedCreateWithoutProfileInput>
+  }
+
+  export type ProfileItemPermissionUpdateWithWhereUniqueWithoutProfileInput = {
+    where: ProfileItemPermissionWhereUniqueInput
+    data: XOR<ProfileItemPermissionUpdateWithoutProfileInput, ProfileItemPermissionUncheckedUpdateWithoutProfileInput>
+  }
+
+  export type ProfileItemPermissionUpdateManyWithWhereWithoutProfileInput = {
+    where: ProfileItemPermissionScalarWhereInput
+    data: XOR<ProfileItemPermissionUpdateManyMutationInput, ProfileItemPermissionUncheckedUpdateManyWithoutProfileInput>
+  }
+
+  export type ProfileItemPermissionScalarWhereInput = {
+    AND?: ProfileItemPermissionScalarWhereInput | ProfileItemPermissionScalarWhereInput[]
+    OR?: ProfileItemPermissionScalarWhereInput[]
+    NOT?: ProfileItemPermissionScalarWhereInput | ProfileItemPermissionScalarWhereInput[]
+    id?: StringFilter<"ProfileItemPermission"> | string
+    profileId?: StringFilter<"ProfileItemPermission"> | string
+    moduleItemId?: StringFilter<"ProfileItemPermission"> | string
+    canRead?: BoolFilter<"ProfileItemPermission"> | boolean
+    canWrite?: BoolFilter<"ProfileItemPermission"> | boolean
+    createdAt?: DateTimeFilter<"ProfileItemPermission"> | Date | string
+    updatedAt?: DateTimeFilter<"ProfileItemPermission"> | Date | string
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutProfileInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutProfileInput, UserUncheckedUpdateWithoutProfileInput>
+    create: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutProfileInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutProfileInput, UserUncheckedUpdateWithoutProfileInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutProfileInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutProfileInput>
+  }
+
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: StringFilter<"User"> | string
+    name?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
+    language?: StringFilter<"User"> | string
+    theme?: StringFilter<"User"> | string
+    resetToken?: StringNullableFilter<"User"> | string | null
+    resetTokenExpires?: DateTimeNullableFilter<"User"> | Date | string | null
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    profileId?: StringNullableFilter<"User"> | string | null
+  }
+
+  export type ModuleItemCreateWithoutModuleInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profileItemPermissions?: ProfileItemPermissionCreateNestedManyWithoutModuleItemInput
+    userItemPermissions?: UserItemPermissionCreateNestedManyWithoutModuleItemInput
+  }
+
+  export type ModuleItemUncheckedCreateWithoutModuleInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profileItemPermissions?: ProfileItemPermissionUncheckedCreateNestedManyWithoutModuleItemInput
+    userItemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutModuleItemInput
+  }
+
+  export type ModuleItemCreateOrConnectWithoutModuleInput = {
+    where: ModuleItemWhereUniqueInput
+    create: XOR<ModuleItemCreateWithoutModuleInput, ModuleItemUncheckedCreateWithoutModuleInput>
+  }
+
+  export type ModuleItemCreateManyModuleInputEnvelope = {
+    data: ModuleItemCreateManyModuleInput | ModuleItemCreateManyModuleInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProfilePermissionCreateWithoutModuleInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profile: ProfileCreateNestedOneWithoutPermissionsInput
+  }
+
+  export type ProfilePermissionUncheckedCreateWithoutModuleInput = {
+    id?: string
+    profileId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfilePermissionCreateOrConnectWithoutModuleInput = {
+    where: ProfilePermissionWhereUniqueInput
+    create: XOR<ProfilePermissionCreateWithoutModuleInput, ProfilePermissionUncheckedCreateWithoutModuleInput>
+  }
+
+  export type ProfilePermissionCreateManyModuleInputEnvelope = {
+    data: ProfilePermissionCreateManyModuleInput | ProfilePermissionCreateManyModuleInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserPermissionCreateWithoutModuleInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutPermissionsInput
+  }
+
+  export type UserPermissionUncheckedCreateWithoutModuleInput = {
+    id?: string
+    userId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserPermissionCreateOrConnectWithoutModuleInput = {
+    where: UserPermissionWhereUniqueInput
+    create: XOR<UserPermissionCreateWithoutModuleInput, UserPermissionUncheckedCreateWithoutModuleInput>
+  }
+
+  export type UserPermissionCreateManyModuleInputEnvelope = {
+    data: UserPermissionCreateManyModuleInput | UserPermissionCreateManyModuleInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ModuleItemUpsertWithWhereUniqueWithoutModuleInput = {
+    where: ModuleItemWhereUniqueInput
+    update: XOR<ModuleItemUpdateWithoutModuleInput, ModuleItemUncheckedUpdateWithoutModuleInput>
+    create: XOR<ModuleItemCreateWithoutModuleInput, ModuleItemUncheckedCreateWithoutModuleInput>
+  }
+
+  export type ModuleItemUpdateWithWhereUniqueWithoutModuleInput = {
+    where: ModuleItemWhereUniqueInput
+    data: XOR<ModuleItemUpdateWithoutModuleInput, ModuleItemUncheckedUpdateWithoutModuleInput>
+  }
+
+  export type ModuleItemUpdateManyWithWhereWithoutModuleInput = {
+    where: ModuleItemScalarWhereInput
+    data: XOR<ModuleItemUpdateManyMutationInput, ModuleItemUncheckedUpdateManyWithoutModuleInput>
+  }
+
+  export type ModuleItemScalarWhereInput = {
+    AND?: ModuleItemScalarWhereInput | ModuleItemScalarWhereInput[]
+    OR?: ModuleItemScalarWhereInput[]
+    NOT?: ModuleItemScalarWhereInput | ModuleItemScalarWhereInput[]
+    id?: StringFilter<"ModuleItem"> | string
+    moduleId?: StringFilter<"ModuleItem"> | string
+    name?: StringFilter<"ModuleItem"> | string
+    key?: StringFilter<"ModuleItem"> | string
+    description?: StringNullableFilter<"ModuleItem"> | string | null
+    createdAt?: DateTimeFilter<"ModuleItem"> | Date | string
+    updatedAt?: DateTimeFilter<"ModuleItem"> | Date | string
+  }
+
+  export type ProfilePermissionUpsertWithWhereUniqueWithoutModuleInput = {
+    where: ProfilePermissionWhereUniqueInput
+    update: XOR<ProfilePermissionUpdateWithoutModuleInput, ProfilePermissionUncheckedUpdateWithoutModuleInput>
+    create: XOR<ProfilePermissionCreateWithoutModuleInput, ProfilePermissionUncheckedCreateWithoutModuleInput>
+  }
+
+  export type ProfilePermissionUpdateWithWhereUniqueWithoutModuleInput = {
+    where: ProfilePermissionWhereUniqueInput
+    data: XOR<ProfilePermissionUpdateWithoutModuleInput, ProfilePermissionUncheckedUpdateWithoutModuleInput>
+  }
+
+  export type ProfilePermissionUpdateManyWithWhereWithoutModuleInput = {
+    where: ProfilePermissionScalarWhereInput
+    data: XOR<ProfilePermissionUpdateManyMutationInput, ProfilePermissionUncheckedUpdateManyWithoutModuleInput>
+  }
+
+  export type UserPermissionUpsertWithWhereUniqueWithoutModuleInput = {
+    where: UserPermissionWhereUniqueInput
+    update: XOR<UserPermissionUpdateWithoutModuleInput, UserPermissionUncheckedUpdateWithoutModuleInput>
+    create: XOR<UserPermissionCreateWithoutModuleInput, UserPermissionUncheckedCreateWithoutModuleInput>
+  }
+
+  export type UserPermissionUpdateWithWhereUniqueWithoutModuleInput = {
+    where: UserPermissionWhereUniqueInput
+    data: XOR<UserPermissionUpdateWithoutModuleInput, UserPermissionUncheckedUpdateWithoutModuleInput>
+  }
+
+  export type UserPermissionUpdateManyWithWhereWithoutModuleInput = {
+    where: UserPermissionScalarWhereInput
+    data: XOR<UserPermissionUpdateManyMutationInput, UserPermissionUncheckedUpdateManyWithoutModuleInput>
+  }
+
+  export type ProfileCreateWithoutPermissionsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    itemPermissions?: ProfileItemPermissionCreateNestedManyWithoutProfileInput
+    users?: UserCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileUncheckedCreateWithoutPermissionsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    itemPermissions?: ProfileItemPermissionUncheckedCreateNestedManyWithoutProfileInput
+    users?: UserUncheckedCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileCreateOrConnectWithoutPermissionsInput = {
+    where: ProfileWhereUniqueInput
+    create: XOR<ProfileCreateWithoutPermissionsInput, ProfileUncheckedCreateWithoutPermissionsInput>
+  }
+
+  export type ModuleCreateWithoutProfilePermissionsInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: ModuleItemCreateNestedManyWithoutModuleInput
+    userPermissions?: UserPermissionCreateNestedManyWithoutModuleInput
+  }
+
+  export type ModuleUncheckedCreateWithoutProfilePermissionsInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: ModuleItemUncheckedCreateNestedManyWithoutModuleInput
+    userPermissions?: UserPermissionUncheckedCreateNestedManyWithoutModuleInput
+  }
+
+  export type ModuleCreateOrConnectWithoutProfilePermissionsInput = {
+    where: ModuleWhereUniqueInput
+    create: XOR<ModuleCreateWithoutProfilePermissionsInput, ModuleUncheckedCreateWithoutProfilePermissionsInput>
+  }
+
+  export type ProfileUpsertWithoutPermissionsInput = {
+    update: XOR<ProfileUpdateWithoutPermissionsInput, ProfileUncheckedUpdateWithoutPermissionsInput>
+    create: XOR<ProfileCreateWithoutPermissionsInput, ProfileUncheckedCreateWithoutPermissionsInput>
+    where?: ProfileWhereInput
+  }
+
+  export type ProfileUpdateToOneWithWhereWithoutPermissionsInput = {
+    where?: ProfileWhereInput
+    data: XOR<ProfileUpdateWithoutPermissionsInput, ProfileUncheckedUpdateWithoutPermissionsInput>
+  }
+
+  export type ProfileUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    itemPermissions?: ProfileItemPermissionUpdateManyWithoutProfileNestedInput
+    users?: UserUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ProfileUncheckedUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    itemPermissions?: ProfileItemPermissionUncheckedUpdateManyWithoutProfileNestedInput
+    users?: UserUncheckedUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ModuleUpsertWithoutProfilePermissionsInput = {
+    update: XOR<ModuleUpdateWithoutProfilePermissionsInput, ModuleUncheckedUpdateWithoutProfilePermissionsInput>
+    create: XOR<ModuleCreateWithoutProfilePermissionsInput, ModuleUncheckedCreateWithoutProfilePermissionsInput>
+    where?: ModuleWhereInput
+  }
+
+  export type ModuleUpdateToOneWithWhereWithoutProfilePermissionsInput = {
+    where?: ModuleWhereInput
+    data: XOR<ModuleUpdateWithoutProfilePermissionsInput, ModuleUncheckedUpdateWithoutProfilePermissionsInput>
+  }
+
+  export type ModuleUpdateWithoutProfilePermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: ModuleItemUpdateManyWithoutModuleNestedInput
+    userPermissions?: UserPermissionUpdateManyWithoutModuleNestedInput
+  }
+
+  export type ModuleUncheckedUpdateWithoutProfilePermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: ModuleItemUncheckedUpdateManyWithoutModuleNestedInput
+    userPermissions?: UserPermissionUncheckedUpdateManyWithoutModuleNestedInput
+  }
+
+  export type UserCreateWithoutPermissionsInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: string
+    language?: string
+    theme?: string
+    resetToken?: string | null
+    resetTokenExpires?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    funcionario?: FuncionarioCreateNestedOneWithoutUserInput
+    alunos?: AlunoCreateNestedManyWithoutUserInput
+    matriculas?: MatriculaCreateNestedManyWithoutUserInput
+    pagamentos?: PagamentoCreateNestedManyWithoutUserInput
+    certificados?: CertificateCreateNestedManyWithoutUserInput
+    turmas?: TurmaCreateNestedManyWithoutUserInput
+    cursos?: CursoCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPermissionsInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: string
+    language?: string
+    theme?: string
+    resetToken?: string | null
+    resetTokenExpires?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profileId?: string | null
+    funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
+    alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
+    matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
+    pagamentos?: PagamentoUncheckedCreateNestedManyWithoutUserInput
+    certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
+    turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
+    cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPermissionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPermissionsInput, UserUncheckedCreateWithoutPermissionsInput>
+  }
+
+  export type ModuleCreateWithoutUserPermissionsInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: ModuleItemCreateNestedManyWithoutModuleInput
+    profilePermissions?: ProfilePermissionCreateNestedManyWithoutModuleInput
+  }
+
+  export type ModuleUncheckedCreateWithoutUserPermissionsInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: ModuleItemUncheckedCreateNestedManyWithoutModuleInput
+    profilePermissions?: ProfilePermissionUncheckedCreateNestedManyWithoutModuleInput
+  }
+
+  export type ModuleCreateOrConnectWithoutUserPermissionsInput = {
+    where: ModuleWhereUniqueInput
+    create: XOR<ModuleCreateWithoutUserPermissionsInput, ModuleUncheckedCreateWithoutUserPermissionsInput>
+  }
+
+  export type UserUpsertWithoutPermissionsInput = {
+    update: XOR<UserUpdateWithoutPermissionsInput, UserUncheckedUpdateWithoutPermissionsInput>
+    create: XOR<UserCreateWithoutPermissionsInput, UserUncheckedCreateWithoutPermissionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPermissionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPermissionsInput, UserUncheckedUpdateWithoutPermissionsInput>
+  }
+
+  export type UserUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    funcionario?: FuncionarioUpdateOneWithoutUserNestedInput
+    alunos?: AlunoUpdateManyWithoutUserNestedInput
+    matriculas?: MatriculaUpdateManyWithoutUserNestedInput
+    pagamentos?: PagamentoUpdateManyWithoutUserNestedInput
+    certificados?: CertificateUpdateManyWithoutUserNestedInput
+    turmas?: TurmaUpdateManyWithoutUserNestedInput
+    cursos?: CursoUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
+    funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
+    alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
+    matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
+    pagamentos?: PagamentoUncheckedUpdateManyWithoutUserNestedInput
+    certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
+    turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
+    cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ModuleUpsertWithoutUserPermissionsInput = {
+    update: XOR<ModuleUpdateWithoutUserPermissionsInput, ModuleUncheckedUpdateWithoutUserPermissionsInput>
+    create: XOR<ModuleCreateWithoutUserPermissionsInput, ModuleUncheckedCreateWithoutUserPermissionsInput>
+    where?: ModuleWhereInput
+  }
+
+  export type ModuleUpdateToOneWithWhereWithoutUserPermissionsInput = {
+    where?: ModuleWhereInput
+    data: XOR<ModuleUpdateWithoutUserPermissionsInput, ModuleUncheckedUpdateWithoutUserPermissionsInput>
+  }
+
+  export type ModuleUpdateWithoutUserPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: ModuleItemUpdateManyWithoutModuleNestedInput
+    profilePermissions?: ProfilePermissionUpdateManyWithoutModuleNestedInput
+  }
+
+  export type ModuleUncheckedUpdateWithoutUserPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: ModuleItemUncheckedUpdateManyWithoutModuleNestedInput
+    profilePermissions?: ProfilePermissionUncheckedUpdateManyWithoutModuleNestedInput
+  }
+
+  export type ModuleCreateWithoutItemsInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profilePermissions?: ProfilePermissionCreateNestedManyWithoutModuleInput
+    userPermissions?: UserPermissionCreateNestedManyWithoutModuleInput
+  }
+
+  export type ModuleUncheckedCreateWithoutItemsInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profilePermissions?: ProfilePermissionUncheckedCreateNestedManyWithoutModuleInput
+    userPermissions?: UserPermissionUncheckedCreateNestedManyWithoutModuleInput
+  }
+
+  export type ModuleCreateOrConnectWithoutItemsInput = {
+    where: ModuleWhereUniqueInput
+    create: XOR<ModuleCreateWithoutItemsInput, ModuleUncheckedCreateWithoutItemsInput>
+  }
+
+  export type ProfileItemPermissionCreateWithoutModuleItemInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profile: ProfileCreateNestedOneWithoutItemPermissionsInput
+  }
+
+  export type ProfileItemPermissionUncheckedCreateWithoutModuleItemInput = {
+    id?: string
+    profileId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfileItemPermissionCreateOrConnectWithoutModuleItemInput = {
+    where: ProfileItemPermissionWhereUniqueInput
+    create: XOR<ProfileItemPermissionCreateWithoutModuleItemInput, ProfileItemPermissionUncheckedCreateWithoutModuleItemInput>
+  }
+
+  export type ProfileItemPermissionCreateManyModuleItemInputEnvelope = {
+    data: ProfileItemPermissionCreateManyModuleItemInput | ProfileItemPermissionCreateManyModuleItemInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserItemPermissionCreateWithoutModuleItemInput = {
+    id?: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutItemPermissionsInput
+  }
+
+  export type UserItemPermissionUncheckedCreateWithoutModuleItemInput = {
+    id?: string
+    userId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserItemPermissionCreateOrConnectWithoutModuleItemInput = {
+    where: UserItemPermissionWhereUniqueInput
+    create: XOR<UserItemPermissionCreateWithoutModuleItemInput, UserItemPermissionUncheckedCreateWithoutModuleItemInput>
+  }
+
+  export type UserItemPermissionCreateManyModuleItemInputEnvelope = {
+    data: UserItemPermissionCreateManyModuleItemInput | UserItemPermissionCreateManyModuleItemInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ModuleUpsertWithoutItemsInput = {
+    update: XOR<ModuleUpdateWithoutItemsInput, ModuleUncheckedUpdateWithoutItemsInput>
+    create: XOR<ModuleCreateWithoutItemsInput, ModuleUncheckedCreateWithoutItemsInput>
+    where?: ModuleWhereInput
+  }
+
+  export type ModuleUpdateToOneWithWhereWithoutItemsInput = {
+    where?: ModuleWhereInput
+    data: XOR<ModuleUpdateWithoutItemsInput, ModuleUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type ModuleUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profilePermissions?: ProfilePermissionUpdateManyWithoutModuleNestedInput
+    userPermissions?: UserPermissionUpdateManyWithoutModuleNestedInput
+  }
+
+  export type ModuleUncheckedUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profilePermissions?: ProfilePermissionUncheckedUpdateManyWithoutModuleNestedInput
+    userPermissions?: UserPermissionUncheckedUpdateManyWithoutModuleNestedInput
+  }
+
+  export type ProfileItemPermissionUpsertWithWhereUniqueWithoutModuleItemInput = {
+    where: ProfileItemPermissionWhereUniqueInput
+    update: XOR<ProfileItemPermissionUpdateWithoutModuleItemInput, ProfileItemPermissionUncheckedUpdateWithoutModuleItemInput>
+    create: XOR<ProfileItemPermissionCreateWithoutModuleItemInput, ProfileItemPermissionUncheckedCreateWithoutModuleItemInput>
+  }
+
+  export type ProfileItemPermissionUpdateWithWhereUniqueWithoutModuleItemInput = {
+    where: ProfileItemPermissionWhereUniqueInput
+    data: XOR<ProfileItemPermissionUpdateWithoutModuleItemInput, ProfileItemPermissionUncheckedUpdateWithoutModuleItemInput>
+  }
+
+  export type ProfileItemPermissionUpdateManyWithWhereWithoutModuleItemInput = {
+    where: ProfileItemPermissionScalarWhereInput
+    data: XOR<ProfileItemPermissionUpdateManyMutationInput, ProfileItemPermissionUncheckedUpdateManyWithoutModuleItemInput>
+  }
+
+  export type UserItemPermissionUpsertWithWhereUniqueWithoutModuleItemInput = {
+    where: UserItemPermissionWhereUniqueInput
+    update: XOR<UserItemPermissionUpdateWithoutModuleItemInput, UserItemPermissionUncheckedUpdateWithoutModuleItemInput>
+    create: XOR<UserItemPermissionCreateWithoutModuleItemInput, UserItemPermissionUncheckedCreateWithoutModuleItemInput>
+  }
+
+  export type UserItemPermissionUpdateWithWhereUniqueWithoutModuleItemInput = {
+    where: UserItemPermissionWhereUniqueInput
+    data: XOR<UserItemPermissionUpdateWithoutModuleItemInput, UserItemPermissionUncheckedUpdateWithoutModuleItemInput>
+  }
+
+  export type UserItemPermissionUpdateManyWithWhereWithoutModuleItemInput = {
+    where: UserItemPermissionScalarWhereInput
+    data: XOR<UserItemPermissionUpdateManyMutationInput, UserItemPermissionUncheckedUpdateManyWithoutModuleItemInput>
+  }
+
+  export type ProfileCreateWithoutItemPermissionsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    permissions?: ProfilePermissionCreateNestedManyWithoutProfileInput
+    users?: UserCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileUncheckedCreateWithoutItemPermissionsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    permissions?: ProfilePermissionUncheckedCreateNestedManyWithoutProfileInput
+    users?: UserUncheckedCreateNestedManyWithoutProfileInput
+  }
+
+  export type ProfileCreateOrConnectWithoutItemPermissionsInput = {
+    where: ProfileWhereUniqueInput
+    create: XOR<ProfileCreateWithoutItemPermissionsInput, ProfileUncheckedCreateWithoutItemPermissionsInput>
+  }
+
+  export type ModuleItemCreateWithoutProfileItemPermissionsInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    module: ModuleCreateNestedOneWithoutItemsInput
+    userItemPermissions?: UserItemPermissionCreateNestedManyWithoutModuleItemInput
+  }
+
+  export type ModuleItemUncheckedCreateWithoutProfileItemPermissionsInput = {
+    id?: string
+    moduleId: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userItemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutModuleItemInput
+  }
+
+  export type ModuleItemCreateOrConnectWithoutProfileItemPermissionsInput = {
+    where: ModuleItemWhereUniqueInput
+    create: XOR<ModuleItemCreateWithoutProfileItemPermissionsInput, ModuleItemUncheckedCreateWithoutProfileItemPermissionsInput>
+  }
+
+  export type ProfileUpsertWithoutItemPermissionsInput = {
+    update: XOR<ProfileUpdateWithoutItemPermissionsInput, ProfileUncheckedUpdateWithoutItemPermissionsInput>
+    create: XOR<ProfileCreateWithoutItemPermissionsInput, ProfileUncheckedCreateWithoutItemPermissionsInput>
+    where?: ProfileWhereInput
+  }
+
+  export type ProfileUpdateToOneWithWhereWithoutItemPermissionsInput = {
+    where?: ProfileWhereInput
+    data: XOR<ProfileUpdateWithoutItemPermissionsInput, ProfileUncheckedUpdateWithoutItemPermissionsInput>
+  }
+
+  export type ProfileUpdateWithoutItemPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: ProfilePermissionUpdateManyWithoutProfileNestedInput
+    users?: UserUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ProfileUncheckedUpdateWithoutItemPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: ProfilePermissionUncheckedUpdateManyWithoutProfileNestedInput
+    users?: UserUncheckedUpdateManyWithoutProfileNestedInput
+  }
+
+  export type ModuleItemUpsertWithoutProfileItemPermissionsInput = {
+    update: XOR<ModuleItemUpdateWithoutProfileItemPermissionsInput, ModuleItemUncheckedUpdateWithoutProfileItemPermissionsInput>
+    create: XOR<ModuleItemCreateWithoutProfileItemPermissionsInput, ModuleItemUncheckedCreateWithoutProfileItemPermissionsInput>
+    where?: ModuleItemWhereInput
+  }
+
+  export type ModuleItemUpdateToOneWithWhereWithoutProfileItemPermissionsInput = {
+    where?: ModuleItemWhereInput
+    data: XOR<ModuleItemUpdateWithoutProfileItemPermissionsInput, ModuleItemUncheckedUpdateWithoutProfileItemPermissionsInput>
+  }
+
+  export type ModuleItemUpdateWithoutProfileItemPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    module?: ModuleUpdateOneRequiredWithoutItemsNestedInput
+    userItemPermissions?: UserItemPermissionUpdateManyWithoutModuleItemNestedInput
+  }
+
+  export type ModuleItemUncheckedUpdateWithoutProfileItemPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userItemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutModuleItemNestedInput
+  }
+
+  export type UserCreateWithoutItemPermissionsInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: string
+    language?: string
+    theme?: string
+    resetToken?: string | null
+    resetTokenExpires?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    funcionario?: FuncionarioCreateNestedOneWithoutUserInput
+    alunos?: AlunoCreateNestedManyWithoutUserInput
+    matriculas?: MatriculaCreateNestedManyWithoutUserInput
+    pagamentos?: PagamentoCreateNestedManyWithoutUserInput
+    certificados?: CertificateCreateNestedManyWithoutUserInput
+    turmas?: TurmaCreateNestedManyWithoutUserInput
+    cursos?: CursoCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutItemPermissionsInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: string
+    language?: string
+    theme?: string
+    resetToken?: string | null
+    resetTokenExpires?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profileId?: string | null
+    funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
+    alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
+    matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
+    pagamentos?: PagamentoUncheckedCreateNestedManyWithoutUserInput
+    certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
+    turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
+    cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutItemPermissionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutItemPermissionsInput, UserUncheckedCreateWithoutItemPermissionsInput>
+  }
+
+  export type ModuleItemCreateWithoutUserItemPermissionsInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    module: ModuleCreateNestedOneWithoutItemsInput
+    profileItemPermissions?: ProfileItemPermissionCreateNestedManyWithoutModuleItemInput
+  }
+
+  export type ModuleItemUncheckedCreateWithoutUserItemPermissionsInput = {
+    id?: string
+    moduleId: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profileItemPermissions?: ProfileItemPermissionUncheckedCreateNestedManyWithoutModuleItemInput
+  }
+
+  export type ModuleItemCreateOrConnectWithoutUserItemPermissionsInput = {
+    where: ModuleItemWhereUniqueInput
+    create: XOR<ModuleItemCreateWithoutUserItemPermissionsInput, ModuleItemUncheckedCreateWithoutUserItemPermissionsInput>
+  }
+
+  export type UserUpsertWithoutItemPermissionsInput = {
+    update: XOR<UserUpdateWithoutItemPermissionsInput, UserUncheckedUpdateWithoutItemPermissionsInput>
+    create: XOR<UserCreateWithoutItemPermissionsInput, UserUncheckedCreateWithoutItemPermissionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutItemPermissionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutItemPermissionsInput, UserUncheckedUpdateWithoutItemPermissionsInput>
+  }
+
+  export type UserUpdateWithoutItemPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    funcionario?: FuncionarioUpdateOneWithoutUserNestedInput
+    alunos?: AlunoUpdateManyWithoutUserNestedInput
+    matriculas?: MatriculaUpdateManyWithoutUserNestedInput
+    pagamentos?: PagamentoUpdateManyWithoutUserNestedInput
+    certificados?: CertificateUpdateManyWithoutUserNestedInput
+    turmas?: TurmaUpdateManyWithoutUserNestedInput
+    cursos?: CursoUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutItemPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
+    funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
+    alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
+    matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
+    pagamentos?: PagamentoUncheckedUpdateManyWithoutUserNestedInput
+    certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
+    turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
+    cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ModuleItemUpsertWithoutUserItemPermissionsInput = {
+    update: XOR<ModuleItemUpdateWithoutUserItemPermissionsInput, ModuleItemUncheckedUpdateWithoutUserItemPermissionsInput>
+    create: XOR<ModuleItemCreateWithoutUserItemPermissionsInput, ModuleItemUncheckedCreateWithoutUserItemPermissionsInput>
+    where?: ModuleItemWhereInput
+  }
+
+  export type ModuleItemUpdateToOneWithWhereWithoutUserItemPermissionsInput = {
+    where?: ModuleItemWhereInput
+    data: XOR<ModuleItemUpdateWithoutUserItemPermissionsInput, ModuleItemUncheckedUpdateWithoutUserItemPermissionsInput>
+  }
+
+  export type ModuleItemUpdateWithoutUserItemPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    module?: ModuleUpdateOneRequiredWithoutItemsNestedInput
+    profileItemPermissions?: ProfileItemPermissionUpdateManyWithoutModuleItemNestedInput
+  }
+
+  export type ModuleItemUncheckedUpdateWithoutUserItemPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileItemPermissions?: ProfileItemPermissionUncheckedUpdateManyWithoutModuleItemNestedInput
+  }
+
   export type CursoCreateWithoutCertificateTemplateInput = {
     id?: string
     nome: string
@@ -41601,6 +53438,9 @@ export namespace Prisma {
     pagamentos?: PagamentoCreateNestedManyWithoutUserInput
     turmas?: TurmaCreateNestedManyWithoutUserInput
     cursos?: CursoCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCertificadosInput = {
@@ -41615,12 +53455,15 @@ export namespace Prisma {
     resetTokenExpires?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    profileId?: string | null
     funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
     alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
     matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
     pagamentos?: PagamentoUncheckedCreateNestedManyWithoutUserInput
     turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCertificadosInput = {
@@ -41704,6 +53547,9 @@ export namespace Prisma {
     pagamentos?: PagamentoUpdateManyWithoutUserNestedInput
     turmas?: TurmaUpdateManyWithoutUserNestedInput
     cursos?: CursoUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCertificadosInput = {
@@ -41718,12 +53564,15 @@ export namespace Prisma {
     resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
     alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
     matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
     pagamentos?: PagamentoUncheckedUpdateManyWithoutUserNestedInput
     turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TurmaCreateWithoutAulasInput = {
@@ -42641,6 +54490,9 @@ export namespace Prisma {
     certificados?: CertificateCreateNestedManyWithoutUserInput
     turmas?: TurmaCreateNestedManyWithoutUserInput
     cursos?: CursoCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFuncionarioInput = {
@@ -42655,12 +54507,15 @@ export namespace Prisma {
     resetTokenExpires?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    profileId?: string | null
     alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
     matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
     pagamentos?: PagamentoUncheckedCreateNestedManyWithoutUserInput
     certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
     turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFuncionarioInput = {
@@ -43035,6 +54890,9 @@ export namespace Prisma {
     certificados?: CertificateUpdateManyWithoutUserNestedInput
     turmas?: TurmaUpdateManyWithoutUserNestedInput
     cursos?: CursoUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFuncionarioInput = {
@@ -43049,12 +54907,15 @@ export namespace Prisma {
     resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
     matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
     pagamentos?: PagamentoUncheckedUpdateManyWithoutUserNestedInput
     certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
     turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ContratoUpsertWithWhereUniqueWithoutFuncionarioInput = {
@@ -44786,6 +56647,24 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type UserPermissionCreateManyUserInput = {
+    id?: string
+    moduleId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserItemPermissionCreateManyUserInput = {
+    id?: string
+    moduleItemId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AlunoUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     nome_completo?: StringFieldUpdateOperationsInput | string
@@ -45034,6 +56913,390 @@ export namespace Prisma {
     frequencia_minima?: FloatFieldUpdateOperationsInput | number
     preco_base?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     certificateTemplateId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserPermissionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    module?: ModuleUpdateOneRequiredWithoutUserPermissionsNestedInput
+  }
+
+  export type UserPermissionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserPermissionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserItemPermissionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    moduleItem?: ModuleItemUpdateOneRequiredWithoutUserItemPermissionsNestedInput
+  }
+
+  export type UserItemPermissionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleItemId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserItemPermissionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleItemId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfilePermissionCreateManyProfileInput = {
+    id?: string
+    moduleId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfileItemPermissionCreateManyProfileInput = {
+    id?: string
+    moduleItemId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateManyProfileInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: string
+    language?: string
+    theme?: string
+    resetToken?: string | null
+    resetTokenExpires?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfilePermissionUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    module?: ModuleUpdateOneRequiredWithoutProfilePermissionsNestedInput
+  }
+
+  export type ProfilePermissionUncheckedUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfilePermissionUncheckedUpdateManyWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileItemPermissionUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    moduleItem?: ModuleItemUpdateOneRequiredWithoutProfileItemPermissionsNestedInput
+  }
+
+  export type ProfileItemPermissionUncheckedUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleItemId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileItemPermissionUncheckedUpdateManyWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleItemId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    funcionario?: FuncionarioUpdateOneWithoutUserNestedInput
+    alunos?: AlunoUpdateManyWithoutUserNestedInput
+    matriculas?: MatriculaUpdateManyWithoutUserNestedInput
+    pagamentos?: PagamentoUpdateManyWithoutUserNestedInput
+    certificados?: CertificateUpdateManyWithoutUserNestedInput
+    turmas?: TurmaUpdateManyWithoutUserNestedInput
+    cursos?: CursoUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
+    alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
+    matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
+    pagamentos?: PagamentoUncheckedUpdateManyWithoutUserNestedInput
+    certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
+    turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
+    cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ModuleItemCreateManyModuleInput = {
+    id?: string
+    name: string
+    key: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfilePermissionCreateManyModuleInput = {
+    id?: string
+    profileId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserPermissionCreateManyModuleInput = {
+    id?: string
+    userId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ModuleItemUpdateWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileItemPermissions?: ProfileItemPermissionUpdateManyWithoutModuleItemNestedInput
+    userItemPermissions?: UserItemPermissionUpdateManyWithoutModuleItemNestedInput
+  }
+
+  export type ModuleItemUncheckedUpdateWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileItemPermissions?: ProfileItemPermissionUncheckedUpdateManyWithoutModuleItemNestedInput
+    userItemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutModuleItemNestedInput
+  }
+
+  export type ModuleItemUncheckedUpdateManyWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfilePermissionUpdateWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUpdateOneRequiredWithoutPermissionsNestedInput
+  }
+
+  export type ProfilePermissionUncheckedUpdateWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    profileId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfilePermissionUncheckedUpdateManyWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    profileId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserPermissionUpdateWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPermissionsNestedInput
+  }
+
+  export type UserPermissionUncheckedUpdateWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserPermissionUncheckedUpdateManyWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileItemPermissionCreateManyModuleItemInput = {
+    id?: string
+    profileId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserItemPermissionCreateManyModuleItemInput = {
+    id?: string
+    userId: string
+    canRead?: boolean
+    canWrite?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProfileItemPermissionUpdateWithoutModuleItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: ProfileUpdateOneRequiredWithoutItemPermissionsNestedInput
+  }
+
+  export type ProfileItemPermissionUncheckedUpdateWithoutModuleItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    profileId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileItemPermissionUncheckedUpdateManyWithoutModuleItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    profileId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserItemPermissionUpdateWithoutModuleItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutItemPermissionsNestedInput
+  }
+
+  export type UserItemPermissionUncheckedUpdateWithoutModuleItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserItemPermissionUncheckedUpdateManyWithoutModuleItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    canRead?: BoolFieldUpdateOperationsInput | boolean
+    canWrite?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -45864,6 +58127,18 @@ export namespace Prisma {
      */
     export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use ProfileCountOutputTypeDefaultArgs instead
+     */
+    export type ProfileCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProfileCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ModuleCountOutputTypeDefaultArgs instead
+     */
+    export type ModuleCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ModuleCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ModuleItemCountOutputTypeDefaultArgs instead
+     */
+    export type ModuleItemCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ModuleItemCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use CertificateTemplateCountOutputTypeDefaultArgs instead
      */
     export type CertificateTemplateCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CertificateTemplateCountOutputTypeDefaultArgs<ExtArgs>
@@ -45919,6 +58194,34 @@ export namespace Prisma {
      * @deprecated Use UserDefaultArgs instead
      */
     export type UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ProfileDefaultArgs instead
+     */
+    export type ProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProfileDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ModuleDefaultArgs instead
+     */
+    export type ModuleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ModuleDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ProfilePermissionDefaultArgs instead
+     */
+    export type ProfilePermissionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProfilePermissionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use UserPermissionDefaultArgs instead
+     */
+    export type UserPermissionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserPermissionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ModuleItemDefaultArgs instead
+     */
+    export type ModuleItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ModuleItemDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ProfileItemPermissionDefaultArgs instead
+     */
+    export type ProfileItemPermissionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProfileItemPermissionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use UserItemPermissionDefaultArgs instead
+     */
+    export type UserItemPermissionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserItemPermissionDefaultArgs<ExtArgs>
     /**
      * @deprecated Use AuditLogDefaultArgs instead
      */
@@ -45987,6 +58290,10 @@ export namespace Prisma {
      * @deprecated Use DescontoDefaultArgs instead
      */
     export type DescontoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DescontoDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use EmailJobDefaultArgs instead
+     */
+    export type EmailJobArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = EmailJobDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

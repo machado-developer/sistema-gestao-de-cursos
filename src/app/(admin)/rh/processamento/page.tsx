@@ -23,7 +23,8 @@ import {
     Banknote,
     TrendingDown,
     Eye,
-    Plus
+    Plus,
+    Mail
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/utils";
@@ -50,6 +51,9 @@ export default function ProcessamentoPage() {
         tipo: "OUTRO",
         motivo: ""
     });
+
+    const [selectedFolhaIds, setSelectedFolhaIds] = useState<string[]>([]);
+    const [sendingEmails, setSendingEmails] = useState(false);
 
     useEffect(() => {
         fetch('/api/configuracoes/empresa').then(res => res.json()).then(setEmpresa);
@@ -176,9 +180,68 @@ export default function ProcessamentoPage() {
         }
     };
 
+    const handleSendBulkEmail = async () => {
+        if (selectedFolhaIds.length === 0) return;
+
+        setSendingEmails(true);
+        try {
+            const res = await fetch("/api/rh/folhas/bulk-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ folhaIds: selectedFolhaIds }),
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                toast.success("E-mails agendados", {
+                    description: `${data.jobsCount} comprovativos foram adicionados à fila de envio.`
+                });
+                setSelectedFolhaIds([]);
+            } else {
+                throw new Error();
+            }
+        } catch (error) {
+            toast.error("Erro ao agendar e-mails");
+        } finally {
+            setSendingEmails(false);
+        }
+    };
+
 
 
     const columns: Column<any>[] = [
+        {
+            key: "selection",
+            header: (
+                <input
+                    type="checkbox"
+                    className="h-3.5 w-3.5 rounded border-2 border-[var(--border-color)] bg-transparent"
+                    onChange={(e) => {
+                        if (e.target.checked) {
+                            setSelectedFolhaIds(relatorio?.folhas.map((f: any) => f.id) || []);
+                        } else {
+                            setSelectedFolhaIds([]);
+                        }
+                    }}
+                    checked={selectedFolhaIds.length > 0 && selectedFolhaIds.length === relatorio?.folhas?.length}
+                />
+            ),
+            render: (item) => (
+                <input
+                    type="checkbox"
+                    className="h-3.5 w-3.5 rounded border-2 border-[var(--border-color)] bg-transparent"
+                    checked={selectedFolhaIds.includes(item.id)}
+                    onChange={() => {
+                        setSelectedFolhaIds(prev =>
+                            prev.includes(item.id)
+                                ? prev.filter(id => id !== item.id)
+                                : [...prev, item.id]
+                        );
+                    }}
+                />
+            ),
+            className: "w-10 px-4"
+        },
         {
             key: "colaborador",
             header: "Colaborador",
@@ -334,7 +397,21 @@ export default function ProcessamentoPage() {
                         <FileText size={16} className="text-blue-600" />
                         <h2 className="text-[10px] font-black uppercase tracking-widest text-app-text">Detalhamento da Folha Salarial</h2>
                     </div>
-                    <p className="text-[9px] font-bold text-[var(--text-muted)] uppercase tracking-widest">Período: {meses.find(m => m.value === mes)?.label} / {ano}</p>
+                    <div className="flex items-center gap-3">
+                        {selectedFolhaIds.length > 0 && (
+                            <Button
+                                size="sm"
+                                variant="outline"
+                                className="h-7 px-3 text-[9px] font-black uppercase text-blue-600 border-blue-500/30 bg-blue-500/5 gap-2 hover:bg-blue-500/10"
+                                onClick={handleSendBulkEmail}
+                                disabled={sendingEmails}
+                            >
+                                {sendingEmails ? <Loader2 size={12} className="animate-spin" /> : <Mail size={12} />}
+                                {sendingEmails ? "PROCESSANDO..." : `ENVIAR COMPROVATIVOS (${selectedFolhaIds.length})`}
+                            </Button>
+                        )}
+                        <p className="text-[9px] font-bold text-[var(--text-muted)] uppercase tracking-widest">Período: {meses.find(m => m.value === mes)?.label} / {ano}</p>
+                    </div>
                 </div>
                 <DataTable
                     columns={columns}

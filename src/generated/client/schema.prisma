@@ -181,7 +181,67 @@ model User {
   turmas            Turma[]       @relation("UserTurmas")
   cursos            Curso[]       @relation("UserCursos")
 
+  // Novos campos para controle de acesso granular
+  profileId   String?
+  profile     Profile?         @relation(fields: [profileId], references: [id])
+  permissions UserPermission[]
+
   @@map("users")
+}
+
+model Profile {
+  id          String              @id @default(uuid())
+  name        String              @unique
+  description String?
+  permissions ProfilePermission[]
+  users       User[]
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@map("sys_profiles")
+}
+
+model Module {
+  id                 String              @id @default(uuid())
+  name               String              @unique
+  key                String              @unique // ex: "gestao_cursos", "financeiro"
+  description        String?
+  profilePermissions ProfilePermission[]
+  userPermissions    UserPermission[]
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  @@map("sys_modules")
+}
+
+model ProfilePermission {
+  id        String   @id @default(uuid())
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  moduleId  String
+  module    Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  canRead   Boolean  @default(true)
+  canWrite  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([profileId, moduleId])
+  @@map("sys_profile_permissions")
+}
+
+model UserPermission {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moduleId  String
+  module    Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  canRead   Boolean  @default(true)
+  canWrite  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, moduleId])
+  @@map("sys_user_permissions")
 }
 
 model AuditLog {
@@ -331,10 +391,12 @@ model Funcionario {
   userId String? @unique
   user   User?   @relation(fields: [userId], references: [id])
 
-  contratos Contrato[]
-  presencas PresencaHR[]
-  folhas    FolhaPagamento[]
-  ferias    FeriasSolicitacao[]
+  contratos     Contrato[]
+  presencas     PresencaHR[]
+  folhas        FolhaPagamento[]
+  ferias        FeriasSolicitacao[]
+  adiantamentos AdiantamentoSalario[]
+  descontos     Desconto[]
 
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
@@ -412,8 +474,9 @@ model FolhaPagamento {
   base_irt   Decimal @db.Decimal(18, 2)
   irt_devido Decimal @db.Decimal(18, 2)
 
-  outros_descontos Decimal @default(0) @db.Decimal(18, 2)
-  liquido_receber  Decimal @db.Decimal(18, 2)
+  outros_descontos    Decimal @default(0) @db.Decimal(18, 2)
+  total_adiantamentos Decimal @default(0) @db.Decimal(18, 2)
+  liquido_receber     Decimal @db.Decimal(18, 2)
 
   status    String   @default("RASCUNHO") // RASCUNHO, PROCESSADO, PAGO
   createdAt DateTime @default(now())
@@ -473,4 +536,54 @@ model Empresa {
   updatedAt DateTime @updatedAt
 
   @@map("empresa_config")
+}
+
+model AdiantamentoSalario {
+  id               String      @id @default(uuid())
+  funcionarioId    String
+  funcionario      Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+  valor            Decimal     @db.Decimal(18, 2)
+  data_solicitacao DateTime    @default(now())
+  motivo           String?     @db.Text
+  status           String      @default("PENDENTE") // PENDENTE, APROVADO, REJEITADO, PROCESSADO
+  mes_referencia   Int
+  ano_referencia   Int
+  observacao       String?     @db.Text
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@map("rh_adiantamentos")
+}
+
+model Desconto {
+  id             String      @id @default(uuid())
+  funcionarioId  String
+  funcionario    Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+  valor          Decimal     @db.Decimal(18, 2)
+  data_registro  DateTime    @default(now())
+  tipo           String      @default("OUTRO") // DISCIPLINAR, FALTA, DANO, OUTRO
+  motivo         String?     @db.Text
+  status         String      @default("APROVADO") // PENDENTE, APROVADO, REJEITADO, PROCESSADO
+  mes_referencia Int
+  ano_referencia Int
+  observacao     String?     @db.Text
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@map("rh_descontos")
+}
+
+model EmailJob {
+  id          String    @id @default(uuid())
+  type        String    @default("SALARY_SLIP")
+  payload     String    @db.Text // JSON string with folhaId, recipientEmail, etc.
+  status      String    @default("PENDING") // PENDING, PROCESSING, COMPLETED, FAILED
+  attempts    Int       @default(0)
+  maxAttempts Int       @default(3)
+  lastError   String?   @db.Text
+  processedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("sys_email_jobs")
 }

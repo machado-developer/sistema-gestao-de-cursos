@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Building2, User, Palette, LucideIcon } from 'lucide-react'
+import { Building2, User, Palette, Shield, LucideIcon } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 interface SettingsMenuItem {
@@ -34,6 +34,12 @@ export function SettingsSidebar() {
             href: '/configuracoes/aparencia',
             icon: Palette,
             labelKey: 'settings.menu.appearance'
+        },
+        {
+            key: 'profiles',
+            href: '/configuracoes/perfis',
+            icon: Shield,
+            labelKey: 'settings.menu.profiles'
         }
     ]
 

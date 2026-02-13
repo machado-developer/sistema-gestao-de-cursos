@@ -1,41 +1,25 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcryptjs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
 export async function GET() {
-    const session = await getServerSession(authOptions);
-
-    if (!session || session.user.role !== 'ADMIN') {
-        return NextResponse.json({ error: "Não autorizado" }, { status: 403 });
-    }
-
     try {
-        const users = await prisma.user.findMany({
-            select: {
-                id: true,
-                name: true,
-                email: true,
-                role: true,
-                profileId: true,
-                profile: { select: { name: true } },
-                createdAt: true,
+        const profiles = await prisma.profile.findMany({
+            include: {
                 permissions: {
                     include: { module: true }
                 },
                 itemPermissions: {
                     include: { moduleItem: true }
                 }
-            },
-            orderBy: { createdAt: "desc" }
+            }
         });
-        return NextResponse.json(users);
+        return NextResponse.json(profiles);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
-
 export async function POST(req: Request) {
     const session = await getServerSession(authOptions);
 
@@ -44,31 +28,21 @@ export async function POST(req: Request) {
     }
 
     try {
-        const { name, email, password, role, profileId, permissions, itemPermissions } = await req.json();
+        const { name, description, permissions, itemPermissions } = await req.json();
 
-        const existingUser = await prisma.user.findUnique({ where: { email } });
-        if (existingUser) {
-            return NextResponse.json({ error: "Email já registado" }, { status: 400 });
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const user = await prisma.$transaction(async (tx) => {
-            const newUser = await tx.user.create({
+        const profile = await prisma.$transaction(async (tx) => {
+            const newProfile = await tx.profile.create({
                 data: {
                     name,
-                    email,
-                    password: hashedPassword,
-                    role: role || 'USER',
-                    profileId: profileId || null
+                    description
                 }
             });
 
             if (permissions && Array.isArray(permissions)) {
                 for (const p of permissions) {
-                    await tx.userPermission.create({
+                    await tx.profilePermission.create({
                         data: {
-                            userId: newUser.id,
+                            profileId: newProfile.id,
                             moduleId: p.moduleId,
                             canRead: p.canRead,
                             canWrite: p.canWrite
@@ -79,9 +53,9 @@ export async function POST(req: Request) {
 
             if (itemPermissions && Array.isArray(itemPermissions)) {
                 for (const ip of itemPermissions) {
-                    await tx.userItemPermission.create({
+                    await tx.profileItemPermission.create({
                         data: {
-                            userId: newUser.id,
+                            profileId: newProfile.id,
                             moduleItemId: ip.moduleItemId,
                             canRead: ip.canRead,
                             canWrite: ip.canWrite
@@ -90,10 +64,10 @@ export async function POST(req: Request) {
                 }
             }
 
-            return newUser;
+            return newProfile;
         });
 
-        return NextResponse.json(user, { status: 201 });
+        return NextResponse.json(profile, { status: 201 });
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
