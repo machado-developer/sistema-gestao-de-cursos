@@ -35,17 +35,28 @@ jobs:
             public \
             prisma
 
+      # 🔹 TESTE DO SECRET DA CHAVE
+      - name: 🔑 Debug SSH Key
+        run: |
+          echo "Verificando secret da chave..."
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > testkey
+          wc -l testkey
+          head -n 3 testkey
+          tail -n 3 testkey
+
+      # 🔹 TESTE DO SECRET DO USUÁRIO
+      - name: 🧑‍💻 Debug SSH User
+        run: echo "USER=${{ secrets.SSH_USER }}"
+
       - name: 📤 Upload to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT || '22' }}
+          port: 22
           source: "deployment.tar.gz"
-
           target: "/root/gestao/"
-
           overwrite: true
 
       - name: 🚀 Deploy on server
@@ -54,8 +65,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-          port: ${{ secrets.SSH_PORT || '22' }}
+          port: 22
           script: |
             set -e
             # 🔑 CARREGAR NVM (ESSENCIAL)
@@ -68,8 +78,7 @@ jobs:
 
             cd /root/gestao/
 
-            echo "📦 Extraindo arquivos...
-            "
+            echo "📦 Extraindo arquivos..."
             tar -xzf deployment.tar.gz
 
             echo "🧩 Instalando dependências de produção..."
@@ -79,19 +88,22 @@ jobs:
             npx prisma generate
 
             echo "🧩 Prisma migrate deploy..."
-            # Tenta rodar a migração. Se falhar, tenta rollback da migração problemática e baseline da nova init.
-            npx prisma migrate deploy || ( echo "⚠️ Falha na migração! Tentando corrigir..." && npx prisma migrate resolve --rolled-back "20260210182348_ni" || true && npx prisma migrate resolve --applied "20260212151100_init" || true && npx prisma migrate deploy )
+            npx prisma migrate deploy || ( 
+              echo "⚠️ Falha na migração! Tentando corrigir..." && 
+              npx prisma migrate resolve --rolled-back "20260210182348_ni" || true && 
+              npx prisma migrate resolve --applied "20260212151100_init" || true && 
+              npx prisma migrate deploy 
+            )
 
             echo "⚙️ Gerenciando aplicação PM2..."
-            # Salva o ecossistema atual se existir para garantir que não perderemos configs
             pm2 save || true
 
-            if pm2 list | grep -q "nextech"; then
+            if pm2 list | grep -q "gestao"; then
               echo "🔄 Recarregando aplicação..."
-              pm2 reload nextech-front --update-env
+              pm2 reload gestao-front --update-env
             else
               echo "🚀 Iniciando aplicação..."
-              pm2 start "npm start" --name "nextech"
+              pm2 start "npm start" --name "gestao"
             fi
 
             pm2 save
