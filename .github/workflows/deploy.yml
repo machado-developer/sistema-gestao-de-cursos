@@ -58,7 +58,6 @@ jobs:
           port: ${{ secrets.SSH_PORT || '22' }}
           script: |
             set -e
-
             # 🔑 CARREGAR NVM (ESSENCIAL)
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
