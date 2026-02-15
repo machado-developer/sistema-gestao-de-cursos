@@ -43,7 +43,6 @@ jobs:
           wc -l testkey
           head -n 3 testkey
           tail -n 3 testkey
-
       # 🔹 TESTE DO SECRET DO USUÁRIO
       - name: 🧑‍💻 Debug SSH User
         run: echo "USER=${{ secrets.SSH_USER }}"
