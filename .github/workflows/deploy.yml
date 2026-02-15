@@ -40,7 +40,8 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: |
+            ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: "deployment.tar.gz"
 
@@ -68,7 +69,8 @@ jobs:
 
             cd /root/gestao/
 
-            echo "📦 Extraindo arquivos..."
+            echo "📦 Extraindo arquivos...
+            "
             tar -xzf deployment.tar.gz
 
             echo "🧩 Instalando dependências de produção..."
