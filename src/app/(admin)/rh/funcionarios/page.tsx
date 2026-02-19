@@ -4,10 +4,7 @@ import { Suspense } from "react";
 import { TableSkeleton } from "@/components/ui/Skeleton";
 import { serializePrisma } from "@/lib/utils";
 
-export const metadata = {
-    title: "Quadro de Colaboradores",
-    description: "Gestão Integral de Capital Humano",
-};
+export const dynamic = 'force-dynamic';
 
 export default async function FuncionariosPage() {
     // Parallelize data fetching on the server

@@ -4,6 +4,8 @@ import { serializePrisma } from "@/lib/utils";
 import { Suspense } from "react";
 import { TableSkeleton } from "@/components/ui/Skeleton";
 
+export const dynamic = 'force-dynamic';
+
 export default async function CargosPage() {
     const [cargos, depts] = await Promise.all([
         RHService.listarCargos(),

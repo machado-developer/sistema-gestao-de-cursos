@@ -1,5 +1,5 @@
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import NextAuthSessionProvider from '@/providers/SessionProvider'
 import { Toaster } from 'sonner'
 import { LanguageProvider } from "@/lib/i18n/LanguageContext"
@@ -63,11 +63,13 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
+  metadataBase: new URL('https://newtech-gestao.com'),
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 }
 
 import { Suspense } from 'react'
