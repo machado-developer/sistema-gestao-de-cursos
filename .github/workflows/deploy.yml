@@ -55,7 +55,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: "deployment.tar.gz"
-          target: "/root/gestao/"
+          target: "/root/nt-gestao/"
           overwrite: true
 
       - name: 🚀 Deploy on server
@@ -75,7 +75,7 @@ jobs:
             node -v
             npm -v
 
-            cd /root/gestao/
+            cd /root/nt-gestao/
 
             echo "📦 Extraindo arquivos..."
             tar -xzf deployment.tar.gz
@@ -97,12 +97,12 @@ jobs:
             echo "⚙️ Gerenciando aplicação PM2..."
             pm2 save || true
 
-            if pm2 list | grep -q "gestao"; then
+            if pm2 list | grep -q "nt-gestao"; then
               echo "🔄 Recarregando aplicação..."
-              pm2 reload gestao-front --update-env
+              pm2 reload nt-gestao-front --update-env
             else
               echo "🚀 Iniciando aplicação..."
-              pm2 start "npm start" --name "gestao"
+              pm2 start "npm start" --name "nt-gestao"
             fi
 
             pm2 save
