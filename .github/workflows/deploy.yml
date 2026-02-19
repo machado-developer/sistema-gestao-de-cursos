@@ -89,8 +89,7 @@ jobs:
             echo "🧩 Prisma migrate deploy..."
             npx prisma migrate deploy || ( 
               echo "⚠️ Falha na migração! Tentando corrigir..." && 
-              npx prisma migrate resolve --rolled-back "20260210182348_ni" || true && 
-              npx prisma migrate resolve --applied "20260212151100_init" || true && 
+
               npx prisma migrate deploy 
             )
 
