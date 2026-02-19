@@ -6,13 +6,31 @@ export class RHService {
 
     static async listarFuncionarios() {
         return await prisma.funcionario.findMany({
-            include: {
-                cargo: true,
-                departamento: true,
-                documentos: true,
+            select: {
+                id: true,
+                nome: true,
+                bi_documento: true,
+                nif: true,
+                email: true,
+                telefone: true,
+                status: true,
+                departamentoId: true,
+                cargoId: true,
+                departamento: {
+                    select: { nome: true }
+                },
+                cargo: {
+                    select: { nome: true }
+                },
                 contratos: {
                     where: { status: "VIGENTE" },
-                    take: 1
+                    take: 1,
+                    select: {
+                        tipo: true,
+                        salario_base: true,
+                        data_fim: true,
+                        status: true
+                    }
                 }
             },
             orderBy: { nome: "asc" }
@@ -709,9 +727,11 @@ export class RHService {
 
     static async listarDepartamentos() {
         return await prisma.departamento.findMany({
-            include: {
-                _count: { select: { funcionarios: true, cargos: true } },
-                cargos: true
+            select: {
+                id: true,
+                nome: true,
+                descricao: true,
+                _count: { select: { funcionarios: true, cargos: true } }
             },
             orderBy: { nome: "asc" }
         });
@@ -749,9 +769,15 @@ export class RHService {
 
     static async listarCargos() {
         return await prisma.cargo.findMany({
-            include: {
-                _count: { select: { funcionarios: true } },
-                departamento: true
+            select: {
+                id: true,
+                nome: true,
+                salario_base: true,
+                departamentoId: true,
+                departamento: {
+                    select: { nome: true }
+                },
+                _count: { select: { funcionarios: true } }
             },
             orderBy: { nome: "asc" }
         });

@@ -11,27 +11,27 @@ interface AlertProps {
 export function Alert({ title, message, variant = 'info', className }: AlertProps) {
     const variants = {
         info: {
-            bg: 'bg-blue-500/10',
-            border: 'border-blue-500/20',
-            text: 'text-blue-400',
+            bg: 'bg-blue-600/5',
+            border: 'border-blue-600/10',
+            text: 'text-blue-600',
             icon: <Info size={18} />
         },
         warning: {
-            bg: 'bg-orange-500/10',
-            border: 'border-orange-500/20',
-            text: 'text-orange-400',
+            bg: 'bg-amber-600/5',
+            border: 'border-amber-600/10',
+            text: 'text-amber-600',
             icon: <AlertCircle size={18} />
         },
         error: {
-            bg: 'bg-red-500/10',
-            border: 'border-red-500/20',
-            text: 'text-red-400',
+            bg: 'bg-red-600/5',
+            border: 'border-red-600/10',
+            text: 'text-red-600',
             icon: <XCircle size={18} />
         },
         success: {
-            bg: 'bg-green-500/10',
-            border: 'border-green-500/20',
-            text: 'text-green-400',
+            bg: 'bg-emerald-600/5',
+            border: 'border-emerald-600/10',
+            text: 'text-emerald-600',
             icon: <CheckCircle2 size={18} />
         }
     }
@@ -40,17 +40,19 @@ export function Alert({ title, message, variant = 'info', className }: AlertProp
 
     return (
         <div className={cn(
-            "flex gap-4 p-4 border rounded-xl animate-in fade-in slide-in-from-top-2 duration-300",
+            "flex gap-3 p-4 border rounded-xl transition-all animate-in fade-in slide-in-from-top-2 duration-300",
             current.bg,
             current.border,
             className
         )}>
-            <div className={cn("mt-0.5", current.text)}>
+            <div className={cn("mt-0.5 shrink-0", current.text)}>
                 {current.icon}
             </div>
             <div className="flex-1">
-                {title && <h4 className={cn("font-bold text-sm mb-1", current.text)}>{title}</h4>}
-                <p className="text-sm text-zinc-300 leading-relaxed">{message}</p>
+                {title && <h4 className={cn("font-bold text-sm mb-0.5", current.text)}>{title}</h4>}
+                <p className="text-sm text-zinc-400 dark:text-zinc-500 font-medium leading-relaxed">
+                    {message}
+                </p>
             </div>
         </div>
     )

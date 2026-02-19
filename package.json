@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "db:backup": "npx tsx scripts/db-backup.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -23,6 +24,7 @@
     "dotenv": "^17.2.3",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
+    "framer-motion": "^12.34.2",
     "jspdf": "^4.0.0",
     "jspdf-autotable": "^5.0.7",
     "lucide-react": "^0.562.0",
@@ -30,9 +32,10 @@
     "mysql2": "^3.16.0",
     "next": "16.1.1",
     "next-auth": "^4.24.13",
+    "nextjs-toploader": "^3.9.17",
     "nodemailer": "^7.0.13",
-    "qrcode": "^1.5.4",
     "prisma": "^5.11.0",
+    "qrcode": "^1.5.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.70.0",

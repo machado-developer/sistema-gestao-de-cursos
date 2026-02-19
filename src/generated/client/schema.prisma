@@ -182,21 +182,23 @@ model User {
   cursos            Curso[]       @relation("UserCursos")
 
   // Novos campos para controle de acesso granular
-  profileId   String?
-  profile     Profile?         @relation(fields: [profileId], references: [id])
-  permissions UserPermission[]
+  profileId       String?
+  profile         Profile?             @relation(fields: [profileId], references: [id])
+  permissions     UserPermission[]
+  itemPermissions UserItemPermission[]
 
   @@map("users")
 }
 
 model Profile {
-  id          String              @id @default(uuid())
-  name        String              @unique
-  description String?
-  permissions ProfilePermission[]
-  users       User[]
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
+  id              String                  @id @default(uuid())
+  name            String                  @unique
+  description     String?
+  permissions     ProfilePermission[]
+  itemPermissions ProfileItemPermission[]
+  users           User[]
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
 
   @@map("sys_profiles")
 }
@@ -206,6 +208,7 @@ model Module {
   name               String              @unique
   key                String              @unique // ex: "gestao_cursos", "financeiro"
   description        String?
+  items              ModuleItem[]
   profilePermissions ProfilePermission[]
   userPermissions    UserPermission[]
   createdAt          DateTime            @default(now())
@@ -242,6 +245,51 @@ model UserPermission {
 
   @@unique([userId, moduleId])
   @@map("sys_user_permissions")
+}
+
+model ModuleItem {
+  id                     String                  @id @default(uuid())
+  moduleId               String
+  module                 Module                  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  name                   String
+  key                    String                  @unique // ex: "alunos", "turmas"
+  description            String?
+  profileItemPermissions ProfileItemPermission[]
+  userItemPermissions    UserItemPermission[]
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+
+  @@map("sys_module_items")
+}
+
+model ProfileItemPermission {
+  id           String     @id @default(uuid())
+  profileId    String
+  profile      Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  moduleItemId String
+  moduleItem   ModuleItem @relation(fields: [moduleItemId], references: [id], onDelete: Cascade)
+  canRead      Boolean    @default(true)
+  canWrite     Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([profileId, moduleItemId])
+  @@map("sys_profile_item_permissions")
+}
+
+model UserItemPermission {
+  id           String     @id @default(uuid())
+  userId       String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moduleItemId String
+  moduleItem   ModuleItem @relation(fields: [moduleItemId], references: [id], onDelete: Cascade)
+  canRead      Boolean    @default(true)
+  canWrite     Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([userId, moduleItemId])
+  @@map("sys_user_item_permissions")
 }
 
 model AuditLog {
@@ -580,6 +628,8 @@ model EmailJob {
   status      String    @default("PENDING") // PENDING, PROCESSING, COMPLETED, FAILED
   attempts    Int       @default(0)
   maxAttempts Int       @default(3)
+  workerId    String? // ID of the worker currently processing this job
+  lockedUntil DateTime? // Time until the job is locked for other workers
   lastError   String?   @db.Text
   processedAt DateTime?
   createdAt   DateTime  @default(now())

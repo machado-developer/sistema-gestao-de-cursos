@@ -296,8 +296,9 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
             }
 
             toast.success(initialData?.id ? "Ficha Atualizada" : "Colaborador Admitido", {
-                description: `O registo de "${data.nome}" foi processado com sucesso.`,
-                icon: <Save size={16} className="text-emerald-500" />
+                description: `O registo de "${data.nome}" foi processado com sucesso conforme as normas da LGT.`,
+                icon: <FileCheck size={18} className="text-emerald-500" />,
+                duration: 4000
             });
 
             // Redirecionar após 1.5 segundos para mostrar o toast
@@ -411,21 +412,33 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
 
                 <div className="flex gap-3">
                     <Button
-                        variant="outline"
+                        variant="ghost"
                         type="button"
                         onClick={handleCancel}
                         disabled={isSubmitting}
-                        className="h-11 px-6 text-sm font-medium border-[var(--border-color)] dark:border-zinc-800 hover:bg-rose-50 dark:hover:bg-rose-900/10 hover:text-rose-600 transition-all"
+                        className="h-11 px-6 text-sm font-semibold text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all"
                     >
                         Descartar
                     </Button>
                     <Button
                         type="submit"
                         disabled={isSubmitting || isLoading}
-                        className="h-11 px-8 bg-[var(--accent-primary)] text-sm font-medium text-white gap-2 shadow-sm hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                        className={`h-11 px-8 rounded-xl text-sm font-bold gap-2 shadow-lg transition-all active:scale-95 ${isSubmitting
+                                ? 'bg-slate-100 text-slate-400'
+                                : 'bg-blue-600 text-white shadow-blue-500/20 hover:bg-blue-700'
+                            }`}
                     >
-                        {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
-                        {isSubmitting ? 'Guardando...' : (initialData?.id ? 'Atualizar Dados' : 'Efectuar Registo')}
+                        {isSubmitting ? (
+                            <>
+                                <Loader2 size={16} className="animate-spin" />
+                                <span>A processar...</span>
+                            </>
+                        ) : (
+                            <>
+                                <Save size={16} />
+                                <span>{initialData?.id ? 'Guardar Alterações' : 'Concluir Admissão'}</span>
+                            </>
+                        )}
                     </Button>
                 </div>
             </div>

@@ -1,0 +1,429 @@
+"use client";
+
+import { useState } from "react";
+import { DataTable, Column } from "@/components/ui/DataTable";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { Input } from "@/components/ui/Input";
+import { StatCard } from "@/components/dashboard/StatCard";
+import {
+    Plus,
+    Search,
+    MoreHorizontal,
+    User,
+    Users,
+    ShieldCheck,
+    Briefcase,
+    Building2,
+    X,
+    Trash2,
+    Download
+} from "lucide-react";
+import { ConfirmModal } from "@/components/ui/ConfirmModal";
+import Link from "next/link";
+import { toast } from "sonner";
+import { formatCurrency } from "@/lib/utils";
+import { Select } from "@/components/ui/Select";
+import { DocumentService, DocumentType, ExportFormat } from "@/services/DocumentService";
+import { useRouter } from "next/navigation";
+
+interface FuncionariosClientProps {
+    initialFuncionarios: any[];
+    departamentos: any[];
+    cargos: any[];
+}
+
+export default function FuncionariosClient({
+    initialFuncionarios,
+    departamentos,
+    cargos
+}: FuncionariosClientProps) {
+    const router = useRouter();
+    const [search, setSearch] = useState("");
+    const [selectedDept, setSelectedDept] = useState("");
+    const [selectedCargo, setSelectedCargo] = useState("");
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [confirmDelete, setConfirmDelete] = useState<{ isOpen: boolean; id: string | null }>({
+        isOpen: false,
+        id: null
+    });
+
+    const handleOpenDelete = (id: string) => {
+        setConfirmDelete({ isOpen: true, id });
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!confirmDelete.id) return;
+
+        setIsDeleting(true);
+        try {
+            const res = await fetch(`/api/rh/funcionarios/${confirmDelete.id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error();
+
+            toast.success("Registo Eliminado", {
+                description: "O colaborador foi removido do sistema com sucesso."
+            });
+
+            setConfirmDelete({ isOpen: false, id: null });
+            router.refresh();
+        } catch (error) {
+            toast.error("Erro ao Remover", {
+                description: "Não foi possível eliminar este colaborador."
+            });
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    const resetFilters = () => {
+        setSearch("");
+        setSelectedDept("");
+        setSelectedCargo("");
+    };
+
+    const filteredData = initialFuncionarios.filter((f: any) => {
+        const matchesSearch = f.nome.toLowerCase().includes(search.toLowerCase()) ||
+            f.bi_documento.toLowerCase().includes(search.toLowerCase()) ||
+            f.email?.toLowerCase().includes(search.toLowerCase());
+
+        const matchesDept = !selectedDept || f.departamentoId === selectedDept;
+        const matchesCargo = !selectedCargo || f.cargoId === selectedCargo;
+
+        return matchesSearch && matchesDept && matchesCargo;
+    });
+
+    const handleExport = () => {
+        if (filteredData.length === 0) {
+            toast.error("Sem dados para exportar");
+            return;
+        }
+
+        const headers = ["Nome", "Identificacao", "NIF", "Email", "Telefone", "Departamento", "Cargo", "Tipo Contrato", "Salario Base", "Estado"];
+        const csvContent = [
+            headers.join(","),
+            ...filteredData.map(f => {
+                const contrato = f.contratos?.[0];
+                return [
+                    `"${f.nome}"`,
+                    `"${f.bi_documento}"`,
+                    f.nif ? `"${f.nif}"` : "",
+                    f.email ? `"${f.email}"` : "",
+                    f.telefone ? `"${f.telefone}"` : "",
+                    `"${f.departamento?.nome || 'N/A'}"`,
+                    `"${f.cargo?.nome || 'N/A'}"`,
+                    `"${contrato?.tipo || 'N/A'}"`,
+                    contrato?.salario_base || 0,
+                    `"${f.status}"`
+                ].join(",");
+            })
+        ].join("\n");
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `funcionarios_export_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        toast.success("Download Iniciado", {
+            description: `${filteredData.length} registos exportados.`
+        });
+    };
+
+    const handleExportPDF = async () => {
+        if (filteredData.length === 0) {
+            toast.error("Sem dados para exportar");
+            return;
+        }
+
+        const columns = ["Nome", "Identificação", "Departamento", "Cargo", "Tipo Contrato", "Salário Base", "Estado"];
+        const data = filteredData.map(f => {
+            const contrato = f.contratos?.[0];
+            return [
+                f.nome,
+                f.bi_documento,
+                f.departamento?.nome || 'N/A',
+                f.cargo?.nome || 'N/A',
+                contrato?.tipo || 'N/A',
+                formatCurrency(contrato?.salario_base || 0),
+                f.status
+            ];
+        });
+
+        await DocumentService.generate(DocumentType.EMPLOYEE_LIST, ExportFormat.PDF, data, {
+            title: "Lista de Colaboradores",
+            columns,
+            filename: `funcionarios_export_${new Date().toISOString().split('T')[0]}`
+        });
+
+        toast.success("PDF Gerado", {
+            description: "O ficheiro foi descarregado com sucesso."
+        });
+    };
+
+    const columns: Column<any>[] = [
+        {
+            key: "colaborador",
+            header: "Colaborador",
+            render: (item) => (
+                <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-lg bg-[var(--surface-color)] flex items-center justify-center text-[var(--accent-primary)] border border-[var(--border-color)]">
+                        <User size={20} />
+                    </div>
+                    <div>
+                        <p className="font-semibold text-sm text-[var(--text-primary)] tracking-tight leading-none mb-1">{item.nome}</p>
+                        <p className="text-xs text-slate-500 font-medium">{item.email || 'Sem e-mail'}</p>
+                    </div>
+                </div>
+            ),
+        },
+        {
+            key: "identificacao",
+            header: "Identificação",
+            render: (item) => (
+                <div className="space-y-1">
+                    <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] font-bold bg-slate-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-slate-500">BI</span>
+                        <span className="text-sm font-medium text-[var(--text-secondary)]">{item.bi_documento}</span>
+                    </div>
+                    {item.nif && (
+                        <div className="flex items-center gap-1.5">
+                            <span className="text-[10px] font-bold bg-emerald-50 dark:bg-emerald-900/10 px-1.5 py-0.5 rounded text-emerald-600">NIF</span>
+                            <span className="text-sm font-medium text-[var(--text-secondary)]">{item.nif}</span>
+                        </div>
+                    )}
+                </div>
+            ),
+        },
+        {
+            key: "vinculo",
+            header: "Vínculo Contratual",
+            render: (item) => {
+                const contrato = item.contratos?.[0];
+                const tipo = contrato?.tipo || 'N/A';
+                const dataFim = contrato?.data_fim;
+
+                return (
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider ${tipo === 'INDETERMINADO' ? 'bg-blue-600/10 text-blue-600' :
+                                tipo === 'DETERMINADO' ? 'bg-amber-600/10 text-amber-600' :
+                                    'bg-purple-600/10 text-purple-600'
+                                }`}>
+                                {tipo}
+                            </span>
+                        </div>
+                        {dataFim && contrato?.status === "VIGENTE" && (
+                            <p className="text-[10px] font-medium text-rose-500">
+                                Expira em: {new Date(dataFim).toLocaleDateString('pt-AO')}
+                            </p>
+                        )}
+                    </div>
+                );
+            }
+        },
+        {
+            key: "alocacao",
+            header: "Alocação / Cargo",
+            render: (item) => (
+                <div className="space-y-1.5">
+                    <div className="flex items-center gap-2">
+                        <Building2 size={12} className="text-blue-500" />
+                        <span className="text-xs font-semibold text-[var(--text-primary)]">
+                            {item.departamento?.nome || 'Geral'}
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Briefcase size={12} className="text-emerald-500" />
+                        <span className="text-xs text-slate-500 font-medium">
+                            {item.cargo?.nome || 'Não Atribuído'}
+                        </span>
+                    </div>
+                </div>
+            ),
+        },
+        {
+            key: "estado",
+            header: "Estado",
+            render: (item) => (
+                <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${item.status === "ATIVO" ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.3)]" : "bg-slate-400"}`} />
+                    <span className={`text-xs font-semibold ${item.status === "ATIVO" ? "text-emerald-600" : "text-slate-500"}`}>
+                        {item.status.charAt(0) + item.status.slice(1).toLowerCase()}
+                    </span>
+                </div>
+            ),
+        },
+        {
+            key: "remuneracao",
+            header: "Remuneração",
+            render: (item) => {
+                const salario = item.contratos?.[0]?.salario_base || 0;
+                return (
+                    <div className="text-right">
+                        <p className="text-sm font-semibold text-emerald-600">{formatCurrency(salario)}</p>
+                        <p className="text-[11px] font-medium text-slate-500">Base Mensal</p>
+                    </div>
+                );
+            },
+            className: "text-right"
+        },
+        {
+            key: "acoes",
+            header: "",
+            render: (item) => (
+                <div className="flex justify-end gap-2 pr-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Link href={`/rh/funcionarios/${item.id}`}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-blue-600">
+                            <MoreHorizontal size={14} />
+                        </Button>
+                    </Link>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 text-slate-400 hover:text-rose-600 hover:bg-rose-50"
+                        onClick={() => handleOpenDelete(item.id)}
+                    >
+                        <Trash2 size={14} />
+                    </Button>
+                </div>
+            ),
+            className: "w-24"
+        },
+    ];
+
+    const activeCount = initialFuncionarios.filter((f: any) => f.status === "ATIVO").length;
+    const totalPayroll = initialFuncionarios.reduce((acc: number, f: any) => acc + Number(f.contratos?.[0]?.salario_base || 0), 0);
+
+    return (
+        <div className="p-1 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 font-sans">
+            {/* Header */}
+            <div className="border-b border-slate-200 dark:border-zinc-800 pb-5 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                <div className="space-y-1">
+                    <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                        Colaboradores
+                    </h1>
+                    <p className="text-sm text-slate-500 font-medium">Gestão profissional de capital humano e talentos</p>
+                </div>
+                <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={handleExport}>
+                        <Download size={16} className="mr-2 opacity-70" /> CSV
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={handleExportPDF}>
+                        <Download size={16} className="mr-2 opacity-70" /> PDF
+                    </Button>
+                    <Link href="/rh/funcionarios/novo">
+                        <Button size="md" className="shadow-blue-500/20">
+                            <Plus size={18} className="mr-2" /> Novo Funcionário
+                        </Button>
+                    </Link>
+                </div>
+            </div>
+
+            {/* Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <StatCard
+                    title="Efetivo Total"
+                    value={initialFuncionarios.length}
+                    icon={Users}
+                    variant="blue"
+                    subStats={[{ label: 'Ativos agora', value: activeCount }]}
+                />
+                <StatCard
+                    title="Disponibilidade"
+                    value={`${((activeCount / (initialFuncionarios.length || 1)) * 100).toFixed(0)}%`}
+                    icon={ShieldCheck}
+                    variant="green"
+                    subStats={[{ label: 'Status', value: 'Operacional' }]}
+                />
+                <StatCard
+                    title="Folha Prevista"
+                    value={formatCurrency(totalPayroll)}
+                    icon={Briefcase}
+                    variant="purple"
+                    subStats={[{ label: 'Média/Colab.', value: formatCurrency(totalPayroll / (initialFuncionarios.length || 1)) }]}
+                />
+            </div>
+
+            {/* Filter Toolbar */}
+            <Card className="p-4 border border-slate-200 dark:border-zinc-800 bg-white/50 backdrop-blur-sm dark:bg-zinc-900/50 shadow-sm overflow-visible rounded-2xl">
+                <div className="flex flex-col md:flex-row gap-4">
+                    <div className="relative flex-1 group">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors" size={16} />
+                        <Input
+                            placeholder="Pesquisar por nome, BI ou email..."
+                            className="pl-10 h-11 bg-slate-50/50 dark:bg-zinc-800/50 border-slate-200 dark:border-zinc-800 text-sm font-medium rounded-xl"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="flex gap-3 flex-1 md:flex-[2]">
+                        <div className="flex-1">
+                            <Select
+                                value={selectedDept}
+                                onChange={setSelectedDept}
+                                options={departamentos.map(d => ({ value: d.id, label: d.nome }))}
+                                placeholder="Departamento"
+                                className="h-11 rounded-xl"
+                            />
+                        </div>
+
+                        <div className="flex-1">
+                            <Select
+                                value={selectedCargo}
+                                onChange={setSelectedCargo}
+                                options={cargos.filter(c => !selectedDept || c.departamentoId === selectedDept).map(c => ({ value: c.id, label: c.nome }))}
+                                placeholder="Cargo"
+                                className="h-11 rounded-xl"
+                            />
+                        </div>
+
+                        {(search || selectedDept || selectedCargo) && (
+                            <Button
+                                variant="outline"
+                                onClick={resetFilters}
+                                className="h-11 px-4 border-slate-200 dark:border-zinc-800 text-slate-400 hover:text-rose-500 rounded-xl"
+                            >
+                                <X size={16} />
+                            </Button>
+                        )}
+                    </div>
+                </div>
+            </Card>
+
+            {/* Table Area */}
+            <DataTable
+                columns={columns}
+                data={filteredData}
+                keyExtractor={(item) => item.id}
+                loading={false}
+                className="group border border-slate-200 dark:border-zinc-800 shadow-sm rounded-2xl overflow-hidden"
+                emptyState={
+                    <div className="py-24 flex flex-col items-center justify-center text-slate-400 space-y-4">
+                        <Users size={64} className="opacity-10" />
+                        <div className="text-center">
+                            <p className="text-sm font-bold uppercase tracking-widest">Nenhum colaborador encontrado</p>
+                            <p className="text-xs font-medium text-slate-500 mt-1">Tente ajustar seus critérios de filtro</p>
+                        </div>
+                    </div>
+                }
+            />
+
+            {/* Modal Area */}
+            <ConfirmModal
+                isOpen={confirmDelete.isOpen}
+                title="Eliminar Colaborador"
+                message="Tem a certeza que deseja remover este colaborador? Esta ação é irreversível e removerá todos os dados contratuais associados."
+                type="danger"
+                confirmText="Confirmar Eliminação"
+                onConfirm={handleConfirmDelete}
+                onCancel={() => setConfirmDelete({ isOpen: false, id: null })}
+                isLoading={isDeleting}
+            />
+        </div>
+    );
+}

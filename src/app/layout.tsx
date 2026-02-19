@@ -4,6 +4,7 @@ import NextAuthSessionProvider from '@/providers/SessionProvider'
 import { Toaster } from 'sonner'
 import { LanguageProvider } from "@/lib/i18n/LanguageContext"
 import { ThemeProvider } from "@/components/ThemeProvider"
+import NextTopLoader from 'nextjs-toploader'
 
 export const metadata: Metadata = {
   title: {
@@ -82,6 +83,17 @@ export default function RootLayout({
         <NextAuthSessionProvider>
           <LanguageProvider>
             <ThemeProvider>
+              <NextTopLoader
+                color="#2563eb"
+                initialPosition={0.08}
+                crawlSpeed={200}
+                height={3}
+                crawl={true}
+                showSpinner={false}
+                easing="ease"
+                speed={200}
+                shadow="0 0 10px #2563eb,0 0 5px #2563eb"
+              />
               <Toaster position="top-right" richColors expand={true} closeButton />
               <Suspense fallback={null}>
                 {children}
