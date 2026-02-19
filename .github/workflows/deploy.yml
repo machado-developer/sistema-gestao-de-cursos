@@ -26,6 +26,7 @@ jobs:
           CI: true
 
       - name: 📦 Create deployment package
+
         run: |
           tar -czf deployment.tar.gz \
             package.json \
@@ -34,7 +35,6 @@ jobs:
             .next \
             public \
             prisma
-
       # 🔹 TESTE DO SECRET DA CHAVE
       - name: 🔑 Debug SSH Key
         run: |
