@@ -19,102 +19,109 @@ export const authOptions: NextAuthOptions = {
 
                 console.log(`[AUTH] Attempting login for: ${credentials.email}`)
 
-                const user = await prisma.user.findUnique({
-                    where: { email: credentials.email },
-                    include: {
-                        profile: {
-                            include: {
-                                permissions: {
-                                    include: { module: true }
-                                },
-                                itemPermissions: {
-                                    include: { moduleItem: true }
+                try {
+                    console.log(`[AUTH] Querying user in database...`)
+                    const user = await prisma.user.findUnique({
+                        where: { email: credentials.email },
+                        include: {
+                            profile: {
+                                include: {
+                                    permissions: {
+                                        include: { module: true }
+                                    },
+                                    itemPermissions: {
+                                        include: { moduleItem: true }
+                                    }
                                 }
-                            }
-                        },
-                        permissions: {
-                            include: { module: true }
-                        },
-                        itemPermissions: {
-                            include: { moduleItem: true }
-                        },
-                        funcionario: {
-                            include: {
-                                documentos: {
-                                    where: { tipo: 'Foto' },
-                                    orderBy: { createdAt: 'desc' },
-                                    take: 1
+                            },
+                            permissions: {
+                                include: { module: true }
+                            },
+                            itemPermissions: {
+                                include: { moduleItem: true }
+                            },
+                            funcionario: {
+                                include: {
+                                    documentos: {
+                                        where: { tipo: 'Foto' },
+                                        orderBy: { createdAt: 'desc' },
+                                        take: 1
+                                    }
                                 }
                             }
                         }
+                    })
+                    console.log(`[AUTH] Query finished. User found: ${!!user}`)
+
+                    if (!user) {
+                        console.log(`[AUTH] User not found: ${credentials.email}`)
+                        return null
                     }
-                })
 
-                if (!user) {
-                    console.log(`[AUTH] User not found: ${credentials.email}`)
+                    console.log(`[AUTH] Validating password for: ${user.email}`)
+                    const isValid = await bcrypt.compare(credentials.password, user.password)
+
+                    if (!isValid) {
+                        console.log(`[AUTH] Invalid password for: ${user.email}`)
+                        return null
+                    }
+
+                    console.log(`[AUTH] Login successful for: ${user.email}`)
+
+                    // Mesclar permissões do perfil com as específicas do usuário (overrides)
+                    const permsMap = new Map<string, any>()
+                    const itemPermsMap = new Map<string, any>()
+
+                    // 1. Permissões do Perfil
+                    user.profile?.permissions.forEach(p => {
+                        permsMap.set(p.module.key, {
+                            key: p.module.key,
+                            canRead: p.canRead,
+                            canWrite: p.canWrite
+                        })
+                    })
+                    user.profile?.itemPermissions.forEach(p => {
+                        itemPermsMap.set(p.moduleItem.key, {
+                            key: p.moduleItem.key,
+                            canRead: p.canRead,
+                            canWrite: p.canWrite
+                        })
+                    })
+
+                    // 2. Overrides do Usuário
+                    user.permissions.forEach(p => {
+                        permsMap.set(p.module.key, {
+                            key: p.module.key,
+                            canRead: p.canRead,
+                            canWrite: p.canWrite
+                        })
+                    })
+                    user.itemPermissions.forEach(p => {
+                        itemPermsMap.set(p.moduleItem.key, {
+                            key: p.moduleItem.key,
+                            canRead: p.canRead,
+                            canWrite: p.canWrite
+                        })
+                    })
+
+                    // 3. Admin sempre tem acesso total
+                    if (user.role === 'ADMIN') {
+                        permsMap.set('*', { key: '*', canRead: true, canWrite: true })
+                        itemPermsMap.set('*', { key: '*', canRead: true, canWrite: true })
+                    }
+
+                    return {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                        permissions: Array.from(permsMap.values()),
+                        itemPermissions: Array.from(itemPermsMap.values()),
+                        image: user.funcionario?.documentos[0]?.url || null
+                    }
+                } catch (error: any) {
+                    console.error(`[AUTH] DATABASE ERROR:`, error.message || error)
                     return null
-                }
-
-                console.log(`[AUTH] User found: ${user.email}. Validating password...`)
-
-                const isValid = await bcrypt.compare(credentials.password, user.password)
-                if (!isValid) {
-                    console.log(`[AUTH] Invalid password for: ${user.email}`)
-                    return null
-                }
-
-                console.log(`[AUTH] Login successful for: ${user.email}`)
-
-                // Mesclar permissões do perfil com as específicas do usuário (overrides)
-                const permsMap = new Map<string, any>()
-                const itemPermsMap = new Map<string, any>()
-
-                // 1. Permissões do Perfil
-                user.profile?.permissions.forEach(p => {
-                    permsMap.set(p.module.key, {
-                        key: p.module.key,
-                        canRead: p.canRead,
-                        canWrite: p.canWrite
-                    })
-                })
-                user.profile?.itemPermissions.forEach(p => {
-                    itemPermsMap.set(p.moduleItem.key, {
-                        key: p.moduleItem.key,
-                        canRead: p.canRead,
-                        canWrite: p.canWrite
-                    })
-                })
-
-                // 2. Overrides do Usuário
-                user.permissions.forEach(p => {
-                    permsMap.set(p.module.key, {
-                        key: p.module.key,
-                        canRead: p.canRead,
-                        canWrite: p.canWrite
-                    })
-                })
-                user.itemPermissions.forEach(p => {
-                    itemPermsMap.set(p.moduleItem.key, {
-                        key: p.moduleItem.key,
-                        canRead: p.canRead,
-                        canWrite: p.canWrite
-                    })
-                })
-
-                // 3. Admin sempre tem acesso total
-                if (user.role === 'ADMIN') {
-                    permsMap.set('*', { key: '*', canRead: true, canWrite: true })
-                    itemPermsMap.set('*', { key: '*', canRead: true, canWrite: true })
-                }
-
-                return {
-                    id: user.id,
-                    name: user.name,
-                    email: user.email,
-                    role: user.role,
-                    permissions: Array.from(permsMap.values()),
-                    itemPermissions: Array.from(itemPermsMap.values()),
-                    image: user.funcionario?.documentos[0]?.url || null
                 }
             }
         })
