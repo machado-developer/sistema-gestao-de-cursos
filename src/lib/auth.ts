@@ -12,7 +12,12 @@ export const authOptions: NextAuthOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
-                if (!credentials?.email || !credentials?.password) return null
+                if (!credentials?.email || !credentials?.password) {
+                    console.log("[AUTH] Missing credentials")
+                    return null
+                }
+
+                console.log(`[AUTH] Attempting login for: ${credentials.email}`)
 
                 const user = await prisma.user.findUnique({
                     where: { email: credentials.email },
@@ -45,10 +50,20 @@ export const authOptions: NextAuthOptions = {
                     }
                 })
 
-                if (!user) return null
+                if (!user) {
+                    console.log(`[AUTH] User not found: ${credentials.email}`)
+                    return null
+                }
+
+                console.log(`[AUTH] User found: ${user.email}. Validating password...`)
 
                 const isValid = await bcrypt.compare(credentials.password, user.password)
-                if (!isValid) return null
+                if (!isValid) {
+                    console.log(`[AUTH] Invalid password for: ${user.email}`)
+                    return null
+                }
+
+                console.log(`[AUTH] Login successful for: ${user.email}`)
 
                 // Mesclar permissões do perfil com as específicas do usuário (overrides)
                 const permsMap = new Map<string, any>()
