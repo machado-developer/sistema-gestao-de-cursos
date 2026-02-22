@@ -77,29 +77,56 @@ export const certificateService = {
         return curso?.certificateTemplate
     },
 
-    async issueCertificate(matriculaId: string) {
-        const validation = await this.validateIssuance(matriculaId)
-        if (!validation.allowed) {
-            throw new Error(`Emissão bloqueada: ${validation.reasons?.join(', ')}`)
-        }
+    async issueCertificatesBulk(matriculaIds: string[]) {
+        const results: any[] = []
 
-        // Check if already issued
-        const existing = await prisma.certificate.findUnique({
-            where: { matriculaId }
-        })
+        // Process in transaction for data integrity
+        return await prisma.$transaction(async (tx) => {
+            for (const id of matriculaIds) {
+                try {
+                    const validation = await this.validateIssuance(id)
+                    if (!validation.allowed) {
+                        results.push({ error: `Bloqueado: ${validation.reasons?.join(', ')}`, matriculaId: id })
+                        continue
+                    }
 
-        if (existing) return existing
+                    // Check if already issued
+                    const existing = await tx.certificate.findUnique({
+                        where: { matriculaId: id }
+                    })
 
-        const codigoUnico = crypto.randomBytes(4).toString('hex').toUpperCase()
-        const hashValidacao = crypto.randomBytes(16).toString('hex')
+                    if (existing) {
+                        results.push({ certificate: existing, matriculaId: id })
+                        continue
+                    }
 
-        return await prisma.certificate.create({
-            data: {
-                matriculaId,
-                codigo_unico: codigoUnico,
-                hash_validacao: hashValidacao
+                    const codigoUnico = crypto.randomBytes(4).toString('hex').toUpperCase()
+                    const hashValidacao = crypto.randomBytes(16).toString('hex')
+
+                    const certificate = await tx.certificate.create({
+                        data: {
+                            matriculaId: id,
+                            codigo_unico: codigoUnico,
+                            hash_validacao: hashValidacao
+                        }
+                    })
+
+                    results.push({ certificate, matriculaId: id })
+                } catch (err: any) {
+                    results.push({ error: err.message, matriculaId: id })
+                }
             }
+            return results
         })
+    },
+
+    async issueCertificate(matriculaId: string) {
+        const results = await this.issueCertificatesBulk([matriculaId])
+        const res = results[0] as any
+        if (res.error) {
+            throw new Error(res.error)
+        }
+        return res.certificate
     },
 
     async generateQRCode(hash: string) {

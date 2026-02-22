@@ -56,10 +56,16 @@ export async function PUT(
                 codigo_turma: data.codigo_turma,
                 data_inicio: data.data_inicio,
                 data_fim: data.data_fim,
-
+                status: data.status,
                 instrutorId: body.instrutorId || null
             }
         })
+
+        // If status changed to Concluída, run the finalization logic
+        if (data.status === 'Concluída') {
+            const { turmaService } = await import('@/services/turmaService')
+            await turmaService.concluirTurma(id)
+        }
 
         return NextResponse.json(turma)
     } catch (error: any) {

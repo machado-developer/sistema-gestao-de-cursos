@@ -183,9 +183,10 @@ model User {
 
     // Novos campos para controle de acesso granular
     profileId       String?
-    profile         Profile?             @relation(fields: [profileId], references: [id])
+    profile         Profile?                     @relation(fields: [profileId], references: [id])
     permissions     UserPermission[]
     itemPermissions UserItemPermission[]
+    statusHistorico FuncionarioStatusHistorico[]
 
     @@map("users")
 }
@@ -450,7 +451,29 @@ model Funcionario {
     updatedAt  DateTime    @updatedAt
     documentos Documento[]
 
+    dataStatusAtual DateTime?
+    statusHistorico FuncionarioStatusHistorico[]
+
     @@map("rh_funcionarios")
+}
+
+model FuncionarioStatusHistorico {
+    id            String      @id @default(uuid())
+    funcionarioId String
+    funcionario   Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+
+    statusAnterior String
+    novoStatus     String
+
+    motivo    String
+    descricao String? @db.Text
+
+    alteradoPorId String?
+    alteradoPor   User?   @relation(fields: [alteradoPorId], references: [id])
+
+    createdAt DateTime @default(now())
+
+    @@map("rh_funcionario_status_historico")
 }
 
 model Contrato {

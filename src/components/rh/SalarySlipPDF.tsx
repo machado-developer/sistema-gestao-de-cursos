@@ -29,8 +29,11 @@ export const SalarySlipPDF = ({ data }: { data: any }) => (
                     <Text><Text style={styles.label}>Mês/Ano: </Text>{data.mes}/{data.ano}</Text>
                 </View>
                 <View style={styles.row}>
-                    <Text><Text style={styles.label}>Cargo: </Text>{data.funcionario.cargo}</Text>
+                    <Text><Text style={styles.label}>BI / NIF: </Text>{data.funcionario.bi_documento} / {data.funcionario.nif || '---'}</Text>
                     <Text><Text style={styles.label}>Nº INSS: </Text>{data.funcionario.numero_inss}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text><Text style={styles.label}>Cargo / Dep: </Text>{data.funcionario.cargo} / {data.funcionario.departamento}</Text>
                 </View>
             </View>
 

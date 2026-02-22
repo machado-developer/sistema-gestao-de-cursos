@@ -440,163 +440,164 @@ export class RHService {
     // --- Processamento Salarial ---
 
     static async processarFolhaMensal(mes: number, ano: number) {
-        const funcionarios = await prisma.funcionario.findMany({
-            where: { status: "ATIVO" },
-            include: {
-                contratos: { where: { status: "VIGENTE" }, take: 1 },
-                presencas: {
-                    where: {
-                        data: {
-                            gte: new Date(ano, mes - 1, 1),
-                            lt: new Date(ano, mes, 1)
+        return await prisma.$transaction(async (tx) => {
+            const funcionarios = await tx.funcionario.findMany({
+                where: { status: "ATIVO" },
+                include: {
+                    contratos: { where: { status: "VIGENTE" }, take: 1 },
+                    presencas: {
+                        where: {
+                            data: {
+                                gte: new Date(ano, mes - 1, 1),
+                                lt: new Date(ano, mes, 1)
+                            }
                         }
                     }
                 }
-            }
-        });
-
-        // Verificar se já existe processamento para este mês/ano
-        const existeProcessamento = await prisma.folhaPagamento.findFirst({
-            where: {
-                mes,
-                ano,
-                status: "PROCESSADO"
-            }
-        });
-
-        if (existeProcessamento) {
-            throw new Error(`A folha de salário para ${mes}/${ano} já foi processada. Só é possível gerar novamente no próximo mês.`);
-        }
-
-        const resultados = [];
-
-        for (const func of funcionarios) {
-            if (func.contratos.length === 0) continue;
-
-            const contrato = func.contratos[0];
-
-            // Consolidar presenças do mês
-            let totalHENormais = 0;
-            let totalHEDescanso = 0;
-            let totalNoturnas = 0;
-            let totalFaltas = 0;
-
-            func.presencas.forEach((p: { horas_extras_50: any; horas_extras_100: any; horas_noturnas: any; status: string; }) => {
-                // Categorizar extras baseadas no tipo de dia (Regra LGT 23)
-                // Se o campo horas_extras_100 for usado, assumimos descanso (ou feriado)
-                totalHENormais += p.horas_extras_50 || 0;
-                totalHEDescanso += p.horas_extras_100 || 0;
-                totalNoturnas += p.horas_noturnas || 0;
-
-                if (p.status === "FALTA_I") totalFaltas++;
             });
 
-            // Buscar adiantamentos aprovados
-            const adiantamentos = await prisma.adiantamentoSalario.findMany({
-                where: {
-                    funcionarioId: func.id,
-                    mes_referencia: mes,
-                    ano_referencia: ano,
-                    status: "APROVADO"
+            const resultados = [];
+
+            for (const func of funcionarios) {
+                if (func.contratos.length === 0) continue;
+
+                // Verificar se já existe processamento para ESTE funcionário no mês/ano
+                const existeFolha = await tx.folhaPagamento.findUnique({
+                    where: {
+                        funcionarioId_mes_ano: {
+                            funcionarioId: func.id,
+                            mes,
+                            ano
+                        }
+                    }
+                });
+
+                // Pular se já estiver PAGO. Se for PROCESSADO, permitimos re-processar para incluir novos descontos/faltas
+                if (existeFolha && existeFolha.status === "PAGO") {
+                    continue;
                 }
-            });
 
-            const totalAdiantamentos = adiantamentos.reduce((acc: number, curr: { valor: any; }) => acc + Number(curr.valor), 0);
+                const contrato = func.contratos[0];
 
-            // Buscar descontos aprovados (Excluir os automáticos pois já são processados no total_faltas da folha)
-            const descontos = await prisma.desconto.findMany({
-                where: {
-                    funcionarioId: func.id,
-                    mes_referencia: mes,
-                    ano_referencia: ano,
-                    status: "APROVADO",
-                    observacao: { not: "GERADO_AUTOMATICAMENTE" }
-                }
-            });
+                // Consolidar presenças do mês
+                let totalHENormais = 0;
+                let totalHEDescanso = 0;
+                let totalNoturnas = 0;
+                let totalFaltas = 0;
 
-            const totalDescontos = descontos.reduce((acc: number, curr: { valor: any; }) => acc + Number(curr.valor), 0);
+                func.presencas.forEach((p: { horas_extras_50: any; horas_extras_100: any; horas_noturnas: any; status: string; }) => {
+                    totalHENormais += p.horas_extras_50 || 0;
+                    totalHEDescanso += p.horas_extras_100 || 0;
+                    totalNoturnas += p.horas_noturnas || 0;
+                    if (p.status === "FALTA_I") totalFaltas++;
+                });
 
-            // Executar cálculo angolano (Lei 12/23)
-            const calc = processarSalarioMensal({
-                salarioBase: Number(contrato.salario_base),
-                subsidiosTributaveis: Number(contrato.subsidio_alimentacao || 0) + Number(contrato.subsidio_transporte || 0),
-                subsidiosIsentos: Number(contrato.subsidio_residencia || 0) + Number(contrato.outros_subsidios || 0),
-                horasExtrasNormais: totalHENormais,
-                horasExtrasDescanso: totalHEDescanso,
-                horasNoturnas: totalNoturnas,
-                faltasNaoJustificadas: totalFaltas,
-                totalAdiantamentos,
-                outrosDescontos: totalDescontos
-            });
+                // Buscar adiantamentos aprovados OU já processados (para acumular se re-processar)
+                const adiantamentos = await tx.adiantamentoSalario.findMany({
+                    where: {
+                        funcionarioId: func.id,
+                        mes_referencia: mes,
+                        ano_referencia: ano,
+                        status: { in: ["APROVADO", "PROCESSADO"] }
+                    }
+                });
 
-            // Persistir folha
-            const folha = await prisma.folhaPagamento.upsert({
-                where: {
-                    funcionarioId_mes_ano: {
+                const totalAdiantamentos = adiantamentos.reduce((acc: number, curr: { valor: any; }) => acc + Number(curr.valor), 0);
+
+                // Buscar descontos aprovados OU já processados
+                const descontos = await tx.desconto.findMany({
+                    where: {
+                        funcionarioId: func.id,
+                        mes_referencia: mes,
+                        ano_referencia: ano,
+                        status: { in: ["APROVADO", "PROCESSADO"] },
+                        observacao: { not: "GERADO_AUTOMATICAMENTE" }
+                    }
+                });
+
+                const totalDescontos = descontos.reduce((acc: number, curr: { valor: any; }) => acc + Number(curr.valor), 0);
+
+                // Executar cálculo angolano (Lei 12/23)
+                const calc = processarSalarioMensal({
+                    salarioBase: Number(contrato.salario_base),
+                    subsidiosTributaveis: Number(contrato.subsidio_alimentacao || 0) + Number(contrato.subsidio_transporte || 0),
+                    subsidiosIsentos: Number(contrato.subsidio_residencia || 0) + Number(contrato.outros_subsidios || 0),
+                    horasExtrasNormais: totalHENormais,
+                    horasExtrasDescanso: totalHEDescanso,
+                    horasNoturnas: totalNoturnas,
+                    faltasNaoJustificadas: totalFaltas,
+                    totalAdiantamentos,
+                    outrosDescontos: totalDescontos
+                });
+
+                // Persistir folha
+                const folha = await tx.folhaPagamento.upsert({
+                    where: {
+                        funcionarioId_mes_ano: {
+                            funcionarioId: func.id,
+                            mes,
+                            ano
+                        }
+                    },
+                    update: {
+                        salario_base: calc.salarioBase,
+                        total_subsidios_tributaveis: calc.totalSubsidiosTributaveis,
+                        total_subsidios_isentos: calc.totalSubsidiosIsentos,
+                        total_horas_extras: calc.totalHorasExtras,
+                        total_faltas: calc.totalFaltas,
+                        faltas_count: totalFaltas,
+                        base_inss: calc.baseInss,
+                        inss_trabalhador: calc.inssTrabalhador,
+                        inss_empresa: calc.inssEmpresa,
+                        base_irt: calc.baseIrt,
+                        irt_devido: calc.irt,
+                        liquido_receber: calc.liquido,
+                        total_adiantamentos: totalAdiantamentos,
+                        outros_descontos: totalDescontos,
+                        status: "PROCESSADO"
+                    },
+                    create: {
                         funcionarioId: func.id,
                         mes,
-                        ano
+                        ano,
+                        salario_base: calc.salarioBase,
+                        total_subsidios_tributaveis: calc.totalSubsidiosTributaveis,
+                        total_subsidios_isentos: calc.totalSubsidiosIsentos,
+                        total_horas_extras: calc.totalHorasExtras,
+                        total_faltas: calc.totalFaltas,
+                        faltas_count: totalFaltas,
+                        base_inss: calc.baseInss,
+                        inss_trabalhador: calc.inssTrabalhador,
+                        inss_empresa: calc.inssEmpresa,
+                        base_irt: calc.baseIrt,
+                        irt_devido: calc.irt,
+                        liquido_receber: calc.liquido,
+                        total_adiantamentos: totalAdiantamentos,
+                        outros_descontos: totalDescontos,
+                        status: "PROCESSADO"
                     }
-                },
-                update: {
-                    salario_base: calc.salarioBase,
-                    total_subsidios_tributaveis: calc.totalSubsidiosTributaveis,
-                    total_subsidios_isentos: calc.totalSubsidiosIsentos,
-                    total_horas_extras: calc.totalHorasExtras,
-                    total_faltas: calc.totalFaltas,
-                    faltas_count: totalFaltas,
-                    base_inss: calc.baseInss,
-                    inss_trabalhador: calc.inssTrabalhador,
-                    inss_empresa: calc.inssEmpresa,
-                    base_irt: calc.baseIrt,
-                    irt_devido: calc.irt,
-                    liquido_receber: calc.liquido,
-                    total_adiantamentos: totalAdiantamentos,
-                    outros_descontos: totalDescontos,
-                    status: "PROCESSADO"
-                },
-                create: {
-                    funcionarioId: func.id,
-                    mes,
-                    ano,
-                    salario_base: calc.salarioBase,
-                    total_subsidios_tributaveis: calc.totalSubsidiosTributaveis,
-                    total_subsidios_isentos: calc.totalSubsidiosIsentos,
-                    total_horas_extras: calc.totalHorasExtras,
-                    total_faltas: calc.totalFaltas,
-                    faltas_count: totalFaltas,
-                    base_inss: calc.baseInss,
-                    inss_trabalhador: calc.inssTrabalhador,
-                    inss_empresa: calc.inssEmpresa,
-                    base_irt: calc.baseIrt,
-                    irt_devido: calc.irt,
-                    liquido_receber: calc.liquido,
-                    total_adiantamentos: totalAdiantamentos,
-                    outros_descontos: totalDescontos,
-                    status: "PROCESSADO"
+                });
+
+                // Atualizar status para PROCESSADO (apenas os que estavam APROVADOS)
+                if (adiantamentos.some(a => a.status === "APROVADO")) {
+                    await tx.adiantamentoSalario.updateMany({
+                        where: { id: { in: adiantamentos.filter(a => a.status === "APROVADO").map(a => a.id) } },
+                        data: { status: "PROCESSADO" }
+                    });
                 }
-            });
 
-            // Atualizar status dos adiantamentos para PROCESSADO
-            if (totalAdiantamentos > 0) {
-                await prisma.adiantamentoSalario.updateMany({
-                    where: { id: { in: adiantamentos.map((a: { id: any; }) => a.id) } },
-                    data: { status: "PROCESSADO" }
-                });
+                if (descontos.some(d => d.status === "APROVADO")) {
+                    await tx.desconto.updateMany({
+                        where: { id: { in: descontos.filter(d => d.status === "APROVADO").map(d => d.id) } },
+                        data: { status: "PROCESSADO" }
+                    });
+                }
+
+                resultados.push(folha);
             }
 
-            // Atualizar status dos descontos para PROCESSADO
-            if (totalDescontos > 0) {
-                await prisma.desconto.updateMany({
-                    where: { id: { in: descontos.map((d: { id: any; }) => d.id) } },
-                    data: { status: "PROCESSADO" }
-                });
-            }
-
-            resultados.push(folha);
-        }
-
-        return resultados;
+            return resultados;
+        });
     }
 
     static async obterFolhaPorId(id: string) {

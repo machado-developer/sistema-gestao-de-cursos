@@ -107,15 +107,16 @@ export const turmaSchema = z.object({
     data_fim: z.string().min(1, "Data de fim é obrigatória"),
     instrutorId: z.string().optional(),
     vagas: z.coerce.number().min(1, "Número de vagas deve ser maior que 0"),
+    status: z.string().optional(),
 });
 
 export const matriculaSchema = z.object({
     alunoId: z.string().min(1, "Selecione um aluno"),
     turmaId: z.string().min(1, "Selecione uma turma"),
     valor_total: z.coerce.number().min(0, "Valor total deve ser maior ou igual a 0"),
-    valor_pago: z.coerce.number().min(0),
+    valor_pago: z.coerce.number().min(0).optional(),
     desconto: z.coerce.number().min(0).default(0),
-    estado_pagamento: z.string(),
+    estado_pagamento: z.string().optional(),
     empresaId: z.string().optional().or(z.literal("")),
 });
 

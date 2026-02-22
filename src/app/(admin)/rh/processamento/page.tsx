@@ -24,11 +24,13 @@ import {
     TrendingDown,
     Eye,
     Plus,
-    Mail
+    Mail,
+    Send
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/utils";
 import { Select } from "@/components/ui/Select";
+import { EmailRecipientsModal } from "@/components/rh/EmailRecipientsModal";
 import { Modal } from "@/components/ui/Modal";
 import { Input } from "@/components/ui/Input";
 import { CurrencyInput } from "@/components/ui/CurrencyInput";
@@ -54,6 +56,9 @@ export default function ProcessamentoPage() {
 
     const [selectedFolhaIds, setSelectedFolhaIds] = useState<string[]>([]);
     const [sendingEmails, setSendingEmails] = useState(false);
+    const [downloadingReceipts, setDownloadingReceipts] = useState(false);
+    const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+    const [emailRecipientsData, setEmailRecipientsData] = useState<any[]>([]);
 
     useEffect(() => {
         fetch('/api/configuracoes/empresa').then(res => res.json()).then(setEmpresa);
@@ -114,6 +119,53 @@ export default function ProcessamentoPage() {
     useEffect(() => {
         fetchRelatorio();
     }, [mes, ano]);
+
+    const handleOpenEmailModal = (folhas?: any[]) => {
+        const targetFolhas = folhas || relatorio?.folhas.filter((f: any) => selectedFolhaIds.includes(f.id)) || [];
+
+        if (targetFolhas.length === 0) {
+            toast.error("Nenhum funcionário selecionado");
+            return;
+        }
+
+        const data = targetFolhas.map((f: any) => ({
+            folhaId: f.id,
+            nome: f.funcionario.nome,
+            email: f.funcionario.email || ""
+        }));
+
+        setEmailRecipientsData(data);
+        setIsEmailModalOpen(true);
+    };
+
+    const handleSendEmailsWithOverrides = async (recipients: { folhaId: string, email: string }[]) => {
+        setSendingEmails(true);
+        try {
+            const res = await fetch("/api/rh/folhas/bulk-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    folhaIds: recipients.map(r => r.folhaId),
+                    recipients
+                }),
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                toast.success("E-mails agendados", {
+                    description: `${data.jobsCount} comprovativos foram adicionados à fila de envio.`
+                });
+                setSelectedFolhaIds([]);
+            } else {
+                throw new Error();
+            }
+        } catch (error) {
+            toast.error("Erro ao agendar e-mails");
+            throw error;
+        } finally {
+            setSendingEmails(false);
+        }
+    };
 
     const handleProcessar = async () => {
         setLoading(true);
@@ -180,30 +232,33 @@ export default function ProcessamentoPage() {
         }
     };
 
-    const handleSendBulkEmail = async () => {
+    const handleBulkDownload = async () => {
         if (selectedFolhaIds.length === 0) return;
 
-        setSendingEmails(true);
+        setDownloadingReceipts(true);
         try {
-            const res = await fetch("/api/rh/folhas/bulk-email", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ folhaIds: selectedFolhaIds }),
-            });
+            const receiptsData = [];
+            for (const id of selectedFolhaIds) {
+                const res = await fetch(`/api/rh/processamento/${id}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    receiptsData.push(data);
+                }
+            }
 
-            if (res.ok) {
-                const data = await res.json();
-                toast.success("E-mails agendados", {
-                    description: `${data.jobsCount} comprovativos foram adicionados à fila de envio.`
-                });
-                setSelectedFolhaIds([]);
-            } else {
-                throw new Error();
+            if (receiptsData.length > 0) {
+                await DocumentService.generate(
+                    DocumentType.PAYROLL_RECEIPT_BULK as any,
+                    ExportFormat.PDF,
+                    receiptsData,
+                    { companyInfo: relatorio?.companyInfo }
+                );
+                toast.success(`${receiptsData.length} recibos processados para download`);
             }
         } catch (error) {
-            toast.error("Erro ao agendar e-mails");
+            toast.error("Erro ao gerar recibos em lote");
         } finally {
-            setSendingEmails(false);
+            setDownloadingReceipts(false);
         }
     };
 
@@ -306,6 +361,15 @@ export default function ProcessamentoPage() {
                     >
                         <TrendingDown size={18} />
                     </Button>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                        title="Enviar por E-mail"
+                        onClick={() => handleOpenEmailModal([item])}
+                    >
+                        <Send size={16} />
+                    </Button>
                     <Link href={`/rh/processamento/recibo/${item.id}`}>
                         <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/20" title="Ver Recibo">
                             <Eye size={18} />
@@ -313,7 +377,7 @@ export default function ProcessamentoPage() {
                     </Link>
                 </div>
             ),
-            className: "w-24"
+            className: "w-32"
         }
     ];
 
@@ -399,16 +463,28 @@ export default function ProcessamentoPage() {
                     </div>
                     <div className="flex items-center gap-3">
                         {selectedFolhaIds.length > 0 && (
-                            <Button
-                                size="sm"
-                                variant="outline"
-                                className="h-7 px-3 text-[9px] font-black uppercase text-blue-600 border-blue-500/30 bg-blue-500/5 gap-2 hover:bg-blue-500/10"
-                                onClick={handleSendBulkEmail}
-                                disabled={sendingEmails}
-                            >
-                                {sendingEmails ? <Loader2 size={12} className="animate-spin" /> : <Mail size={12} />}
-                                {sendingEmails ? "PROCESSANDO..." : `ENVIAR COMPROVATIVOS (${selectedFolhaIds.length})`}
-                            </Button>
+                            <div className="flex gap-2">
+                                <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="h-7 px-3 text-[9px] font-black uppercase text-blue-600 border-blue-500/30 bg-blue-500/5 gap-2 hover:bg-blue-500/10"
+                                    onClick={() => handleOpenEmailModal()}
+                                    disabled={sendingEmails}
+                                >
+                                    {sendingEmails ? <Loader2 size={12} className="animate-spin" /> : <Mail size={12} />}
+                                    {sendingEmails ? "PROCESSANDO..." : `ENVIAR (${selectedFolhaIds.length})`}
+                                </Button>
+                                <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="h-7 px-3 text-[9px] font-black uppercase text-emerald-600 border-emerald-500/30 bg-emerald-500/5 gap-2 hover:bg-emerald-500/10"
+                                    onClick={handleBulkDownload}
+                                    disabled={downloadingReceipts}
+                                >
+                                    {downloadingReceipts ? <Loader2 size={12} className="animate-spin" /> : <Download size={12} />}
+                                    {downloadingReceipts ? "GERANDO..." : `BAIXAR RECIBOS (${selectedFolhaIds.length})`}
+                                </Button>
+                            </div>
                         )}
                         <p className="text-[9px] font-bold text-[var(--text-muted)] uppercase tracking-widest">Período: {meses.find(m => m.value === mes)?.label} / {ano}</p>
                     </div>
@@ -473,6 +549,16 @@ export default function ProcessamentoPage() {
                     </div>
                 </div>
             </Modal>
+
+            {/* Email Recipients Modal */}
+            {isEmailModalOpen && (
+                <EmailRecipientsModal
+                    isOpen={isEmailModalOpen}
+                    onClose={() => setIsEmailModalOpen(false)}
+                    initialRecipients={emailRecipientsData}
+                    onConfirm={handleSendEmailsWithOverrides}
+                />
+            )}
         </div>
     );
 }

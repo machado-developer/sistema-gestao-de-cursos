@@ -10,15 +10,17 @@ async function PostBulkIssuer(req: NextRequest) {
             return NextResponse.json({ error: 'Array of matriculaIds is required' }, { status: 400 })
         }
 
+        const bulkResults = await certificateService.issueCertificatesBulk(matriculaIds)
         const results = []
-        for (const id of matriculaIds) {
-            try {
-                const certificate = await certificateService.issueCertificate(id)
-                const fullData = await certificateService.getCertificateData(id)
-                const qrCode = await certificateService.generateQRCode(certificate.hash_validacao)
-                results.push({ certificate, data: fullData, qrCode })
-            } catch (err: any) {
-                results.push({ error: err.message, matriculaId: id })
+
+        for (const res of bulkResults) {
+            const item = res as any
+            if (item.error) {
+                results.push({ error: item.error, matriculaId: item.matriculaId })
+            } else {
+                const qrCode = await certificateService.generateQRCode(item.certificate.hash_validacao)
+                const fullData = await certificateService.getCertificateData(item.matriculaId)
+                results.push({ certificate: item.certificate, data: fullData, qrCode })
             }
         }
 

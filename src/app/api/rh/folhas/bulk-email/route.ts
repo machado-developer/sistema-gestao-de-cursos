@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     }
 
     try {
-        const { folhaIds } = await req.json();
+        const { folhaIds, recipients } = await req.json();
 
         if (!folhaIds || !Array.isArray(folhaIds)) {
             return NextResponse.json({ error: "Lista de IDs inválida" }, { status: 400 });
@@ -33,14 +33,18 @@ export async function POST(req: Request) {
         const createdJobs = [];
 
         for (const folha of folhas) {
-            if (!folha.funcionario.email) continue;
+            // Check if there's an override email in recipients
+            const override = recipients?.find((r: any) => r.folhaId === folha.id);
+            const targetEmail = override?.email || folha.funcionario.email;
+
+            if (!targetEmail) continue;
 
             const job = await prisma.emailJob.create({
                 data: {
                     type: "SALARY_SLIP",
                     payload: JSON.stringify({
                         folhaId: folha.id,
-                        recipientEmail: folha.funcionario.email,
+                        recipientEmail: targetEmail,
                         recipientName: folha.funcionario.nome,
                         month: folha.mes,
                         year: folha.ano

@@ -84,7 +84,25 @@ export function MatriculaForm() {
             const result = await res.json()
 
             if (!res.ok) {
-                throw new Error(result.message || 'Falha ao registrar matrícula')
+                // Se houver detalhes de validação (Zod), formatar para exibir
+                let errorDescription = result.message || 'Falha ao registrar matrícula'
+
+                if (result.details) {
+                    const errorMessages = Object.entries(result.details)
+                        .map(([field, error]: [string, any]) => {
+                            const fieldName = field === 'alunoId' ? 'Estudante' :
+                                field === 'turmaId' ? 'Turma' :
+                                    field === 'valor_total' ? 'Valor Total' : field
+                            return `${fieldName}: ${error._errors?.join(', ') || 'Erro inválido'}`
+                        })
+                        .join('\n')
+
+                    if (errorMessages) {
+                        errorDescription = errorMessages
+                    }
+                }
+
+                throw new Error(errorDescription)
             }
 
             toast.success('Matrícula Confirmada!', {
@@ -95,7 +113,8 @@ export function MatriculaForm() {
             router.refresh()
         } catch (err: any) {
             toast.error('Erro na Matrícula', {
-                description: err.message
+                description: err.message,
+                className: 'whitespace-pre-line' // Para respeitar quebras de linha nas mensagens de erro
             })
         } finally {
             setLoading(false)

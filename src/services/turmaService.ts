@@ -43,16 +43,17 @@ export const turmaService = {
             })
 
             // Calculate pass/fail for each student
-            // Assuming 'media_final' is already populated by instructor
             for (const m of turma.matriculas) {
-                const media = m.media_final || 0 // Default to 0 if not set
-                const aprovado = media >= turma.curso.media_minima_aprovacao
+                const media = m.media_final || 0
+                const frequencia = m.percentual_frequencia || 0
+
+                const aprovadoPorMedia = media >= turma.curso.media_minima_aprovacao
+                const aprovadoPorFrequencia = frequencia >= turma.curso.frequencia_minima
 
                 await tx.matricula.update({
                     where: { id: m.id },
                     data: {
-                        status_academico: aprovado ? 'Aprovado' : 'Reprovado',
-                        // Optional: Lock grades here logic implies we don't change 'notas' anymore
+                        status_academico: (aprovadoPorMedia && aprovadoPorFrequencia) ? 'Aprovado' : 'Reprovado',
                     }
                 })
             }
@@ -117,12 +118,15 @@ export const turmaService = {
                     // Only update students who are still "Cursando"
                     if (m.status_academico === 'Cursando') {
                         const media = m.media_final || 0
-                        const aprovado = media >= turma.curso.media_minima_aprovacao
+                        const frequencia = m.percentual_frequencia || 0
+
+                        const aprovadoPorMedia = media >= turma.curso.media_minima_aprovacao
+                        const aprovadoPorFrequencia = frequencia >= turma.curso.frequencia_minima
 
                         await tx.matricula.update({
                             where: { id: m.id },
                             data: {
-                                status_academico: aprovado ? 'Aprovado' : 'Reprovado',
+                                status_academico: (aprovadoPorMedia && aprovadoPorFrequencia) ? 'Aprovado' : 'Reprovado',
                             }
                         })
                     }

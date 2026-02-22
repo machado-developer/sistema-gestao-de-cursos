@@ -31,7 +31,8 @@ export enum DocumentType {
     VACATION_MAP = "VACATION_MAP",
     ABSENCE_REPORT = "ABSENCE_REPORT",
     COURSE_LIST = "COURSE_LIST",
-    COURSE_DETAIL = "COURSE_DETAIL"
+    COURSE_DETAIL = "COURSE_DETAIL",
+    PAYROLL_RECEIPT_BULK = "PAYROLL_RECEIPT_BULK"
 }
 
 /**
@@ -140,20 +141,10 @@ export class DocumentService {
                 return this.handlePayrollReceipt(format, data, company);
             case DocumentType.PAYROLL_SHEET:
                 return this.handlePayrollSheet(format, data, company, options);
-            case DocumentType.IRT_MAP:
-            case DocumentType.INSS_MAP:
-            case DocumentType.VACATION_MAP:
-            case DocumentType.ABSENCE_REPORT:
-                return this.handleLegalMap(type, format, data, options, company);
-            case DocumentType.STUDENT_LIST:
-            case DocumentType.ENROLLMENT_LIST:
-            case DocumentType.ACADEMIC_PAUTA:
-            case DocumentType.EMPLOYEE_LIST:
-                return this.handleTableExport(type, format, data, options, company);
-            case DocumentType.CERTIFICATE:
-                return this.handleCertificateExport(data, options);
             case DocumentType.BULK_CERTIFICATES:
                 return this.handleBulkCertificateExport(data, options);
+            case DocumentType.PAYROLL_RECEIPT_BULK:
+                return this.handleBulkPayrollReceiptExport(data, company);
             case DocumentType.MATRICULA_CONFIRMATION:
                 return this.handleMatriculaConfirmation(data, company);
             case DocumentType.STUDENT_FINANCIAL_EXTRACT:
@@ -398,6 +389,102 @@ export class DocumentService {
 
     // --- Implementações de Exportação (Portadas de payrollExporter.ts) ---
 
+    private static async handleBulkPayrollReceiptExport(receipts: any[], company: any) {
+        const doc = new jsPDF();
+
+        for (let i = 0; i < receipts.length; i++) {
+            if (i > 0) doc.addPage();
+
+            const data = receipts[i];
+            const { funcionario, mes, ano, salario_base, total_subsidios_tributaveis, total_subsidios_isentos, total_horas_extras, total_faltas, inss_trabalhador, irt_devido, liquido_receber } = data;
+
+            const startY = await this.drawStandardHeader(doc, company, "RECIBO DE VENCIMENTO");
+
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(50, 50, 50);
+            doc.text(`Período: ${meses[mes]} / ${ano}`, 196, startY - 12, { align: "right" });
+
+            // Employee Info Box
+            doc.setDrawColor(37, 99, 235);
+            doc.setLineWidth(0.3);
+            doc.rect(14, startY + 10, 182, 30);
+
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+            doc.text("COLABORADOR:", 18, startY + 17);
+            doc.setFont("helvetica", "bold");
+            doc.text(funcionario.nome.toUpperCase(), 18, startY + 22);
+
+            doc.setFont("helvetica", "normal");
+            doc.text(`BI / DOCUMENTO: ${funcionario.bi_documento}`, 18, startY + 29);
+            doc.text(`NIF: ${funcionario.nif || '---'}`, 18, startY + 34);
+
+            doc.text("DEPARTAMENTO:", 120, startY + 17);
+            doc.setFont("helvetica", "bold");
+            doc.text((funcionario.departamento?.nome || 'Geral').toUpperCase(), 120, startY + 22);
+
+            doc.setFont("helvetica", "normal");
+            doc.text("CARGO:", 120, startY + 29);
+            doc.text((funcionario.cargo?.nome || '---').toUpperCase(), 135, startY + 29);
+
+            // Table Data
+            const tableBody: any[][] = [
+                ["Salário Base Mensal", "30 D", formatCurrency(Number(salario_base)), "---"],
+            ];
+
+            if (Number(total_subsidios_tributaveis) > 0) tableBody.push(["Subsídios Tributáveis", "1", formatCurrency(Number(total_subsidios_tributaveis)), "---"]);
+            if (Number(total_subsidios_isentos) > 0) tableBody.push(["Subsídios Isentos", "1", formatCurrency(Number(total_subsidios_isentos)), "---"]);
+            if (Number(total_horas_extras) > 0) tableBody.push(["Horas Extras / Ajustes", "---", formatCurrency(Number(total_horas_extras)), "---"]);
+            if (Number(total_faltas) > 0) tableBody.push([`Faltas Injustificadas (${data.faltas_count || 0} D)`, "---", "---", `(${formatCurrency(Number(total_faltas))})`]);
+
+            if (data.detalhesAdiantamentos && data.detalhesAdiantamentos.length > 0) {
+                data.detalhesAdiantamentos.forEach((a: any) => {
+                    tableBody.push([`Adiantamento: ${a.motivo || 'Solicitado'}`, "---", "---", `(${formatCurrency(Number(a.valor))})`]);
+                });
+            }
+
+            if (data.detalhesDescontos && data.detalhesDescontos.length > 0) {
+                data.detalhesDescontos.forEach((d: any) => {
+                    const tipoDesc = d.tipo === 'DISCIPLINAR' ? 'Desc. Disciplinar' : d.tipo === 'FALTA' ? 'Desc. Faltas' : d.tipo === 'DANO' ? 'Desc. Danos' : 'Outro Desconto';
+                    tableBody.push([`${tipoDesc}: ${d.motivo || 'Registado'}`, "---", "---", `(${formatCurrency(Number(d.valor))})`]);
+                });
+            }
+
+            tableBody.push(["Segurança Social (3%)", "3%", "---", formatCurrency(Number(inss_trabalhador))]);
+            tableBody.push(["Imposto IRT", "Var.", "---", formatCurrency(Number(irt_devido))]);
+
+            autoTable(doc, {
+                startY: startY + 45,
+                head: [["Descrição", "Quant.", "Vencimentos", "Descontos"]],
+                body: tableBody,
+                theme: 'grid',
+                headStyles: { fillColor: [30, 41, 59], textColor: 255, fontStyle: 'bold' },
+                styles: { fontSize: 8, cellPadding: 2 },
+                columnStyles: {
+                    0: { cellWidth: 'auto' },
+                    1: { halign: 'center' },
+                    2: { halign: 'right' },
+                    3: { halign: 'right' }
+                },
+                foot: [[
+                    { content: 'Líquido a Receber', colSpan: 2, styles: { fontStyle: 'bold', halign: 'right', fillColor: [16, 185, 129], textColor: 255 } },
+                    { content: formatCurrency(Number(liquido_receber)), colSpan: 2, styles: { fontStyle: 'bold', halign: 'right', fillColor: [16, 185, 129], textColor: 255, fontSize: 10 } }
+                ]]
+            });
+
+            const finalY = (doc as any).lastAutoTable.finalY + 25;
+            doc.setDrawColor(100);
+            doc.line(30, finalY, 80, finalY);
+            doc.line(130, finalY, 180, finalY);
+            doc.setFontSize(8);
+            doc.text("Pelo Empregador", 55, finalY + 5, { align: "center" });
+            doc.text("O Colaborador", 155, finalY + 5, { align: "center" });
+        }
+
+        doc.save(`Recibos_Lote_${new Date().getTime()}.pdf`);
+    }
+
     private static async exportPayrollReceiptPDF(data: any, company: any) {
         const doc = new jsPDF();
         const { funcionario, mes, ano, salario_base, total_subsidios_tributaveis, total_subsidios_isentos, total_horas_extras, total_faltas, inss_trabalhador, irt_devido, liquido_receber } = data;
@@ -421,8 +508,8 @@ export class DocumentService {
         doc.text(funcionario.nome.toUpperCase(), 18, startY + 22);
 
         doc.setFont("helvetica", "normal");
-        doc.text(`BI: ${funcionario.bi_documento}`, 18, startY + 29);
-        doc.text(`NIF: ${funcionario.nif || '---'}`, 60, startY + 29);
+        doc.text(`BI / DOCUMENTO: ${funcionario.bi_documento}`, 18, startY + 29);
+        doc.text(`NIF: ${funcionario.nif || '---'}`, 18, startY + 34);
 
         doc.text("DEPARTAMENTO:", 120, startY + 17);
         doc.setFont("helvetica", "bold");
@@ -431,6 +518,11 @@ export class DocumentService {
         doc.setFont("helvetica", "normal");
         doc.text("CARGO:", 120, startY + 29);
         doc.text((funcionario.cargo?.nome || '---').toUpperCase(), 135, startY + 29);
+
+        // Ajustar rect para os novos campos
+        doc.setDrawColor(37, 99, 235);
+        doc.setLineWidth(0.3);
+        doc.rect(14, startY + 10, 182, 30);
 
         // Table Data
         const tableBody: any[][] = [
