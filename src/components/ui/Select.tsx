@@ -176,11 +176,11 @@ export function Select({
                     ) : options.length > 0 ? (
                         options.map((opt) => {
                             const valStr = String(opt.value);
-                            return valStr && valStr.trim() !== "" ? (
+                            return (
                                 <SelectItem key={opt.value} value={valStr}>
                                     {opt.label}
                                 </SelectItem>
-                            ) : null;
+                            );
                         })
                     ) : (
                         <div className="py-2 px-8 text-sm text-slate-500 italic">Nenhum item disponível</div>

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { User, Mail, FileText, GraduationCap, Banknote, Download } from 'lucide-react'
+import { PermissionGate } from '@/components/auth/PermissionGate'
 import { DataTable, Column } from '@/components/ui/DataTable'
 import { DocumentService, DocumentType, ExportFormat } from '@/services/DocumentService'
 import { TableFilters, FilterConfig } from '@/components/ui/TableFilters'
@@ -239,11 +240,13 @@ export function AlunosTableClient({ alunos, cursos, turmas, title, subtitle, pag
                             {t('pages.students.view_profile')}
                         </Button>
                     </Link>
-                    <Link href={`/alunos/${aluno.id}/editar`}>
-                        <Button variant="ghost" className="text-xs h-8 px-3">
-                            {t('common.edit')}
-                        </Button>
-                    </Link>
+                    <PermissionGate module="gestao_cursos" action="write">
+                        <Link href={`/alunos/${aluno.id}/editar`}>
+                            <Button variant="ghost" className="text-xs h-8 px-3">
+                                {t('common.edit')}
+                            </Button>
+                        </Link>
+                    </PermissionGate>
                 </div>
             )
         }
@@ -261,11 +264,13 @@ export function AlunosTableClient({ alunos, cursos, turmas, title, subtitle, pag
                         <Download size={18} />
                         Exportar PDF
                     </Button>
-                    <Link href="/alunos/novo">
-                        <Button className="gap-2">
-                            <User size={18} /> {t('pages.students.new')}
-                        </Button>
-                    </Link>
+                    <PermissionGate module="gestao_cursos" action="write">
+                        <Link href="/alunos/novo">
+                            <Button className="gap-2">
+                                <User size={18} /> {t('pages.students.new')}
+                            </Button>
+                        </Link>
+                    </PermissionGate>
                 </div>
             </div>
 

@@ -321,7 +321,7 @@ export default function UtilizadoresClient({ initialUsers, profiles, modules }: 
                 <Card className="p-6 border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 backdrop-blur-md shadow-xl animate-in fade-in slide-in-from-top-4 duration-300 rounded-2xl relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-1 h-full bg-blue-600" />
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-8 gap-y-6">
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nome Completo</label>
                                 <Input

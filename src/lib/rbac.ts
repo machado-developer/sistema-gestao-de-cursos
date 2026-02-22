@@ -64,6 +64,35 @@ export const MODULE_PERMISSION_MAP: Record<string, string> = {
     'sistema': 'sistema',
 };
 
+/**
+ * Mapeamento de Hrefs de itens para chaves de permissão (Itens da DB)
+ */
+export const ITEM_PERMISSION_MAP: Record<string, string> = {
+    'alunos': 'alunos',
+    'cursos': 'cursos',
+    'turmas': 'turmas',
+    'matriculas': 'matriculas',
+    'instrutores': 'cursos', // Agrupado em cursos por enquanto
+    'empresas-clientes': 'matriculas',
+    'certificados': 'matriculas',
+    'financeiro': 'pagamentos',
+    'rh': 'funcionarios',
+    'rh/funcionarios': 'funcionarios',
+    'rh/contratos': 'funcionarios',
+    'rh/presencas': 'funcionarios',
+    'rh/processamento': 'processamento_salarial',
+    'rh/adiantamentos': 'adiantamentos',
+    'rh/descontos': 'processamento_salarial',
+    'rh/relatorios': 'funcionarios',
+    'rh/ferias': 'ferias',
+    'rh/organograma': 'funcionarios',
+    'rh/departamentos': 'funcionarios',
+    'rh/cargos': 'funcionarios',
+    'configuracoes/utilizadores': 'utilizadores',
+    'configuracoes': 'config_gerais',
+    'audit': 'auditoria',
+};
+
 // Mantido para compatibilidade temporária se necessário, 
 // mas o ideal é migrar tudo para o novo hasPermission que usa sessionPermissions
 export const ROLE_PERMISSIONS: Record<Role, string[]> = {

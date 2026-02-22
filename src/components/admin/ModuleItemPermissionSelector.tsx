@@ -52,7 +52,7 @@ export function ModuleItemPermissionSelector({
     const dividerClass = isDark ? 'border-zinc-800' : 'border-gray-100';
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {modules.map(mod => {
                 const perm = permissions.find(p => p.moduleId === mod.id);
                 const isExpanded = expandedModules.includes(mod.id);

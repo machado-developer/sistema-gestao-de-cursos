@@ -22,7 +22,8 @@ interface SidebarProps {
     onClose?: () => void
 }
 
-import { MODULE_PERMISSION_MAP, hasPermission } from '@/lib/rbac'
+import { MODULE_PERMISSION_MAP, ITEM_PERMISSION_MAP, hasPermission } from '@/lib/rbac'
+import { PermissionGate } from '@/components/auth/PermissionGate'
 
 import { getNavigation } from '@/config/navigation'
 
@@ -155,18 +156,23 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                                                 const Icon = item.icon
                                                                 const isActive = pathname === item.href
 
+                                                                // Obter a chave do item usando o mapeamento ou o próprio path
+                                                                const itemPath = item.href.startsWith('/') ? item.href.substring(1) : item.href
+                                                                const itemKey = ITEM_PERMISSION_MAP[itemPath] || itemPath
+
                                                                 return (
-                                                                    <Link
-                                                                        key={item.href}
-                                                                        href={item.href}
-                                                                        className={`py-2 px-3 rounded-md transition-all text-[13px] font-medium flex items-center gap-3 ${isActive
-                                                                            ? 'bg-[var(--surface-color)] text-[var(--accent-primary)]'
-                                                                            : 'text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--surface-hover)]'
-                                                                            }`}
-                                                                    >
-                                                                        <Icon size={18} strokeWidth={1.5} />
-                                                                        {item.name}
-                                                                    </Link>
+                                                                    <PermissionGate key={item.href} item={itemKey} action="read">
+                                                                        <Link
+                                                                            href={item.href}
+                                                                            className={`py-2 px-3 rounded-md transition-all text-[13px] font-medium flex items-center gap-3 ${isActive
+                                                                                ? 'bg-[var(--surface-color)] text-[var(--accent-primary)]'
+                                                                                : 'text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--surface-hover)]'
+                                                                                }`}
+                                                                        >
+                                                                            <Icon size={18} strokeWidth={1.5} />
+                                                                            {item.name}
+                                                                        </Link>
+                                                                    </PermissionGate>
                                                                 )
                                                             })}
                                                         </div>
