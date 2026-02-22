@@ -98,7 +98,7 @@ jobs:
 
             if pm2 list | grep -q "nt-gestao"; then
               echo "🔄 Recarregando aplicação..."
-              pm2 reload nt-gestao-front --update-env
+              pm2 reload nt-gestao --update-env
             else
               echo "🚀 Iniciando aplicação..."
               pm2 start "npm start" --name "nt-gestao"
