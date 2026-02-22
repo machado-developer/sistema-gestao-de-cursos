@@ -1,0 +1,103 @@
+DOCUMENTAÇÃO TÉCNICA COMPLETA - SISTEMA NEWTECH
+================================================================================
+ARQUIVO ÚNICO CONSOLIDADO
+ARQUITETO: Antigravity AI (Google DeepMind)
+DATA: 2026-02-22
+================================================================================
+
+[CONTEÚDO]
+1. Resumo Executivo
+2. Documentação do Banco de Dados
+3. Documentação de Módulos
+4. Especificação de Requisitos
+5. Regras de Negócio
+6. Arquitetura do Sistema
+7. Análise Técnica e Estratégica
+
+--------------------------------------------------------------------------------
+1. RESUMO EXECUTIVO
+--------------------------------------------------------------------------------
+Este pacote de documentação foi gerado por um Arquiteto de Software Sênior após uma análise profunda e exaustiva de todo o repositório. O objetivo é fornecer uma visão de nível corporativo sobre a arquitetura, segurança, regras de negócio e escalabilidade do sistema NewTech.
+
+VISÃO GERAL DO SISTEMA
+O sistema é uma plataforma ERP (Enterprise Resource Planning) integrada, focada em Gestão Acadêmica e Recursos Humanos, com suporte financeiro para rastreamento de receitas. Foi desenvolvido utilizando as tecnologias mais modernas do ecossistema JavaScript (Next.js, TypeScript e Prisma), garantindo alta disponibilidade e integridade de dados.
+
+PRINCIPAIS ATRIBUTOS TÉCNICOS
+- Arquitetura de Serviços: Toda a lógica de negócio está isolada em serviços desacoplados.
+- Segurança Corporativa: Implementação de RBAC (Role-Based Access Control) granular.
+- Auditoria Nativa: Registo automático de mutações sensíveis.
+- Motor RH: Conformidade com a legislação angolana (IRT, INSS).
+
+--------------------------------------------------------------------------------
+2. DOCUMENTAÇÃO DO BANCO DE DADOS
+--------------------------------------------------------------------------------
+TECHNICAL OVERVIEW
+The system utilizes MySQL as the primary relational database, managed through Prisma ORM.
+
+CORE MODULES & ENTITIES:
+- Aluno / Curso / Turma / Matricula (Acadêmico)
+- Funcionario / Contrato / FolhaPagamento (RH)
+- User / Profile / Permission (Segurança)
+
+KEY RELATIONSHIPS:
+- Aluno 1:N Matricula
+- Turma 1:N Matricula
+- Matricula 1:N Pagamento
+
+--------------------------------------------------------------------------------
+3. DOCUMENTAÇÃO DE MÓDULOS
+--------------------------------------------------------------------------------
+- Gestão Acadêmica: Lifecycle de matrículas, turmas e certificação.
+- Recursos Humanos (RH): Contratos, tempos (Clocking) e processamento salarial.
+- Financeiro: Rastreio de pagamentos e saldos pendentes.
+- IAM (Segurança): Gestão de acessos e auditoria.
+
+--------------------------------------------------------------------------------
+4. ESPECIFICAÇÃO DE REQUISITOS
+--------------------------------------------------------------------------------
+FUNCIONAL REQUISITOS (RF):
+- RF-001: Gestão de Alunos (B2C/B2B).
+- RF-007: Geração de Certificados Digitais.
+- RF-012: Processamento de Folha Mensal (IRT/INSS).
+- RF-018: Log de Auditoria não-volátil.
+
+NÃO-FUNCIONAL REQUISITOS (RNF):
+- RNF-001: Autenticação segura (NextAuth).
+- RNF-007: Cálculos financeiros com tipo Decimal (evita erros de precisão).
+
+--------------------------------------------------------------------------------
+5. REGRAS DE NEGÓCIO
+--------------------------------------------------------------------------------
+- Lógica de Aprovação: Final Average >= 10.0 E Presença >= 75%.
+- Imutabilidade Fiscal: Documentos de folha marcados como "PAGO" não podem ser alterados.
+- Auditoria Obrigatória: Qualquer mutação sensível deve ser capturada via middleware 'withAudit'.
+
+--------------------------------------------------------------------------------
+6. ARQUITETURA DO SISTEMA
+--------------------------------------------------------------------------------
+STAC TECNOLÓGICA:
+- Framework: Next.js (App Router).
+- ORM: Prisma.
+- BD: MySQL.
+- Background Jobs: Email Worker dedicado para envio de comprovativos.
+
+ESTRATÉGIA MULTI-TENANT:
+- Separação lógica via 'EmpresaCliente' para contratos B2B.
+
+--------------------------------------------------------------------------------
+7. ANÁLISE TÉCNICA E ESTRATÉGICA
+--------------------------------------------------------------------------------
+MATURIDADE: Intermediária (Business-Ready).
+
+RISCOS:
+- Necessidade de certificação AGT para faturamento em escala.
+- Escalabilidade de SMTP (SMTP Latency) requer brokers de mensagens em volumes extremos.
+
+RECOMENDAÇÕES:
+- Integrar com API certificada pela AGT.
+- Implementar testes automatizados na camada de Serviços.
+- Evoluir para brokers de mensagens (BullMQ/Redis) para Background Jobs.
+
+================================================================================
+FIM DA DOCUMENTAÇÃO
+================================================================================

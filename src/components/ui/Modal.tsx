@@ -2,15 +2,17 @@
 
 import { X } from 'lucide-react'
 import { useEffect } from 'react'
+import { cn } from '@/lib/utils'
 
 interface ModalProps {
     isOpen: boolean
     onClose: () => void
     title: string
     children: React.ReactNode
+    className?: string
 }
 
-export function Modal({ isOpen, onClose, title, children }: ModalProps) {
+export function Modal({ isOpen, onClose, title, children, className }: ModalProps) {
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === 'Escape') onClose()

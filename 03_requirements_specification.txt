@@ -1,0 +1,56 @@
+03 - REQUIREMENTS SPECIFICATION
+
+This document outlines the functional and non-functional requirements of the system as identified through reverse engineering of the implementation.
+
+--------------------------------------------------------------------------------
+
+1. FUNCTIONAL REQUIREMENTS (RF)
+
+ACADEMIC MANAGEMENT
+- RF-001: Register and manage students with personal and B2B data.
+- RF-002: Define training programs (Courses) with specific approval criteria (Grades and Attendance).
+- RF-003: Create training classes (Turmas) with scheduling and instructor allocation.
+- RF-004: Automate enrollment management, including price calculation and status tracking.
+- RF-005: Record student attendance and lesson topics.
+- RF-006: Record student grades and automatically calculate final averages.
+- RF-007: Generate and issue digital certificates upon course completion.
+- RF-008: Support bulk certificate issuance for entire classes.
+
+HUMAN RESOURCES (RH)
+- RF-009: Manage employees with comprehensive legal and financial metadata.
+- RF-010: Track employee contracts, including types and salary components.
+- RF-011: Recording and managing employee timesheets (Clocking).
+- RF-012: Process monthly payroll with automated tax calculations (IRT/INSS).
+- RF-013: Manage leave requests (Ferias) and absences.
+- RF-014: Register salary advances and deductions with status-based approval flows.
+- RF-015: Generate payslip documents (Recibos de Vencimento) in multiple formats (PDF, XLSX).
+
+FINANCIAL & AUDIT
+- RF-016: Register payments against student enrollments.
+- RF-017: Provide real-time dashboards for revenue and pending balances.
+- RF-018: Maintain a non-volatile audit log for all sensitive data mutations.
+- RF-019: System-wide configuration for company identity and fiscal constants.
+
+--------------------------------------------------------------------------------
+
+2. NON-FUNCTIONAL REQUIREMENTS (RNF)
+
+SECURITY & ACCESS
+- RNF-001: Authentication must be performed via secure session management (NextAuth).
+- RNF-002: Access control must be granular, allowing permissions at Module and Item levels.
+- RNF-003: Sensitive data (passwords) must be hashed.
+
+PERFORMANCE & SCALABILITY
+- RNF-004: Critical operations (bulk certificates, payroll) must utilize database transactions for atomicity.
+- RNF-005: Asynchronous task processing (Email Worker) must handle high-volume communications without blocking UI.
+- RNF-006: Search operations must be optimized utilizing appropriate indexing in the schema.
+
+DATA INTEGRITY & COMPLIANCE
+- RNF-007: Decimal types must be used for all financial calculations to prevent floating-point errors.
+- RNF-008: All identifying numbers (BI, NIF, INSS) must have uniqueness constraints.
+- RNF-009: Historical records (Contracts, Payroll) must be immutable once processed or ended.
+
+USABILITY & INTERNATIONALIZATION
+- RNF-010: Provide multi-language support (Portuguese/English).
+- RNF-011: Support both Dark and Light themes.
+- RNF-012: Layout must be responsive for administrative use on various devices.

@@ -1,0 +1,58 @@
+05 - SYSTEM ARCHITECTURE
+
+This document describes the high-level architecture, technology stack, and engineering patterns used in the system.
+
+--------------------------------------------------------------------------------
+
+1. ARCHITECTURAL OVERVIEW
+The system follows a 3-Tier Architecture paradigm, optimized for a modern server-side-first experience using the Next.js App Router framework.
+
+- Presentation Layer: React Server Components (RSC) and Client Components with Tailwind CSS.
+- Service Layer: Decoupled business logic stored in src/services, bridging the gap between APIs and the database.
+- Data Layer: MySQL database managed by Prisma ORM for type-safe relational mapping.
+
+--------------------------------------------------------------------------------
+
+2. TECHNOLOGY STACK
+- Framework: Next.js 14/15
+- Language: TypeScript
+- Database: MySQL
+- ORM: Prisma
+- Authentication: NextAuth
+- Styling: Tailwind CSS + Lucide React
+- PDF Generation: jsPDF / @react-pdf/renderer
+- Excel/Docx: ExcelJS / docx.js
+
+--------------------------------------------------------------------------------
+
+3. CORE LOGIC PATTERNS
+
+SERVICE-ORIENTED LOGIC
+Instead of bloating API routes or components, the system utilizes a Service Pattern (found in src/services).
+- Examples: RHService, MatriculaService, DocumentService.
+- Benefit: Ensures logic can be reused across API routes, Server Actions, and Background Workers.
+
+AUDITING & SECURITY FLOW
+The system implements a transparent security wrapper:
+1. Authentication: middleware.ts ensures all routes (except public ones) have a valid token.
+2. Authorization: Custom Profile and Permission logic verified during data fetching or mutation.
+3. Auditing: The withAudit Higher-Order Function wraps API handlers, automatically persisting a snapshot of the transaction to the AuditLog table.
+
+ASYNCHRONOUS BACKGROUND PROCESSING
+To handle SMTP latency and heavy PDF generation:
+- Email Worker: A separate Node.js process (or Cron-triggered script) that polls the sys_email_jobs table.
+- Reliability: Implements retry logic (attempts) and locking mechanisms to prevent duplicate delivery in clustered environments.
+
+--------------------------------------------------------------------------------
+
+4. MULTI-TENANT STRATEGY
+The architecture supports a Shared Schema multi-occupancy model:
+- Internal Config: The Empresa model acts as the "Owner" of the system instance.
+- Client Segregation: EmpresaCliente allows a single instance to serve multiple B2B clients, segregating financial extracts and certificate sets by client identity without needing separate databases.
+
+--------------------------------------------------------------------------------
+
+5. TECHNICAL DEBT & IMPROVEMENT POINTS
+- Worker Execution: The EmailWorker is currently implemented as a manual script/cron; moving to a dedicated message broker (e.g., Redis/BullMQ) would improve real-time responsiveness.
+- State Management: Heavy reliance on local state and prop drilling in some UI parts; centralized state (Zustand/Redux) could be considered for very complex dashboards.
+- Testing: Limited automated test coverage identified in the core directory; implementing unit tests for the Service layer is recommended for enterprise readiness.
