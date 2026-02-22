@@ -2,12 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { alunoSchema } from '@/lib/schemas'
 import { withAudit } from '@/lib/withAudit'
+import { checkPermission } from '@/lib/rbac-server'
 
 export async function GET(
     request: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        if (!(await checkPermission('gestao_cursos', 'read'))) {
+            return NextResponse.json({ message: 'Não autorizado' }, { status: 403 })
+        }
         const { id } = await params
         const aluno = await prisma.aluno.findUnique({
             where: { id },
@@ -37,6 +41,9 @@ async function PUTHandler(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        if (!(await checkPermission('gestao_cursos', 'write'))) {
+            return NextResponse.json({ message: 'Não autorizado para escrita' }, { status: 403 })
+        }
         const { id } = await params
         const body = await request.json()
 
@@ -97,6 +104,9 @@ async function DELETEHandler(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        if (!(await checkPermission('gestao_cursos', 'write'))) {
+            return NextResponse.json({ message: 'Não autorizado para escrita' }, { status: 403 })
+        }
         const { id } = await params
 
         // Check for enrollment dependencies

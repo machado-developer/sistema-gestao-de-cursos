@@ -3,8 +3,13 @@ import { alunoService } from '@/services/alunoService'
 import { alunoSchema } from '@/lib/schemas'
 import { withAudit } from '@/lib/withAudit'
 
+import { checkPermission } from '@/lib/rbac-server'
+
 export async function GET() {
     try {
+        if (!(await checkPermission('gestao_cursos', 'read'))) {
+            return NextResponse.json({ error: 'Não autorizado' }, { status: 403 })
+        }
         const alunos = await alunoService.findAll()
         return NextResponse.json(alunos)
     } catch (error: any) {
@@ -18,6 +23,9 @@ import { prisma } from '@/lib/prisma'
 
 async function POSTHandler(request: NextRequest) {
     try {
+        if (!(await checkPermission('gestao_cursos', 'write'))) {
+            return NextResponse.json({ error: 'Não autorizado para escrita neste módulo' }, { status: 403 })
+        }
         const session = await getServerSession(authOptions)
         const user = session?.user?.email ? await prisma.user.findUnique({ where: { email: session.user.email } }) : null
 
