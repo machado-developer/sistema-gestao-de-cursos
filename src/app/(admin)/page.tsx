@@ -23,6 +23,10 @@ export default async function Home() {
     redirect('/academico');
   }
 
+  if ((session.user as any).role === 'FINANCEIRO') {
+    redirect('/financeiro');
+  }
+
   // Se não for ADMIN e não caiu em nenhum redirecionamento acima, vai para a página padrão
   // (Ou se quiser ser estrito: if (session.user.role !== 'ADMIN') redirect('/algum-lugar') )
   if ((session.user as any).role !== 'ADMIN') {
