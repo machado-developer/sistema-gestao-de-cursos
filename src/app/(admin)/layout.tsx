@@ -11,7 +11,6 @@ export default function AdminLayout({
     children: React.ReactNode
 }) {
     const [isMenuOpen, setIsMenuOpen] = useState(true)
-    useEffect
     return (
         <div className="flex min-h-screen bg-[var(--bg-color)] transition-colors duration-300">
             <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />

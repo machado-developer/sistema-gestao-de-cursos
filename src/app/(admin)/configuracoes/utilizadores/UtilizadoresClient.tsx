@@ -148,8 +148,10 @@ export default function UtilizadoresClient({ initialUsers, profiles, modules }: 
                     profileId,
                     permissions: newPermissions,
                     itemPermissions: newItemPermissions,
-                    role: selectedProfile.name === 'Administrador' ? 'ADMIN' : (selectedProfile.name === 'Recursos Humanos' || selectedProfile.name === 'RH' ? 'RH' :
-                        selectedProfile.name === 'Financeiro' ? 'FINANCEIRO' : 'USER')
+                    role: selectedProfile.name === 'Administrador' ? 'ADMIN' :
+                        (selectedProfile.name === 'Recursos Humanos' || selectedProfile.name === 'RH' ? 'RH' :
+                            selectedProfile.name === 'Financeiro' ? 'FINANCEIRO' :
+                                selectedProfile.name === 'Gestor Académico' ? 'GESTOR_ACADEMICO' : 'USER')
                 });
             }
         } catch (error) {
@@ -368,11 +370,9 @@ export default function UtilizadoresClient({ initialUsers, profiles, modules }: 
                                 <Select
                                     value={formData.profileId}
                                     onChange={handleProfileChange}
+                                    placeholder="Selecionar Perfil"
                                     className="h-11 bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 transition-all rounded-xl shadow-none"
-                                    options={[
-                                        { value: "", label: "Selecionar Perfil" },
-                                        ...profiles.map(p => ({ value: p.id, label: p.name }))
-                                    ]}
+                                    options={profiles.map(p => ({ value: p.id, label: p.name }))}
                                     required
                                 />
                             </div>

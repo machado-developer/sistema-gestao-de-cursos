@@ -64,30 +64,26 @@ export async function POST(req: Request) {
                 }
             });
 
-            if (permissions && Array.isArray(permissions)) {
-                for (const p of permissions) {
-                    await tx.userPermission.create({
-                        data: {
-                            userId: newUser.id,
-                            moduleId: p.moduleId,
-                            canRead: p.canRead,
-                            canWrite: p.canWrite
-                        }
-                    });
-                }
+            if (permissions && Array.isArray(permissions) && permissions.length > 0) {
+                await tx.userPermission.createMany({
+                    data: permissions.map(p => ({
+                        userId: newUser.id,
+                        moduleId: p.moduleId,
+                        canRead: p.canRead,
+                        canWrite: p.canWrite
+                    }))
+                });
             }
 
-            if (itemPermissions && Array.isArray(itemPermissions)) {
-                for (const ip of itemPermissions) {
-                    await tx.userItemPermission.create({
-                        data: {
-                            userId: newUser.id,
-                            moduleItemId: ip.moduleItemId,
-                            canRead: ip.canRead,
-                            canWrite: ip.canWrite
-                        }
-                    });
-                }
+            if (itemPermissions && Array.isArray(itemPermissions) && itemPermissions.length > 0) {
+                await tx.userItemPermission.createMany({
+                    data: itemPermissions.map(ip => ({
+                        userId: newUser.id,
+                        moduleItemId: ip.moduleItemId,
+                        canRead: ip.canRead,
+                        canWrite: ip.canWrite
+                    }))
+                });
             }
 
             return newUser;

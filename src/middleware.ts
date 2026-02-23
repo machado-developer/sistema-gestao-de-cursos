@@ -33,7 +33,7 @@ export default withAuth(
 
             // Check if user has at least read permission for this module
             if (!hasPermission(permissions, moduleKey, 'read')) {
-                // If no permission, redirect to dashboard or a "not authorized" page
+                // Se não tem permissão para o módulo, volta para a home que decidirá o que mostrar
                 return NextResponse.redirect(new URL('/', req.url));
             }
         }

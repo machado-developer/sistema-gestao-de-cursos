@@ -40,30 +40,26 @@ export async function PUT(
             await tx.userItemPermission.deleteMany({ where: { userId: id } });
 
             // Criar novas permissões
-            if (permissions && Array.isArray(permissions)) {
-                for (const p of permissions) {
-                    await tx.userPermission.create({
-                        data: {
-                            userId: id,
-                            moduleId: p.moduleId,
-                            canRead: p.canRead,
-                            canWrite: p.canWrite
-                        }
-                    });
-                }
+            if (permissions && Array.isArray(permissions) && permissions.length > 0) {
+                await tx.userPermission.createMany({
+                    data: permissions.map(p => ({
+                        userId: id,
+                        moduleId: p.moduleId,
+                        canRead: p.canRead,
+                        canWrite: p.canWrite
+                    }))
+                });
             }
 
-            if (itemPermissions && Array.isArray(itemPermissions)) {
-                for (const ip of itemPermissions) {
-                    await tx.userItemPermission.create({
-                        data: {
-                            userId: id,
-                            moduleItemId: ip.moduleItemId,
-                            canRead: ip.canRead,
-                            canWrite: ip.canWrite
-                        }
-                    });
-                }
+            if (itemPermissions && Array.isArray(itemPermissions) && itemPermissions.length > 0) {
+                await tx.userItemPermission.createMany({
+                    data: itemPermissions.map(ip => ({
+                        userId: id,
+                        moduleItemId: ip.moduleItemId,
+                        canRead: ip.canRead,
+                        canWrite: ip.canWrite
+                    }))
+                });
             }
 
             return updatedUser;

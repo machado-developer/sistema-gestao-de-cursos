@@ -60,30 +60,26 @@ export async function PUT(
             await tx.profileItemPermission.deleteMany({ where: { profileId: id } });
 
             // Criar novas permissões
-            if (permissions && Array.isArray(permissions)) {
-                for (const p of permissions) {
-                    await tx.profilePermission.create({
-                        data: {
-                            profileId: id,
-                            moduleId: p.moduleId,
-                            canRead: p.canRead,
-                            canWrite: p.canWrite
-                        }
-                    });
-                }
+            if (permissions && Array.isArray(permissions) && permissions.length > 0) {
+                await tx.profilePermission.createMany({
+                    data: permissions.map(p => ({
+                        profileId: id,
+                        moduleId: p.moduleId,
+                        canRead: p.canRead,
+                        canWrite: p.canWrite
+                    }))
+                });
             }
 
-            if (itemPermissions && Array.isArray(itemPermissions)) {
-                for (const ip of itemPermissions) {
-                    await tx.profileItemPermission.create({
-                        data: {
-                            profileId: id,
-                            moduleItemId: ip.moduleItemId,
-                            canRead: ip.canRead,
-                            canWrite: ip.canWrite
-                        }
-                    });
-                }
+            if (itemPermissions && Array.isArray(itemPermissions) && itemPermissions.length > 0) {
+                await tx.profileItemPermission.createMany({
+                    data: itemPermissions.map(ip => ({
+                        profileId: id,
+                        moduleItemId: ip.moduleItemId,
+                        canRead: ip.canRead,
+                        canWrite: ip.canWrite
+                    }))
+                });
             }
 
             return updatedProfile;
