@@ -260,7 +260,7 @@ export default function DescontosPage() {
             header: "Ações",
             render: (item) => (
                 <div className="flex justify-end gap-2">
-                    {item.status === "PENDENTE" && item.observacao !== "GERADO_AUTOMATICAMENTE" && (
+                    {item.status !== "PROCESSADO" && (
                         <>
                             <Button
                                 size="sm"
@@ -280,23 +280,27 @@ export default function DescontosPage() {
                             >
                                 <Trash2 size={14} />
                             </Button>
-                            <div className="w-[1px] h-4 bg-slate-200 dark:bg-zinc-800 mx-1 self-center" />
-                            <Button
-                                size="sm"
-                                className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border-emerald-200 h-7"
-                                onClick={() => handleStatusUpdate(item.id, "APROVADO")}
-                                title="Aprovar"
-                            >
-                                <CheckCircle size={14} />
-                            </Button>
-                            <Button
-                                size="sm"
-                                className="bg-rose-50 text-rose-600 hover:bg-rose-100 border-rose-200 h-7"
-                                onClick={() => handleStatusUpdate(item.id, "REJEITADO")}
-                                title="Rejeitar"
-                            >
-                                <XCircle size={14} />
-                            </Button>
+                            {item.status === "PENDENTE" && (
+                                <>
+                                    <div className="w-[1px] h-4 bg-slate-200 dark:bg-zinc-800 mx-1 self-center" />
+                                    <Button
+                                        size="sm"
+                                        className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border-emerald-200 h-7"
+                                        onClick={() => handleStatusUpdate(item.id, "APROVADO")}
+                                        title="Aprovar"
+                                    >
+                                        <CheckCircle size={14} />
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        className="bg-rose-50 text-rose-600 hover:bg-rose-100 border-rose-200 h-7"
+                                        onClick={() => handleStatusUpdate(item.id, "REJEITADO")}
+                                        title="Rejeitar"
+                                    >
+                                        <XCircle size={14} />
+                                    </Button>
+                                </>
+                            )}
                         </>
                     )}
                 </div>

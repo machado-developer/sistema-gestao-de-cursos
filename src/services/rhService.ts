@@ -628,10 +628,6 @@ export class RHService {
                         cargo: true,
                         departamento: true
                     }
-                },
-                ajustes: {
-                    include: { alteradoPor: { select: { name: true } } },
-                    orderBy: { createdAt: "desc" }
                 }
             }
         });
