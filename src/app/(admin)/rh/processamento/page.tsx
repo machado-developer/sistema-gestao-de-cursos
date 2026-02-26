@@ -73,6 +73,7 @@ export default function ProcessamentoPage() {
         total_faltas: 0,
         total_adiantamentos: 0,
         outros_descontos: 0,
+        liquido_override: null as number | null, // null = auto-recalculate
         motivo: ""
     });
 
@@ -302,6 +303,7 @@ export default function ProcessamentoPage() {
                     total_faltas: Number(data.total_faltas),
                     total_adiantamentos: Number(data.total_adiantamentos),
                     outros_descontos: Number(data.outros_descontos),
+                    liquido_override: null,
                     motivo: ""
                 });
                 setIsAdjustmentModalOpen(true);
@@ -331,6 +333,15 @@ export default function ProcessamentoPage() {
                     valorNovo: Number(ajustes[campo]),
                     motivo: ajustes.motivo
                 }));
+
+            // If user set a direct net salary override, add it as a special adjustment
+            if (ajustes.liquido_override !== null && ajustes.liquido_override > 0) {
+                listaAjustes.push({
+                    campo: "liquido_receber",
+                    valorNovo: Number(ajustes.liquido_override),
+                    motivo: ajustes.motivo
+                });
+            }
 
             if (listaAjustes.length === 0) {
                 toast.error("Nenhuma alteração detectada");
@@ -691,9 +702,29 @@ export default function ProcessamentoPage() {
                         label="Motivo do Ajuste (Obrigatório)"
                         value={ajustes.motivo}
                         onChange={(e) => setAjustes({ ...ajustes, motivo: e.target.value })}
-                        placeholder="Ex: Correção de bónus de desempenho, ajuste de faltas justificadas..."
+                        placeholder="Ex: Correcção de bónus de desempenho, ajuste de faltas justificadas..."
                         required
                     />
+
+                    {/* Direct net override */}
+                    <div className="p-4 border-2 border-dashed border-amber-400/60 dark:border-amber-500/40 rounded-lg bg-amber-50/50 dark:bg-amber-900/10">
+                        <p className="text-[10px] font-black uppercase text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-2">
+                            <Calculator size={12} /> Sobreposição Directa do Líquido (Opcional)
+                        </p>
+                        <p className="text-[9px] text-slate-500 mb-3">
+                            Se preencher este campo, o valor será salvo directamente como líquido a receber, sem recalcular IRT/INSS.
+                        </p>
+                        <CurrencyInput
+                            label="Líquido a Receber (override)"
+                            value={ajustes.liquido_override ?? 0}
+                            onChange={(val) => setAjustes({ ...ajustes, liquido_override: val > 0 ? val : null })}
+                        />
+                        {ajustes.liquido_override !== null && ajustes.liquido_override > 0 && (
+                            <p className="text-[9px] font-bold text-amber-600 mt-2 flex items-center gap-1">
+                                <AlertCircle size={10} /> O recalculo automático de IRT/INSS será ignorado
+                            </p>
+                        )}
+                    </div>
 
                     {/* History */}
                     {selectedFolha?.ajustes?.length > 0 && (

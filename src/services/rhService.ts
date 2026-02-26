@@ -1113,27 +1113,38 @@ export class RHService {
             const atualizado: any = { ...folha };
 
             for (const ajuste of ajustes) {
-                const valorAnterior = Number((folha as any)[ajuste.campo]);
                 atualizado[ajuste.campo] = ajuste.valorNovo;
 
-                await tx.folhaAjusteHistorico.create({
+                // NOTE: history writing is temporarily disabled until the migration
+                // for rh_folhas_ajustes_historico is applied on the production database.
+                // Once `pnpm prisma migrate resolve --applied 20260226212030_add_payroll_adjustments`
+                // has been run, uncomment the block below:
+                //
+                // const valorAnterior = Number((folha as any)[ajuste.campo]);
+                // await tx.folhaAjusteHistorico.create({
+                //     data: { folhaId: id, campo: ajuste.campo, valorAnterior, valorNovo: ajuste.valorNovo, motivo: ajuste.motivo, alteradoPorId }
+                // });
+            }
+
+            // If the user set liquido_receber directly, respect it and skip recalculation
+            if ('liquido_receber' in atualizado && Number(atualizado.liquido_receber) !== Number(folha.liquido_receber)) {
+                const liquidoOverride = Number(atualizado.liquido_receber);
+                return await tx.folhaPagamento.update({
+                    where: { id },
                     data: {
-                        folhaId: id,
-                        campo: ajuste.campo,
-                        valorAnterior,
-                        valorNovo: ajuste.valorNovo,
-                        motivo: ajuste.motivo,
-                        alteradoPorId
+                        salario_base: atualizado.salario_base,
+                        total_subsidios_tributaveis: atualizado.total_subsidios_tributaveis,
+                        total_subsidios_isentos: atualizado.total_subsidios_isentos,
+                        total_horas_extras: atualizado.total_horas_extras,
+                        total_faltas: atualizado.total_faltas,
+                        total_adiantamentos: atualizado.total_adiantamentos,
+                        outros_descontos: atualizado.outros_descontos,
+                        liquido_receber: liquidoOverride
                     }
                 });
             }
 
-            // Recalcular com base nos novos valores
-            // Nota: Como processarSalarioMensal recalcula Horas Extras de base,
-            // aqui injetamos os valores já monetários se eles não foram o alvo do ajuste,
-            // ou deixamos o sistema lidar com a lógica de base.
-            // Para maior flexibilidade em ajustes manuais "post-mortem", recalculamos IRT/INSS sobre o bruto resultante.
-
+            // Recalculate IRT/INSS from adjusted gross values
             const salarioBase = Number(atualizado.salario_base);
             const subsidiosTributaveis = Number(atualizado.total_subsidios_tributaveis);
             const subsidiosIsentos = Number(atualizado.total_subsidios_isentos);
@@ -1142,7 +1153,6 @@ export class RHService {
             const adiantamentos = Number(atualizado.total_adiantamentos);
             const outrosDescontos = Number(atualizado.outros_descontos);
 
-            // Rendimento Bruto (Salário Base + Subsídios Tributáveis + Horas Extras - Faltas)
             const rendimentoBruto = Math.round((salarioBase + subsidiosTributaveis + valorHorasExtras - valorFaltas) * 100) / 100;
 
             const inss = {
@@ -1152,11 +1162,9 @@ export class RHService {
 
             const baseIrt = Math.round((rendimentoBruto - inss.trabalhador) * 100) / 100;
 
-            // Re-importar ou definir calcularIRT localmente se necessário, mas RHService já importa processarSalarioMensal que usa calculosAngola
-            // Vamos usar uma abordagem que garanta consistência total
             const resRecalculo = processarSalarioMensal({
-                salarioBase: rendimentoBruto, // Aqui passamos o bruto já consolidado como "base" para os impostos
-                subsidiosTributaveis: 0,      // Já incluído no bruto acima
+                salarioBase: rendimentoBruto,
+                subsidiosTributaveis: 0,
                 subsidiosIsentos: subsidiosIsentos,
                 totalAdiantamentos: adiantamentos,
                 outrosDescontos: outrosDescontos
