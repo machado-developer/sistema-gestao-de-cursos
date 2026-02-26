@@ -487,6 +487,17 @@ exports.Prisma.FolhaPagamentoScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.FolhaAjusteHistoricoScalarFieldEnum = {
+  id: 'id',
+  folhaId: 'folhaId',
+  campo: 'campo',
+  valorAnterior: 'valorAnterior',
+  valorNovo: 'valorNovo',
+  motivo: 'motivo',
+  alteradoPorId: 'alteradoPorId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.FeriasSolicitacaoScalarFieldEnum = {
   id: 'id',
   funcionarioId: 'funcionarioId',
@@ -613,6 +624,7 @@ exports.Prisma.ModelName = {
   Contrato: 'Contrato',
   PresencaHR: 'PresencaHR',
   FolhaPagamento: 'FolhaPagamento',
+  FolhaAjusteHistorico: 'FolhaAjusteHistorico',
   FeriasSolicitacao: 'FeriasSolicitacao',
   ConfigRH: 'ConfigRH',
   Empresa: 'Empresa',

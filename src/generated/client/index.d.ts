@@ -159,6 +159,11 @@ export type PresencaHR = $Result.DefaultSelection<Prisma.$PresencaHRPayload>
  */
 export type FolhaPagamento = $Result.DefaultSelection<Prisma.$FolhaPagamentoPayload>
 /**
+ * Model FolhaAjusteHistorico
+ * 
+ */
+export type FolhaAjusteHistorico = $Result.DefaultSelection<Prisma.$FolhaAjusteHistoricoPayload>
+/**
  * Model FeriasSolicitacao
  * 
  */
@@ -601,6 +606,16 @@ export class PrismaClient<
     * ```
     */
   get folhaPagamento(): Prisma.FolhaPagamentoDelegate<ExtArgs>;
+
+  /**
+   * `prisma.folhaAjusteHistorico`: Exposes CRUD operations for the **FolhaAjusteHistorico** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FolhaAjusteHistoricos
+    * const folhaAjusteHistoricos = await prisma.folhaAjusteHistorico.findMany()
+    * ```
+    */
+  get folhaAjusteHistorico(): Prisma.FolhaAjusteHistoricoDelegate<ExtArgs>;
 
   /**
    * `prisma.feriasSolicitacao`: Exposes CRUD operations for the **FeriasSolicitacao** model.
@@ -1131,6 +1146,7 @@ export namespace Prisma {
     Contrato: 'Contrato',
     PresencaHR: 'PresencaHR',
     FolhaPagamento: 'FolhaPagamento',
+    FolhaAjusteHistorico: 'FolhaAjusteHistorico',
     FeriasSolicitacao: 'FeriasSolicitacao',
     ConfigRH: 'ConfigRH',
     Empresa: 'Empresa',
@@ -1152,7 +1168,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "aluno" | "empresaCliente" | "documento" | "curso" | "instrutor" | "turma" | "matricula" | "pagamento" | "user" | "profile" | "module" | "profilePermission" | "userPermission" | "moduleItem" | "profileItemPermission" | "userItemPermission" | "auditLog" | "certificateTemplate" | "certificate" | "aula" | "presenca" | "avaliacao" | "departamento" | "cargo" | "funcionario" | "funcionarioStatusHistorico" | "contrato" | "presencaHR" | "folhaPagamento" | "feriasSolicitacao" | "configRH" | "empresa" | "adiantamentoSalario" | "desconto" | "emailJob"
+      modelProps: "aluno" | "empresaCliente" | "documento" | "curso" | "instrutor" | "turma" | "matricula" | "pagamento" | "user" | "profile" | "module" | "profilePermission" | "userPermission" | "moduleItem" | "profileItemPermission" | "userItemPermission" | "auditLog" | "certificateTemplate" | "certificate" | "aula" | "presenca" | "avaliacao" | "departamento" | "cargo" | "funcionario" | "funcionarioStatusHistorico" | "contrato" | "presencaHR" | "folhaPagamento" | "folhaAjusteHistorico" | "feriasSolicitacao" | "configRH" | "empresa" | "adiantamentoSalario" | "desconto" | "emailJob"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3070,6 +3086,72 @@ export namespace Prisma {
           }
         }
       }
+      FolhaAjusteHistorico: {
+        payload: Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>
+        fields: Prisma.FolhaAjusteHistoricoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FolhaAjusteHistoricoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolhaAjusteHistoricoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FolhaAjusteHistoricoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolhaAjusteHistoricoPayload>
+          }
+          findFirst: {
+            args: Prisma.FolhaAjusteHistoricoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolhaAjusteHistoricoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FolhaAjusteHistoricoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolhaAjusteHistoricoPayload>
+          }
+          findMany: {
+            args: Prisma.FolhaAjusteHistoricoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolhaAjusteHistoricoPayload>[]
+          }
+          create: {
+            args: Prisma.FolhaAjusteHistoricoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolhaAjusteHistoricoPayload>
+          }
+          createMany: {
+            args: Prisma.FolhaAjusteHistoricoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.FolhaAjusteHistoricoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolhaAjusteHistoricoPayload>
+          }
+          update: {
+            args: Prisma.FolhaAjusteHistoricoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolhaAjusteHistoricoPayload>
+          }
+          deleteMany: {
+            args: Prisma.FolhaAjusteHistoricoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FolhaAjusteHistoricoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FolhaAjusteHistoricoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FolhaAjusteHistoricoPayload>
+          }
+          aggregate: {
+            args: Prisma.FolhaAjusteHistoricoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFolhaAjusteHistorico>
+          }
+          groupBy: {
+            args: Prisma.FolhaAjusteHistoricoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FolhaAjusteHistoricoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FolhaAjusteHistoricoCountArgs<ExtArgs>
+            result: $Utils.Optional<FolhaAjusteHistoricoCountAggregateOutputType> | number
+          }
+        }
+      }
       FeriasSolicitacao: {
         payload: Prisma.$FeriasSolicitacaoPayload<ExtArgs>
         fields: Prisma.FeriasSolicitacaoFieldRefs
@@ -3876,6 +3958,7 @@ export namespace Prisma {
     permissions: number
     itemPermissions: number
     statusHistorico: number
+    folhaAjusteHistoricos: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3888,6 +3971,7 @@ export namespace Prisma {
     permissions?: boolean | UserCountOutputTypeCountPermissionsArgs
     itemPermissions?: boolean | UserCountOutputTypeCountItemPermissionsArgs
     statusHistorico?: boolean | UserCountOutputTypeCountStatusHistoricoArgs
+    folhaAjusteHistoricos?: boolean | UserCountOutputTypeCountFolhaAjusteHistoricosArgs
   }
 
   // Custom InputTypes
@@ -3962,6 +4046,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountStatusHistoricoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FuncionarioStatusHistoricoWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFolhaAjusteHistoricosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FolhaAjusteHistoricoWhereInput
   }
 
 
@@ -4336,6 +4427,37 @@ export namespace Prisma {
    */
   export type FuncionarioCountOutputTypeCountStatusHistoricoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FuncionarioStatusHistoricoWhereInput
+  }
+
+
+  /**
+   * Count Type FolhaPagamentoCountOutputType
+   */
+
+  export type FolhaPagamentoCountOutputType = {
+    ajustes: number
+  }
+
+  export type FolhaPagamentoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ajustes?: boolean | FolhaPagamentoCountOutputTypeCountAjustesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FolhaPagamentoCountOutputType without action
+   */
+  export type FolhaPagamentoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaPagamentoCountOutputType
+     */
+    select?: FolhaPagamentoCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FolhaPagamentoCountOutputType without action
+   */
+  export type FolhaPagamentoCountOutputTypeCountAjustesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FolhaAjusteHistoricoWhereInput
   }
 
 
@@ -12770,6 +12892,7 @@ export namespace Prisma {
     permissions?: boolean | User$permissionsArgs<ExtArgs>
     itemPermissions?: boolean | User$itemPermissionsArgs<ExtArgs>
     statusHistorico?: boolean | User$statusHistoricoArgs<ExtArgs>
+    folhaAjusteHistoricos?: boolean | User$folhaAjusteHistoricosArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -12802,6 +12925,7 @@ export namespace Prisma {
     permissions?: boolean | User$permissionsArgs<ExtArgs>
     itemPermissions?: boolean | User$itemPermissionsArgs<ExtArgs>
     statusHistorico?: boolean | User$statusHistoricoArgs<ExtArgs>
+    folhaAjusteHistoricos?: boolean | User$folhaAjusteHistoricosArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -12819,6 +12943,7 @@ export namespace Prisma {
       permissions: Prisma.$UserPermissionPayload<ExtArgs>[]
       itemPermissions: Prisma.$UserItemPermissionPayload<ExtArgs>[]
       statusHistorico: Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>[]
+      folhaAjusteHistoricos: Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -13185,6 +13310,7 @@ export namespace Prisma {
     permissions<T extends User$permissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "findMany"> | Null>
     itemPermissions<T extends User$itemPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$itemPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "findMany"> | Null>
     statusHistorico<T extends User$statusHistoricoArgs<ExtArgs> = {}>(args?: Subset<T, User$statusHistoricoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "findMany"> | Null>
+    folhaAjusteHistoricos<T extends User$folhaAjusteHistoricosArgs<ExtArgs> = {}>(args?: Subset<T, User$folhaAjusteHistoricosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13733,6 +13859,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FuncionarioStatusHistoricoScalarFieldEnum | FuncionarioStatusHistoricoScalarFieldEnum[]
+  }
+
+  /**
+   * User.folhaAjusteHistoricos
+   */
+  export type User$folhaAjusteHistoricosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
+    where?: FolhaAjusteHistoricoWhereInput
+    orderBy?: FolhaAjusteHistoricoOrderByWithRelationInput | FolhaAjusteHistoricoOrderByWithRelationInput[]
+    cursor?: FolhaAjusteHistoricoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FolhaAjusteHistoricoScalarFieldEnum | FolhaAjusteHistoricoScalarFieldEnum[]
   }
 
   /**
@@ -32363,6 +32509,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     funcionario?: boolean | FuncionarioDefaultArgs<ExtArgs>
+    ajustes?: boolean | FolhaPagamento$ajustesArgs<ExtArgs>
+    _count?: boolean | FolhaPagamentoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["folhaPagamento"]>
 
 
@@ -32393,12 +32541,15 @@ export namespace Prisma {
 
   export type FolhaPagamentoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     funcionario?: boolean | FuncionarioDefaultArgs<ExtArgs>
+    ajustes?: boolean | FolhaPagamento$ajustesArgs<ExtArgs>
+    _count?: boolean | FolhaPagamentoCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $FolhaPagamentoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "FolhaPagamento"
     objects: {
       funcionario: Prisma.$FuncionarioPayload<ExtArgs>
+      ajustes: Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -32764,6 +32915,7 @@ export namespace Prisma {
   export interface Prisma__FolhaPagamentoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     funcionario<T extends FuncionarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FuncionarioDefaultArgs<ExtArgs>>): Prisma__FuncionarioClient<$Result.GetResult<Prisma.$FuncionarioPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    ajustes<T extends FolhaPagamento$ajustesArgs<ExtArgs> = {}>(args?: Subset<T, FolhaPagamento$ajustesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -33114,6 +33266,26 @@ export namespace Prisma {
   }
 
   /**
+   * FolhaPagamento.ajustes
+   */
+  export type FolhaPagamento$ajustesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
+    where?: FolhaAjusteHistoricoWhereInput
+    orderBy?: FolhaAjusteHistoricoOrderByWithRelationInput | FolhaAjusteHistoricoOrderByWithRelationInput[]
+    cursor?: FolhaAjusteHistoricoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FolhaAjusteHistoricoScalarFieldEnum | FolhaAjusteHistoricoScalarFieldEnum[]
+  }
+
+  /**
    * FolhaPagamento without action
    */
   export type FolhaPagamentoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -33125,6 +33297,975 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: FolhaPagamentoInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FolhaAjusteHistorico
+   */
+
+  export type AggregateFolhaAjusteHistorico = {
+    _count: FolhaAjusteHistoricoCountAggregateOutputType | null
+    _avg: FolhaAjusteHistoricoAvgAggregateOutputType | null
+    _sum: FolhaAjusteHistoricoSumAggregateOutputType | null
+    _min: FolhaAjusteHistoricoMinAggregateOutputType | null
+    _max: FolhaAjusteHistoricoMaxAggregateOutputType | null
+  }
+
+  export type FolhaAjusteHistoricoAvgAggregateOutputType = {
+    valorAnterior: Decimal | null
+    valorNovo: Decimal | null
+  }
+
+  export type FolhaAjusteHistoricoSumAggregateOutputType = {
+    valorAnterior: Decimal | null
+    valorNovo: Decimal | null
+  }
+
+  export type FolhaAjusteHistoricoMinAggregateOutputType = {
+    id: string | null
+    folhaId: string | null
+    campo: string | null
+    valorAnterior: Decimal | null
+    valorNovo: Decimal | null
+    motivo: string | null
+    alteradoPorId: string | null
+    createdAt: Date | null
+  }
+
+  export type FolhaAjusteHistoricoMaxAggregateOutputType = {
+    id: string | null
+    folhaId: string | null
+    campo: string | null
+    valorAnterior: Decimal | null
+    valorNovo: Decimal | null
+    motivo: string | null
+    alteradoPorId: string | null
+    createdAt: Date | null
+  }
+
+  export type FolhaAjusteHistoricoCountAggregateOutputType = {
+    id: number
+    folhaId: number
+    campo: number
+    valorAnterior: number
+    valorNovo: number
+    motivo: number
+    alteradoPorId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type FolhaAjusteHistoricoAvgAggregateInputType = {
+    valorAnterior?: true
+    valorNovo?: true
+  }
+
+  export type FolhaAjusteHistoricoSumAggregateInputType = {
+    valorAnterior?: true
+    valorNovo?: true
+  }
+
+  export type FolhaAjusteHistoricoMinAggregateInputType = {
+    id?: true
+    folhaId?: true
+    campo?: true
+    valorAnterior?: true
+    valorNovo?: true
+    motivo?: true
+    alteradoPorId?: true
+    createdAt?: true
+  }
+
+  export type FolhaAjusteHistoricoMaxAggregateInputType = {
+    id?: true
+    folhaId?: true
+    campo?: true
+    valorAnterior?: true
+    valorNovo?: true
+    motivo?: true
+    alteradoPorId?: true
+    createdAt?: true
+  }
+
+  export type FolhaAjusteHistoricoCountAggregateInputType = {
+    id?: true
+    folhaId?: true
+    campo?: true
+    valorAnterior?: true
+    valorNovo?: true
+    motivo?: true
+    alteradoPorId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type FolhaAjusteHistoricoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FolhaAjusteHistorico to aggregate.
+     */
+    where?: FolhaAjusteHistoricoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FolhaAjusteHistoricos to fetch.
+     */
+    orderBy?: FolhaAjusteHistoricoOrderByWithRelationInput | FolhaAjusteHistoricoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FolhaAjusteHistoricoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FolhaAjusteHistoricos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FolhaAjusteHistoricos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FolhaAjusteHistoricos
+    **/
+    _count?: true | FolhaAjusteHistoricoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FolhaAjusteHistoricoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FolhaAjusteHistoricoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FolhaAjusteHistoricoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FolhaAjusteHistoricoMaxAggregateInputType
+  }
+
+  export type GetFolhaAjusteHistoricoAggregateType<T extends FolhaAjusteHistoricoAggregateArgs> = {
+        [P in keyof T & keyof AggregateFolhaAjusteHistorico]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFolhaAjusteHistorico[P]>
+      : GetScalarType<T[P], AggregateFolhaAjusteHistorico[P]>
+  }
+
+
+
+
+  export type FolhaAjusteHistoricoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FolhaAjusteHistoricoWhereInput
+    orderBy?: FolhaAjusteHistoricoOrderByWithAggregationInput | FolhaAjusteHistoricoOrderByWithAggregationInput[]
+    by: FolhaAjusteHistoricoScalarFieldEnum[] | FolhaAjusteHistoricoScalarFieldEnum
+    having?: FolhaAjusteHistoricoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FolhaAjusteHistoricoCountAggregateInputType | true
+    _avg?: FolhaAjusteHistoricoAvgAggregateInputType
+    _sum?: FolhaAjusteHistoricoSumAggregateInputType
+    _min?: FolhaAjusteHistoricoMinAggregateInputType
+    _max?: FolhaAjusteHistoricoMaxAggregateInputType
+  }
+
+  export type FolhaAjusteHistoricoGroupByOutputType = {
+    id: string
+    folhaId: string
+    campo: string
+    valorAnterior: Decimal
+    valorNovo: Decimal
+    motivo: string
+    alteradoPorId: string | null
+    createdAt: Date
+    _count: FolhaAjusteHistoricoCountAggregateOutputType | null
+    _avg: FolhaAjusteHistoricoAvgAggregateOutputType | null
+    _sum: FolhaAjusteHistoricoSumAggregateOutputType | null
+    _min: FolhaAjusteHistoricoMinAggregateOutputType | null
+    _max: FolhaAjusteHistoricoMaxAggregateOutputType | null
+  }
+
+  type GetFolhaAjusteHistoricoGroupByPayload<T extends FolhaAjusteHistoricoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FolhaAjusteHistoricoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FolhaAjusteHistoricoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FolhaAjusteHistoricoGroupByOutputType[P]>
+            : GetScalarType<T[P], FolhaAjusteHistoricoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FolhaAjusteHistoricoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folhaId?: boolean
+    campo?: boolean
+    valorAnterior?: boolean
+    valorNovo?: boolean
+    motivo?: boolean
+    alteradoPorId?: boolean
+    createdAt?: boolean
+    folha?: boolean | FolhaPagamentoDefaultArgs<ExtArgs>
+    alteradoPor?: boolean | FolhaAjusteHistorico$alteradoPorArgs<ExtArgs>
+  }, ExtArgs["result"]["folhaAjusteHistorico"]>
+
+
+  export type FolhaAjusteHistoricoSelectScalar = {
+    id?: boolean
+    folhaId?: boolean
+    campo?: boolean
+    valorAnterior?: boolean
+    valorNovo?: boolean
+    motivo?: boolean
+    alteradoPorId?: boolean
+    createdAt?: boolean
+  }
+
+  export type FolhaAjusteHistoricoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    folha?: boolean | FolhaPagamentoDefaultArgs<ExtArgs>
+    alteradoPor?: boolean | FolhaAjusteHistorico$alteradoPorArgs<ExtArgs>
+  }
+
+  export type $FolhaAjusteHistoricoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FolhaAjusteHistorico"
+    objects: {
+      folha: Prisma.$FolhaPagamentoPayload<ExtArgs>
+      alteradoPor: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      folhaId: string
+      campo: string
+      valorAnterior: Prisma.Decimal
+      valorNovo: Prisma.Decimal
+      motivo: string
+      alteradoPorId: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["folhaAjusteHistorico"]>
+    composites: {}
+  }
+
+  type FolhaAjusteHistoricoGetPayload<S extends boolean | null | undefined | FolhaAjusteHistoricoDefaultArgs> = $Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload, S>
+
+  type FolhaAjusteHistoricoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<FolhaAjusteHistoricoFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: FolhaAjusteHistoricoCountAggregateInputType | true
+    }
+
+  export interface FolhaAjusteHistoricoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FolhaAjusteHistorico'], meta: { name: 'FolhaAjusteHistorico' } }
+    /**
+     * Find zero or one FolhaAjusteHistorico that matches the filter.
+     * @param {FolhaAjusteHistoricoFindUniqueArgs} args - Arguments to find a FolhaAjusteHistorico
+     * @example
+     * // Get one FolhaAjusteHistorico
+     * const folhaAjusteHistorico = await prisma.folhaAjusteHistorico.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FolhaAjusteHistoricoFindUniqueArgs>(args: SelectSubset<T, FolhaAjusteHistoricoFindUniqueArgs<ExtArgs>>): Prisma__FolhaAjusteHistoricoClient<$Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one FolhaAjusteHistorico that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {FolhaAjusteHistoricoFindUniqueOrThrowArgs} args - Arguments to find a FolhaAjusteHistorico
+     * @example
+     * // Get one FolhaAjusteHistorico
+     * const folhaAjusteHistorico = await prisma.folhaAjusteHistorico.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FolhaAjusteHistoricoFindUniqueOrThrowArgs>(args: SelectSubset<T, FolhaAjusteHistoricoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FolhaAjusteHistoricoClient<$Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first FolhaAjusteHistorico that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolhaAjusteHistoricoFindFirstArgs} args - Arguments to find a FolhaAjusteHistorico
+     * @example
+     * // Get one FolhaAjusteHistorico
+     * const folhaAjusteHistorico = await prisma.folhaAjusteHistorico.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FolhaAjusteHistoricoFindFirstArgs>(args?: SelectSubset<T, FolhaAjusteHistoricoFindFirstArgs<ExtArgs>>): Prisma__FolhaAjusteHistoricoClient<$Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first FolhaAjusteHistorico that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolhaAjusteHistoricoFindFirstOrThrowArgs} args - Arguments to find a FolhaAjusteHistorico
+     * @example
+     * // Get one FolhaAjusteHistorico
+     * const folhaAjusteHistorico = await prisma.folhaAjusteHistorico.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FolhaAjusteHistoricoFindFirstOrThrowArgs>(args?: SelectSubset<T, FolhaAjusteHistoricoFindFirstOrThrowArgs<ExtArgs>>): Prisma__FolhaAjusteHistoricoClient<$Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more FolhaAjusteHistoricos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolhaAjusteHistoricoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FolhaAjusteHistoricos
+     * const folhaAjusteHistoricos = await prisma.folhaAjusteHistorico.findMany()
+     * 
+     * // Get first 10 FolhaAjusteHistoricos
+     * const folhaAjusteHistoricos = await prisma.folhaAjusteHistorico.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const folhaAjusteHistoricoWithIdOnly = await prisma.folhaAjusteHistorico.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FolhaAjusteHistoricoFindManyArgs>(args?: SelectSubset<T, FolhaAjusteHistoricoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a FolhaAjusteHistorico.
+     * @param {FolhaAjusteHistoricoCreateArgs} args - Arguments to create a FolhaAjusteHistorico.
+     * @example
+     * // Create one FolhaAjusteHistorico
+     * const FolhaAjusteHistorico = await prisma.folhaAjusteHistorico.create({
+     *   data: {
+     *     // ... data to create a FolhaAjusteHistorico
+     *   }
+     * })
+     * 
+     */
+    create<T extends FolhaAjusteHistoricoCreateArgs>(args: SelectSubset<T, FolhaAjusteHistoricoCreateArgs<ExtArgs>>): Prisma__FolhaAjusteHistoricoClient<$Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many FolhaAjusteHistoricos.
+     * @param {FolhaAjusteHistoricoCreateManyArgs} args - Arguments to create many FolhaAjusteHistoricos.
+     * @example
+     * // Create many FolhaAjusteHistoricos
+     * const folhaAjusteHistorico = await prisma.folhaAjusteHistorico.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FolhaAjusteHistoricoCreateManyArgs>(args?: SelectSubset<T, FolhaAjusteHistoricoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FolhaAjusteHistorico.
+     * @param {FolhaAjusteHistoricoDeleteArgs} args - Arguments to delete one FolhaAjusteHistorico.
+     * @example
+     * // Delete one FolhaAjusteHistorico
+     * const FolhaAjusteHistorico = await prisma.folhaAjusteHistorico.delete({
+     *   where: {
+     *     // ... filter to delete one FolhaAjusteHistorico
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FolhaAjusteHistoricoDeleteArgs>(args: SelectSubset<T, FolhaAjusteHistoricoDeleteArgs<ExtArgs>>): Prisma__FolhaAjusteHistoricoClient<$Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one FolhaAjusteHistorico.
+     * @param {FolhaAjusteHistoricoUpdateArgs} args - Arguments to update one FolhaAjusteHistorico.
+     * @example
+     * // Update one FolhaAjusteHistorico
+     * const folhaAjusteHistorico = await prisma.folhaAjusteHistorico.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FolhaAjusteHistoricoUpdateArgs>(args: SelectSubset<T, FolhaAjusteHistoricoUpdateArgs<ExtArgs>>): Prisma__FolhaAjusteHistoricoClient<$Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more FolhaAjusteHistoricos.
+     * @param {FolhaAjusteHistoricoDeleteManyArgs} args - Arguments to filter FolhaAjusteHistoricos to delete.
+     * @example
+     * // Delete a few FolhaAjusteHistoricos
+     * const { count } = await prisma.folhaAjusteHistorico.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FolhaAjusteHistoricoDeleteManyArgs>(args?: SelectSubset<T, FolhaAjusteHistoricoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FolhaAjusteHistoricos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolhaAjusteHistoricoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FolhaAjusteHistoricos
+     * const folhaAjusteHistorico = await prisma.folhaAjusteHistorico.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FolhaAjusteHistoricoUpdateManyArgs>(args: SelectSubset<T, FolhaAjusteHistoricoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FolhaAjusteHistorico.
+     * @param {FolhaAjusteHistoricoUpsertArgs} args - Arguments to update or create a FolhaAjusteHistorico.
+     * @example
+     * // Update or create a FolhaAjusteHistorico
+     * const folhaAjusteHistorico = await prisma.folhaAjusteHistorico.upsert({
+     *   create: {
+     *     // ... data to create a FolhaAjusteHistorico
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FolhaAjusteHistorico we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FolhaAjusteHistoricoUpsertArgs>(args: SelectSubset<T, FolhaAjusteHistoricoUpsertArgs<ExtArgs>>): Prisma__FolhaAjusteHistoricoClient<$Result.GetResult<Prisma.$FolhaAjusteHistoricoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of FolhaAjusteHistoricos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolhaAjusteHistoricoCountArgs} args - Arguments to filter FolhaAjusteHistoricos to count.
+     * @example
+     * // Count the number of FolhaAjusteHistoricos
+     * const count = await prisma.folhaAjusteHistorico.count({
+     *   where: {
+     *     // ... the filter for the FolhaAjusteHistoricos we want to count
+     *   }
+     * })
+    **/
+    count<T extends FolhaAjusteHistoricoCountArgs>(
+      args?: Subset<T, FolhaAjusteHistoricoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FolhaAjusteHistoricoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FolhaAjusteHistorico.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolhaAjusteHistoricoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FolhaAjusteHistoricoAggregateArgs>(args: Subset<T, FolhaAjusteHistoricoAggregateArgs>): Prisma.PrismaPromise<GetFolhaAjusteHistoricoAggregateType<T>>
+
+    /**
+     * Group by FolhaAjusteHistorico.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FolhaAjusteHistoricoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FolhaAjusteHistoricoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FolhaAjusteHistoricoGroupByArgs['orderBy'] }
+        : { orderBy?: FolhaAjusteHistoricoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FolhaAjusteHistoricoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFolhaAjusteHistoricoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FolhaAjusteHistorico model
+   */
+  readonly fields: FolhaAjusteHistoricoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FolhaAjusteHistorico.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FolhaAjusteHistoricoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    folha<T extends FolhaPagamentoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FolhaPagamentoDefaultArgs<ExtArgs>>): Prisma__FolhaPagamentoClient<$Result.GetResult<Prisma.$FolhaPagamentoPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    alteradoPor<T extends FolhaAjusteHistorico$alteradoPorArgs<ExtArgs> = {}>(args?: Subset<T, FolhaAjusteHistorico$alteradoPorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FolhaAjusteHistorico model
+   */ 
+  interface FolhaAjusteHistoricoFieldRefs {
+    readonly id: FieldRef<"FolhaAjusteHistorico", 'String'>
+    readonly folhaId: FieldRef<"FolhaAjusteHistorico", 'String'>
+    readonly campo: FieldRef<"FolhaAjusteHistorico", 'String'>
+    readonly valorAnterior: FieldRef<"FolhaAjusteHistorico", 'Decimal'>
+    readonly valorNovo: FieldRef<"FolhaAjusteHistorico", 'Decimal'>
+    readonly motivo: FieldRef<"FolhaAjusteHistorico", 'String'>
+    readonly alteradoPorId: FieldRef<"FolhaAjusteHistorico", 'String'>
+    readonly createdAt: FieldRef<"FolhaAjusteHistorico", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FolhaAjusteHistorico findUnique
+   */
+  export type FolhaAjusteHistoricoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter, which FolhaAjusteHistorico to fetch.
+     */
+    where: FolhaAjusteHistoricoWhereUniqueInput
+  }
+
+  /**
+   * FolhaAjusteHistorico findUniqueOrThrow
+   */
+  export type FolhaAjusteHistoricoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter, which FolhaAjusteHistorico to fetch.
+     */
+    where: FolhaAjusteHistoricoWhereUniqueInput
+  }
+
+  /**
+   * FolhaAjusteHistorico findFirst
+   */
+  export type FolhaAjusteHistoricoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter, which FolhaAjusteHistorico to fetch.
+     */
+    where?: FolhaAjusteHistoricoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FolhaAjusteHistoricos to fetch.
+     */
+    orderBy?: FolhaAjusteHistoricoOrderByWithRelationInput | FolhaAjusteHistoricoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FolhaAjusteHistoricos.
+     */
+    cursor?: FolhaAjusteHistoricoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FolhaAjusteHistoricos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FolhaAjusteHistoricos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FolhaAjusteHistoricos.
+     */
+    distinct?: FolhaAjusteHistoricoScalarFieldEnum | FolhaAjusteHistoricoScalarFieldEnum[]
+  }
+
+  /**
+   * FolhaAjusteHistorico findFirstOrThrow
+   */
+  export type FolhaAjusteHistoricoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter, which FolhaAjusteHistorico to fetch.
+     */
+    where?: FolhaAjusteHistoricoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FolhaAjusteHistoricos to fetch.
+     */
+    orderBy?: FolhaAjusteHistoricoOrderByWithRelationInput | FolhaAjusteHistoricoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FolhaAjusteHistoricos.
+     */
+    cursor?: FolhaAjusteHistoricoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FolhaAjusteHistoricos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FolhaAjusteHistoricos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FolhaAjusteHistoricos.
+     */
+    distinct?: FolhaAjusteHistoricoScalarFieldEnum | FolhaAjusteHistoricoScalarFieldEnum[]
+  }
+
+  /**
+   * FolhaAjusteHistorico findMany
+   */
+  export type FolhaAjusteHistoricoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter, which FolhaAjusteHistoricos to fetch.
+     */
+    where?: FolhaAjusteHistoricoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FolhaAjusteHistoricos to fetch.
+     */
+    orderBy?: FolhaAjusteHistoricoOrderByWithRelationInput | FolhaAjusteHistoricoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FolhaAjusteHistoricos.
+     */
+    cursor?: FolhaAjusteHistoricoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FolhaAjusteHistoricos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FolhaAjusteHistoricos.
+     */
+    skip?: number
+    distinct?: FolhaAjusteHistoricoScalarFieldEnum | FolhaAjusteHistoricoScalarFieldEnum[]
+  }
+
+  /**
+   * FolhaAjusteHistorico create
+   */
+  export type FolhaAjusteHistoricoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FolhaAjusteHistorico.
+     */
+    data: XOR<FolhaAjusteHistoricoCreateInput, FolhaAjusteHistoricoUncheckedCreateInput>
+  }
+
+  /**
+   * FolhaAjusteHistorico createMany
+   */
+  export type FolhaAjusteHistoricoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FolhaAjusteHistoricos.
+     */
+    data: FolhaAjusteHistoricoCreateManyInput | FolhaAjusteHistoricoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FolhaAjusteHistorico update
+   */
+  export type FolhaAjusteHistoricoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FolhaAjusteHistorico.
+     */
+    data: XOR<FolhaAjusteHistoricoUpdateInput, FolhaAjusteHistoricoUncheckedUpdateInput>
+    /**
+     * Choose, which FolhaAjusteHistorico to update.
+     */
+    where: FolhaAjusteHistoricoWhereUniqueInput
+  }
+
+  /**
+   * FolhaAjusteHistorico updateMany
+   */
+  export type FolhaAjusteHistoricoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FolhaAjusteHistoricos.
+     */
+    data: XOR<FolhaAjusteHistoricoUpdateManyMutationInput, FolhaAjusteHistoricoUncheckedUpdateManyInput>
+    /**
+     * Filter which FolhaAjusteHistoricos to update
+     */
+    where?: FolhaAjusteHistoricoWhereInput
+  }
+
+  /**
+   * FolhaAjusteHistorico upsert
+   */
+  export type FolhaAjusteHistoricoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FolhaAjusteHistorico to update in case it exists.
+     */
+    where: FolhaAjusteHistoricoWhereUniqueInput
+    /**
+     * In case the FolhaAjusteHistorico found by the `where` argument doesn't exist, create a new FolhaAjusteHistorico with this data.
+     */
+    create: XOR<FolhaAjusteHistoricoCreateInput, FolhaAjusteHistoricoUncheckedCreateInput>
+    /**
+     * In case the FolhaAjusteHistorico was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FolhaAjusteHistoricoUpdateInput, FolhaAjusteHistoricoUncheckedUpdateInput>
+  }
+
+  /**
+   * FolhaAjusteHistorico delete
+   */
+  export type FolhaAjusteHistoricoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter which FolhaAjusteHistorico to delete.
+     */
+    where: FolhaAjusteHistoricoWhereUniqueInput
+  }
+
+  /**
+   * FolhaAjusteHistorico deleteMany
+   */
+  export type FolhaAjusteHistoricoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FolhaAjusteHistoricos to delete
+     */
+    where?: FolhaAjusteHistoricoWhereInput
+  }
+
+  /**
+   * FolhaAjusteHistorico.alteradoPor
+   */
+  export type FolhaAjusteHistorico$alteradoPorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * FolhaAjusteHistorico without action
+   */
+  export type FolhaAjusteHistoricoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FolhaAjusteHistorico
+     */
+    select?: FolhaAjusteHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FolhaAjusteHistoricoInclude<ExtArgs> | null
   }
 
 
@@ -39348,6 +40489,20 @@ export namespace Prisma {
   export type FolhaPagamentoScalarFieldEnum = (typeof FolhaPagamentoScalarFieldEnum)[keyof typeof FolhaPagamentoScalarFieldEnum]
 
 
+  export const FolhaAjusteHistoricoScalarFieldEnum: {
+    id: 'id',
+    folhaId: 'folhaId',
+    campo: 'campo',
+    valorAnterior: 'valorAnterior',
+    valorNovo: 'valorNovo',
+    motivo: 'motivo',
+    alteradoPorId: 'alteradoPorId',
+    createdAt: 'createdAt'
+  };
+
+  export type FolhaAjusteHistoricoScalarFieldEnum = (typeof FolhaAjusteHistoricoScalarFieldEnum)[keyof typeof FolhaAjusteHistoricoScalarFieldEnum]
+
+
   export const FeriasSolicitacaoScalarFieldEnum: {
     id: 'id',
     funcionarioId: 'funcionarioId',
@@ -40273,6 +41428,7 @@ export namespace Prisma {
     permissions?: UserPermissionListRelationFilter
     itemPermissions?: UserItemPermissionListRelationFilter
     statusHistorico?: FuncionarioStatusHistoricoListRelationFilter
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -40300,6 +41456,7 @@ export namespace Prisma {
     permissions?: UserPermissionOrderByRelationAggregateInput
     itemPermissions?: UserItemPermissionOrderByRelationAggregateInput
     statusHistorico?: FuncionarioStatusHistoricoOrderByRelationAggregateInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -40330,6 +41487,7 @@ export namespace Prisma {
     permissions?: UserPermissionListRelationFilter
     itemPermissions?: UserItemPermissionListRelationFilter
     statusHistorico?: FuncionarioStatusHistoricoListRelationFilter
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoListRelationFilter
   }, "id" | "email" | "resetToken">
 
   export type UserOrderByWithAggregationInput = {
@@ -41861,6 +43019,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"FolhaPagamento"> | Date | string
     updatedAt?: DateTimeFilter<"FolhaPagamento"> | Date | string
     funcionario?: XOR<FuncionarioRelationFilter, FuncionarioWhereInput>
+    ajustes?: FolhaAjusteHistoricoListRelationFilter
   }
 
   export type FolhaPagamentoOrderByWithRelationInput = {
@@ -41887,6 +43046,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     funcionario?: FuncionarioOrderByWithRelationInput
+    ajustes?: FolhaAjusteHistoricoOrderByRelationAggregateInput
   }
 
   export type FolhaPagamentoWhereUniqueInput = Prisma.AtLeast<{
@@ -41917,6 +43077,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"FolhaPagamento"> | Date | string
     updatedAt?: DateTimeFilter<"FolhaPagamento"> | Date | string
     funcionario?: XOR<FuncionarioRelationFilter, FuncionarioWhereInput>
+    ajustes?: FolhaAjusteHistoricoListRelationFilter
   }, "id" | "funcionarioId_mes_ano">
 
   export type FolhaPagamentoOrderByWithAggregationInput = {
@@ -41975,6 +43136,81 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"FolhaPagamento"> | string
     createdAt?: DateTimeWithAggregatesFilter<"FolhaPagamento"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"FolhaPagamento"> | Date | string
+  }
+
+  export type FolhaAjusteHistoricoWhereInput = {
+    AND?: FolhaAjusteHistoricoWhereInput | FolhaAjusteHistoricoWhereInput[]
+    OR?: FolhaAjusteHistoricoWhereInput[]
+    NOT?: FolhaAjusteHistoricoWhereInput | FolhaAjusteHistoricoWhereInput[]
+    id?: StringFilter<"FolhaAjusteHistorico"> | string
+    folhaId?: StringFilter<"FolhaAjusteHistorico"> | string
+    campo?: StringFilter<"FolhaAjusteHistorico"> | string
+    valorAnterior?: DecimalFilter<"FolhaAjusteHistorico"> | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFilter<"FolhaAjusteHistorico"> | Decimal | DecimalJsLike | number | string
+    motivo?: StringFilter<"FolhaAjusteHistorico"> | string
+    alteradoPorId?: StringNullableFilter<"FolhaAjusteHistorico"> | string | null
+    createdAt?: DateTimeFilter<"FolhaAjusteHistorico"> | Date | string
+    folha?: XOR<FolhaPagamentoRelationFilter, FolhaPagamentoWhereInput>
+    alteradoPor?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }
+
+  export type FolhaAjusteHistoricoOrderByWithRelationInput = {
+    id?: SortOrder
+    folhaId?: SortOrder
+    campo?: SortOrder
+    valorAnterior?: SortOrder
+    valorNovo?: SortOrder
+    motivo?: SortOrder
+    alteradoPorId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    folha?: FolhaPagamentoOrderByWithRelationInput
+    alteradoPor?: UserOrderByWithRelationInput
+  }
+
+  export type FolhaAjusteHistoricoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: FolhaAjusteHistoricoWhereInput | FolhaAjusteHistoricoWhereInput[]
+    OR?: FolhaAjusteHistoricoWhereInput[]
+    NOT?: FolhaAjusteHistoricoWhereInput | FolhaAjusteHistoricoWhereInput[]
+    folhaId?: StringFilter<"FolhaAjusteHistorico"> | string
+    campo?: StringFilter<"FolhaAjusteHistorico"> | string
+    valorAnterior?: DecimalFilter<"FolhaAjusteHistorico"> | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFilter<"FolhaAjusteHistorico"> | Decimal | DecimalJsLike | number | string
+    motivo?: StringFilter<"FolhaAjusteHistorico"> | string
+    alteradoPorId?: StringNullableFilter<"FolhaAjusteHistorico"> | string | null
+    createdAt?: DateTimeFilter<"FolhaAjusteHistorico"> | Date | string
+    folha?: XOR<FolhaPagamentoRelationFilter, FolhaPagamentoWhereInput>
+    alteradoPor?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type FolhaAjusteHistoricoOrderByWithAggregationInput = {
+    id?: SortOrder
+    folhaId?: SortOrder
+    campo?: SortOrder
+    valorAnterior?: SortOrder
+    valorNovo?: SortOrder
+    motivo?: SortOrder
+    alteradoPorId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: FolhaAjusteHistoricoCountOrderByAggregateInput
+    _avg?: FolhaAjusteHistoricoAvgOrderByAggregateInput
+    _max?: FolhaAjusteHistoricoMaxOrderByAggregateInput
+    _min?: FolhaAjusteHistoricoMinOrderByAggregateInput
+    _sum?: FolhaAjusteHistoricoSumOrderByAggregateInput
+  }
+
+  export type FolhaAjusteHistoricoScalarWhereWithAggregatesInput = {
+    AND?: FolhaAjusteHistoricoScalarWhereWithAggregatesInput | FolhaAjusteHistoricoScalarWhereWithAggregatesInput[]
+    OR?: FolhaAjusteHistoricoScalarWhereWithAggregatesInput[]
+    NOT?: FolhaAjusteHistoricoScalarWhereWithAggregatesInput | FolhaAjusteHistoricoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FolhaAjusteHistorico"> | string
+    folhaId?: StringWithAggregatesFilter<"FolhaAjusteHistorico"> | string
+    campo?: StringWithAggregatesFilter<"FolhaAjusteHistorico"> | string
+    valorAnterior?: DecimalWithAggregatesFilter<"FolhaAjusteHistorico"> | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalWithAggregatesFilter<"FolhaAjusteHistorico"> | Decimal | DecimalJsLike | number | string
+    motivo?: StringWithAggregatesFilter<"FolhaAjusteHistorico"> | string
+    alteradoPorId?: StringNullableWithAggregatesFilter<"FolhaAjusteHistorico"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"FolhaAjusteHistorico"> | Date | string
   }
 
   export type FeriasSolicitacaoWhereInput = {
@@ -43310,6 +44546,7 @@ export namespace Prisma {
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -43336,6 +44573,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUpdateInput = {
@@ -43362,6 +44600,7 @@ export namespace Prisma {
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -43388,6 +44627,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -45035,6 +46275,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     funcionario: FuncionarioCreateNestedOneWithoutFolhasInput
+    ajustes?: FolhaAjusteHistoricoCreateNestedManyWithoutFolhaInput
   }
 
   export type FolhaPagamentoUncheckedCreateInput = {
@@ -45060,6 +46301,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    ajustes?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutFolhaInput
   }
 
   export type FolhaPagamentoUpdateInput = {
@@ -45085,6 +46327,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     funcionario?: FuncionarioUpdateOneRequiredWithoutFolhasNestedInput
+    ajustes?: FolhaAjusteHistoricoUpdateManyWithoutFolhaNestedInput
   }
 
   export type FolhaPagamentoUncheckedUpdateInput = {
@@ -45110,6 +46353,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ajustes?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutFolhaNestedInput
   }
 
   export type FolhaPagamentoCreateManyInput = {
@@ -45184,6 +46428,81 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FolhaAjusteHistoricoCreateInput = {
+    id?: string
+    campo: string
+    valorAnterior: Decimal | DecimalJsLike | number | string
+    valorNovo: Decimal | DecimalJsLike | number | string
+    motivo: string
+    createdAt?: Date | string
+    folha: FolhaPagamentoCreateNestedOneWithoutAjustesInput
+    alteradoPor?: UserCreateNestedOneWithoutFolhaAjusteHistoricosInput
+  }
+
+  export type FolhaAjusteHistoricoUncheckedCreateInput = {
+    id?: string
+    folhaId: string
+    campo: string
+    valorAnterior: Decimal | DecimalJsLike | number | string
+    valorNovo: Decimal | DecimalJsLike | number | string
+    motivo: string
+    alteradoPorId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FolhaAjusteHistoricoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    folha?: FolhaPagamentoUpdateOneRequiredWithoutAjustesNestedInput
+    alteradoPor?: UserUpdateOneWithoutFolhaAjusteHistoricosNestedInput
+  }
+
+  export type FolhaAjusteHistoricoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folhaId?: StringFieldUpdateOperationsInput | string
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    alteradoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FolhaAjusteHistoricoCreateManyInput = {
+    id?: string
+    folhaId: string
+    campo: string
+    valorAnterior: Decimal | DecimalJsLike | number | string
+    valorNovo: Decimal | DecimalJsLike | number | string
+    motivo: string
+    alteradoPorId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FolhaAjusteHistoricoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FolhaAjusteHistoricoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folhaId?: StringFieldUpdateOperationsInput | string
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    alteradoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FeriasSolicitacaoCreateInput = {
@@ -46540,6 +47859,12 @@ export namespace Prisma {
     none?: FuncionarioStatusHistoricoWhereInput
   }
 
+  export type FolhaAjusteHistoricoListRelationFilter = {
+    every?: FolhaAjusteHistoricoWhereInput
+    some?: FolhaAjusteHistoricoWhereInput
+    none?: FolhaAjusteHistoricoWhereInput
+  }
+
   export type CertificateOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -46557,6 +47882,10 @@ export namespace Prisma {
   }
 
   export type FuncionarioStatusHistoricoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FolhaAjusteHistoricoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -47662,6 +48991,54 @@ export namespace Prisma {
     outros_descontos?: SortOrder
     total_adiantamentos?: SortOrder
     liquido_receber?: SortOrder
+  }
+
+  export type FolhaPagamentoRelationFilter = {
+    is?: FolhaPagamentoWhereInput
+    isNot?: FolhaPagamentoWhereInput
+  }
+
+  export type FolhaAjusteHistoricoCountOrderByAggregateInput = {
+    id?: SortOrder
+    folhaId?: SortOrder
+    campo?: SortOrder
+    valorAnterior?: SortOrder
+    valorNovo?: SortOrder
+    motivo?: SortOrder
+    alteradoPorId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FolhaAjusteHistoricoAvgOrderByAggregateInput = {
+    valorAnterior?: SortOrder
+    valorNovo?: SortOrder
+  }
+
+  export type FolhaAjusteHistoricoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    folhaId?: SortOrder
+    campo?: SortOrder
+    valorAnterior?: SortOrder
+    valorNovo?: SortOrder
+    motivo?: SortOrder
+    alteradoPorId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FolhaAjusteHistoricoMinOrderByAggregateInput = {
+    id?: SortOrder
+    folhaId?: SortOrder
+    campo?: SortOrder
+    valorAnterior?: SortOrder
+    valorNovo?: SortOrder
+    motivo?: SortOrder
+    alteradoPorId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FolhaAjusteHistoricoSumOrderByAggregateInput = {
+    valorAnterior?: SortOrder
+    valorNovo?: SortOrder
   }
 
   export type FeriasSolicitacaoCountOrderByAggregateInput = {
@@ -48899,6 +50276,13 @@ export namespace Prisma {
     connect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
   }
 
+  export type FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput = {
+    create?: XOR<FolhaAjusteHistoricoCreateWithoutAlteradoPorInput, FolhaAjusteHistoricoUncheckedCreateWithoutAlteradoPorInput> | FolhaAjusteHistoricoCreateWithoutAlteradoPorInput[] | FolhaAjusteHistoricoUncheckedCreateWithoutAlteradoPorInput[]
+    connectOrCreate?: FolhaAjusteHistoricoCreateOrConnectWithoutAlteradoPorInput | FolhaAjusteHistoricoCreateOrConnectWithoutAlteradoPorInput[]
+    createMany?: FolhaAjusteHistoricoCreateManyAlteradoPorInputEnvelope
+    connect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+  }
+
   export type FuncionarioUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<FuncionarioCreateWithoutUserInput, FuncionarioUncheckedCreateWithoutUserInput>
     connectOrCreate?: FuncionarioCreateOrConnectWithoutUserInput
@@ -48966,6 +50350,13 @@ export namespace Prisma {
     connectOrCreate?: FuncionarioStatusHistoricoCreateOrConnectWithoutAlteradoPorInput | FuncionarioStatusHistoricoCreateOrConnectWithoutAlteradoPorInput[]
     createMany?: FuncionarioStatusHistoricoCreateManyAlteradoPorInputEnvelope
     connect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+  }
+
+  export type FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput = {
+    create?: XOR<FolhaAjusteHistoricoCreateWithoutAlteradoPorInput, FolhaAjusteHistoricoUncheckedCreateWithoutAlteradoPorInput> | FolhaAjusteHistoricoCreateWithoutAlteradoPorInput[] | FolhaAjusteHistoricoUncheckedCreateWithoutAlteradoPorInput[]
+    connectOrCreate?: FolhaAjusteHistoricoCreateOrConnectWithoutAlteradoPorInput | FolhaAjusteHistoricoCreateOrConnectWithoutAlteradoPorInput[]
+    createMany?: FolhaAjusteHistoricoCreateManyAlteradoPorInputEnvelope
+    connect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -49118,6 +50509,20 @@ export namespace Prisma {
     deleteMany?: FuncionarioStatusHistoricoScalarWhereInput | FuncionarioStatusHistoricoScalarWhereInput[]
   }
 
+  export type FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput = {
+    create?: XOR<FolhaAjusteHistoricoCreateWithoutAlteradoPorInput, FolhaAjusteHistoricoUncheckedCreateWithoutAlteradoPorInput> | FolhaAjusteHistoricoCreateWithoutAlteradoPorInput[] | FolhaAjusteHistoricoUncheckedCreateWithoutAlteradoPorInput[]
+    connectOrCreate?: FolhaAjusteHistoricoCreateOrConnectWithoutAlteradoPorInput | FolhaAjusteHistoricoCreateOrConnectWithoutAlteradoPorInput[]
+    upsert?: FolhaAjusteHistoricoUpsertWithWhereUniqueWithoutAlteradoPorInput | FolhaAjusteHistoricoUpsertWithWhereUniqueWithoutAlteradoPorInput[]
+    createMany?: FolhaAjusteHistoricoCreateManyAlteradoPorInputEnvelope
+    set?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    disconnect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    delete?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    connect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    update?: FolhaAjusteHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput | FolhaAjusteHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput[]
+    updateMany?: FolhaAjusteHistoricoUpdateManyWithWhereWithoutAlteradoPorInput | FolhaAjusteHistoricoUpdateManyWithWhereWithoutAlteradoPorInput[]
+    deleteMany?: FolhaAjusteHistoricoScalarWhereInput | FolhaAjusteHistoricoScalarWhereInput[]
+  }
+
   export type FuncionarioUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<FuncionarioCreateWithoutUserInput, FuncionarioUncheckedCreateWithoutUserInput>
     connectOrCreate?: FuncionarioCreateOrConnectWithoutUserInput
@@ -49252,6 +50657,20 @@ export namespace Prisma {
     update?: FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput | FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput[]
     updateMany?: FuncionarioStatusHistoricoUpdateManyWithWhereWithoutAlteradoPorInput | FuncionarioStatusHistoricoUpdateManyWithWhereWithoutAlteradoPorInput[]
     deleteMany?: FuncionarioStatusHistoricoScalarWhereInput | FuncionarioStatusHistoricoScalarWhereInput[]
+  }
+
+  export type FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput = {
+    create?: XOR<FolhaAjusteHistoricoCreateWithoutAlteradoPorInput, FolhaAjusteHistoricoUncheckedCreateWithoutAlteradoPorInput> | FolhaAjusteHistoricoCreateWithoutAlteradoPorInput[] | FolhaAjusteHistoricoUncheckedCreateWithoutAlteradoPorInput[]
+    connectOrCreate?: FolhaAjusteHistoricoCreateOrConnectWithoutAlteradoPorInput | FolhaAjusteHistoricoCreateOrConnectWithoutAlteradoPorInput[]
+    upsert?: FolhaAjusteHistoricoUpsertWithWhereUniqueWithoutAlteradoPorInput | FolhaAjusteHistoricoUpsertWithWhereUniqueWithoutAlteradoPorInput[]
+    createMany?: FolhaAjusteHistoricoCreateManyAlteradoPorInputEnvelope
+    set?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    disconnect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    delete?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    connect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    update?: FolhaAjusteHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput | FolhaAjusteHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput[]
+    updateMany?: FolhaAjusteHistoricoUpdateManyWithWhereWithoutAlteradoPorInput | FolhaAjusteHistoricoUpdateManyWithWhereWithoutAlteradoPorInput[]
+    deleteMany?: FolhaAjusteHistoricoScalarWhereInput | FolhaAjusteHistoricoScalarWhereInput[]
   }
 
   export type ProfilePermissionCreateNestedManyWithoutProfileInput = {
@@ -50558,12 +51977,84 @@ export namespace Prisma {
     connect?: FuncionarioWhereUniqueInput
   }
 
+  export type FolhaAjusteHistoricoCreateNestedManyWithoutFolhaInput = {
+    create?: XOR<FolhaAjusteHistoricoCreateWithoutFolhaInput, FolhaAjusteHistoricoUncheckedCreateWithoutFolhaInput> | FolhaAjusteHistoricoCreateWithoutFolhaInput[] | FolhaAjusteHistoricoUncheckedCreateWithoutFolhaInput[]
+    connectOrCreate?: FolhaAjusteHistoricoCreateOrConnectWithoutFolhaInput | FolhaAjusteHistoricoCreateOrConnectWithoutFolhaInput[]
+    createMany?: FolhaAjusteHistoricoCreateManyFolhaInputEnvelope
+    connect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+  }
+
+  export type FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutFolhaInput = {
+    create?: XOR<FolhaAjusteHistoricoCreateWithoutFolhaInput, FolhaAjusteHistoricoUncheckedCreateWithoutFolhaInput> | FolhaAjusteHistoricoCreateWithoutFolhaInput[] | FolhaAjusteHistoricoUncheckedCreateWithoutFolhaInput[]
+    connectOrCreate?: FolhaAjusteHistoricoCreateOrConnectWithoutFolhaInput | FolhaAjusteHistoricoCreateOrConnectWithoutFolhaInput[]
+    createMany?: FolhaAjusteHistoricoCreateManyFolhaInputEnvelope
+    connect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+  }
+
   export type FuncionarioUpdateOneRequiredWithoutFolhasNestedInput = {
     create?: XOR<FuncionarioCreateWithoutFolhasInput, FuncionarioUncheckedCreateWithoutFolhasInput>
     connectOrCreate?: FuncionarioCreateOrConnectWithoutFolhasInput
     upsert?: FuncionarioUpsertWithoutFolhasInput
     connect?: FuncionarioWhereUniqueInput
     update?: XOR<XOR<FuncionarioUpdateToOneWithWhereWithoutFolhasInput, FuncionarioUpdateWithoutFolhasInput>, FuncionarioUncheckedUpdateWithoutFolhasInput>
+  }
+
+  export type FolhaAjusteHistoricoUpdateManyWithoutFolhaNestedInput = {
+    create?: XOR<FolhaAjusteHistoricoCreateWithoutFolhaInput, FolhaAjusteHistoricoUncheckedCreateWithoutFolhaInput> | FolhaAjusteHistoricoCreateWithoutFolhaInput[] | FolhaAjusteHistoricoUncheckedCreateWithoutFolhaInput[]
+    connectOrCreate?: FolhaAjusteHistoricoCreateOrConnectWithoutFolhaInput | FolhaAjusteHistoricoCreateOrConnectWithoutFolhaInput[]
+    upsert?: FolhaAjusteHistoricoUpsertWithWhereUniqueWithoutFolhaInput | FolhaAjusteHistoricoUpsertWithWhereUniqueWithoutFolhaInput[]
+    createMany?: FolhaAjusteHistoricoCreateManyFolhaInputEnvelope
+    set?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    disconnect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    delete?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    connect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    update?: FolhaAjusteHistoricoUpdateWithWhereUniqueWithoutFolhaInput | FolhaAjusteHistoricoUpdateWithWhereUniqueWithoutFolhaInput[]
+    updateMany?: FolhaAjusteHistoricoUpdateManyWithWhereWithoutFolhaInput | FolhaAjusteHistoricoUpdateManyWithWhereWithoutFolhaInput[]
+    deleteMany?: FolhaAjusteHistoricoScalarWhereInput | FolhaAjusteHistoricoScalarWhereInput[]
+  }
+
+  export type FolhaAjusteHistoricoUncheckedUpdateManyWithoutFolhaNestedInput = {
+    create?: XOR<FolhaAjusteHistoricoCreateWithoutFolhaInput, FolhaAjusteHistoricoUncheckedCreateWithoutFolhaInput> | FolhaAjusteHistoricoCreateWithoutFolhaInput[] | FolhaAjusteHistoricoUncheckedCreateWithoutFolhaInput[]
+    connectOrCreate?: FolhaAjusteHistoricoCreateOrConnectWithoutFolhaInput | FolhaAjusteHistoricoCreateOrConnectWithoutFolhaInput[]
+    upsert?: FolhaAjusteHistoricoUpsertWithWhereUniqueWithoutFolhaInput | FolhaAjusteHistoricoUpsertWithWhereUniqueWithoutFolhaInput[]
+    createMany?: FolhaAjusteHistoricoCreateManyFolhaInputEnvelope
+    set?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    disconnect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    delete?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    connect?: FolhaAjusteHistoricoWhereUniqueInput | FolhaAjusteHistoricoWhereUniqueInput[]
+    update?: FolhaAjusteHistoricoUpdateWithWhereUniqueWithoutFolhaInput | FolhaAjusteHistoricoUpdateWithWhereUniqueWithoutFolhaInput[]
+    updateMany?: FolhaAjusteHistoricoUpdateManyWithWhereWithoutFolhaInput | FolhaAjusteHistoricoUpdateManyWithWhereWithoutFolhaInput[]
+    deleteMany?: FolhaAjusteHistoricoScalarWhereInput | FolhaAjusteHistoricoScalarWhereInput[]
+  }
+
+  export type FolhaPagamentoCreateNestedOneWithoutAjustesInput = {
+    create?: XOR<FolhaPagamentoCreateWithoutAjustesInput, FolhaPagamentoUncheckedCreateWithoutAjustesInput>
+    connectOrCreate?: FolhaPagamentoCreateOrConnectWithoutAjustesInput
+    connect?: FolhaPagamentoWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutFolhaAjusteHistoricosInput = {
+    create?: XOR<UserCreateWithoutFolhaAjusteHistoricosInput, UserUncheckedCreateWithoutFolhaAjusteHistoricosInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFolhaAjusteHistoricosInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type FolhaPagamentoUpdateOneRequiredWithoutAjustesNestedInput = {
+    create?: XOR<FolhaPagamentoCreateWithoutAjustesInput, FolhaPagamentoUncheckedCreateWithoutAjustesInput>
+    connectOrCreate?: FolhaPagamentoCreateOrConnectWithoutAjustesInput
+    upsert?: FolhaPagamentoUpsertWithoutAjustesInput
+    connect?: FolhaPagamentoWhereUniqueInput
+    update?: XOR<XOR<FolhaPagamentoUpdateToOneWithWhereWithoutAjustesInput, FolhaPagamentoUpdateWithoutAjustesInput>, FolhaPagamentoUncheckedUpdateWithoutAjustesInput>
+  }
+
+  export type UserUpdateOneWithoutFolhaAjusteHistoricosNestedInput = {
+    create?: XOR<UserCreateWithoutFolhaAjusteHistoricosInput, UserUncheckedCreateWithoutFolhaAjusteHistoricosInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFolhaAjusteHistoricosInput
+    upsert?: UserUpsertWithoutFolhaAjusteHistoricosInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFolhaAjusteHistoricosInput, UserUpdateWithoutFolhaAjusteHistoricosInput>, UserUncheckedUpdateWithoutFolhaAjusteHistoricosInput>
   }
 
   export type FuncionarioCreateNestedOneWithoutFeriasInput = {
@@ -51026,6 +52517,7 @@ export namespace Prisma {
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutAlunosInput = {
@@ -51051,6 +52543,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutAlunosInput = {
@@ -51215,6 +52708,7 @@ export namespace Prisma {
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAlunosInput = {
@@ -51240,6 +52734,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type EmpresaClienteUpsertWithoutAlunosInput = {
@@ -51752,6 +53247,7 @@ export namespace Prisma {
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutCursosInput = {
@@ -51777,6 +53273,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutCursosInput = {
@@ -51882,6 +53379,7 @@ export namespace Prisma {
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCursosInput = {
@@ -51907,6 +53405,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type TurmaCreateWithoutInstrutorInput = {
@@ -52198,6 +53697,7 @@ export namespace Prisma {
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutTurmasInput = {
@@ -52223,6 +53723,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutTurmasInput = {
@@ -52387,6 +53888,7 @@ export namespace Prisma {
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTurmasInput = {
@@ -52412,6 +53914,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type AlunoCreateWithoutMatriculasInput = {
@@ -52606,6 +54109,7 @@ export namespace Prisma {
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutMatriculasInput = {
@@ -52631,6 +54135,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutMatriculasInput = {
@@ -52872,6 +54377,7 @@ export namespace Prisma {
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMatriculasInput = {
@@ -52897,6 +54403,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type EmpresaClienteUpsertWithoutMatriculasInput = {
@@ -53000,6 +54507,7 @@ export namespace Prisma {
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutPagamentosInput = {
@@ -53025,6 +54533,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutPagamentosInput = {
@@ -53113,6 +54622,7 @@ export namespace Prisma {
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPagamentosInput = {
@@ -53138,6 +54648,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type FuncionarioCreateWithoutUserInput = {
@@ -53552,6 +55063,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FolhaAjusteHistoricoCreateWithoutAlteradoPorInput = {
+    id?: string
+    campo: string
+    valorAnterior: Decimal | DecimalJsLike | number | string
+    valorNovo: Decimal | DecimalJsLike | number | string
+    motivo: string
+    createdAt?: Date | string
+    folha: FolhaPagamentoCreateNestedOneWithoutAjustesInput
+  }
+
+  export type FolhaAjusteHistoricoUncheckedCreateWithoutAlteradoPorInput = {
+    id?: string
+    folhaId: string
+    campo: string
+    valorAnterior: Decimal | DecimalJsLike | number | string
+    valorNovo: Decimal | DecimalJsLike | number | string
+    motivo: string
+    createdAt?: Date | string
+  }
+
+  export type FolhaAjusteHistoricoCreateOrConnectWithoutAlteradoPorInput = {
+    where: FolhaAjusteHistoricoWhereUniqueInput
+    create: XOR<FolhaAjusteHistoricoCreateWithoutAlteradoPorInput, FolhaAjusteHistoricoUncheckedCreateWithoutAlteradoPorInput>
+  }
+
+  export type FolhaAjusteHistoricoCreateManyAlteradoPorInputEnvelope = {
+    data: FolhaAjusteHistoricoCreateManyAlteradoPorInput | FolhaAjusteHistoricoCreateManyAlteradoPorInput[]
+    skipDuplicates?: boolean
+  }
+
   export type FuncionarioUpsertWithoutUserInput = {
     update: XOR<FuncionarioUpdateWithoutUserInput, FuncionarioUncheckedUpdateWithoutUserInput>
     create: XOR<FuncionarioCreateWithoutUserInput, FuncionarioUncheckedCreateWithoutUserInput>
@@ -53871,6 +55412,36 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"FuncionarioStatusHistorico"> | Date | string
   }
 
+  export type FolhaAjusteHistoricoUpsertWithWhereUniqueWithoutAlteradoPorInput = {
+    where: FolhaAjusteHistoricoWhereUniqueInput
+    update: XOR<FolhaAjusteHistoricoUpdateWithoutAlteradoPorInput, FolhaAjusteHistoricoUncheckedUpdateWithoutAlteradoPorInput>
+    create: XOR<FolhaAjusteHistoricoCreateWithoutAlteradoPorInput, FolhaAjusteHistoricoUncheckedCreateWithoutAlteradoPorInput>
+  }
+
+  export type FolhaAjusteHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput = {
+    where: FolhaAjusteHistoricoWhereUniqueInput
+    data: XOR<FolhaAjusteHistoricoUpdateWithoutAlteradoPorInput, FolhaAjusteHistoricoUncheckedUpdateWithoutAlteradoPorInput>
+  }
+
+  export type FolhaAjusteHistoricoUpdateManyWithWhereWithoutAlteradoPorInput = {
+    where: FolhaAjusteHistoricoScalarWhereInput
+    data: XOR<FolhaAjusteHistoricoUpdateManyMutationInput, FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorInput>
+  }
+
+  export type FolhaAjusteHistoricoScalarWhereInput = {
+    AND?: FolhaAjusteHistoricoScalarWhereInput | FolhaAjusteHistoricoScalarWhereInput[]
+    OR?: FolhaAjusteHistoricoScalarWhereInput[]
+    NOT?: FolhaAjusteHistoricoScalarWhereInput | FolhaAjusteHistoricoScalarWhereInput[]
+    id?: StringFilter<"FolhaAjusteHistorico"> | string
+    folhaId?: StringFilter<"FolhaAjusteHistorico"> | string
+    campo?: StringFilter<"FolhaAjusteHistorico"> | string
+    valorAnterior?: DecimalFilter<"FolhaAjusteHistorico"> | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFilter<"FolhaAjusteHistorico"> | Decimal | DecimalJsLike | number | string
+    motivo?: StringFilter<"FolhaAjusteHistorico"> | string
+    alteradoPorId?: StringNullableFilter<"FolhaAjusteHistorico"> | string | null
+    createdAt?: DateTimeFilter<"FolhaAjusteHistorico"> | Date | string
+  }
+
   export type ProfilePermissionCreateWithoutProfileInput = {
     id?: string
     canRead?: boolean
@@ -53950,6 +55521,7 @@ export namespace Prisma {
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutProfileInput = {
@@ -53975,6 +55547,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutProfileInput = {
@@ -54368,6 +55941,7 @@ export namespace Prisma {
     profile?: ProfileCreateNestedOneWithoutUsersInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutPermissionsInput = {
@@ -54393,6 +55967,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutPermissionsInput = {
@@ -54461,6 +56036,7 @@ export namespace Prisma {
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPermissionsInput = {
@@ -54486,6 +56062,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type ModuleUpsertWithoutUserPermissionsInput = {
@@ -54808,6 +56385,7 @@ export namespace Prisma {
     profile?: ProfileCreateNestedOneWithoutUsersInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutItemPermissionsInput = {
@@ -54833,6 +56411,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutItemPermissionsInput = {
@@ -54901,6 +56480,7 @@ export namespace Prisma {
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutItemPermissionsInput = {
@@ -54926,6 +56506,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type ModuleItemUpsertWithoutUserItemPermissionsInput = {
@@ -55079,6 +56660,7 @@ export namespace Prisma {
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutCertificadosInput = {
@@ -55104,6 +56686,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutCertificadosInput = {
@@ -55192,6 +56775,7 @@ export namespace Prisma {
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCertificadosInput = {
@@ -55217,6 +56801,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type TurmaCreateWithoutAulasInput = {
@@ -56148,6 +57733,7 @@ export namespace Prisma {
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutFuncionarioInput = {
@@ -56173,6 +57759,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutFuncionarioInput = {
@@ -56284,6 +57871,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    ajustes?: FolhaAjusteHistoricoCreateNestedManyWithoutFolhaInput
   }
 
   export type FolhaPagamentoUncheckedCreateWithoutFuncionarioInput = {
@@ -56308,6 +57896,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    ajustes?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutFolhaInput
   }
 
   export type FolhaPagamentoCreateOrConnectWithoutFuncionarioInput = {
@@ -56584,6 +58173,7 @@ export namespace Prisma {
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFuncionarioInput = {
@@ -56609,6 +58199,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type ContratoUpsertWithWhereUniqueWithoutFuncionarioInput = {
@@ -56949,6 +58540,7 @@ export namespace Prisma {
     profile?: ProfileCreateNestedOneWithoutUsersInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutStatusHistoricoInput = {
@@ -56974,6 +58566,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutStatusHistoricoInput = {
@@ -57088,6 +58681,7 @@ export namespace Prisma {
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStatusHistoricoInput = {
@@ -57113,6 +58707,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type FuncionarioCreateWithoutContratosInput = {
@@ -57462,6 +59057,36 @@ export namespace Prisma {
     create: XOR<FuncionarioCreateWithoutFolhasInput, FuncionarioUncheckedCreateWithoutFolhasInput>
   }
 
+  export type FolhaAjusteHistoricoCreateWithoutFolhaInput = {
+    id?: string
+    campo: string
+    valorAnterior: Decimal | DecimalJsLike | number | string
+    valorNovo: Decimal | DecimalJsLike | number | string
+    motivo: string
+    createdAt?: Date | string
+    alteradoPor?: UserCreateNestedOneWithoutFolhaAjusteHistoricosInput
+  }
+
+  export type FolhaAjusteHistoricoUncheckedCreateWithoutFolhaInput = {
+    id?: string
+    campo: string
+    valorAnterior: Decimal | DecimalJsLike | number | string
+    valorNovo: Decimal | DecimalJsLike | number | string
+    motivo: string
+    alteradoPorId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FolhaAjusteHistoricoCreateOrConnectWithoutFolhaInput = {
+    where: FolhaAjusteHistoricoWhereUniqueInput
+    create: XOR<FolhaAjusteHistoricoCreateWithoutFolhaInput, FolhaAjusteHistoricoUncheckedCreateWithoutFolhaInput>
+  }
+
+  export type FolhaAjusteHistoricoCreateManyFolhaInputEnvelope = {
+    data: FolhaAjusteHistoricoCreateManyFolhaInput | FolhaAjusteHistoricoCreateManyFolhaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type FuncionarioUpsertWithoutFolhasInput = {
     update: XOR<FuncionarioUpdateWithoutFolhasInput, FuncionarioUncheckedUpdateWithoutFolhasInput>
     create: XOR<FuncionarioCreateWithoutFolhasInput, FuncionarioUncheckedCreateWithoutFolhasInput>
@@ -57533,6 +59158,258 @@ export namespace Prisma {
     descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
+  }
+
+  export type FolhaAjusteHistoricoUpsertWithWhereUniqueWithoutFolhaInput = {
+    where: FolhaAjusteHistoricoWhereUniqueInput
+    update: XOR<FolhaAjusteHistoricoUpdateWithoutFolhaInput, FolhaAjusteHistoricoUncheckedUpdateWithoutFolhaInput>
+    create: XOR<FolhaAjusteHistoricoCreateWithoutFolhaInput, FolhaAjusteHistoricoUncheckedCreateWithoutFolhaInput>
+  }
+
+  export type FolhaAjusteHistoricoUpdateWithWhereUniqueWithoutFolhaInput = {
+    where: FolhaAjusteHistoricoWhereUniqueInput
+    data: XOR<FolhaAjusteHistoricoUpdateWithoutFolhaInput, FolhaAjusteHistoricoUncheckedUpdateWithoutFolhaInput>
+  }
+
+  export type FolhaAjusteHistoricoUpdateManyWithWhereWithoutFolhaInput = {
+    where: FolhaAjusteHistoricoScalarWhereInput
+    data: XOR<FolhaAjusteHistoricoUpdateManyMutationInput, FolhaAjusteHistoricoUncheckedUpdateManyWithoutFolhaInput>
+  }
+
+  export type FolhaPagamentoCreateWithoutAjustesInput = {
+    id?: string
+    mes: number
+    ano: number
+    data_processamento?: Date | string
+    salario_base: Decimal | DecimalJsLike | number | string
+    total_subsidios_tributaveis?: Decimal | DecimalJsLike | number | string
+    total_subsidios_isentos?: Decimal | DecimalJsLike | number | string
+    total_horas_extras?: Decimal | DecimalJsLike | number | string
+    total_faltas?: Decimal | DecimalJsLike | number | string
+    faltas_count?: number
+    base_inss: Decimal | DecimalJsLike | number | string
+    inss_trabalhador: Decimal | DecimalJsLike | number | string
+    inss_empresa: Decimal | DecimalJsLike | number | string
+    base_irt: Decimal | DecimalJsLike | number | string
+    irt_devido: Decimal | DecimalJsLike | number | string
+    outros_descontos?: Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: Decimal | DecimalJsLike | number | string
+    liquido_receber: Decimal | DecimalJsLike | number | string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    funcionario: FuncionarioCreateNestedOneWithoutFolhasInput
+  }
+
+  export type FolhaPagamentoUncheckedCreateWithoutAjustesInput = {
+    id?: string
+    funcionarioId: string
+    mes: number
+    ano: number
+    data_processamento?: Date | string
+    salario_base: Decimal | DecimalJsLike | number | string
+    total_subsidios_tributaveis?: Decimal | DecimalJsLike | number | string
+    total_subsidios_isentos?: Decimal | DecimalJsLike | number | string
+    total_horas_extras?: Decimal | DecimalJsLike | number | string
+    total_faltas?: Decimal | DecimalJsLike | number | string
+    faltas_count?: number
+    base_inss: Decimal | DecimalJsLike | number | string
+    inss_trabalhador: Decimal | DecimalJsLike | number | string
+    inss_empresa: Decimal | DecimalJsLike | number | string
+    base_irt: Decimal | DecimalJsLike | number | string
+    irt_devido: Decimal | DecimalJsLike | number | string
+    outros_descontos?: Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: Decimal | DecimalJsLike | number | string
+    liquido_receber: Decimal | DecimalJsLike | number | string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FolhaPagamentoCreateOrConnectWithoutAjustesInput = {
+    where: FolhaPagamentoWhereUniqueInput
+    create: XOR<FolhaPagamentoCreateWithoutAjustesInput, FolhaPagamentoUncheckedCreateWithoutAjustesInput>
+  }
+
+  export type UserCreateWithoutFolhaAjusteHistoricosInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: string
+    isSystemRoot?: boolean
+    language?: string
+    theme?: string
+    resetToken?: string | null
+    resetTokenExpires?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    funcionario?: FuncionarioCreateNestedOneWithoutUserInput
+    alunos?: AlunoCreateNestedManyWithoutUserInput
+    matriculas?: MatriculaCreateNestedManyWithoutUserInput
+    pagamentos?: PagamentoCreateNestedManyWithoutUserInput
+    certificados?: CertificateCreateNestedManyWithoutUserInput
+    turmas?: TurmaCreateNestedManyWithoutUserInput
+    cursos?: CursoCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
+  }
+
+  export type UserUncheckedCreateWithoutFolhaAjusteHistoricosInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: string
+    isSystemRoot?: boolean
+    language?: string
+    theme?: string
+    resetToken?: string | null
+    resetTokenExpires?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profileId?: string | null
+    funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
+    alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
+    matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
+    pagamentos?: PagamentoUncheckedCreateNestedManyWithoutUserInput
+    certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
+    turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
+    cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
+  }
+
+  export type UserCreateOrConnectWithoutFolhaAjusteHistoricosInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFolhaAjusteHistoricosInput, UserUncheckedCreateWithoutFolhaAjusteHistoricosInput>
+  }
+
+  export type FolhaPagamentoUpsertWithoutAjustesInput = {
+    update: XOR<FolhaPagamentoUpdateWithoutAjustesInput, FolhaPagamentoUncheckedUpdateWithoutAjustesInput>
+    create: XOR<FolhaPagamentoCreateWithoutAjustesInput, FolhaPagamentoUncheckedCreateWithoutAjustesInput>
+    where?: FolhaPagamentoWhereInput
+  }
+
+  export type FolhaPagamentoUpdateToOneWithWhereWithoutAjustesInput = {
+    where?: FolhaPagamentoWhereInput
+    data: XOR<FolhaPagamentoUpdateWithoutAjustesInput, FolhaPagamentoUncheckedUpdateWithoutAjustesInput>
+  }
+
+  export type FolhaPagamentoUpdateWithoutAjustesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    ano?: IntFieldUpdateOperationsInput | number
+    data_processamento?: DateTimeFieldUpdateOperationsInput | Date | string
+    salario_base?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_subsidios_tributaveis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_subsidios_isentos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_horas_extras?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_faltas?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    faltas_count?: IntFieldUpdateOperationsInput | number
+    base_inss?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    inss_trabalhador?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    inss_empresa?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    base_irt?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    irt_devido?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    outros_descontos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    liquido_receber?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    funcionario?: FuncionarioUpdateOneRequiredWithoutFolhasNestedInput
+  }
+
+  export type FolhaPagamentoUncheckedUpdateWithoutAjustesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    funcionarioId?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    ano?: IntFieldUpdateOperationsInput | number
+    data_processamento?: DateTimeFieldUpdateOperationsInput | Date | string
+    salario_base?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_subsidios_tributaveis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_subsidios_isentos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_horas_extras?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_faltas?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    faltas_count?: IntFieldUpdateOperationsInput | number
+    base_inss?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    inss_trabalhador?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    inss_empresa?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    base_irt?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    irt_devido?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    outros_descontos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_adiantamentos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    liquido_receber?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpsertWithoutFolhaAjusteHistoricosInput = {
+    update: XOR<UserUpdateWithoutFolhaAjusteHistoricosInput, UserUncheckedUpdateWithoutFolhaAjusteHistoricosInput>
+    create: XOR<UserCreateWithoutFolhaAjusteHistoricosInput, UserUncheckedCreateWithoutFolhaAjusteHistoricosInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFolhaAjusteHistoricosInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFolhaAjusteHistoricosInput, UserUncheckedUpdateWithoutFolhaAjusteHistoricosInput>
+  }
+
+  export type UserUpdateWithoutFolhaAjusteHistoricosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
+    language?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    funcionario?: FuncionarioUpdateOneWithoutUserNestedInput
+    alunos?: AlunoUpdateManyWithoutUserNestedInput
+    matriculas?: MatriculaUpdateManyWithoutUserNestedInput
+    pagamentos?: PagamentoUpdateManyWithoutUserNestedInput
+    certificados?: CertificateUpdateManyWithoutUserNestedInput
+    turmas?: TurmaUpdateManyWithoutUserNestedInput
+    cursos?: CursoUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFolhaAjusteHistoricosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
+    language?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
+    funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
+    alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
+    matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
+    pagamentos?: PagamentoUncheckedUpdateManyWithoutUserNestedInput
+    certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
+    turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
+    cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type FuncionarioCreateWithoutFeriasInput = {
@@ -58689,6 +60566,16 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type FolhaAjusteHistoricoCreateManyAlteradoPorInput = {
+    id?: string
+    folhaId: string
+    campo: string
+    valorAnterior: Decimal | DecimalJsLike | number | string
+    valorNovo: Decimal | DecimalJsLike | number | string
+    motivo: string
+    createdAt?: Date | string
+  }
+
   export type AlunoUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     nome_completo?: StringFieldUpdateOperationsInput | string
@@ -59025,6 +60912,36 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FolhaAjusteHistoricoUpdateWithoutAlteradoPorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    folha?: FolhaPagamentoUpdateOneRequiredWithoutAjustesNestedInput
+  }
+
+  export type FolhaAjusteHistoricoUncheckedUpdateWithoutAlteradoPorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folhaId?: StringFieldUpdateOperationsInput | string
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folhaId?: StringFieldUpdateOperationsInput | string
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ProfilePermissionCreateManyProfileInput = {
     id?: string
     moduleId: string
@@ -59135,6 +61052,7 @@ export namespace Prisma {
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfileInput = {
@@ -59160,6 +61078,7 @@ export namespace Prisma {
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
     statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
+    folhaAjusteHistoricos?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutProfileInput = {
@@ -59979,6 +61898,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ajustes?: FolhaAjusteHistoricoUpdateManyWithoutFolhaNestedInput
   }
 
   export type FolhaPagamentoUncheckedUpdateWithoutFuncionarioInput = {
@@ -60003,6 +61923,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ajustes?: FolhaAjusteHistoricoUncheckedUpdateManyWithoutFolhaNestedInput
   }
 
   export type FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioInput = {
@@ -60209,6 +62130,46 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FolhaAjusteHistoricoCreateManyFolhaInput = {
+    id?: string
+    campo: string
+    valorAnterior: Decimal | DecimalJsLike | number | string
+    valorNovo: Decimal | DecimalJsLike | number | string
+    motivo: string
+    alteradoPorId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FolhaAjusteHistoricoUpdateWithoutFolhaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    alteradoPor?: UserUpdateOneWithoutFolhaAjusteHistoricosNestedInput
+  }
+
+  export type FolhaAjusteHistoricoUncheckedUpdateWithoutFolhaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    alteradoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FolhaAjusteHistoricoUncheckedUpdateManyWithoutFolhaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    valorNovo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    alteradoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -60274,6 +62235,10 @@ export namespace Prisma {
      * @deprecated Use FuncionarioCountOutputTypeDefaultArgs instead
      */
     export type FuncionarioCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FuncionarioCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use FolhaPagamentoCountOutputTypeDefaultArgs instead
+     */
+    export type FolhaPagamentoCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FolhaPagamentoCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use AlunoDefaultArgs instead
      */
@@ -60390,6 +62355,10 @@ export namespace Prisma {
      * @deprecated Use FolhaPagamentoDefaultArgs instead
      */
     export type FolhaPagamentoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FolhaPagamentoDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use FolhaAjusteHistoricoDefaultArgs instead
+     */
+    export type FolhaAjusteHistoricoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FolhaAjusteHistoricoDefaultArgs<ExtArgs>
     /**
      * @deprecated Use FeriasSolicitacaoDefaultArgs instead
      */

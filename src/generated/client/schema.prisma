@@ -183,11 +183,12 @@ model User {
   cursos            Curso[]       @relation("UserCursos")
 
   // Novos campos para controle de acesso granular
-  profileId       String?
-  profile         Profile?                     @relation(fields: [profileId], references: [id])
-  permissions     UserPermission[]
-  itemPermissions UserItemPermission[]
-  statusHistorico FuncionarioStatusHistorico[]
+  profileId             String?
+  profile               Profile?                     @relation(fields: [profileId], references: [id])
+  permissions           UserPermission[]
+  itemPermissions       UserItemPermission[]
+  statusHistorico       FuncionarioStatusHistorico[]
+  folhaAjusteHistoricos FolhaAjusteHistorico[]
 
   @@map("users")
 }
@@ -554,8 +555,28 @@ model FolhaPagamento {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  ajustes FolhaAjusteHistorico[]
+
   @@unique([funcionarioId, mes, ano])
   @@map("rh_folhas_pagamento")
+}
+
+model FolhaAjusteHistorico {
+  id      String         @id @default(uuid())
+  folhaId String
+  folha   FolhaPagamento @relation(fields: [folhaId], references: [id], onDelete: Cascade)
+
+  campo         String // salario_base, total_subsidios_tributaveis, etc.
+  valorAnterior Decimal @db.Decimal(18, 2)
+  valorNovo     Decimal @db.Decimal(18, 2)
+  motivo        String  @db.Text
+
+  alteradoPorId String?
+  alteradoPor   User?   @relation(fields: [alteradoPorId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@map("rh_folhas_ajustes_historico")
 }
 
 model FeriasSolicitacao {

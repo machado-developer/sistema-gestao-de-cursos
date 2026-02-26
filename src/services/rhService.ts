@@ -628,6 +628,10 @@ export class RHService {
                         cargo: true,
                         departamento: true
                     }
+                },
+                ajustes: {
+                    include: { alteradoPor: { select: { name: true } } },
+                    orderBy: { createdAt: "desc" }
                 }
             }
         });
@@ -1102,6 +1106,85 @@ export class RHService {
                 ...dados,
                 valor: valorFinal
             }
+        });
+    }
+
+    static async ajustarFolhaPagamento(id: string, ajustes: { campo: string, valorNovo: number, motivo: string }[], alteradoPorId?: string) {
+        return await prisma.$transaction(async (tx) => {
+            const folha = await tx.folhaPagamento.findUnique({ where: { id } });
+            if (!folha) throw new Error("Folha não encontrada");
+
+            const atualizado: any = { ...folha };
+
+            for (const ajuste of ajustes) {
+                const valorAnterior = Number((folha as any)[ajuste.campo]);
+                atualizado[ajuste.campo] = ajuste.valorNovo;
+
+                await tx.folhaAjusteHistorico.create({
+                    data: {
+                        folhaId: id,
+                        campo: ajuste.campo,
+                        valorAnterior,
+                        valorNovo: ajuste.valorNovo,
+                        motivo: ajuste.motivo,
+                        alteradoPorId
+                    }
+                });
+            }
+
+            // Recalcular com base nos novos valores
+            // Nota: Como processarSalarioMensal recalcula Horas Extras de base,
+            // aqui injetamos os valores já monetários se eles não foram o alvo do ajuste,
+            // ou deixamos o sistema lidar com a lógica de base.
+            // Para maior flexibilidade em ajustes manuais "post-mortem", recalculamos IRT/INSS sobre o bruto resultante.
+
+            const salarioBase = Number(atualizado.salario_base);
+            const subsidiosTributaveis = Number(atualizado.total_subsidios_tributaveis);
+            const subsidiosIsentos = Number(atualizado.total_subsidios_isentos);
+            const valorHorasExtras = Number(atualizado.total_horas_extras);
+            const valorFaltas = Number(atualizado.total_faltas);
+            const adiantamentos = Number(atualizado.total_adiantamentos);
+            const outrosDescontos = Number(atualizado.outros_descontos);
+
+            // Rendimento Bruto (Salário Base + Subsídios Tributáveis + Horas Extras - Faltas)
+            const rendimentoBruto = Math.round((salarioBase + subsidiosTributaveis + valorHorasExtras - valorFaltas) * 100) / 100;
+
+            const inss = {
+                trabalhador: Math.round(rendimentoBruto * 0.03 * 100) / 100,
+                empresa: Math.round(rendimentoBruto * 0.08 * 100) / 100
+            };
+
+            const baseIrt = Math.round((rendimentoBruto - inss.trabalhador) * 100) / 100;
+
+            // Re-importar ou definir calcularIRT localmente se necessário, mas RHService já importa processarSalarioMensal que usa calculosAngola
+            // Vamos usar uma abordagem que garanta consistência total
+            const resRecalculo = processarSalarioMensal({
+                salarioBase: rendimentoBruto, // Aqui passamos o bruto já consolidado como "base" para os impostos
+                subsidiosTributaveis: 0,      // Já incluído no bruto acima
+                subsidiosIsentos: subsidiosIsentos,
+                totalAdiantamentos: adiantamentos,
+                outrosDescontos: outrosDescontos
+            });
+
+            return await tx.folhaPagamento.update({
+                where: { id },
+                data: {
+                    salario_base: atualizado.salario_base,
+                    total_subsidios_tributaveis: atualizado.total_subsidios_tributaveis,
+                    total_subsidios_isentos: atualizado.total_subsidios_isentos,
+                    total_horas_extras: atualizado.total_horas_extras,
+                    total_faltas: atualizado.total_faltas,
+                    total_adiantamentos: atualizado.total_adiantamentos,
+                    outros_descontos: atualizado.outros_descontos,
+
+                    base_inss: rendimentoBruto,
+                    inss_trabalhador: inss.trabalhador,
+                    inss_empresa: inss.empresa,
+                    base_irt: baseIrt,
+                    irt_devido: resRecalculo.irt,
+                    liquido_receber: resRecalculo.liquido
+                }
+            });
         });
     }
 }

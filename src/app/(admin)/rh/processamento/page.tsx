@@ -61,6 +61,21 @@ export default function ProcessamentoPage() {
     const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
     const [emailRecipientsData, setEmailRecipientsData] = useState<any[]>([]);
 
+    // Adjustment State
+    const [isAdjustmentModalOpen, setIsAdjustmentModalOpen] = useState(false);
+    const [selectedFolha, setSelectedFolha] = useState<any>(null);
+    const [submittingAdjustment, setSubmittingAdjustment] = useState(false);
+    const [ajustes, setAjustes] = useState<any>({
+        salario_base: 0,
+        total_subsidios_tributaveis: 0,
+        total_subsidios_isentos: 0,
+        total_horas_extras: 0,
+        total_faltas: 0,
+        total_adiantamentos: 0,
+        outros_descontos: 0,
+        motivo: ""
+    });
+
     useEffect(() => {
         fetch('/api/configuracoes/empresa').then(res => res.json()).then(setEmpresa);
     }, []);
@@ -273,6 +288,73 @@ export default function ProcessamentoPage() {
         }
     };
 
+    const handleOpenAdjustmentModal = async (folha: any) => {
+        try {
+            const res = await fetch(`/api/rh/processamento/${folha.id}`);
+            if (res.ok) {
+                const data = await res.json();
+                setSelectedFolha(data);
+                setAjustes({
+                    salario_base: Number(data.salario_base),
+                    total_subsidios_tributaveis: Number(data.total_subsidios_tributaveis),
+                    total_subsidios_isentos: Number(data.total_subsidios_isentos),
+                    total_horas_extras: Number(data.total_horas_extras),
+                    total_faltas: Number(data.total_faltas),
+                    total_adiantamentos: Number(data.total_adiantamentos),
+                    outros_descontos: Number(data.outros_descontos),
+                    motivo: ""
+                });
+                setIsAdjustmentModalOpen(true);
+            }
+        } catch (error) {
+            toast.error("Erro ao carregar detalhes da folha");
+        }
+    };
+
+    const handleAdjustmentSubmit = async () => {
+        if (!ajustes.motivo) {
+            toast.error("O motivo é obrigatório para registar o ajuste");
+            return;
+        }
+
+        setSubmittingAdjustment(true);
+        try {
+            const camposParaAjustar = [
+                "salario_base", "total_subsidios_tributaveis", "total_subsidios_isentos",
+                "total_horas_extras", "total_faltas", "total_adiantamentos", "outros_descontos"
+            ];
+
+            const listaAjustes = camposParaAjustar
+                .filter(campo => Number(selectedFolha[campo]) !== Number(ajustes[campo]))
+                .map(campo => ({
+                    campo,
+                    valorNovo: Number(ajustes[campo]),
+                    motivo: ajustes.motivo
+                }));
+
+            if (listaAjustes.length === 0) {
+                toast.error("Nenhuma alteração detectada");
+                return;
+            }
+
+            const res = await fetch(`/api/rh/folhas/${selectedFolha.id}/ajustar`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ajustes: listaAjustes })
+            });
+
+            if (!res.ok) throw new Error();
+
+            toast.success("Folha ajustada com sucesso");
+            setIsAdjustmentModalOpen(false);
+            fetchRelatorio();
+        } catch (error) {
+            toast.error("Erro ao processar ajuste");
+        } finally {
+            setSubmittingAdjustment(false);
+        }
+    };
+
 
 
     const columns: Column<any>[] = [
@@ -313,8 +395,11 @@ export default function ProcessamentoPage() {
             header: "Colaborador",
             render: (item) => (
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded bg-slate-100 dark:bg-zinc-800 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded bg-slate-100 dark:bg-zinc-800 flex items-center justify-center relative">
                         <User size={14} className="text-slate-500" />
+                        {item.ajustes?.length > 0 && (
+                            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-500 rounded-full border border-white" title="Possui ajustes manuais" />
+                        )}
                     </div>
                     <div>
                         <p className="text-[10px] font-black uppercase tracking-tight text-[var(--text-primary)]">
@@ -377,6 +462,15 @@ export default function ProcessamentoPage() {
                     <Button
                         variant="ghost"
                         size="sm"
+                        className="h-8 w-8 p-0 text-amber-600 hover:text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-900/20"
+                        title="Ajustar Manualmente"
+                        onClick={() => handleOpenAdjustmentModal(item)}
+                    >
+                        <Calculator size={18} />
+                    </Button>
+                    <Button
+                        variant="ghost"
+                        size="sm"
                         className="h-8 w-8 p-0 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20"
                         title="Registar Desconto Ágil"
                         onClick={() => {
@@ -402,7 +496,7 @@ export default function ProcessamentoPage() {
                     </Link>
                 </div>
             ),
-            className: "w-32"
+            className: "w-40"
         }
     ];
 
@@ -528,6 +622,115 @@ export default function ProcessamentoPage() {
                     }
                 />
             </Card>
+
+            {/* Adjustment Modal */}
+            <Modal
+                isOpen={isAdjustmentModalOpen}
+                onClose={() => setIsAdjustmentModalOpen(false)}
+                title={`Ajuste Manual: ${selectedFolha?.funcionario?.nome}`}
+            >
+                <div className="max-h-[80vh] overflow-y-auto pr-2 custom-scrollbar space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <CurrencyInput
+                            label="Salário Base"
+                            value={ajustes.salario_base}
+                            onChange={(val) => setAjustes({ ...ajustes, salario_base: val })}
+                        />
+                        <CurrencyInput
+                            label="Subsídios Tributáveis"
+                            value={ajustes.total_subsidios_tributaveis}
+                            onChange={(val) => setAjustes({ ...ajustes, total_subsidios_tributaveis: val })}
+                        />
+                        <CurrencyInput
+                            label="Subsídios Isentos"
+                            value={ajustes.total_subsidios_isentos}
+                            onChange={(val) => setAjustes({ ...ajustes, total_subsidios_isentos: val })}
+                        />
+                        <CurrencyInput
+                            label="Horas Extras"
+                            value={ajustes.total_horas_extras}
+                            onChange={(val) => setAjustes({ ...ajustes, total_horas_extras: val })}
+                        />
+                        <CurrencyInput
+                            label="Faltas"
+                            value={ajustes.total_faltas}
+                            onChange={(val) => setAjustes({ ...ajustes, total_faltas: val })}
+                        />
+                        <CurrencyInput
+                            label="Adiantamentos"
+                            value={ajustes.total_adiantamentos}
+                            onChange={(val) => setAjustes({ ...ajustes, total_adiantamentos: val })}
+                        />
+                        <CurrencyInput
+                            label="Outros Descontos"
+                            value={ajustes.outros_descontos}
+                            onChange={(val) => setAjustes({ ...ajustes, outros_descontos: val })}
+                        />
+                    </div>
+
+                    <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 rounded-lg">
+                        <h4 className="text-[10px] font-black uppercase text-blue-600 mb-2">Resumo do Ajuste</h4>
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                            <div className="flex justify-between">
+                                <span className="text-slate-500">Novo Bruto:</span>
+                                <span className="font-bold text-[var(--text-primary)]">
+                                    {formatCurrency(Number(ajustes.salario_base) + Number(ajustes.total_subsidios_tributaveis) + Number(ajustes.total_horas_extras) - Number(ajustes.total_faltas))}
+                                </span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-slate-500">Estimativa Líquido:</span>
+                                <span className="font-bold text-emerald-600">
+                                    {/* Simplificação visual; o cálculo real será feito no backend */}
+                                    ~ {formatCurrency(Number(ajustes.salario_base) + Number(ajustes.total_subsidios_tributaveis) + Number(ajustes.total_horas_extras) - Number(ajustes.total_faltas) - Number(ajustes.outros_descontos) - Number(ajustes.total_adiantamentos))}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <Input
+                        label="Motivo do Ajuste (Obrigatório)"
+                        value={ajustes.motivo}
+                        onChange={(e) => setAjustes({ ...ajustes, motivo: e.target.value })}
+                        placeholder="Ex: Correção de bónus de desempenho, ajuste de faltas justificadas..."
+                        required
+                    />
+
+                    {/* History */}
+                    {selectedFolha?.ajustes?.length > 0 && (
+                        <div className="mt-6 border-t pt-4">
+                            <h4 className="text-[10px] font-black uppercase text-slate-500 flex items-center gap-2 mb-3">
+                                <Calculator size={14} /> Histórico de Ajustes
+                            </h4>
+                            <div className="space-y-3">
+                                {selectedFolha.ajustes.map((h: any) => (
+                                    <div key={h.id} className="text-[9px] p-2 bg-slate-50 dark:bg-zinc-800/50 rounded border border-slate-100 dark:border-zinc-800">
+                                        <div className="flex justify-between items-start mb-1">
+                                            <span className="font-bold text-blue-600 uppercase tracking-tighter">Campo: {h.campo}</span>
+                                            <span className="text-slate-400">{new Date(h.createdAt).toLocaleString()}</span>
+                                        </div>
+                                        <p className="mb-1"><span className="text-slate-500">De:</span> {formatCurrency(h.valorAnterior)} <span className="text-slate-500 mx-1">→</span> <span className="text-slate-500">Para:</span> <span className="font-bold">{formatCurrency(h.valorNovo)}</span></p>
+                                        <p className="italic text-slate-500 underline underline-offset-2 tracking-tight">Motivo: {h.motivo}</p>
+                                        <p className="mt-1 text-[8px] text-slate-400 font-bold">Por: {h.alteradoPor?.name}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="pt-6 flex justify-end gap-2 sticky bottom-0 bg-[var(--surface-color)] dark:bg-zinc-900 pb-2">
+                        <Button variant="ghost" onClick={() => setIsAdjustmentModalOpen(false)}>Sair</Button>
+                        <Button
+                            className="bg-amber-600 text-white hover:bg-amber-700"
+                            onClick={handleAdjustmentSubmit}
+                            disabled={submittingAdjustment}
+                        >
+                            {submittingAdjustment ? "Processando..." : "Confirmar e Recalcular"}
+                        </Button>
+                    </div>
+                </div>
+            </Modal>
+
+
 
             {/* Quick Deduction Modal */}
             <Modal
