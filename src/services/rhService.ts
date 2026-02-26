@@ -1053,4 +1053,55 @@ export class RHService {
             data: { status, observacao }
         });
     }
+
+    static async eliminarDesconto(id: string) {
+        return await prisma.desconto.delete({
+            where: { id }
+        });
+    }
+
+    static async atualizarDesconto(id: string, dados: {
+        valor: number;
+        mes_referencia: number;
+        ano_referencia: number;
+        tipo?: string;
+        motivo?: string;
+        numeroDiasFalta?: number;
+    }) {
+        let valorFinal = Number(dados.valor);
+
+        // Se for FALTA e tiver dias, calcular automaticamente baseado no salário base atual
+        if (dados.tipo === "FALTA" && dados.numeroDiasFalta) {
+            const descontoAtual = await prisma.desconto.findUnique({
+                where: { id },
+                select: { funcionarioId: true }
+            });
+
+            if (descontoAtual) {
+                const funcionario = await prisma.funcionario.findUnique({
+                    where: { id: descontoAtual.funcionarioId },
+                    include: {
+                        contratos: {
+                            where: { status: "VIGENTE" },
+                            orderBy: { data_inicio: "desc" },
+                            take: 1
+                        }
+                    }
+                });
+
+                if (funcionario && funcionario.contratos.length > 0) {
+                    const salarioBase = Number(funcionario.contratos[0].salario_base);
+                    valorFinal = (salarioBase / 30) * dados.numeroDiasFalta;
+                }
+            }
+        }
+
+        return await prisma.desconto.update({
+            where: { id },
+            data: {
+                ...dados,
+                valor: valorFinal
+            }
+        });
+    }
 }

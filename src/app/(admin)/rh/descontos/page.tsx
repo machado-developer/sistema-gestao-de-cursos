@@ -16,7 +16,9 @@ import {
     User,
     Calendar,
     FileText,
-    AlertCircle
+    AlertCircle,
+    Edit,
+    Trash2
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/utils";
@@ -30,6 +32,7 @@ export default function DescontosPage() {
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [editingId, setEditingId] = useState<string | null>(null);
 
     // Filters
     const [search, setSearch] = useState("");
@@ -83,7 +86,20 @@ export default function DescontosPage() {
         fetchData();
     }, []);
 
-    const handleCreate = async () => {
+    const resetForm = () => {
+        setFormData({
+            funcionarioId: "",
+            valor: 0,
+            mes_referencia: new Date().getMonth() + 1,
+            ano_referencia: new Date().getFullYear(),
+            tipo: "OUTRO",
+            motivo: "",
+            numeroDiasFalta: 0
+        });
+        setEditingId(null);
+    };
+
+    const handleSubmit = async () => {
         // Validation logic
         const isFalta = formData.tipo === "FALTA";
         const isValorInvalid = !isFalta && formData.valor <= 0;
@@ -96,30 +112,52 @@ export default function DescontosPage() {
 
         setSubmitting(true);
         try {
-            const res = await fetch("/api/rh/descontos", {
-                method: "POST",
+            const url = editingId ? `/api/rh/descontos/${editingId}` : "/api/rh/descontos";
+            const method = editingId ? "PUT" : "POST";
+
+            const res = await fetch(url, {
+                method,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             });
 
             if (!res.ok) throw new Error();
 
-            toast.success("Desconto registado com sucesso");
+            toast.success(editingId ? "Desconto atualizado" : "Desconto registado com sucesso");
             setIsModalOpen(false);
-            setFormData({
-                funcionarioId: "",
-                valor: 0,
-                mes_referencia: new Date().getMonth() + 1,
-                ano_referencia: new Date().getFullYear(),
-                tipo: "OUTRO",
-                motivo: "",
-                numeroDiasFalta: 0
-            });
+            resetForm();
             fetchData();
         } catch (error) {
-            toast.error("Erro ao registar desconto");
+            toast.error(editingId ? "Erro ao atualizar" : "Erro ao registar desconto");
         } finally {
             setSubmitting(false);
+        }
+    };
+
+    const handleEdit = (item: any) => {
+        setFormData({
+            funcionarioId: item.funcionarioId,
+            valor: Number(item.valor),
+            mes_referencia: item.mes_referencia,
+            ano_referencia: item.ano_referencia,
+            tipo: item.tipo,
+            motivo: item.motivo || "",
+            numeroDiasFalta: item.numeroDiasFalta || 0
+        });
+        setEditingId(item.id);
+        setIsModalOpen(true);
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!confirm("Tem certeza que deseja eliminar este desconto?")) return;
+
+        try {
+            const res = await fetch(`/api/rh/descontos/${id}`, { method: "DELETE" });
+            if (!res.ok) throw new Error();
+            toast.success("Desconto eliminado");
+            fetchData();
+        } catch (error) {
+            toast.error("Erro ao eliminar desconto");
         }
     };
 
@@ -218,40 +256,52 @@ export default function DescontosPage() {
             }
         },
         {
-            key: "motivo",
-            header: "Motivo",
+            key: "acoes",
+            header: "Ações",
             render: (item) => (
-                <div className="text-sm text-slate-500 max-w-[200px] truncate" title={item.motivo}>
-                    {item.motivo || '---'}
+                <div className="flex justify-end gap-2">
+                    {item.status === "PENDENTE" && item.observacao !== "GERADO_AUTOMATICAMENTE" && (
+                        <>
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                                onClick={() => handleEdit(item)}
+                                title="Editar"
+                            >
+                                <Edit size={14} />
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-8 w-8 p-0 text-rose-600 hover:text-rose-700 hover:bg-rose-50"
+                                onClick={() => handleDelete(item.id)}
+                                title="Eliminar"
+                            >
+                                <Trash2 size={14} />
+                            </Button>
+                            <div className="w-[1px] h-4 bg-slate-200 dark:bg-zinc-800 mx-1 self-center" />
+                            <Button
+                                size="sm"
+                                className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border-emerald-200 h-7"
+                                onClick={() => handleStatusUpdate(item.id, "APROVADO")}
+                                title="Aprovar"
+                            >
+                                <CheckCircle size={14} />
+                            </Button>
+                            <Button
+                                size="sm"
+                                className="bg-rose-50 text-rose-600 hover:bg-rose-100 border-rose-200 h-7"
+                                onClick={() => handleStatusUpdate(item.id, "REJEITADO")}
+                                title="Rejeitar"
+                            >
+                                <XCircle size={14} />
+                            </Button>
+                        </>
+                    )}
                 </div>
             ),
-        },
-        {
-            key: "acoes",
-            header: "",
-            render: (item) => (
-                item.status === "PENDENTE" && item.observacao !== "GERADO_AUTOMATICAMENTE" && (
-                    <div className="flex justify-end gap-2">
-                        <Button
-                            size="sm"
-                            className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border-emerald-200 h-7"
-                            onClick={() => handleStatusUpdate(item.id, "APROVADO")}
-                            title="Aprovar"
-                        >
-                            <CheckCircle size={14} />
-                        </Button>
-                        <Button
-                            size="sm"
-                            className="bg-rose-50 text-rose-600 hover:bg-rose-100 border-rose-200 h-7"
-                            onClick={() => handleStatusUpdate(item.id, "REJEITADO")}
-                            title="Rejeitar"
-                        >
-                            <XCircle size={14} />
-                        </Button>
-                    </div>
-                )
-            ),
-            className: "w-24"
+            className: "w-40"
         }
     ];
 
@@ -274,13 +324,13 @@ export default function DescontosPage() {
                 </div>
                 <Button
                     className="bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-500/20"
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => { resetForm(); setIsModalOpen(true); }}
                 >
                     <Plus size={18} className="mr-2" /> Registar Desconto
                 </Button>
             </div>
 
-            {/* Metrics */}
+            {/* Metrics ... unchanged ... */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <StatCard
                     title="Total em Pendente"
@@ -305,7 +355,7 @@ export default function DescontosPage() {
                 />
             </div>
 
-            {/* Filters */}
+            {/* Filters ... unchanged ... */}
             <Card className="p-4 border border-white/10 bg-zinc-900/50">
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="relative flex-1">
@@ -350,8 +400,8 @@ export default function DescontosPage() {
             {/* Modal */}
             <Modal
                 isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                title="Registar Novo Desconto"
+                onClose={() => { setIsModalOpen(false); resetForm(); }}
+                title={editingId ? "Editar Desconto" : "Registar Novo Desconto"}
             >
                 <div className="max-h-[70vh] overflow-y-auto pr-2 space-y-4 custom-scrollbar">
                     <Select
@@ -360,8 +410,9 @@ export default function DescontosPage() {
                         onChange={(val) => setFormData({ ...formData, funcionarioId: val })}
                         options={funcionarios.map(f => ({ value: f.id, label: f.nome }))}
                         placeholder="Selecione o colaborador"
+                        disabled={!!editingId}
                     />
-                    {/* ... rest of the form ... */}
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Select
                             label="Tipo de Desconto"
@@ -435,13 +486,13 @@ export default function DescontosPage() {
                     />
 
                     <div className="pt-4 flex justify-end gap-2 sticky bottom-0 bg-[var(--surface-color)] dark:bg-zinc-900 pb-1">
-                        <Button variant="ghost" onClick={() => setIsModalOpen(false)}>Cancelar</Button>
+                        <Button variant="ghost" onClick={() => { setIsModalOpen(false); resetForm(); }}>Cancelar</Button>
                         <Button
                             className="bg-rose-600 text-white"
-                            onClick={handleCreate}
+                            onClick={handleSubmit}
                             disabled={submitting}
                         >
-                            {submitting ? "Processando..." : "Registar Desconto"}
+                            {submitting ? "Processando..." : (editingId ? "Atualizar Desconto" : "Registar Desconto")}
                         </Button>
                     </div>
                 </div>
