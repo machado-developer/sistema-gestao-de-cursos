@@ -84,8 +84,13 @@ export default function DescontosPage() {
     }, []);
 
     const handleCreate = async () => {
-        if (!formData.funcionarioId || formData.valor <= 0) {
-            toast.error("Preencha os campos obrigatórios");
+        // Validation logic
+        const isFalta = formData.tipo === "FALTA";
+        const isValorInvalid = !isFalta && formData.valor <= 0;
+        const isDiasInvalid = isFalta && formData.numeroDiasFalta <= 0;
+
+        if (!formData.funcionarioId || isValorInvalid || isDiasInvalid) {
+            toast.error("Preencha todos os campos obrigatórios");
             return;
         }
 
@@ -348,7 +353,7 @@ export default function DescontosPage() {
                 onClose={() => setIsModalOpen(false)}
                 title="Registar Novo Desconto"
             >
-                <div className="space-y-4">
+                <div className="max-h-[70vh] overflow-y-auto pr-2 space-y-4 custom-scrollbar">
                     <Select
                         label="Colaborador"
                         value={formData.funcionarioId}
@@ -356,7 +361,7 @@ export default function DescontosPage() {
                         options={funcionarios.map(f => ({ value: f.id, label: f.nome }))}
                         placeholder="Selecione o colaborador"
                     />
-
+                    {/* ... rest of the form ... */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Select
                             label="Tipo de Desconto"
@@ -429,7 +434,7 @@ export default function DescontosPage() {
                         placeholder="Ex: Falta dia 15 sem justiticação"
                     />
 
-                    <div className="pt-4 flex justify-end gap-2">
+                    <div className="pt-4 flex justify-end gap-2 sticky bottom-0 bg-[var(--surface-color)] dark:bg-zinc-900 pb-1">
                         <Button variant="ghost" onClick={() => setIsModalOpen(false)}>Cancelar</Button>
                         <Button
                             className="bg-rose-600 text-white"
