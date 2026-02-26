@@ -51,7 +51,8 @@ export default function ProcessamentoPage() {
     const [deductionData, setDeductionData] = useState({
         valor: 0,
         tipo: "OUTRO",
-        motivo: ""
+        motivo: "",
+        numeroDiasFalta: 0
     });
 
     const [selectedFolhaIds, setSelectedFolhaIds] = useState<string[]>([]);
@@ -198,7 +199,16 @@ export default function ProcessamentoPage() {
     };
 
     const handleQuickDeduction = async () => {
-        if (!selectedFuncionario || deductionData.valor <= 0) {
+        if (!selectedFuncionario) return;
+
+        const isFalta = deductionData.tipo === "FALTA";
+
+        if (isFalta && (deductionData.numeroDiasFalta <= 0 || deductionData.numeroDiasFalta > 30)) {
+            toast.error("Número de dias inválido (1-30)");
+            return;
+        }
+
+        if (!isFalta && deductionData.valor <= 0) {
             toast.error("Preencha o valor do desconto");
             return;
         }
@@ -210,11 +220,12 @@ export default function ProcessamentoPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     funcionarioId: selectedFuncionario.id,
-                    valor: deductionData.valor,
+                    valor: isFalta ? 0 : deductionData.valor, // API calcula se for FALTA
+                    numeroDiasFalta: isFalta ? deductionData.numeroDiasFalta : undefined,
                     mes_referencia: mes,
                     ano_referencia: ano,
                     tipo: deductionData.tipo,
-                    motivo: deductionData.motivo,
+                    motivo: isFalta ? `Faltas: ${deductionData.numeroDiasFalta} dias. ${deductionData.motivo}` : deductionData.motivo,
                     status: "APROVADO" // Auto-aprovado via quick action
                 })
             });
@@ -223,7 +234,7 @@ export default function ProcessamentoPage() {
 
             toast.success("Desconto aplicado com sucesso");
             setIsDeductionModalOpen(false);
-            setDeductionData({ valor: 0, tipo: "OUTRO", motivo: "" });
+            setDeductionData({ valor: 0, tipo: "OUTRO", motivo: "", numeroDiasFalta: 0 });
             fetchRelatorio();
         } catch (error) {
             toast.error("Erro ao aplicar desconto");
@@ -332,6 +343,20 @@ export default function ProcessamentoPage() {
                 <div className="flex flex-col">
                     <span className="text-[9px] font-bold text-rose-500">IRT: {formatCurrency(item.irt_devido)}</span>
                     <span className="text-[9px] font-bold text-amber-600">INSS: {formatCurrency(item.inss_trabalhador)}</span>
+                </div>
+            )
+        },
+        {
+            key: "faltas",
+            header: "Faltas",
+            render: (item: any) => (
+                <div className="flex flex-col">
+                    <span className="text-[10px] font-black text-rose-600">
+                        {formatCurrency(item.total_faltas)}
+                    </span>
+                    <span className="text-[8px] font-bold text-slate-400 uppercase">
+                        {item.faltas_count || 0} Dias
+                    </span>
                 </div>
             )
         },
@@ -517,18 +542,49 @@ export default function ProcessamentoPage() {
                             value={deductionData.tipo}
                             onChange={(val) => setDeductionData({ ...deductionData, tipo: val })}
                             options={[
-                                { value: "FALTA", label: "Faltas" },
+                                { value: "FALTA", label: "Faltas (Por Dia)" },
                                 { value: "DISCIPLINAR", label: "Sancção Disciplinar" },
                                 { value: "DANO", label: "Dano Material" },
                                 { value: "OUTRO", label: "Outro" }
                             ]}
                         />
-                        <CurrencyInput
-                            label="Valor do Desconto"
-                            value={deductionData.valor}
-                            onChange={(val) => setDeductionData({ ...deductionData, valor: val })}
-                        />
+
+                        {deductionData.tipo === "FALTA" ? (
+                            <div className="space-y-2">
+                                <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">Número de Dias</label>
+                                <Input
+                                    type="number"
+                                    min={1}
+                                    max={30}
+                                    value={deductionData.numeroDiasFalta}
+                                    onChange={(e) => setDeductionData({ ...deductionData, numeroDiasFalta: Number(e.target.value) })}
+                                    placeholder="Ex: 2"
+                                />
+                            </div>
+                        ) : (
+                            <CurrencyInput
+                                label="Valor do Desconto"
+                                value={deductionData.valor}
+                                onChange={(val) => setDeductionData({ ...deductionData, valor: val })}
+                            />
+                        )}
                     </div>
+
+                    {deductionData.tipo === "FALTA" && deductionData.numeroDiasFalta > 0 && selectedFuncionario && (
+                        <div className="p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800/30 rounded-lg">
+                            <p className="text-[10px] uppercase font-black text-amber-600 mb-1">Impacto Estimado</p>
+                            <div className="flex justify-between items-center">
+                                <span className="text-[10px] text-slate-500 font-bold">Valor a Descontar:</span>
+                                <span className="text-sm font-black text-rose-600">
+                                    {(() => {
+                                        const folha = relatorio?.folhas.find((f: any) => f.funcionarioId === selectedFuncionario.id);
+                                        const base = folha ? Number(folha.salario_base) : 0;
+                                        return formatCurrency((base / 30) * deductionData.numeroDiasFalta);
+                                    })()}
+                                </span>
+                            </div>
+                        </div>
+                    )}
 
                     <Input
                         label="Motivo / Descrição"

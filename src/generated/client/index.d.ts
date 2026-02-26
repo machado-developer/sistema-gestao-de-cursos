@@ -36938,12 +36938,14 @@ export namespace Prisma {
     valor: Decimal | null
     mes_referencia: number | null
     ano_referencia: number | null
+    numeroDiasFalta: number | null
   }
 
   export type DescontoSumAggregateOutputType = {
     valor: Decimal | null
     mes_referencia: number | null
     ano_referencia: number | null
+    numeroDiasFalta: number | null
   }
 
   export type DescontoMinAggregateOutputType = {
@@ -36956,6 +36958,7 @@ export namespace Prisma {
     status: string | null
     mes_referencia: number | null
     ano_referencia: number | null
+    numeroDiasFalta: number | null
     observacao: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -36971,6 +36974,7 @@ export namespace Prisma {
     status: string | null
     mes_referencia: number | null
     ano_referencia: number | null
+    numeroDiasFalta: number | null
     observacao: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -36986,6 +36990,7 @@ export namespace Prisma {
     status: number
     mes_referencia: number
     ano_referencia: number
+    numeroDiasFalta: number
     observacao: number
     createdAt: number
     updatedAt: number
@@ -36997,12 +37002,14 @@ export namespace Prisma {
     valor?: true
     mes_referencia?: true
     ano_referencia?: true
+    numeroDiasFalta?: true
   }
 
   export type DescontoSumAggregateInputType = {
     valor?: true
     mes_referencia?: true
     ano_referencia?: true
+    numeroDiasFalta?: true
   }
 
   export type DescontoMinAggregateInputType = {
@@ -37015,6 +37022,7 @@ export namespace Prisma {
     status?: true
     mes_referencia?: true
     ano_referencia?: true
+    numeroDiasFalta?: true
     observacao?: true
     createdAt?: true
     updatedAt?: true
@@ -37030,6 +37038,7 @@ export namespace Prisma {
     status?: true
     mes_referencia?: true
     ano_referencia?: true
+    numeroDiasFalta?: true
     observacao?: true
     createdAt?: true
     updatedAt?: true
@@ -37045,6 +37054,7 @@ export namespace Prisma {
     status?: true
     mes_referencia?: true
     ano_referencia?: true
+    numeroDiasFalta?: true
     observacao?: true
     createdAt?: true
     updatedAt?: true
@@ -37147,6 +37157,7 @@ export namespace Prisma {
     status: string
     mes_referencia: number
     ano_referencia: number
+    numeroDiasFalta: number | null
     observacao: string | null
     createdAt: Date
     updatedAt: Date
@@ -37181,6 +37192,7 @@ export namespace Prisma {
     status?: boolean
     mes_referencia?: boolean
     ano_referencia?: boolean
+    numeroDiasFalta?: boolean
     observacao?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -37198,6 +37210,7 @@ export namespace Prisma {
     status?: boolean
     mes_referencia?: boolean
     ano_referencia?: boolean
+    numeroDiasFalta?: boolean
     observacao?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -37222,6 +37235,7 @@ export namespace Prisma {
       status: string
       mes_referencia: number
       ano_referencia: number
+      numeroDiasFalta: number | null
       observacao: string | null
       createdAt: Date
       updatedAt: Date
@@ -37604,6 +37618,7 @@ export namespace Prisma {
     readonly status: FieldRef<"Desconto", 'String'>
     readonly mes_referencia: FieldRef<"Desconto", 'Int'>
     readonly ano_referencia: FieldRef<"Desconto", 'Int'>
+    readonly numeroDiasFalta: FieldRef<"Desconto", 'Int'>
     readonly observacao: FieldRef<"Desconto", 'String'>
     readonly createdAt: FieldRef<"Desconto", 'DateTime'>
     readonly updatedAt: FieldRef<"Desconto", 'DateTime'>
@@ -39409,6 +39424,7 @@ export namespace Prisma {
     status: 'status',
     mes_referencia: 'mes_referencia',
     ano_referencia: 'ano_referencia',
+    numeroDiasFalta: 'numeroDiasFalta',
     observacao: 'observacao',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -42304,6 +42320,7 @@ export namespace Prisma {
     status?: StringFilter<"Desconto"> | string
     mes_referencia?: IntFilter<"Desconto"> | number
     ano_referencia?: IntFilter<"Desconto"> | number
+    numeroDiasFalta?: IntNullableFilter<"Desconto"> | number | null
     observacao?: StringNullableFilter<"Desconto"> | string | null
     createdAt?: DateTimeFilter<"Desconto"> | Date | string
     updatedAt?: DateTimeFilter<"Desconto"> | Date | string
@@ -42320,6 +42337,7 @@ export namespace Prisma {
     status?: SortOrder
     mes_referencia?: SortOrder
     ano_referencia?: SortOrder
+    numeroDiasFalta?: SortOrderInput | SortOrder
     observacao?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -42339,6 +42357,7 @@ export namespace Prisma {
     status?: StringFilter<"Desconto"> | string
     mes_referencia?: IntFilter<"Desconto"> | number
     ano_referencia?: IntFilter<"Desconto"> | number
+    numeroDiasFalta?: IntNullableFilter<"Desconto"> | number | null
     observacao?: StringNullableFilter<"Desconto"> | string | null
     createdAt?: DateTimeFilter<"Desconto"> | Date | string
     updatedAt?: DateTimeFilter<"Desconto"> | Date | string
@@ -42355,6 +42374,7 @@ export namespace Prisma {
     status?: SortOrder
     mes_referencia?: SortOrder
     ano_referencia?: SortOrder
+    numeroDiasFalta?: SortOrderInput | SortOrder
     observacao?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -42378,6 +42398,7 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"Desconto"> | string
     mes_referencia?: IntWithAggregatesFilter<"Desconto"> | number
     ano_referencia?: IntWithAggregatesFilter<"Desconto"> | number
+    numeroDiasFalta?: IntNullableWithAggregatesFilter<"Desconto"> | number | null
     observacao?: StringNullableWithAggregatesFilter<"Desconto"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Desconto"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Desconto"> | Date | string
@@ -45550,6 +45571,7 @@ export namespace Prisma {
     status?: string
     mes_referencia: number
     ano_referencia: number
+    numeroDiasFalta?: number | null
     observacao?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45566,6 +45588,7 @@ export namespace Prisma {
     status?: string
     mes_referencia: number
     ano_referencia: number
+    numeroDiasFalta?: number | null
     observacao?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45580,6 +45603,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     mes_referencia?: IntFieldUpdateOperationsInput | number
     ano_referencia?: IntFieldUpdateOperationsInput | number
+    numeroDiasFalta?: NullableIntFieldUpdateOperationsInput | number | null
     observacao?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45596,6 +45620,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     mes_referencia?: IntFieldUpdateOperationsInput | number
     ano_referencia?: IntFieldUpdateOperationsInput | number
+    numeroDiasFalta?: NullableIntFieldUpdateOperationsInput | number | null
     observacao?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45611,6 +45636,7 @@ export namespace Prisma {
     status?: string
     mes_referencia: number
     ano_referencia: number
+    numeroDiasFalta?: number | null
     observacao?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45625,6 +45651,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     mes_referencia?: IntFieldUpdateOperationsInput | number
     ano_referencia?: IntFieldUpdateOperationsInput | number
+    numeroDiasFalta?: NullableIntFieldUpdateOperationsInput | number | null
     observacao?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45640,6 +45667,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     mes_referencia?: IntFieldUpdateOperationsInput | number
     ano_referencia?: IntFieldUpdateOperationsInput | number
+    numeroDiasFalta?: NullableIntFieldUpdateOperationsInput | number | null
     observacao?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47873,6 +47901,7 @@ export namespace Prisma {
     status?: SortOrder
     mes_referencia?: SortOrder
     ano_referencia?: SortOrder
+    numeroDiasFalta?: SortOrder
     observacao?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47882,6 +47911,7 @@ export namespace Prisma {
     valor?: SortOrder
     mes_referencia?: SortOrder
     ano_referencia?: SortOrder
+    numeroDiasFalta?: SortOrder
   }
 
   export type DescontoMaxOrderByAggregateInput = {
@@ -47894,6 +47924,7 @@ export namespace Prisma {
     status?: SortOrder
     mes_referencia?: SortOrder
     ano_referencia?: SortOrder
+    numeroDiasFalta?: SortOrder
     observacao?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47909,6 +47940,7 @@ export namespace Prisma {
     status?: SortOrder
     mes_referencia?: SortOrder
     ano_referencia?: SortOrder
+    numeroDiasFalta?: SortOrder
     observacao?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47918,6 +47950,7 @@ export namespace Prisma {
     valor?: SortOrder
     mes_referencia?: SortOrder
     ano_referencia?: SortOrder
+    numeroDiasFalta?: SortOrder
   }
 
   export type EmailJobCountOrderByAggregateInput = {
@@ -56368,6 +56401,7 @@ export namespace Prisma {
     status?: string
     mes_referencia: number
     ano_referencia: number
+    numeroDiasFalta?: number | null
     observacao?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56382,6 +56416,7 @@ export namespace Prisma {
     status?: string
     mes_referencia: number
     ano_referencia: number
+    numeroDiasFalta?: number | null
     observacao?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56786,6 +56821,7 @@ export namespace Prisma {
     status?: StringFilter<"Desconto"> | string
     mes_referencia?: IntFilter<"Desconto"> | number
     ano_referencia?: IntFilter<"Desconto"> | number
+    numeroDiasFalta?: IntNullableFilter<"Desconto"> | number | null
     observacao?: StringNullableFilter<"Desconto"> | string | null
     createdAt?: DateTimeFilter<"Desconto"> | Date | string
     updatedAt?: DateTimeFilter<"Desconto"> | Date | string
@@ -59803,6 +59839,7 @@ export namespace Prisma {
     status?: string
     mes_referencia: number
     ano_referencia: number
+    numeroDiasFalta?: number | null
     observacao?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60079,6 +60116,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     mes_referencia?: IntFieldUpdateOperationsInput | number
     ano_referencia?: IntFieldUpdateOperationsInput | number
+    numeroDiasFalta?: NullableIntFieldUpdateOperationsInput | number | null
     observacao?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60093,6 +60131,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     mes_referencia?: IntFieldUpdateOperationsInput | number
     ano_referencia?: IntFieldUpdateOperationsInput | number
+    numeroDiasFalta?: NullableIntFieldUpdateOperationsInput | number | null
     observacao?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60107,6 +60146,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     mes_referencia?: IntFieldUpdateOperationsInput | number
     ano_referencia?: IntFieldUpdateOperationsInput | number
+    numeroDiasFalta?: NullableIntFieldUpdateOperationsInput | number | null
     observacao?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

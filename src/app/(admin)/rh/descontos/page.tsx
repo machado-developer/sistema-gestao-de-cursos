@@ -42,7 +42,8 @@ export default function DescontosPage() {
         mes_referencia: new Date().getMonth() + 1,
         ano_referencia: new Date().getFullYear(),
         tipo: "OUTRO",
-        motivo: ""
+        motivo: "",
+        numeroDiasFalta: 0
     });
 
     const fetchData = async () => {
@@ -106,7 +107,8 @@ export default function DescontosPage() {
                 mes_referencia: new Date().getMonth() + 1,
                 ano_referencia: new Date().getFullYear(),
                 tipo: "OUTRO",
-                motivo: ""
+                motivo: "",
+                numeroDiasFalta: 0
             });
             fetchData();
         } catch (error) {
@@ -145,7 +147,10 @@ export default function DescontosPage() {
                     <div>
                         <p className="font-semibold text-sm text-[var(--text-primary)]">{item.funcionario?.nome}</p>
                         <div className="flex items-center gap-2">
-                            <span className="text-xs text-slate-500">{item.tipo}</span>
+                            <span className="text-xs text-slate-500">
+                                {item.tipo}
+                                {item.tipo === "FALTA" && item.numeroDiasFalta > 0 && ` (${item.numeroDiasFalta} Dias)`}
+                            </span>
                             {item.observacao === "GERADO_AUTOMATICAMENTE" && (
                                 <span className="text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-100 font-bold uppercase tracking-tighter">Automático</span>
                             )}
@@ -358,18 +363,48 @@ export default function DescontosPage() {
                             value={formData.tipo}
                             onChange={(val) => setFormData({ ...formData, tipo: val })}
                             options={[
-                                { value: "FALTA", label: "Faltas" },
+                                { value: "FALTA", label: "Faltas (Por Dia)" },
                                 { value: "DISCIPLINAR", label: "Sancção Disciplinar" },
                                 { value: "DANO", label: "Dano Material" },
                                 { value: "OUTRO", label: "Outro" }
                             ]}
                         />
-                        <CurrencyInput
-                            label="Valor do Desconto"
-                            value={formData.valor}
-                            onChange={(val) => setFormData({ ...formData, valor: val })}
-                        />
+                        {formData.tipo === "FALTA" ? (
+                            <div className="space-y-2">
+                                <label className="text-sm font-semibold text-slate-700 dark:text-zinc-300">Número de Dias</label>
+                                <Input
+                                    type="number"
+                                    min={1}
+                                    max={30}
+                                    value={formData.numeroDiasFalta}
+                                    onChange={(e) => setFormData({ ...formData, numeroDiasFalta: Number(e.target.value) })}
+                                    placeholder="Ex: 2"
+                                />
+                            </div>
+                        ) : (
+                            <CurrencyInput
+                                label="Valor do Desconto"
+                                value={formData.valor}
+                                onChange={(val) => setFormData({ ...formData, valor: val })}
+                            />
+                        )}
                     </div>
+
+                    {formData.tipo === "FALTA" && formData.numeroDiasFalta > 0 && formData.funcionarioId && (
+                        <div className="p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800/30 rounded-lg">
+                            <p className="text-[10px] uppercase font-black text-amber-600 mb-1">Impacto Estimado (Calculado)</p>
+                            <div className="flex justify-between items-center">
+                                <span className="text-[10px] text-slate-500 font-bold">Valor a Descontar:</span>
+                                <span className="text-sm font-black text-rose-600">
+                                    {(() => {
+                                        const func = funcionarios.find(f => f.id === formData.funcionarioId);
+                                        const salario = func?.contratos?.[0]?.salario_base ? Number(func.contratos[0].salario_base) : 0;
+                                        return formatCurrency((salario / 30) * formData.numeroDiasFalta);
+                                    })()}
+                                </span>
+                            </div>
+                        </div>
+                    )}
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Input

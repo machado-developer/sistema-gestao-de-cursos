@@ -13,7 +13,7 @@ import { Select } from "@/components/ui/Select";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
-import { calcularBrutoPorLiquido } from "@/lib/calculosAngola";
+import { calcularBrutoPorLiquido, processarSalarioMensal } from "@/lib/calculosAngola";
 import {
     User,
     FileText,
@@ -79,6 +79,7 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
 
     // Estados para o cálculo reverso
     const [liquidoDesejado, setLiquidoDesejado] = useState<number>(0);
+    const [faltasSimulacao, setFaltasSimulacao] = useState<number>(0);
     const [isCalculating, setIsCalculating] = useState(false);
     const [resultadoSimulacao, setResultadoSimulacao] = useState<any>(null);
 
@@ -351,11 +352,27 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                     liquidoDesejado,
                     subsidiosTributaveis: subTributaveis,
                     subsidiosIsentos: subIsentos,
-                    outrosDescontos: 0, // No formulário inicial não temos outros descontos
-                    totalAdiantamentos: 0
+                    outrosDescontos: 0,
+                    totalAdiantamentos: 0,
+                    // O motor de cálculo calcula as faltas internamente se passarmos no processarSalarioMensal
+                    // Mas como calcularBrutoPorLiquido é reversivo, vamos garantir que ele considere o impacto das faltas no bruto final
                 });
 
-                setResultadoSimulacao(resultado);
+                // Recalcular o resultado final incluindo as faltas para exibição precisa
+                const finalProcess = processarSalarioMensal({
+                    salarioBase: resultado.brutoCalculado,
+                    subsidiosTributaveis: subTributaveis,
+                    subsidiosIsentos: subIsentos,
+                    faltasNaoJustificadas: faltasSimulacao,
+                    totalAdiantamentos: 0,
+                    outrosDescontos: 0
+                });
+
+                setResultadoSimulacao({
+                    ...resultado,
+                    liquidoObtido: finalProcess.liquido,
+                    totalFaltas: finalProcess.totalFaltas
+                });
                 setValue("salario_base", resultado.brutoCalculado, { shouldDirty: true });
 
                 toast.success("Cálculo Concluído", {
@@ -955,8 +972,19 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                                                     <CurrencyInput
                                                         value={liquidoDesejado}
                                                         onChange={(val) => setLiquidoDesejado(Number(val) || 0)}
-                                                        placeholder="Ex: 500.000,00"
+                                                        placeholder="Líquido Desejado..."
                                                         className="bg-blue-50/30 border-blue-200 dark:bg-blue-900/5 dark:border-blue-800/50"
+                                                    />
+                                                </div>
+                                                <div className="w-full sm:w-32">
+                                                    <Input
+                                                        type="number"
+                                                        value={faltasSimulacao}
+                                                        onChange={(e) => setFaltasSimulacao(Number(e.target.value))}
+                                                        placeholder="Faltas (Dias)"
+                                                        className="bg-blue-50/30 border-blue-200 dark:bg-blue-900/5 dark:border-blue-800/50 h-11"
+                                                        min={0}
+                                                        max={30}
                                                     />
                                                 </div>
                                                 <Button
@@ -992,6 +1020,12 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Líquido Final</p>
                                                     <p className="text-sm font-extrabold text-blue-700 dark:text-blue-400">{formatCurrency(resultadoSimulacao.liquidoObtido)}</p>
                                                 </div>
+                                                {resultadoSimulacao.totalFaltas > 0 && (
+                                                    <div className="space-y-1 col-span-2 sm:col-span-4 border-t border-emerald-100 dark:border-emerald-800/20 pt-2 flex justify-between items-center">
+                                                        <p className="text-[9px] font-black text-rose-500 uppercase tracking-widest">Dedução por Faltas ({faltasSimulacao} Dias)</p>
+                                                        <p className="text-xs font-bold text-rose-600">-{formatCurrency(resultadoSimulacao.totalFaltas)}</p>
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
                                     </div>

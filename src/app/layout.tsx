@@ -73,6 +73,8 @@ export const viewport: Viewport = {
 }
 
 import { Suspense } from 'react'
+import { ConnectivityProvider } from '@/providers/ConnectivityProvider'
+import { SystemStatusBanner } from '@/components/ui/SystemStatusBanner'
 
 export default function RootLayout({
   children,
@@ -85,21 +87,24 @@ export default function RootLayout({
         <NextAuthSessionProvider>
           <LanguageProvider>
             <ThemeProvider>
-              <NextTopLoader
-                color="#2563eb"
-                initialPosition={0.08}
-                crawlSpeed={200}
-                height={3}
-                crawl={true}
-                showSpinner={false}
-                easing="ease"
-                speed={200}
-                shadow="0 0 10px #2563eb,0 0 5px #2563eb"
-              />
-              <Toaster position="top-right" richColors expand={true} closeButton />
-              <Suspense fallback={null}>
-                {children}
-              </Suspense>
+              <ConnectivityProvider>
+                <NextTopLoader
+                  color="#2563eb"
+                  initialPosition={0.08}
+                  crawlSpeed={200}
+                  height={3}
+                  crawl={true}
+                  showSpinner={false}
+                  easing="ease"
+                  speed={200}
+                  shadow="0 0 10px #2563eb,0 0 5px #2563eb"
+                />
+                <SystemStatusBanner />
+                <Toaster position="top-right" richColors expand={true} closeButton />
+                <Suspense fallback={null}>
+                  {children}
+                </Suspense>
+              </ConnectivityProvider>
             </ThemeProvider>
           </LanguageProvider>
         </NextAuthSessionProvider>

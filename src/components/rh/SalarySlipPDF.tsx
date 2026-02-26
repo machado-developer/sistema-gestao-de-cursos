@@ -72,9 +72,24 @@ export const SalarySlipPDF = ({ data }: { data: any }) => (
                     <Text>-{Number(data.irt_devido).toLocaleString()} Kz</Text>
                 </View>
                 <View style={styles.row}>
-                    <Text>Faltas</Text>
+                    <Text>Faltas {data.faltas_count > 0 ? `(${data.faltas_count} dias)` : ""}</Text>
                     <Text>-{Number(data.total_faltas).toLocaleString()} Kz</Text>
                 </View>
+                {data.detalhesAdiantamentos?.map((a: any, idx: number) => (
+                    <View style={styles.row} key={`a-${idx}`}>
+                        <Text>Adiantamento: {a.motivo || 'Mensal'}</Text>
+                        <Text>-{Number(a.valor).toLocaleString()} Kz</Text>
+                    </View>
+                ))}
+                {data.detalhesDescontos?.map((d: any, idx: number) => (
+                    <View style={styles.row} key={`d-${idx}`}>
+                        <Text>
+                            {d.tipo === 'FALTA' ? 'Desc. Faltas' : d.tipo === 'DISCIPLINAR' ? 'Desc. Disciplinar' : 'Outro Desconto'}
+                            {d.numeroDiasFalta > 0 ? ` (${d.numeroDiasFalta} dias)` : ""}
+                        </Text>
+                        <Text>-{Number(d.valor).toLocaleString()} Kz</Text>
+                    </View>
+                ))}
             </View>
 
             <View style={styles.totalRow}>

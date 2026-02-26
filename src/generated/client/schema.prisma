@@ -167,6 +167,7 @@ model User {
   email             String        @unique
   password          String
   role              String        @default("USER")
+  isSystemRoot      Boolean       @default(false)
   language          String        @default("pt") // "pt", "en"
   theme             String        @default("dark") // "dark", "light"
   resetToken        String?       @unique
@@ -183,9 +184,10 @@ model User {
 
   // Novos campos para controle de acesso granular
   profileId       String?
-  profile         Profile?             @relation(fields: [profileId], references: [id])
+  profile         Profile?                     @relation(fields: [profileId], references: [id])
   permissions     UserPermission[]
   itemPermissions UserItemPermission[]
+  statusHistorico FuncionarioStatusHistorico[]
 
   @@map("users")
 }
@@ -450,7 +452,29 @@ model Funcionario {
   updatedAt  DateTime    @updatedAt
   documentos Documento[]
 
+  dataStatusAtual DateTime?
+  statusHistorico FuncionarioStatusHistorico[]
+
   @@map("rh_funcionarios")
+}
+
+model FuncionarioStatusHistorico {
+  id            String      @id @default(uuid())
+  funcionarioId String
+  funcionario   Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+
+  statusAnterior String
+  novoStatus     String
+
+  motivo    String
+  descricao String? @db.Text
+
+  alteradoPorId String?
+  alteradoPor   User?   @relation(fields: [alteradoPorId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@map("rh_funcionario_status_historico")
 }
 
 model Contrato {
@@ -604,19 +628,20 @@ model AdiantamentoSalario {
 }
 
 model Desconto {
-  id             String      @id @default(uuid())
-  funcionarioId  String
-  funcionario    Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
-  valor          Decimal     @db.Decimal(18, 2)
-  data_registro  DateTime    @default(now())
-  tipo           String      @default("OUTRO") // DISCIPLINAR, FALTA, DANO, OUTRO
-  motivo         String?     @db.Text
-  status         String      @default("APROVADO") // PENDENTE, APROVADO, REJEITADO, PROCESSADO
-  mes_referencia Int
-  ano_referencia Int
-  observacao     String?     @db.Text
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  id              String      @id @default(uuid())
+  funcionarioId   String
+  funcionario     Funcionario @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+  valor           Decimal     @db.Decimal(18, 2)
+  data_registro   DateTime    @default(now())
+  tipo            String      @default("OUTRO") // DISCIPLINAR, FALTA, DANO, OUTRO
+  motivo          String?     @db.Text
+  status          String      @default("APROVADO") // PENDENTE, APROVADO, REJEITADO, PROCESSADO
+  mes_referencia  Int
+  ano_referencia  Int
+  numeroDiasFalta Int?
+  observacao      String?     @db.Text
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 
   @@map("rh_descontos")
 }

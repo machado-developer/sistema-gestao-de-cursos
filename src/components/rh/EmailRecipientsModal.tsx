@@ -72,7 +72,7 @@ export function EmailRecipientsModal({ isOpen, onClose, onConfirm, initialRecipi
                                 value={recipient.email}
                                 onChange={(e) => handleEmailChange(recipient.folhaId, e.target.value)}
                                 placeholder="E-mail do colaborador..."
-                                className="w-full pl-8 pr-3 py-2 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded text-[10px] font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full pl-8 pr-3 py-2 bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-600 rounded text-[10px] font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all hover:border-blue-400"
                             />
                         </div>
                     </div>

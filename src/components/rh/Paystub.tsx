@@ -117,7 +117,7 @@ export function Paystub({ data }: PaystubProps) {
                         {Number(total_faltas) > 0 && (
                             <tr>
                                 <td className="py-3 px-4 font-bold uppercase text-rose-600">Faltas Não Justificadas</td>
-                                <td className="py-3 px-4 text-center">---</td>
+                                <td className="py-3 px-4 text-center">{data.faltas_count || 0} D</td>
                                 <td className="py-3 px-4 text-right text-slate-300">---</td>
                                 <td className="py-3 px-4 text-right font-bold text-rose-600">({formatCurrency(Number(total_faltas))})</td>
                             </tr>

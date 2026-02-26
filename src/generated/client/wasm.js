@@ -551,6 +551,7 @@ exports.Prisma.DescontoScalarFieldEnum = {
   status: 'status',
   mes_referencia: 'mes_referencia',
   ano_referencia: 'ano_referencia',
+  numeroDiasFalta: 'numeroDiasFalta',
   observacao: 'observacao',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

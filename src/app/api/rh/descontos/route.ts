@@ -27,19 +27,20 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { funcionarioId, valor, mes_referencia, ano_referencia, tipo, motivo } = body;
+        const { funcionarioId, valor, mes_referencia, ano_referencia, tipo, motivo, numeroDiasFalta } = body;
 
-        if (!funcionarioId || !valor || !mes_referencia || !ano_referencia) {
+        if (!funcionarioId || (!valor && tipo !== "FALTA") || !mes_referencia || !ano_referencia) {
             return NextResponse.json({ error: "Dados incompletos" }, { status: 400 });
         }
 
         const desconto = await RHService.registarDesconto({
             funcionarioId,
-            valor,
+            valor: Number(valor) || 0,
             mes_referencia,
             ano_referencia,
             tipo,
-            motivo
+            motivo,
+            numeroDiasFalta: numeroDiasFalta ? Number(numeroDiasFalta) : undefined
         });
 
         return NextResponse.json(desconto, { status: 201 });

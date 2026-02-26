@@ -515,7 +515,16 @@ export class RHService {
                     }
                 });
 
-                const totalDescontos = descontos.reduce((acc: number, curr: { valor: any; }) => acc + Number(curr.valor), 0);
+                // Somar faltas manuais (em dias) aos das presenças
+                const faltasManuaisDias = descontos
+                    .filter(d => d.tipo === "FALTA")
+                    .reduce((acc, curr) => acc + (curr.numeroDiasFalta || 0), 0);
+
+                const totalFaltasPeriodo = totalFaltas + faltasManuaisDias;
+
+                const totalOutrosDescontos = descontos
+                    .filter(d => d.tipo !== "FALTA")
+                    .reduce((acc: number, curr: { valor: any; }) => acc + Number(curr.valor), 0);
 
                 // Executar cálculo angolano (Lei 12/23)
                 const calc = processarSalarioMensal({
@@ -525,9 +534,9 @@ export class RHService {
                     horasExtrasNormais: totalHENormais,
                     horasExtrasDescanso: totalHEDescanso,
                     horasNoturnas: totalNoturnas,
-                    faltasNaoJustificadas: totalFaltas,
+                    faltasNaoJustificadas: totalFaltasPeriodo,
                     totalAdiantamentos,
-                    outrosDescontos: totalDescontos
+                    outrosDescontos: totalOutrosDescontos
                 });
 
                 // Persistir folha
@@ -545,7 +554,7 @@ export class RHService {
                         total_subsidios_isentos: calc.totalSubsidiosIsentos,
                         total_horas_extras: calc.totalHorasExtras,
                         total_faltas: calc.totalFaltas,
-                        faltas_count: totalFaltas,
+                        faltas_count: totalFaltasPeriodo,
                         base_inss: calc.baseInss,
                         inss_trabalhador: calc.inssTrabalhador,
                         inss_empresa: calc.inssEmpresa,
@@ -553,7 +562,7 @@ export class RHService {
                         irt_devido: calc.irt,
                         liquido_receber: calc.liquido,
                         total_adiantamentos: totalAdiantamentos,
-                        outros_descontos: totalDescontos,
+                        outros_descontos: totalOutrosDescontos,
                         status: "PROCESSADO"
                     },
                     create: {
@@ -565,7 +574,7 @@ export class RHService {
                         total_subsidios_isentos: calc.totalSubsidiosIsentos,
                         total_horas_extras: calc.totalHorasExtras,
                         total_faltas: calc.totalFaltas,
-                        faltas_count: totalFaltas,
+                        faltas_count: totalFaltasPeriodo,
                         base_inss: calc.baseInss,
                         inss_trabalhador: calc.inssTrabalhador,
                         inss_empresa: calc.inssEmpresa,
@@ -573,7 +582,7 @@ export class RHService {
                         irt_devido: calc.irt,
                         liquido_receber: calc.liquido,
                         total_adiantamentos: totalAdiantamentos,
-                        outros_descontos: totalDescontos,
+                        outros_descontos: totalOutrosDescontos,
                         status: "PROCESSADO"
                     }
                 });
@@ -966,11 +975,27 @@ export class RHService {
         ano_referencia: number;
         tipo?: string;
         motivo?: string;
+        numeroDiasFalta?: number;
     }) {
+        let valorFinal = Number(dados.valor);
+
+        // Se for FALTA e tiver dias, calcular automaticamente baseado no salário base atual
+        if (dados.tipo === "FALTA" && dados.numeroDiasFalta) {
+            const funcionario = await prisma.funcionario.findUnique({
+                where: { id: dados.funcionarioId },
+                include: { contratos: { where: { status: "VIGENTE" }, take: 1 } }
+            });
+
+            if (funcionario && funcionario.contratos.length > 0) {
+                const salarioBase = Number(funcionario.contratos[0].salario_base);
+                valorFinal = (salarioBase / 30) * dados.numeroDiasFalta;
+            }
+        }
+
         return await prisma.desconto.create({
             data: {
                 ...dados,
-                valor: Number(dados.valor)
+                valor: valorFinal
             }
         });
     }

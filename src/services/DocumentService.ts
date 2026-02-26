@@ -447,7 +447,8 @@ export class DocumentService {
             if (data.detalhesDescontos && data.detalhesDescontos.length > 0) {
                 data.detalhesDescontos.forEach((d: any) => {
                     const tipoDesc = d.tipo === 'DISCIPLINAR' ? 'Desc. Disciplinar' : d.tipo === 'FALTA' ? 'Desc. Faltas' : d.tipo === 'DANO' ? 'Desc. Danos' : 'Outro Desconto';
-                    tableBody.push([`${tipoDesc}: ${d.motivo || 'Registado'}`, "---", "---", `(${formatCurrency(Number(d.valor))})`]);
+                    const label = d.tipo === 'FALTA' && d.numeroDiasFalta ? `${tipoDesc} (${d.numeroDiasFalta} D)` : tipoDesc;
+                    tableBody.push([`${label}: ${d.motivo || 'Registado'}`, "---", "---", `(${formatCurrency(Number(d.valor))})`]);
                 });
             }
 
@@ -545,7 +546,8 @@ export class DocumentService {
         if (data.detalhesDescontos && data.detalhesDescontos.length > 0) {
             data.detalhesDescontos.forEach((d: any) => {
                 const tipoDesc = d.tipo === 'DISCIPLINAR' ? 'Desc. Disciplinar' : d.tipo === 'FALTA' ? 'Desc. Faltas' : d.tipo === 'DANO' ? 'Desc. Danos' : 'Outro Desconto';
-                tableBody.push([`${tipoDesc}: ${d.motivo || 'Registado'}`, "---", "---", `(${formatCurrency(Number(d.valor))})`]);
+                const label = d.tipo === 'FALTA' && d.numeroDiasFalta ? `${tipoDesc} (${d.numeroDiasFalta} D)` : tipoDesc;
+                tableBody.push([`${label}: ${d.motivo || 'Registado'}`, "---", "---", `(${formatCurrency(Number(d.valor))})`]);
             });
         }
 
@@ -658,7 +660,8 @@ export class DocumentService {
         if (data.detalhesDescontos && data.detalhesDescontos.length > 0) {
             data.detalhesDescontos.forEach((d: any) => {
                 const tipoDesc = d.tipo === 'DISCIPLINAR' ? 'Desc. Disciplinar' : d.tipo === 'FALTA' ? 'Desc. Faltas' : d.tipo === 'DANO' ? 'Desc. Danos' : 'Outro Desconto';
-                addDataRow(`${tipoDesc}: ${d.motivo || 'Registado'}`, "---", 0, Number(d.valor), 'FFE11D48');
+                const label = d.tipo === 'FALTA' && d.numeroDiasFalta ? `${tipoDesc} (${d.numeroDiasFalta} D)` : tipoDesc;
+                addDataRow(`${label}: ${d.motivo || 'Registado'}`, "---", 0, Number(d.valor), 'FFE11D48');
             });
         }
 
