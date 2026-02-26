@@ -176,7 +176,7 @@ export class RHService {
             dias_trabalho
         } = dados;
 
-        return await prisma.$transaction(async (tx: { funcionario: { update: (arg0: { where: { id: string; }; data: { nome: any; bi_documento: any; email: any; telefone: any; nif: any; iban: any; numero_inss: any; genero: any; data_nascimento: Date | null; cargo: { connect: { id: any; }; disconnect?: undefined; } | { disconnect: boolean; connect?: undefined; }; departamento: { connect: { id: any; }; disconnect?: undefined; } | { disconnect: boolean; connect?: undefined; }; data_admissao: Date; hora_entrada: any; hora_saida: any; dias_trabalho: any; }; }) => any; }; contrato: { findFirst: (arg0: { where: { funcionarioId: string; status: string; }; }) => any; update: (arg0: { where: { id: any; }; data: { tipo: any; data_fim: Date | null; renovacao_automatica: boolean; salario_base: number; subsidio_alimentacao: number; subsidio_transporte: number; subsidio_residencia: number; outros_subsidios: number; }; }) => any; create: (arg0: { data: { funcionarioId: string; tipo: any; data_inicio: Date; data_fim: Date | null; renovacao_automatica: boolean; status: string; salario_base: number; subsidio_alimentacao: number; subsidio_transporte: number; subsidio_residencia: number; outros_subsidios: number; }; }) => any; }; }) => {
+        return await prisma.$transaction(async (tx: any) => {
             const funcionario = await tx.funcionario.update({
                 where: { id },
                 data: {
