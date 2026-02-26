@@ -200,7 +200,8 @@ export class RHService {
 
             // Atualizar contrato vigente ou criar um novo se não existir
             const contratoVigente = await tx.contrato.findFirst({
-                where: { funcionarioId: id, status: "VIGENTE" }
+                where: { funcionarioId: id, status: "VIGENTE" },
+                orderBy: { data_inicio: "desc" }
             });
 
             if (contratoVigente) {
@@ -308,7 +309,8 @@ export class RHService {
 
         const totalFaltas = presencas.length;
         const contrato = await prisma.contrato.findFirst({
-            where: { funcionarioId, status: "VIGENTE" }
+            where: { funcionarioId, status: "VIGENTE" },
+            orderBy: { data_inicio: "desc" }
         });
 
         // Procurar desconto automático existente
@@ -444,7 +446,11 @@ export class RHService {
             const funcionarios = await tx.funcionario.findMany({
                 where: { status: "ATIVO" },
                 include: {
-                    contratos: { where: { status: "VIGENTE" }, take: 1 },
+                    contratos: {
+                        where: { status: "VIGENTE" },
+                        orderBy: { data_inicio: "desc" },
+                        take: 1
+                    },
                     presencas: {
                         where: {
                             data: {
@@ -511,7 +517,11 @@ export class RHService {
                         mes_referencia: mes,
                         ano_referencia: ano,
                         status: { in: ["APROVADO", "PROCESSADO"] },
-                        observacao: { not: "GERADO_AUTOMATICAMENTE" }
+                        OR: [
+                            { observacao: null },
+                            { observacao: "" },
+                            { observacao: { not: "GERADO_AUTOMATICAMENTE" } }
+                        ]
                     }
                 });
 
@@ -640,7 +650,11 @@ export class RHService {
                     mes_referencia: folha.mes,
                     ano_referencia: folha.ano,
                     status: "PROCESSADO",
-                    observacao: { not: "GERADO_AUTOMATICAMENTE" }
+                    OR: [
+                        { observacao: null },
+                        { observacao: "" },
+                        { observacao: { not: "GERADO_AUTOMATICAMENTE" } }
+                    ]
                 }
             })
         ]);
@@ -983,7 +997,13 @@ export class RHService {
         if (dados.tipo === "FALTA" && dados.numeroDiasFalta) {
             const funcionario = await prisma.funcionario.findUnique({
                 where: { id: dados.funcionarioId },
-                include: { contratos: { where: { status: "VIGENTE" }, take: 1 } }
+                include: {
+                    contratos: {
+                        where: { status: "VIGENTE" },
+                        orderBy: { data_inicio: "desc" },
+                        take: 1
+                    }
+                }
             });
 
             if (funcionario && funcionario.contratos.length > 0) {
