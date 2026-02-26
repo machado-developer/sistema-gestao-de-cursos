@@ -5,9 +5,10 @@ import { authOptions } from "@/lib/auth";
 
 export async function POST(
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const session = await getServerSession(authOptions);
         const { ajustes } = await req.json();
 
@@ -16,7 +17,7 @@ export async function POST(
         }
 
         const result = await RHService.ajustarFolhaPagamento(
-            params.id,
+            id,
             ajustes,
             (session?.user as any)?.id
         );
