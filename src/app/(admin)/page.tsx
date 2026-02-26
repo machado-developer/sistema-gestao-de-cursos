@@ -39,8 +39,8 @@ export default async function Home() {
     if (hasPermission(permissions, 'sistema', 'read')) redirect('/configuracoes');
   }
 
-  // 3. Se for ADMIN, continua para o dashboard global
-  if (role === 'ADMIN') {
+  // 3. Se for ADMIN ou SUPER_ADMIN_ROOT, acede ao dashboard global
+  if (role === 'ADMIN' || role === 'SUPER_ADMIN_ROOT') {
     const data = await DashboardService.getGlobalStats();
     return <DashboardClient data={serializePrisma(data)} />
   }

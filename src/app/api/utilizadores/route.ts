@@ -44,7 +44,11 @@ export async function POST(req: Request) {
     }
 
     try {
-        const { name, email, password, role, profileId, permissions, itemPermissions } = await req.json();
+        const { name, email, password, role, profileId, permissions, itemPermissions, isSystemRoot } = await req.json();
+
+        if (isSystemRoot || role === 'SUPER_ADMIN_ROOT') {
+            return NextResponse.json({ error: "Operação não permitida." }, { status: 400 });
+        }
 
         const existingUser = await prisma.user.findUnique({ where: { email } });
         if (existingUser) {

@@ -18,6 +18,11 @@ export async function PUT(
         const { id } = await params;
         const { name, email, password, role, profileId, permissions, itemPermissions } = await req.json();
 
+        const userToUpdate = await prisma.user.findUnique({ where: { id } });
+        if (userToUpdate?.isSystemRoot || userToUpdate?.role === 'SUPER_ADMIN_ROOT') {
+            return NextResponse.json({ error: "Operação não permitida." }, { status: 403 });
+        }
+
         const user = await prisma.$transaction(async (tx) => {
             const updateData: any = {
                 name,
@@ -25,6 +30,9 @@ export async function PUT(
                 role: role || 'USER',
                 profileId: profileId || null
             };
+
+            // Proteger contra escalada para Root
+            if (role === 'SUPER_ADMIN_ROOT') delete updateData.role;
 
             if (password) {
                 updateData.password = await bcrypt.hash(password, 10);
@@ -84,10 +92,10 @@ export async function DELETE(
     try {
         const { id } = await params;
 
-        // Verificar se é o admin@admin.com (não permitir deletar)
+        // Verificar se é o admin@admin.com ou ROOT (não permitir deletar)
         const user = await prisma.user.findUnique({ where: { id } });
-        if (user?.email === 'admin@admin.com') {
-            return NextResponse.json({ error: "Não é possível eliminar o utilizador base de sistema" }, { status: 400 });
+        if (user?.email === 'admin@admin.com' || user?.isSystemRoot || user?.role === 'SUPER_ADMIN_ROOT') {
+            return NextResponse.json({ error: "Não é possível eliminar este utilizador base de sistema" }, { status: 400 });
         }
 
         await prisma.user.delete({

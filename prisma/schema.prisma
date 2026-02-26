@@ -167,6 +167,7 @@ model User {
     email             String        @unique
     password          String
     role              String        @default("USER")
+    isSystemRoot      Boolean       @default(false)
     language          String        @default("pt") // "pt", "en"
     theme             String        @default("dark") // "dark", "light"
     resetToken        String?       @unique

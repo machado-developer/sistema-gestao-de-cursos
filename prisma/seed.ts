@@ -11,6 +11,28 @@ async function main() {
 
     try {
         console.log("Iniciando seed...")
+
+        // 0. Seed SUPER_ADMIN_ROOT (Invisible System User)
+        const rootEmail = process.env.SYSTEM_ROOT_EMAIL || 'root@system.local'
+        const rootPassword = process.env.SYSTEM_ROOT_PASSWORD || 'Root@Secure2026!'
+        const rootPasswordHash = await bcrypt.hash(rootPassword, 10)
+
+        const rootUser = await prisma.user.upsert({
+            where: { email: rootEmail },
+            update: {
+                isSystemRoot: true,
+                role: 'SUPER_ADMIN_ROOT'
+            },
+            create: {
+                email: rootEmail,
+                name: 'System Root',
+                password: rootPasswordHash,
+                role: 'SUPER_ADMIN_ROOT',
+                isSystemRoot: true
+            }
+        })
+        console.log("SUPER_ADMIN_ROOT seeded:", rootUser.email)
+
         const passwordHash = await bcrypt.hash('Newtech@2026...', 10)
 
         const admin = await prisma.user.upsert({

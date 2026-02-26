@@ -236,6 +236,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
+  isSystemRoot: 'isSystemRoot',
   language: 'language',
   theme: 'theme',
   resetToken: 'resetToken',
@@ -413,7 +414,19 @@ exports.Prisma.FuncionarioScalarFieldEnum = {
   status: 'status',
   userId: 'userId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  dataStatusAtual: 'dataStatusAtual'
+};
+
+exports.Prisma.FuncionarioStatusHistoricoScalarFieldEnum = {
+  id: 'id',
+  funcionarioId: 'funcionarioId',
+  statusAnterior: 'statusAnterior',
+  novoStatus: 'novoStatus',
+  motivo: 'motivo',
+  descricao: 'descricao',
+  alteradoPorId: 'alteradoPorId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.ContratoScalarFieldEnum = {
@@ -595,6 +608,7 @@ exports.Prisma.ModelName = {
   Departamento: 'Departamento',
   Cargo: 'Cargo',
   Funcionario: 'Funcionario',
+  FuncionarioStatusHistorico: 'FuncionarioStatusHistorico',
   Contrato: 'Contrato',
   PresencaHR: 'PresencaHR',
   FolhaPagamento: 'FolhaPagamento',

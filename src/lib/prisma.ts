@@ -6,6 +6,15 @@ export const PRISMA_VERSION_ID = 'final_v4_clean';
 
 export const prisma = prismaBase.$extends({
     query: {
+        user: {
+            async $allOperations({ operation, args, query }) {
+                // Invisibilidade Global: Filtrar usuários root de todas as consultas padrão
+                if (['findMany', 'findFirst', 'findUnique', 'count', 'aggregate', 'groupBy'].includes(operation)) {
+                    (args as any).where = { ...(args as any).where, isSystemRoot: false }
+                }
+                return query(args)
+            },
+        },
         $allModels: {
             async $allOperations({ model, operation, args, query }) {
                 const mutatedOps = [
@@ -16,12 +25,16 @@ export const prisma = prismaBase.$extends({
 
                 const result = await query(args)
 
+                // Não registrar logs para o SUPER_ADMIN_ROOT
                 if (mutatedOps.includes(operation) && model !== 'AuditLog') {
                     (async () => {
                         try {
                             const { getServerSession } = await import('next-auth')
                             const { authOptions } = await import('@/lib/auth')
                             const session: any = await getServerSession(authOptions).catch(() => null)
+
+                            // Se for root, no gera log
+                            if (session?.user?.isRoot) return;
 
                             const detailsObj = JSON.parse(JSON.stringify({ args }))
                             const sensitiveFields = ['password', 'senha', 'token', 'secret']

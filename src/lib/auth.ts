@@ -105,7 +105,7 @@ export const authOptions: NextAuthOptions = {
                     })
 
                     // 3. Admin sempre tem acesso total
-                    if (user.role === 'ADMIN') {
+                    if (user.role === 'ADMIN' || user.role === 'SUPER_ADMIN_ROOT') {
                         permsMap.set('*', { key: '*', canRead: true, canWrite: true })
                         itemPermsMap.set('*', { key: '*', canRead: true, canWrite: true })
                     }
@@ -115,6 +115,7 @@ export const authOptions: NextAuthOptions = {
                         name: user.name,
                         email: user.email,
                         role: user.role,
+                        isRoot: user.isSystemRoot || user.role === 'SUPER_ADMIN_ROOT',
                         permissions: Array.from(permsMap.values()),
                         itemPermissions: Array.from(itemPermsMap.values()),
                         image: user.funcionario?.documentos[0]?.url || null
@@ -133,6 +134,7 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user }: any) {
             if (user) {
                 token.role = user.role
+                token.isRoot = user.isRoot
                 token.permissions = user.permissions
                 token.itemPermissions = user.itemPermissions
                 token.image = user.image
@@ -142,6 +144,7 @@ export const authOptions: NextAuthOptions = {
         async session({ session, token }: any) {
             if (session.user) {
                 session.user.role = token.role
+                session.user.isRoot = token.isRoot
                 session.user.permissions = token.permissions
                 session.user.itemPermissions = token.itemPermissions
                 session.user.image = token.image

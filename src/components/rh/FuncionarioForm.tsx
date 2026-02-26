@@ -12,7 +12,8 @@ import { Card } from "@/components/ui/Card";
 import { Select } from "@/components/ui/Select";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { calcularBrutoPorLiquido } from "@/lib/calculosAngola";
 import {
     User,
     FileText,
@@ -75,6 +76,11 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
     const [activeTab, setActiveTab] = useState<"dados" | "vencimento" | "historico" | "pagamentos" | "documentos">("dados")
     const [employeeDocs, setEmployeeDocs] = useState<any[]>(initialData?.documentos || [])
     const [stagedFiles, setStagedFiles] = useState<{ file: File, tipo: string, tempId: string }[]>([])
+
+    // Estados para o cálculo reverso
+    const [liquidoDesejado, setLiquidoDesejado] = useState<number>(0);
+    const [isCalculating, setIsCalculating] = useState(false);
+    const [resultadoSimulacao, setResultadoSimulacao] = useState<any>(null);
 
     // Converter dados do Prisma para o formato do formulário
     const getDefaultValues = (): FuncionarioSchema => {
@@ -325,6 +331,47 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
         }
     };
 
+    const handleCalcularBruto = useCallback(() => {
+        if (!liquidoDesejado || liquidoDesejado <= 0) {
+            toast.error("Valor Inválido", {
+                description: "Por favor, insira um salário líquido desejado maior que zero."
+            });
+            return;
+        }
+
+        setIsCalculating(true);
+
+        // Pequeno delay para mostrar o loading breve conforme solicitado (UX)
+        setTimeout(() => {
+            try {
+                const subTributaveis = Number(watch("subsidio_alimentacao") || 0) + Number(watch("subsidio_transporte") || 0);
+                const subIsentos = Number(watch("subsidio_residencia") || 0) + Number(watch("outros_subsidios") || 0);
+
+                const resultado = calcularBrutoPorLiquido({
+                    liquidoDesejado,
+                    subsidiosTributaveis: subTributaveis,
+                    subsidiosIsentos: subIsentos,
+                    outrosDescontos: 0, // No formulário inicial não temos outros descontos
+                    totalAdiantamentos: 0
+                });
+
+                setResultadoSimulacao(resultado);
+                setValue("salario_base", resultado.brutoCalculado, { shouldDirty: true });
+
+                toast.success("Cálculo Concluído", {
+                    description: `O salário base foi ajustado para atingir o líquido de ${formatCurrency(liquidoDesejado)} Kz.`
+                });
+            } catch (error) {
+                console.error("Erro no cálculo reverso:", error);
+                toast.error("Erro no Cálculo", {
+                    description: "Ocorreu um erro ao tentar simular o salário bruto."
+                });
+            } finally {
+                setIsCalculating(false);
+            }
+        }, 600);
+    }, [liquidoDesejado, watch, setValue]);
+
     // Função para formatar valor monetário
     const formatCurrency = (value: number | undefined) => {
         if (value === undefined || isNaN(value)) return "0,00";
@@ -424,8 +471,8 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                         type="submit"
                         disabled={isSubmitting || isLoading}
                         className={`h-11 px-8 rounded-xl text-sm font-bold gap-2 shadow-lg transition-all active:scale-95 ${isSubmitting
-                                ? 'bg-slate-100 text-slate-400'
-                                : 'bg-blue-600 text-white shadow-blue-500/20 hover:bg-blue-700'
+                            ? 'bg-slate-100 text-slate-400'
+                            : 'bg-blue-600 text-white shadow-blue-500/20 hover:bg-blue-700'
                             }`}
                     >
                         {isSubmitting ? (
@@ -895,6 +942,58 @@ export default function FuncionarioForm({ initialData }: { initialData?: Funcion
                                     <div className="flex items-center gap-2 border-b border-[var(--border-color)] dark:border-zinc-800 pb-2">
                                         <Wallet size={16} className="text-[var(--success)]" />
                                         <h2 className="text-sm font-semibold text-slate-500">Grelha Salarial e Compensatória</h2>
+                                    </div>
+
+                                    <div className="flex flex-col gap-6 pb-6 border-b border-slate-200 dark:border-zinc-800">
+                                        <div className="w-full max-w-xl space-y-2">
+                                            <label className="text-sm font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2">
+                                                <Wallet size={14} />
+                                                Salário Líquido Desejado (Simulação)
+                                            </label>
+                                            <div className="flex flex-col sm:flex-row gap-2">
+                                                <div className="flex-1">
+                                                    <CurrencyInput
+                                                        value={liquidoDesejado}
+                                                        onChange={(val) => setLiquidoDesejado(Number(val) || 0)}
+                                                        placeholder="Ex: 500.000,00"
+                                                        className="bg-blue-50/30 border-blue-200 dark:bg-blue-900/5 dark:border-blue-800/50"
+                                                    />
+                                                </div>
+                                                <Button
+                                                    type="button"
+                                                    onClick={handleCalcularBruto}
+                                                    disabled={isCalculating || !liquidoDesejado}
+                                                    className="bg-blue-600 hover:bg-blue-700 text-white gap-2 h-11 w-full sm:w-auto whitespace-nowrap"
+                                                >
+                                                    {isCalculating ? <Loader2 size={16} className="animate-spin" /> : <Clock size={16} />}
+                                                    <span>Calcular Bruto</span>
+                                                </Button>
+                                            </div>
+                                            <p className="text-[10px] text-slate-500 font-medium italic">
+                                                O sistema calculará o bruto necessário para atingir este líquido após impostos.
+                                            </p>
+                                        </div>
+
+                                        {resultadoSimulacao && (
+                                            <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800/30 rounded-xl animate-in fade-in slide-in-from-top-2 duration-500">
+                                                <div className="space-y-1">
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Bruto Sugerido</p>
+                                                    <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">{formatCurrency(resultadoSimulacao.brutoCalculado)}</p>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">INSS (3%)</p>
+                                                    <p className="text-sm font-bold text-rose-600">{formatCurrency(resultadoSimulacao.inssTrabalhador)}</p>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">IRT</p>
+                                                    <p className="text-sm font-bold text-rose-600">{formatCurrency(resultadoSimulacao.irt)}</p>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Líquido Final</p>
+                                                    <p className="text-sm font-extrabold text-blue-700 dark:text-blue-400">{formatCurrency(resultadoSimulacao.liquidoObtido)}</p>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">

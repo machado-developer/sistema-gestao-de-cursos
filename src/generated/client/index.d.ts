@@ -139,6 +139,11 @@ export type Cargo = $Result.DefaultSelection<Prisma.$CargoPayload>
  */
 export type Funcionario = $Result.DefaultSelection<Prisma.$FuncionarioPayload>
 /**
+ * Model FuncionarioStatusHistorico
+ * 
+ */
+export type FuncionarioStatusHistorico = $Result.DefaultSelection<Prisma.$FuncionarioStatusHistoricoPayload>
+/**
  * Model Contrato
  * 
  */
@@ -556,6 +561,16 @@ export class PrismaClient<
     * ```
     */
   get funcionario(): Prisma.FuncionarioDelegate<ExtArgs>;
+
+  /**
+   * `prisma.funcionarioStatusHistorico`: Exposes CRUD operations for the **FuncionarioStatusHistorico** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FuncionarioStatusHistoricos
+    * const funcionarioStatusHistoricos = await prisma.funcionarioStatusHistorico.findMany()
+    * ```
+    */
+  get funcionarioStatusHistorico(): Prisma.FuncionarioStatusHistoricoDelegate<ExtArgs>;
 
   /**
    * `prisma.contrato`: Exposes CRUD operations for the **Contrato** model.
@@ -1112,6 +1127,7 @@ export namespace Prisma {
     Departamento: 'Departamento',
     Cargo: 'Cargo',
     Funcionario: 'Funcionario',
+    FuncionarioStatusHistorico: 'FuncionarioStatusHistorico',
     Contrato: 'Contrato',
     PresencaHR: 'PresencaHR',
     FolhaPagamento: 'FolhaPagamento',
@@ -1136,7 +1152,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "aluno" | "empresaCliente" | "documento" | "curso" | "instrutor" | "turma" | "matricula" | "pagamento" | "user" | "profile" | "module" | "profilePermission" | "userPermission" | "moduleItem" | "profileItemPermission" | "userItemPermission" | "auditLog" | "certificateTemplate" | "certificate" | "aula" | "presenca" | "avaliacao" | "departamento" | "cargo" | "funcionario" | "contrato" | "presencaHR" | "folhaPagamento" | "feriasSolicitacao" | "configRH" | "empresa" | "adiantamentoSalario" | "desconto" | "emailJob"
+      modelProps: "aluno" | "empresaCliente" | "documento" | "curso" | "instrutor" | "turma" | "matricula" | "pagamento" | "user" | "profile" | "module" | "profilePermission" | "userPermission" | "moduleItem" | "profileItemPermission" | "userItemPermission" | "auditLog" | "certificateTemplate" | "certificate" | "aula" | "presenca" | "avaliacao" | "departamento" | "cargo" | "funcionario" | "funcionarioStatusHistorico" | "contrato" | "presencaHR" | "folhaPagamento" | "feriasSolicitacao" | "configRH" | "empresa" | "adiantamentoSalario" | "desconto" | "emailJob"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2790,6 +2806,72 @@ export namespace Prisma {
           }
         }
       }
+      FuncionarioStatusHistorico: {
+        payload: Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>
+        fields: Prisma.FuncionarioStatusHistoricoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FuncionarioStatusHistoricoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FuncionarioStatusHistoricoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FuncionarioStatusHistoricoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FuncionarioStatusHistoricoPayload>
+          }
+          findFirst: {
+            args: Prisma.FuncionarioStatusHistoricoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FuncionarioStatusHistoricoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FuncionarioStatusHistoricoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FuncionarioStatusHistoricoPayload>
+          }
+          findMany: {
+            args: Prisma.FuncionarioStatusHistoricoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FuncionarioStatusHistoricoPayload>[]
+          }
+          create: {
+            args: Prisma.FuncionarioStatusHistoricoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FuncionarioStatusHistoricoPayload>
+          }
+          createMany: {
+            args: Prisma.FuncionarioStatusHistoricoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.FuncionarioStatusHistoricoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FuncionarioStatusHistoricoPayload>
+          }
+          update: {
+            args: Prisma.FuncionarioStatusHistoricoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FuncionarioStatusHistoricoPayload>
+          }
+          deleteMany: {
+            args: Prisma.FuncionarioStatusHistoricoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FuncionarioStatusHistoricoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FuncionarioStatusHistoricoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FuncionarioStatusHistoricoPayload>
+          }
+          aggregate: {
+            args: Prisma.FuncionarioStatusHistoricoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFuncionarioStatusHistorico>
+          }
+          groupBy: {
+            args: Prisma.FuncionarioStatusHistoricoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FuncionarioStatusHistoricoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FuncionarioStatusHistoricoCountArgs<ExtArgs>
+            result: $Utils.Optional<FuncionarioStatusHistoricoCountAggregateOutputType> | number
+          }
+        }
+      }
       Contrato: {
         payload: Prisma.$ContratoPayload<ExtArgs>
         fields: Prisma.ContratoFieldRefs
@@ -3793,6 +3875,7 @@ export namespace Prisma {
     cursos: number
     permissions: number
     itemPermissions: number
+    statusHistorico: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3804,6 +3887,7 @@ export namespace Prisma {
     cursos?: boolean | UserCountOutputTypeCountCursosArgs
     permissions?: boolean | UserCountOutputTypeCountPermissionsArgs
     itemPermissions?: boolean | UserCountOutputTypeCountItemPermissionsArgs
+    statusHistorico?: boolean | UserCountOutputTypeCountStatusHistoricoArgs
   }
 
   // Custom InputTypes
@@ -3871,6 +3955,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountItemPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserItemPermissionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountStatusHistoricoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FuncionarioStatusHistoricoWhereInput
   }
 
 
@@ -4166,6 +4257,7 @@ export namespace Prisma {
     adiantamentos: number
     descontos: number
     documentos: number
+    statusHistorico: number
   }
 
   export type FuncionarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4176,6 +4268,7 @@ export namespace Prisma {
     adiantamentos?: boolean | FuncionarioCountOutputTypeCountAdiantamentosArgs
     descontos?: boolean | FuncionarioCountOutputTypeCountDescontosArgs
     documentos?: boolean | FuncionarioCountOutputTypeCountDocumentosArgs
+    statusHistorico?: boolean | FuncionarioCountOutputTypeCountStatusHistoricoArgs
   }
 
   // Custom InputTypes
@@ -4236,6 +4329,13 @@ export namespace Prisma {
    */
   export type FuncionarioCountOutputTypeCountDocumentosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DocumentoWhereInput
+  }
+
+  /**
+   * FuncionarioCountOutputType without action
+   */
+  export type FuncionarioCountOutputTypeCountStatusHistoricoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FuncionarioStatusHistoricoWhereInput
   }
 
 
@@ -12447,6 +12547,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     role: string | null
+    isSystemRoot: boolean | null
     language: string | null
     theme: string | null
     resetToken: string | null
@@ -12462,6 +12563,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     role: string | null
+    isSystemRoot: boolean | null
     language: string | null
     theme: string | null
     resetToken: string | null
@@ -12477,6 +12579,7 @@ export namespace Prisma {
     email: number
     password: number
     role: number
+    isSystemRoot: number
     language: number
     theme: number
     resetToken: number
@@ -12494,6 +12597,7 @@ export namespace Prisma {
     email?: true
     password?: true
     role?: true
+    isSystemRoot?: true
     language?: true
     theme?: true
     resetToken?: true
@@ -12509,6 +12613,7 @@ export namespace Prisma {
     email?: true
     password?: true
     role?: true
+    isSystemRoot?: true
     language?: true
     theme?: true
     resetToken?: true
@@ -12524,6 +12629,7 @@ export namespace Prisma {
     email?: true
     password?: true
     role?: true
+    isSystemRoot?: true
     language?: true
     theme?: true
     resetToken?: true
@@ -12612,6 +12718,7 @@ export namespace Prisma {
     email: string
     password: string
     role: string
+    isSystemRoot: boolean
     language: string
     theme: string
     resetToken: string | null
@@ -12644,6 +12751,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     role?: boolean
+    isSystemRoot?: boolean
     language?: boolean
     theme?: boolean
     resetToken?: boolean
@@ -12661,6 +12769,7 @@ export namespace Prisma {
     profile?: boolean | User$profileArgs<ExtArgs>
     permissions?: boolean | User$permissionsArgs<ExtArgs>
     itemPermissions?: boolean | User$itemPermissionsArgs<ExtArgs>
+    statusHistorico?: boolean | User$statusHistoricoArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -12671,6 +12780,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     role?: boolean
+    isSystemRoot?: boolean
     language?: boolean
     theme?: boolean
     resetToken?: boolean
@@ -12691,6 +12801,7 @@ export namespace Prisma {
     profile?: boolean | User$profileArgs<ExtArgs>
     permissions?: boolean | User$permissionsArgs<ExtArgs>
     itemPermissions?: boolean | User$itemPermissionsArgs<ExtArgs>
+    statusHistorico?: boolean | User$statusHistoricoArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -12707,6 +12818,7 @@ export namespace Prisma {
       profile: Prisma.$ProfilePayload<ExtArgs> | null
       permissions: Prisma.$UserPermissionPayload<ExtArgs>[]
       itemPermissions: Prisma.$UserItemPermissionPayload<ExtArgs>[]
+      statusHistorico: Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12714,6 +12826,7 @@ export namespace Prisma {
       email: string
       password: string
       role: string
+      isSystemRoot: boolean
       language: string
       theme: string
       resetToken: string | null
@@ -13071,6 +13184,7 @@ export namespace Prisma {
     profile<T extends User$profileArgs<ExtArgs> = {}>(args?: Subset<T, User$profileArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     permissions<T extends User$permissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "findMany"> | Null>
     itemPermissions<T extends User$itemPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$itemPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserItemPermissionPayload<ExtArgs>, T, "findMany"> | Null>
+    statusHistorico<T extends User$statusHistoricoArgs<ExtArgs> = {}>(args?: Subset<T, User$statusHistoricoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13105,6 +13219,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'String'>
+    readonly isSystemRoot: FieldRef<"User", 'Boolean'>
     readonly language: FieldRef<"User", 'String'>
     readonly theme: FieldRef<"User", 'String'>
     readonly resetToken: FieldRef<"User", 'String'>
@@ -13598,6 +13713,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserItemPermissionScalarFieldEnum | UserItemPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * User.statusHistorico
+   */
+  export type User$statusHistoricoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
+    where?: FuncionarioStatusHistoricoWhereInput
+    orderBy?: FuncionarioStatusHistoricoOrderByWithRelationInput | FuncionarioStatusHistoricoOrderByWithRelationInput[]
+    cursor?: FuncionarioStatusHistoricoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FuncionarioStatusHistoricoScalarFieldEnum | FuncionarioStatusHistoricoScalarFieldEnum[]
   }
 
   /**
@@ -27590,6 +27725,7 @@ export namespace Prisma {
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    dataStatusAtual: Date | null
   }
 
   export type FuncionarioMaxAggregateOutputType = {
@@ -27613,6 +27749,7 @@ export namespace Prisma {
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    dataStatusAtual: Date | null
   }
 
   export type FuncionarioCountAggregateOutputType = {
@@ -27636,6 +27773,7 @@ export namespace Prisma {
     userId: number
     createdAt: number
     updatedAt: number
+    dataStatusAtual: number
     _all: number
   }
 
@@ -27661,6 +27799,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     updatedAt?: true
+    dataStatusAtual?: true
   }
 
   export type FuncionarioMaxAggregateInputType = {
@@ -27684,6 +27823,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     updatedAt?: true
+    dataStatusAtual?: true
   }
 
   export type FuncionarioCountAggregateInputType = {
@@ -27707,6 +27847,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     updatedAt?: true
+    dataStatusAtual?: true
     _all?: true
   }
 
@@ -27803,6 +27944,7 @@ export namespace Prisma {
     userId: string | null
     createdAt: Date
     updatedAt: Date
+    dataStatusAtual: Date | null
     _count: FuncionarioCountAggregateOutputType | null
     _min: FuncionarioMinAggregateOutputType | null
     _max: FuncionarioMaxAggregateOutputType | null
@@ -27843,6 +27985,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    dataStatusAtual?: boolean
     cargo?: boolean | Funcionario$cargoArgs<ExtArgs>
     departamento?: boolean | Funcionario$departamentoArgs<ExtArgs>
     user?: boolean | Funcionario$userArgs<ExtArgs>
@@ -27853,6 +27996,7 @@ export namespace Prisma {
     adiantamentos?: boolean | Funcionario$adiantamentosArgs<ExtArgs>
     descontos?: boolean | Funcionario$descontosArgs<ExtArgs>
     documentos?: boolean | Funcionario$documentosArgs<ExtArgs>
+    statusHistorico?: boolean | Funcionario$statusHistoricoArgs<ExtArgs>
     _count?: boolean | FuncionarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["funcionario"]>
 
@@ -27878,6 +28022,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    dataStatusAtual?: boolean
   }
 
   export type FuncionarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -27891,6 +28036,7 @@ export namespace Prisma {
     adiantamentos?: boolean | Funcionario$adiantamentosArgs<ExtArgs>
     descontos?: boolean | Funcionario$descontosArgs<ExtArgs>
     documentos?: boolean | Funcionario$documentosArgs<ExtArgs>
+    statusHistorico?: boolean | Funcionario$statusHistoricoArgs<ExtArgs>
     _count?: boolean | FuncionarioCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -27907,6 +28053,7 @@ export namespace Prisma {
       adiantamentos: Prisma.$AdiantamentoSalarioPayload<ExtArgs>[]
       descontos: Prisma.$DescontoPayload<ExtArgs>[]
       documentos: Prisma.$DocumentoPayload<ExtArgs>[]
+      statusHistorico: Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -27929,6 +28076,7 @@ export namespace Prisma {
       userId: string | null
       createdAt: Date
       updatedAt: Date
+      dataStatusAtual: Date | null
     }, ExtArgs["result"]["funcionario"]>
     composites: {}
   }
@@ -28279,6 +28427,7 @@ export namespace Prisma {
     adiantamentos<T extends Funcionario$adiantamentosArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$adiantamentosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdiantamentoSalarioPayload<ExtArgs>, T, "findMany"> | Null>
     descontos<T extends Funcionario$descontosArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$descontosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DescontoPayload<ExtArgs>, T, "findMany"> | Null>
     documentos<T extends Funcionario$documentosArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$documentosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentoPayload<ExtArgs>, T, "findMany"> | Null>
+    statusHistorico<T extends Funcionario$statusHistoricoArgs<ExtArgs> = {}>(args?: Subset<T, Funcionario$statusHistoricoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -28328,6 +28477,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"Funcionario", 'String'>
     readonly createdAt: FieldRef<"Funcionario", 'DateTime'>
     readonly updatedAt: FieldRef<"Funcionario", 'DateTime'>
+    readonly dataStatusAtual: FieldRef<"Funcionario", 'DateTime'>
   }
     
 
@@ -28812,6 +28962,26 @@ export namespace Prisma {
   }
 
   /**
+   * Funcionario.statusHistorico
+   */
+  export type Funcionario$statusHistoricoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
+    where?: FuncionarioStatusHistoricoWhereInput
+    orderBy?: FuncionarioStatusHistoricoOrderByWithRelationInput | FuncionarioStatusHistoricoOrderByWithRelationInput[]
+    cursor?: FuncionarioStatusHistoricoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FuncionarioStatusHistoricoScalarFieldEnum | FuncionarioStatusHistoricoScalarFieldEnum[]
+  }
+
+  /**
    * Funcionario without action
    */
   export type FuncionarioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -28823,6 +28993,937 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: FuncionarioInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FuncionarioStatusHistorico
+   */
+
+  export type AggregateFuncionarioStatusHistorico = {
+    _count: FuncionarioStatusHistoricoCountAggregateOutputType | null
+    _min: FuncionarioStatusHistoricoMinAggregateOutputType | null
+    _max: FuncionarioStatusHistoricoMaxAggregateOutputType | null
+  }
+
+  export type FuncionarioStatusHistoricoMinAggregateOutputType = {
+    id: string | null
+    funcionarioId: string | null
+    statusAnterior: string | null
+    novoStatus: string | null
+    motivo: string | null
+    descricao: string | null
+    alteradoPorId: string | null
+    createdAt: Date | null
+  }
+
+  export type FuncionarioStatusHistoricoMaxAggregateOutputType = {
+    id: string | null
+    funcionarioId: string | null
+    statusAnterior: string | null
+    novoStatus: string | null
+    motivo: string | null
+    descricao: string | null
+    alteradoPorId: string | null
+    createdAt: Date | null
+  }
+
+  export type FuncionarioStatusHistoricoCountAggregateOutputType = {
+    id: number
+    funcionarioId: number
+    statusAnterior: number
+    novoStatus: number
+    motivo: number
+    descricao: number
+    alteradoPorId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type FuncionarioStatusHistoricoMinAggregateInputType = {
+    id?: true
+    funcionarioId?: true
+    statusAnterior?: true
+    novoStatus?: true
+    motivo?: true
+    descricao?: true
+    alteradoPorId?: true
+    createdAt?: true
+  }
+
+  export type FuncionarioStatusHistoricoMaxAggregateInputType = {
+    id?: true
+    funcionarioId?: true
+    statusAnterior?: true
+    novoStatus?: true
+    motivo?: true
+    descricao?: true
+    alteradoPorId?: true
+    createdAt?: true
+  }
+
+  export type FuncionarioStatusHistoricoCountAggregateInputType = {
+    id?: true
+    funcionarioId?: true
+    statusAnterior?: true
+    novoStatus?: true
+    motivo?: true
+    descricao?: true
+    alteradoPorId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type FuncionarioStatusHistoricoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FuncionarioStatusHistorico to aggregate.
+     */
+    where?: FuncionarioStatusHistoricoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FuncionarioStatusHistoricos to fetch.
+     */
+    orderBy?: FuncionarioStatusHistoricoOrderByWithRelationInput | FuncionarioStatusHistoricoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FuncionarioStatusHistoricoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FuncionarioStatusHistoricos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FuncionarioStatusHistoricos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FuncionarioStatusHistoricos
+    **/
+    _count?: true | FuncionarioStatusHistoricoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FuncionarioStatusHistoricoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FuncionarioStatusHistoricoMaxAggregateInputType
+  }
+
+  export type GetFuncionarioStatusHistoricoAggregateType<T extends FuncionarioStatusHistoricoAggregateArgs> = {
+        [P in keyof T & keyof AggregateFuncionarioStatusHistorico]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFuncionarioStatusHistorico[P]>
+      : GetScalarType<T[P], AggregateFuncionarioStatusHistorico[P]>
+  }
+
+
+
+
+  export type FuncionarioStatusHistoricoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FuncionarioStatusHistoricoWhereInput
+    orderBy?: FuncionarioStatusHistoricoOrderByWithAggregationInput | FuncionarioStatusHistoricoOrderByWithAggregationInput[]
+    by: FuncionarioStatusHistoricoScalarFieldEnum[] | FuncionarioStatusHistoricoScalarFieldEnum
+    having?: FuncionarioStatusHistoricoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FuncionarioStatusHistoricoCountAggregateInputType | true
+    _min?: FuncionarioStatusHistoricoMinAggregateInputType
+    _max?: FuncionarioStatusHistoricoMaxAggregateInputType
+  }
+
+  export type FuncionarioStatusHistoricoGroupByOutputType = {
+    id: string
+    funcionarioId: string
+    statusAnterior: string
+    novoStatus: string
+    motivo: string
+    descricao: string | null
+    alteradoPorId: string | null
+    createdAt: Date
+    _count: FuncionarioStatusHistoricoCountAggregateOutputType | null
+    _min: FuncionarioStatusHistoricoMinAggregateOutputType | null
+    _max: FuncionarioStatusHistoricoMaxAggregateOutputType | null
+  }
+
+  type GetFuncionarioStatusHistoricoGroupByPayload<T extends FuncionarioStatusHistoricoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FuncionarioStatusHistoricoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FuncionarioStatusHistoricoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FuncionarioStatusHistoricoGroupByOutputType[P]>
+            : GetScalarType<T[P], FuncionarioStatusHistoricoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FuncionarioStatusHistoricoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    funcionarioId?: boolean
+    statusAnterior?: boolean
+    novoStatus?: boolean
+    motivo?: boolean
+    descricao?: boolean
+    alteradoPorId?: boolean
+    createdAt?: boolean
+    funcionario?: boolean | FuncionarioDefaultArgs<ExtArgs>
+    alteradoPor?: boolean | FuncionarioStatusHistorico$alteradoPorArgs<ExtArgs>
+  }, ExtArgs["result"]["funcionarioStatusHistorico"]>
+
+
+  export type FuncionarioStatusHistoricoSelectScalar = {
+    id?: boolean
+    funcionarioId?: boolean
+    statusAnterior?: boolean
+    novoStatus?: boolean
+    motivo?: boolean
+    descricao?: boolean
+    alteradoPorId?: boolean
+    createdAt?: boolean
+  }
+
+  export type FuncionarioStatusHistoricoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    funcionario?: boolean | FuncionarioDefaultArgs<ExtArgs>
+    alteradoPor?: boolean | FuncionarioStatusHistorico$alteradoPorArgs<ExtArgs>
+  }
+
+  export type $FuncionarioStatusHistoricoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FuncionarioStatusHistorico"
+    objects: {
+      funcionario: Prisma.$FuncionarioPayload<ExtArgs>
+      alteradoPor: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      funcionarioId: string
+      statusAnterior: string
+      novoStatus: string
+      motivo: string
+      descricao: string | null
+      alteradoPorId: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["funcionarioStatusHistorico"]>
+    composites: {}
+  }
+
+  type FuncionarioStatusHistoricoGetPayload<S extends boolean | null | undefined | FuncionarioStatusHistoricoDefaultArgs> = $Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload, S>
+
+  type FuncionarioStatusHistoricoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<FuncionarioStatusHistoricoFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: FuncionarioStatusHistoricoCountAggregateInputType | true
+    }
+
+  export interface FuncionarioStatusHistoricoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FuncionarioStatusHistorico'], meta: { name: 'FuncionarioStatusHistorico' } }
+    /**
+     * Find zero or one FuncionarioStatusHistorico that matches the filter.
+     * @param {FuncionarioStatusHistoricoFindUniqueArgs} args - Arguments to find a FuncionarioStatusHistorico
+     * @example
+     * // Get one FuncionarioStatusHistorico
+     * const funcionarioStatusHistorico = await prisma.funcionarioStatusHistorico.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FuncionarioStatusHistoricoFindUniqueArgs>(args: SelectSubset<T, FuncionarioStatusHistoricoFindUniqueArgs<ExtArgs>>): Prisma__FuncionarioStatusHistoricoClient<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one FuncionarioStatusHistorico that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {FuncionarioStatusHistoricoFindUniqueOrThrowArgs} args - Arguments to find a FuncionarioStatusHistorico
+     * @example
+     * // Get one FuncionarioStatusHistorico
+     * const funcionarioStatusHistorico = await prisma.funcionarioStatusHistorico.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FuncionarioStatusHistoricoFindUniqueOrThrowArgs>(args: SelectSubset<T, FuncionarioStatusHistoricoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FuncionarioStatusHistoricoClient<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first FuncionarioStatusHistorico that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FuncionarioStatusHistoricoFindFirstArgs} args - Arguments to find a FuncionarioStatusHistorico
+     * @example
+     * // Get one FuncionarioStatusHistorico
+     * const funcionarioStatusHistorico = await prisma.funcionarioStatusHistorico.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FuncionarioStatusHistoricoFindFirstArgs>(args?: SelectSubset<T, FuncionarioStatusHistoricoFindFirstArgs<ExtArgs>>): Prisma__FuncionarioStatusHistoricoClient<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first FuncionarioStatusHistorico that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FuncionarioStatusHistoricoFindFirstOrThrowArgs} args - Arguments to find a FuncionarioStatusHistorico
+     * @example
+     * // Get one FuncionarioStatusHistorico
+     * const funcionarioStatusHistorico = await prisma.funcionarioStatusHistorico.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FuncionarioStatusHistoricoFindFirstOrThrowArgs>(args?: SelectSubset<T, FuncionarioStatusHistoricoFindFirstOrThrowArgs<ExtArgs>>): Prisma__FuncionarioStatusHistoricoClient<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more FuncionarioStatusHistoricos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FuncionarioStatusHistoricoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FuncionarioStatusHistoricos
+     * const funcionarioStatusHistoricos = await prisma.funcionarioStatusHistorico.findMany()
+     * 
+     * // Get first 10 FuncionarioStatusHistoricos
+     * const funcionarioStatusHistoricos = await prisma.funcionarioStatusHistorico.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const funcionarioStatusHistoricoWithIdOnly = await prisma.funcionarioStatusHistorico.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FuncionarioStatusHistoricoFindManyArgs>(args?: SelectSubset<T, FuncionarioStatusHistoricoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a FuncionarioStatusHistorico.
+     * @param {FuncionarioStatusHistoricoCreateArgs} args - Arguments to create a FuncionarioStatusHistorico.
+     * @example
+     * // Create one FuncionarioStatusHistorico
+     * const FuncionarioStatusHistorico = await prisma.funcionarioStatusHistorico.create({
+     *   data: {
+     *     // ... data to create a FuncionarioStatusHistorico
+     *   }
+     * })
+     * 
+     */
+    create<T extends FuncionarioStatusHistoricoCreateArgs>(args: SelectSubset<T, FuncionarioStatusHistoricoCreateArgs<ExtArgs>>): Prisma__FuncionarioStatusHistoricoClient<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many FuncionarioStatusHistoricos.
+     * @param {FuncionarioStatusHistoricoCreateManyArgs} args - Arguments to create many FuncionarioStatusHistoricos.
+     * @example
+     * // Create many FuncionarioStatusHistoricos
+     * const funcionarioStatusHistorico = await prisma.funcionarioStatusHistorico.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FuncionarioStatusHistoricoCreateManyArgs>(args?: SelectSubset<T, FuncionarioStatusHistoricoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FuncionarioStatusHistorico.
+     * @param {FuncionarioStatusHistoricoDeleteArgs} args - Arguments to delete one FuncionarioStatusHistorico.
+     * @example
+     * // Delete one FuncionarioStatusHistorico
+     * const FuncionarioStatusHistorico = await prisma.funcionarioStatusHistorico.delete({
+     *   where: {
+     *     // ... filter to delete one FuncionarioStatusHistorico
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FuncionarioStatusHistoricoDeleteArgs>(args: SelectSubset<T, FuncionarioStatusHistoricoDeleteArgs<ExtArgs>>): Prisma__FuncionarioStatusHistoricoClient<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one FuncionarioStatusHistorico.
+     * @param {FuncionarioStatusHistoricoUpdateArgs} args - Arguments to update one FuncionarioStatusHistorico.
+     * @example
+     * // Update one FuncionarioStatusHistorico
+     * const funcionarioStatusHistorico = await prisma.funcionarioStatusHistorico.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FuncionarioStatusHistoricoUpdateArgs>(args: SelectSubset<T, FuncionarioStatusHistoricoUpdateArgs<ExtArgs>>): Prisma__FuncionarioStatusHistoricoClient<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more FuncionarioStatusHistoricos.
+     * @param {FuncionarioStatusHistoricoDeleteManyArgs} args - Arguments to filter FuncionarioStatusHistoricos to delete.
+     * @example
+     * // Delete a few FuncionarioStatusHistoricos
+     * const { count } = await prisma.funcionarioStatusHistorico.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FuncionarioStatusHistoricoDeleteManyArgs>(args?: SelectSubset<T, FuncionarioStatusHistoricoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FuncionarioStatusHistoricos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FuncionarioStatusHistoricoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FuncionarioStatusHistoricos
+     * const funcionarioStatusHistorico = await prisma.funcionarioStatusHistorico.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FuncionarioStatusHistoricoUpdateManyArgs>(args: SelectSubset<T, FuncionarioStatusHistoricoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FuncionarioStatusHistorico.
+     * @param {FuncionarioStatusHistoricoUpsertArgs} args - Arguments to update or create a FuncionarioStatusHistorico.
+     * @example
+     * // Update or create a FuncionarioStatusHistorico
+     * const funcionarioStatusHistorico = await prisma.funcionarioStatusHistorico.upsert({
+     *   create: {
+     *     // ... data to create a FuncionarioStatusHistorico
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FuncionarioStatusHistorico we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FuncionarioStatusHistoricoUpsertArgs>(args: SelectSubset<T, FuncionarioStatusHistoricoUpsertArgs<ExtArgs>>): Prisma__FuncionarioStatusHistoricoClient<$Result.GetResult<Prisma.$FuncionarioStatusHistoricoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of FuncionarioStatusHistoricos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FuncionarioStatusHistoricoCountArgs} args - Arguments to filter FuncionarioStatusHistoricos to count.
+     * @example
+     * // Count the number of FuncionarioStatusHistoricos
+     * const count = await prisma.funcionarioStatusHistorico.count({
+     *   where: {
+     *     // ... the filter for the FuncionarioStatusHistoricos we want to count
+     *   }
+     * })
+    **/
+    count<T extends FuncionarioStatusHistoricoCountArgs>(
+      args?: Subset<T, FuncionarioStatusHistoricoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FuncionarioStatusHistoricoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FuncionarioStatusHistorico.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FuncionarioStatusHistoricoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FuncionarioStatusHistoricoAggregateArgs>(args: Subset<T, FuncionarioStatusHistoricoAggregateArgs>): Prisma.PrismaPromise<GetFuncionarioStatusHistoricoAggregateType<T>>
+
+    /**
+     * Group by FuncionarioStatusHistorico.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FuncionarioStatusHistoricoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FuncionarioStatusHistoricoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FuncionarioStatusHistoricoGroupByArgs['orderBy'] }
+        : { orderBy?: FuncionarioStatusHistoricoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FuncionarioStatusHistoricoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFuncionarioStatusHistoricoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FuncionarioStatusHistorico model
+   */
+  readonly fields: FuncionarioStatusHistoricoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FuncionarioStatusHistorico.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FuncionarioStatusHistoricoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    funcionario<T extends FuncionarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FuncionarioDefaultArgs<ExtArgs>>): Prisma__FuncionarioClient<$Result.GetResult<Prisma.$FuncionarioPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    alteradoPor<T extends FuncionarioStatusHistorico$alteradoPorArgs<ExtArgs> = {}>(args?: Subset<T, FuncionarioStatusHistorico$alteradoPorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FuncionarioStatusHistorico model
+   */ 
+  interface FuncionarioStatusHistoricoFieldRefs {
+    readonly id: FieldRef<"FuncionarioStatusHistorico", 'String'>
+    readonly funcionarioId: FieldRef<"FuncionarioStatusHistorico", 'String'>
+    readonly statusAnterior: FieldRef<"FuncionarioStatusHistorico", 'String'>
+    readonly novoStatus: FieldRef<"FuncionarioStatusHistorico", 'String'>
+    readonly motivo: FieldRef<"FuncionarioStatusHistorico", 'String'>
+    readonly descricao: FieldRef<"FuncionarioStatusHistorico", 'String'>
+    readonly alteradoPorId: FieldRef<"FuncionarioStatusHistorico", 'String'>
+    readonly createdAt: FieldRef<"FuncionarioStatusHistorico", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FuncionarioStatusHistorico findUnique
+   */
+  export type FuncionarioStatusHistoricoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter, which FuncionarioStatusHistorico to fetch.
+     */
+    where: FuncionarioStatusHistoricoWhereUniqueInput
+  }
+
+  /**
+   * FuncionarioStatusHistorico findUniqueOrThrow
+   */
+  export type FuncionarioStatusHistoricoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter, which FuncionarioStatusHistorico to fetch.
+     */
+    where: FuncionarioStatusHistoricoWhereUniqueInput
+  }
+
+  /**
+   * FuncionarioStatusHistorico findFirst
+   */
+  export type FuncionarioStatusHistoricoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter, which FuncionarioStatusHistorico to fetch.
+     */
+    where?: FuncionarioStatusHistoricoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FuncionarioStatusHistoricos to fetch.
+     */
+    orderBy?: FuncionarioStatusHistoricoOrderByWithRelationInput | FuncionarioStatusHistoricoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FuncionarioStatusHistoricos.
+     */
+    cursor?: FuncionarioStatusHistoricoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FuncionarioStatusHistoricos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FuncionarioStatusHistoricos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FuncionarioStatusHistoricos.
+     */
+    distinct?: FuncionarioStatusHistoricoScalarFieldEnum | FuncionarioStatusHistoricoScalarFieldEnum[]
+  }
+
+  /**
+   * FuncionarioStatusHistorico findFirstOrThrow
+   */
+  export type FuncionarioStatusHistoricoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter, which FuncionarioStatusHistorico to fetch.
+     */
+    where?: FuncionarioStatusHistoricoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FuncionarioStatusHistoricos to fetch.
+     */
+    orderBy?: FuncionarioStatusHistoricoOrderByWithRelationInput | FuncionarioStatusHistoricoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FuncionarioStatusHistoricos.
+     */
+    cursor?: FuncionarioStatusHistoricoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FuncionarioStatusHistoricos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FuncionarioStatusHistoricos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FuncionarioStatusHistoricos.
+     */
+    distinct?: FuncionarioStatusHistoricoScalarFieldEnum | FuncionarioStatusHistoricoScalarFieldEnum[]
+  }
+
+  /**
+   * FuncionarioStatusHistorico findMany
+   */
+  export type FuncionarioStatusHistoricoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter, which FuncionarioStatusHistoricos to fetch.
+     */
+    where?: FuncionarioStatusHistoricoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FuncionarioStatusHistoricos to fetch.
+     */
+    orderBy?: FuncionarioStatusHistoricoOrderByWithRelationInput | FuncionarioStatusHistoricoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FuncionarioStatusHistoricos.
+     */
+    cursor?: FuncionarioStatusHistoricoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FuncionarioStatusHistoricos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FuncionarioStatusHistoricos.
+     */
+    skip?: number
+    distinct?: FuncionarioStatusHistoricoScalarFieldEnum | FuncionarioStatusHistoricoScalarFieldEnum[]
+  }
+
+  /**
+   * FuncionarioStatusHistorico create
+   */
+  export type FuncionarioStatusHistoricoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FuncionarioStatusHistorico.
+     */
+    data: XOR<FuncionarioStatusHistoricoCreateInput, FuncionarioStatusHistoricoUncheckedCreateInput>
+  }
+
+  /**
+   * FuncionarioStatusHistorico createMany
+   */
+  export type FuncionarioStatusHistoricoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FuncionarioStatusHistoricos.
+     */
+    data: FuncionarioStatusHistoricoCreateManyInput | FuncionarioStatusHistoricoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FuncionarioStatusHistorico update
+   */
+  export type FuncionarioStatusHistoricoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FuncionarioStatusHistorico.
+     */
+    data: XOR<FuncionarioStatusHistoricoUpdateInput, FuncionarioStatusHistoricoUncheckedUpdateInput>
+    /**
+     * Choose, which FuncionarioStatusHistorico to update.
+     */
+    where: FuncionarioStatusHistoricoWhereUniqueInput
+  }
+
+  /**
+   * FuncionarioStatusHistorico updateMany
+   */
+  export type FuncionarioStatusHistoricoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FuncionarioStatusHistoricos.
+     */
+    data: XOR<FuncionarioStatusHistoricoUpdateManyMutationInput, FuncionarioStatusHistoricoUncheckedUpdateManyInput>
+    /**
+     * Filter which FuncionarioStatusHistoricos to update
+     */
+    where?: FuncionarioStatusHistoricoWhereInput
+  }
+
+  /**
+   * FuncionarioStatusHistorico upsert
+   */
+  export type FuncionarioStatusHistoricoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FuncionarioStatusHistorico to update in case it exists.
+     */
+    where: FuncionarioStatusHistoricoWhereUniqueInput
+    /**
+     * In case the FuncionarioStatusHistorico found by the `where` argument doesn't exist, create a new FuncionarioStatusHistorico with this data.
+     */
+    create: XOR<FuncionarioStatusHistoricoCreateInput, FuncionarioStatusHistoricoUncheckedCreateInput>
+    /**
+     * In case the FuncionarioStatusHistorico was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FuncionarioStatusHistoricoUpdateInput, FuncionarioStatusHistoricoUncheckedUpdateInput>
+  }
+
+  /**
+   * FuncionarioStatusHistorico delete
+   */
+  export type FuncionarioStatusHistoricoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
+    /**
+     * Filter which FuncionarioStatusHistorico to delete.
+     */
+    where: FuncionarioStatusHistoricoWhereUniqueInput
+  }
+
+  /**
+   * FuncionarioStatusHistorico deleteMany
+   */
+  export type FuncionarioStatusHistoricoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FuncionarioStatusHistoricos to delete
+     */
+    where?: FuncionarioStatusHistoricoWhereInput
+  }
+
+  /**
+   * FuncionarioStatusHistorico.alteradoPor
+   */
+  export type FuncionarioStatusHistorico$alteradoPorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * FuncionarioStatusHistorico without action
+   */
+  export type FuncionarioStatusHistoricoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FuncionarioStatusHistorico
+     */
+    select?: FuncionarioStatusHistoricoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FuncionarioStatusHistoricoInclude<ExtArgs> | null
   }
 
 
@@ -37918,6 +39019,7 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     role: 'role',
+    isSystemRoot: 'isSystemRoot',
     language: 'language',
     theme: 'theme',
     resetToken: 'resetToken',
@@ -38143,10 +39245,25 @@ export namespace Prisma {
     status: 'status',
     userId: 'userId',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    dataStatusAtual: 'dataStatusAtual'
   };
 
   export type FuncionarioScalarFieldEnum = (typeof FuncionarioScalarFieldEnum)[keyof typeof FuncionarioScalarFieldEnum]
+
+
+  export const FuncionarioStatusHistoricoScalarFieldEnum: {
+    id: 'id',
+    funcionarioId: 'funcionarioId',
+    statusAnterior: 'statusAnterior',
+    novoStatus: 'novoStatus',
+    motivo: 'motivo',
+    descricao: 'descricao',
+    alteradoPorId: 'alteradoPorId',
+    createdAt: 'createdAt'
+  };
+
+  export type FuncionarioStatusHistoricoScalarFieldEnum = (typeof FuncionarioStatusHistoricoScalarFieldEnum)[keyof typeof FuncionarioStatusHistoricoScalarFieldEnum]
 
 
   export const ContratoScalarFieldEnum: {
@@ -39121,6 +40238,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
+    isSystemRoot?: BoolFilter<"User"> | boolean
     language?: StringFilter<"User"> | string
     theme?: StringFilter<"User"> | string
     resetToken?: StringNullableFilter<"User"> | string | null
@@ -39138,6 +40256,7 @@ export namespace Prisma {
     profile?: XOR<ProfileNullableRelationFilter, ProfileWhereInput> | null
     permissions?: UserPermissionListRelationFilter
     itemPermissions?: UserItemPermissionListRelationFilter
+    statusHistorico?: FuncionarioStatusHistoricoListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -39146,6 +40265,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    isSystemRoot?: SortOrder
     language?: SortOrder
     theme?: SortOrder
     resetToken?: SortOrderInput | SortOrder
@@ -39163,6 +40283,7 @@ export namespace Prisma {
     profile?: ProfileOrderByWithRelationInput
     permissions?: UserPermissionOrderByRelationAggregateInput
     itemPermissions?: UserItemPermissionOrderByRelationAggregateInput
+    statusHistorico?: FuncionarioStatusHistoricoOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -39175,6 +40296,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
+    isSystemRoot?: BoolFilter<"User"> | boolean
     language?: StringFilter<"User"> | string
     theme?: StringFilter<"User"> | string
     resetTokenExpires?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -39191,6 +40313,7 @@ export namespace Prisma {
     profile?: XOR<ProfileNullableRelationFilter, ProfileWhereInput> | null
     permissions?: UserPermissionListRelationFilter
     itemPermissions?: UserItemPermissionListRelationFilter
+    statusHistorico?: FuncionarioStatusHistoricoListRelationFilter
   }, "id" | "email" | "resetToken">
 
   export type UserOrderByWithAggregationInput = {
@@ -39199,6 +40322,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    isSystemRoot?: SortOrder
     language?: SortOrder
     theme?: SortOrder
     resetToken?: SortOrderInput | SortOrder
@@ -39220,6 +40344,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     role?: StringWithAggregatesFilter<"User"> | string
+    isSystemRoot?: BoolWithAggregatesFilter<"User"> | boolean
     language?: StringWithAggregatesFilter<"User"> | string
     theme?: StringWithAggregatesFilter<"User"> | string
     resetToken?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -40279,6 +41404,7 @@ export namespace Prisma {
     userId?: StringNullableFilter<"Funcionario"> | string | null
     createdAt?: DateTimeFilter<"Funcionario"> | Date | string
     updatedAt?: DateTimeFilter<"Funcionario"> | Date | string
+    dataStatusAtual?: DateTimeNullableFilter<"Funcionario"> | Date | string | null
     cargo?: XOR<CargoNullableRelationFilter, CargoWhereInput> | null
     departamento?: XOR<DepartamentoNullableRelationFilter, DepartamentoWhereInput> | null
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
@@ -40289,6 +41415,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioListRelationFilter
     descontos?: DescontoListRelationFilter
     documentos?: DocumentoListRelationFilter
+    statusHistorico?: FuncionarioStatusHistoricoListRelationFilter
   }
 
   export type FuncionarioOrderByWithRelationInput = {
@@ -40312,6 +41439,7 @@ export namespace Prisma {
     userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    dataStatusAtual?: SortOrderInput | SortOrder
     cargo?: CargoOrderByWithRelationInput
     departamento?: DepartamentoOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
@@ -40322,6 +41450,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioOrderByRelationAggregateInput
     descontos?: DescontoOrderByRelationAggregateInput
     documentos?: DocumentoOrderByRelationAggregateInput
+    statusHistorico?: FuncionarioStatusHistoricoOrderByRelationAggregateInput
   }
 
   export type FuncionarioWhereUniqueInput = Prisma.AtLeast<{
@@ -40348,6 +41477,7 @@ export namespace Prisma {
     status?: StringFilter<"Funcionario"> | string
     createdAt?: DateTimeFilter<"Funcionario"> | Date | string
     updatedAt?: DateTimeFilter<"Funcionario"> | Date | string
+    dataStatusAtual?: DateTimeNullableFilter<"Funcionario"> | Date | string | null
     cargo?: XOR<CargoNullableRelationFilter, CargoWhereInput> | null
     departamento?: XOR<DepartamentoNullableRelationFilter, DepartamentoWhereInput> | null
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
@@ -40358,6 +41488,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioListRelationFilter
     descontos?: DescontoListRelationFilter
     documentos?: DocumentoListRelationFilter
+    statusHistorico?: FuncionarioStatusHistoricoListRelationFilter
   }, "id" | "bi_documento" | "email" | "nif" | "numero_inss" | "userId">
 
   export type FuncionarioOrderByWithAggregationInput = {
@@ -40381,6 +41512,7 @@ export namespace Prisma {
     userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    dataStatusAtual?: SortOrderInput | SortOrder
     _count?: FuncionarioCountOrderByAggregateInput
     _max?: FuncionarioMaxOrderByAggregateInput
     _min?: FuncionarioMinOrderByAggregateInput
@@ -40410,6 +41542,80 @@ export namespace Prisma {
     userId?: StringNullableWithAggregatesFilter<"Funcionario"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Funcionario"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Funcionario"> | Date | string
+    dataStatusAtual?: DateTimeNullableWithAggregatesFilter<"Funcionario"> | Date | string | null
+  }
+
+  export type FuncionarioStatusHistoricoWhereInput = {
+    AND?: FuncionarioStatusHistoricoWhereInput | FuncionarioStatusHistoricoWhereInput[]
+    OR?: FuncionarioStatusHistoricoWhereInput[]
+    NOT?: FuncionarioStatusHistoricoWhereInput | FuncionarioStatusHistoricoWhereInput[]
+    id?: StringFilter<"FuncionarioStatusHistorico"> | string
+    funcionarioId?: StringFilter<"FuncionarioStatusHistorico"> | string
+    statusAnterior?: StringFilter<"FuncionarioStatusHistorico"> | string
+    novoStatus?: StringFilter<"FuncionarioStatusHistorico"> | string
+    motivo?: StringFilter<"FuncionarioStatusHistorico"> | string
+    descricao?: StringNullableFilter<"FuncionarioStatusHistorico"> | string | null
+    alteradoPorId?: StringNullableFilter<"FuncionarioStatusHistorico"> | string | null
+    createdAt?: DateTimeFilter<"FuncionarioStatusHistorico"> | Date | string
+    funcionario?: XOR<FuncionarioRelationFilter, FuncionarioWhereInput>
+    alteradoPor?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }
+
+  export type FuncionarioStatusHistoricoOrderByWithRelationInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    statusAnterior?: SortOrder
+    novoStatus?: SortOrder
+    motivo?: SortOrder
+    descricao?: SortOrderInput | SortOrder
+    alteradoPorId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    funcionario?: FuncionarioOrderByWithRelationInput
+    alteradoPor?: UserOrderByWithRelationInput
+  }
+
+  export type FuncionarioStatusHistoricoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: FuncionarioStatusHistoricoWhereInput | FuncionarioStatusHistoricoWhereInput[]
+    OR?: FuncionarioStatusHistoricoWhereInput[]
+    NOT?: FuncionarioStatusHistoricoWhereInput | FuncionarioStatusHistoricoWhereInput[]
+    funcionarioId?: StringFilter<"FuncionarioStatusHistorico"> | string
+    statusAnterior?: StringFilter<"FuncionarioStatusHistorico"> | string
+    novoStatus?: StringFilter<"FuncionarioStatusHistorico"> | string
+    motivo?: StringFilter<"FuncionarioStatusHistorico"> | string
+    descricao?: StringNullableFilter<"FuncionarioStatusHistorico"> | string | null
+    alteradoPorId?: StringNullableFilter<"FuncionarioStatusHistorico"> | string | null
+    createdAt?: DateTimeFilter<"FuncionarioStatusHistorico"> | Date | string
+    funcionario?: XOR<FuncionarioRelationFilter, FuncionarioWhereInput>
+    alteradoPor?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type FuncionarioStatusHistoricoOrderByWithAggregationInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    statusAnterior?: SortOrder
+    novoStatus?: SortOrder
+    motivo?: SortOrder
+    descricao?: SortOrderInput | SortOrder
+    alteradoPorId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: FuncionarioStatusHistoricoCountOrderByAggregateInput
+    _max?: FuncionarioStatusHistoricoMaxOrderByAggregateInput
+    _min?: FuncionarioStatusHistoricoMinOrderByAggregateInput
+  }
+
+  export type FuncionarioStatusHistoricoScalarWhereWithAggregatesInput = {
+    AND?: FuncionarioStatusHistoricoScalarWhereWithAggregatesInput | FuncionarioStatusHistoricoScalarWhereWithAggregatesInput[]
+    OR?: FuncionarioStatusHistoricoScalarWhereWithAggregatesInput[]
+    NOT?: FuncionarioStatusHistoricoScalarWhereWithAggregatesInput | FuncionarioStatusHistoricoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FuncionarioStatusHistorico"> | string
+    funcionarioId?: StringWithAggregatesFilter<"FuncionarioStatusHistorico"> | string
+    statusAnterior?: StringWithAggregatesFilter<"FuncionarioStatusHistorico"> | string
+    novoStatus?: StringWithAggregatesFilter<"FuncionarioStatusHistorico"> | string
+    motivo?: StringWithAggregatesFilter<"FuncionarioStatusHistorico"> | string
+    descricao?: StringNullableWithAggregatesFilter<"FuncionarioStatusHistorico"> | string | null
+    alteradoPorId?: StringNullableWithAggregatesFilter<"FuncionarioStatusHistorico"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"FuncionarioStatusHistorico"> | Date | string
   }
 
   export type ContratoWhereInput = {
@@ -42065,6 +43271,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -42081,6 +43288,7 @@ export namespace Prisma {
     profile?: ProfileCreateNestedOneWithoutUsersInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -42089,6 +43297,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -42105,6 +43314,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUpdateInput = {
@@ -42113,6 +43323,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42129,6 +43340,7 @@ export namespace Prisma {
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -42137,6 +43349,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42153,6 +43366,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -42161,6 +43375,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -42176,6 +43391,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42190,6 +43406,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43291,6 +44508,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     cargo?: CargoCreateNestedOneWithoutFuncionariosInput
     departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
     user?: UserCreateNestedOneWithoutFuncionarioInput
@@ -43301,6 +44519,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateInput = {
@@ -43324,6 +44543,7 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
@@ -43331,6 +44551,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUpdateInput = {
@@ -43351,6 +44572,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
     departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
     user?: UserUpdateOneWithoutFuncionarioNestedInput
@@ -43361,6 +44583,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateInput = {
@@ -43384,6 +44607,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
@@ -43391,6 +44615,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioCreateManyInput = {
@@ -43414,6 +44639,7 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
   }
 
   export type FuncionarioUpdateManyMutationInput = {
@@ -43434,6 +44660,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type FuncionarioUncheckedUpdateManyInput = {
@@ -43457,6 +44684,82 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type FuncionarioStatusHistoricoCreateInput = {
+    id?: string
+    statusAnterior: string
+    novoStatus: string
+    motivo: string
+    descricao?: string | null
+    createdAt?: Date | string
+    funcionario: FuncionarioCreateNestedOneWithoutStatusHistoricoInput
+    alteradoPor?: UserCreateNestedOneWithoutStatusHistoricoInput
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedCreateInput = {
+    id?: string
+    funcionarioId: string
+    statusAnterior: string
+    novoStatus: string
+    motivo: string
+    descricao?: string | null
+    alteradoPorId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FuncionarioStatusHistoricoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    statusAnterior?: StringFieldUpdateOperationsInput | string
+    novoStatus?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    funcionario?: FuncionarioUpdateOneRequiredWithoutStatusHistoricoNestedInput
+    alteradoPor?: UserUpdateOneWithoutStatusHistoricoNestedInput
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    funcionarioId?: StringFieldUpdateOperationsInput | string
+    statusAnterior?: StringFieldUpdateOperationsInput | string
+    novoStatus?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    alteradoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FuncionarioStatusHistoricoCreateManyInput = {
+    id?: string
+    funcionarioId: string
+    statusAnterior: string
+    novoStatus: string
+    motivo: string
+    descricao?: string | null
+    alteradoPorId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FuncionarioStatusHistoricoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    statusAnterior?: StringFieldUpdateOperationsInput | string
+    novoStatus?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    funcionarioId?: StringFieldUpdateOperationsInput | string
+    statusAnterior?: StringFieldUpdateOperationsInput | string
+    novoStatus?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    alteradoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ContratoCreateInput = {
@@ -45203,6 +46506,12 @@ export namespace Prisma {
     none?: UserItemPermissionWhereInput
   }
 
+  export type FuncionarioStatusHistoricoListRelationFilter = {
+    every?: FuncionarioStatusHistoricoWhereInput
+    some?: FuncionarioStatusHistoricoWhereInput
+    none?: FuncionarioStatusHistoricoWhereInput
+  }
+
   export type CertificateOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -45219,12 +46528,17 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type FuncionarioStatusHistoricoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    isSystemRoot?: SortOrder
     language?: SortOrder
     theme?: SortOrder
     resetToken?: SortOrder
@@ -45240,6 +46554,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    isSystemRoot?: SortOrder
     language?: SortOrder
     theme?: SortOrder
     resetToken?: SortOrder
@@ -45255,6 +46570,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    isSystemRoot?: SortOrder
     language?: SortOrder
     theme?: SortOrder
     resetToken?: SortOrder
@@ -45978,6 +47294,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    dataStatusAtual?: SortOrder
   }
 
   export type FuncionarioMaxOrderByAggregateInput = {
@@ -46001,6 +47318,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    dataStatusAtual?: SortOrder
   }
 
   export type FuncionarioMinOrderByAggregateInput = {
@@ -46024,11 +47342,45 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    dataStatusAtual?: SortOrder
   }
 
   export type FuncionarioRelationFilter = {
     is?: FuncionarioWhereInput
     isNot?: FuncionarioWhereInput
+  }
+
+  export type FuncionarioStatusHistoricoCountOrderByAggregateInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    statusAnterior?: SortOrder
+    novoStatus?: SortOrder
+    motivo?: SortOrder
+    descricao?: SortOrder
+    alteradoPorId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FuncionarioStatusHistoricoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    statusAnterior?: SortOrder
+    novoStatus?: SortOrder
+    motivo?: SortOrder
+    descricao?: SortOrder
+    alteradoPorId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FuncionarioStatusHistoricoMinOrderByAggregateInput = {
+    id?: SortOrder
+    funcionarioId?: SortOrder
+    statusAnterior?: SortOrder
+    novoStatus?: SortOrder
+    motivo?: SortOrder
+    descricao?: SortOrder
+    alteradoPorId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type ContratoCountOrderByAggregateInput = {
@@ -47507,6 +48859,13 @@ export namespace Prisma {
     connect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
   }
 
+  export type FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput = {
+    create?: XOR<FuncionarioStatusHistoricoCreateWithoutAlteradoPorInput, FuncionarioStatusHistoricoUncheckedCreateWithoutAlteradoPorInput> | FuncionarioStatusHistoricoCreateWithoutAlteradoPorInput[] | FuncionarioStatusHistoricoUncheckedCreateWithoutAlteradoPorInput[]
+    connectOrCreate?: FuncionarioStatusHistoricoCreateOrConnectWithoutAlteradoPorInput | FuncionarioStatusHistoricoCreateOrConnectWithoutAlteradoPorInput[]
+    createMany?: FuncionarioStatusHistoricoCreateManyAlteradoPorInputEnvelope
+    connect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+  }
+
   export type FuncionarioUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<FuncionarioCreateWithoutUserInput, FuncionarioUncheckedCreateWithoutUserInput>
     connectOrCreate?: FuncionarioCreateOrConnectWithoutUserInput
@@ -47567,6 +48926,13 @@ export namespace Prisma {
     connectOrCreate?: UserItemPermissionCreateOrConnectWithoutUserInput | UserItemPermissionCreateOrConnectWithoutUserInput[]
     createMany?: UserItemPermissionCreateManyUserInputEnvelope
     connect?: UserItemPermissionWhereUniqueInput | UserItemPermissionWhereUniqueInput[]
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput = {
+    create?: XOR<FuncionarioStatusHistoricoCreateWithoutAlteradoPorInput, FuncionarioStatusHistoricoUncheckedCreateWithoutAlteradoPorInput> | FuncionarioStatusHistoricoCreateWithoutAlteradoPorInput[] | FuncionarioStatusHistoricoUncheckedCreateWithoutAlteradoPorInput[]
+    connectOrCreate?: FuncionarioStatusHistoricoCreateOrConnectWithoutAlteradoPorInput | FuncionarioStatusHistoricoCreateOrConnectWithoutAlteradoPorInput[]
+    createMany?: FuncionarioStatusHistoricoCreateManyAlteradoPorInputEnvelope
+    connect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -47705,6 +49071,20 @@ export namespace Prisma {
     deleteMany?: UserItemPermissionScalarWhereInput | UserItemPermissionScalarWhereInput[]
   }
 
+  export type FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput = {
+    create?: XOR<FuncionarioStatusHistoricoCreateWithoutAlteradoPorInput, FuncionarioStatusHistoricoUncheckedCreateWithoutAlteradoPorInput> | FuncionarioStatusHistoricoCreateWithoutAlteradoPorInput[] | FuncionarioStatusHistoricoUncheckedCreateWithoutAlteradoPorInput[]
+    connectOrCreate?: FuncionarioStatusHistoricoCreateOrConnectWithoutAlteradoPorInput | FuncionarioStatusHistoricoCreateOrConnectWithoutAlteradoPorInput[]
+    upsert?: FuncionarioStatusHistoricoUpsertWithWhereUniqueWithoutAlteradoPorInput | FuncionarioStatusHistoricoUpsertWithWhereUniqueWithoutAlteradoPorInput[]
+    createMany?: FuncionarioStatusHistoricoCreateManyAlteradoPorInputEnvelope
+    set?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    disconnect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    delete?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    connect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    update?: FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput | FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput[]
+    updateMany?: FuncionarioStatusHistoricoUpdateManyWithWhereWithoutAlteradoPorInput | FuncionarioStatusHistoricoUpdateManyWithWhereWithoutAlteradoPorInput[]
+    deleteMany?: FuncionarioStatusHistoricoScalarWhereInput | FuncionarioStatusHistoricoScalarWhereInput[]
+  }
+
   export type FuncionarioUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<FuncionarioCreateWithoutUserInput, FuncionarioUncheckedCreateWithoutUserInput>
     connectOrCreate?: FuncionarioCreateOrConnectWithoutUserInput
@@ -47825,6 +49205,20 @@ export namespace Prisma {
     update?: UserItemPermissionUpdateWithWhereUniqueWithoutUserInput | UserItemPermissionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserItemPermissionUpdateManyWithWhereWithoutUserInput | UserItemPermissionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserItemPermissionScalarWhereInput | UserItemPermissionScalarWhereInput[]
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput = {
+    create?: XOR<FuncionarioStatusHistoricoCreateWithoutAlteradoPorInput, FuncionarioStatusHistoricoUncheckedCreateWithoutAlteradoPorInput> | FuncionarioStatusHistoricoCreateWithoutAlteradoPorInput[] | FuncionarioStatusHistoricoUncheckedCreateWithoutAlteradoPorInput[]
+    connectOrCreate?: FuncionarioStatusHistoricoCreateOrConnectWithoutAlteradoPorInput | FuncionarioStatusHistoricoCreateOrConnectWithoutAlteradoPorInput[]
+    upsert?: FuncionarioStatusHistoricoUpsertWithWhereUniqueWithoutAlteradoPorInput | FuncionarioStatusHistoricoUpsertWithWhereUniqueWithoutAlteradoPorInput[]
+    createMany?: FuncionarioStatusHistoricoCreateManyAlteradoPorInputEnvelope
+    set?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    disconnect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    delete?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    connect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    update?: FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput | FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput[]
+    updateMany?: FuncionarioStatusHistoricoUpdateManyWithWhereWithoutAlteradoPorInput | FuncionarioStatusHistoricoUpdateManyWithWhereWithoutAlteradoPorInput[]
+    deleteMany?: FuncionarioStatusHistoricoScalarWhereInput | FuncionarioStatusHistoricoScalarWhereInput[]
   }
 
   export type ProfilePermissionCreateNestedManyWithoutProfileInput = {
@@ -48750,6 +50144,13 @@ export namespace Prisma {
     connect?: DocumentoWhereUniqueInput | DocumentoWhereUniqueInput[]
   }
 
+  export type FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput = {
+    create?: XOR<FuncionarioStatusHistoricoCreateWithoutFuncionarioInput, FuncionarioStatusHistoricoUncheckedCreateWithoutFuncionarioInput> | FuncionarioStatusHistoricoCreateWithoutFuncionarioInput[] | FuncionarioStatusHistoricoUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: FuncionarioStatusHistoricoCreateOrConnectWithoutFuncionarioInput | FuncionarioStatusHistoricoCreateOrConnectWithoutFuncionarioInput[]
+    createMany?: FuncionarioStatusHistoricoCreateManyFuncionarioInputEnvelope
+    connect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+  }
+
   export type ContratoUncheckedCreateNestedManyWithoutFuncionarioInput = {
     create?: XOR<ContratoCreateWithoutFuncionarioInput, ContratoUncheckedCreateWithoutFuncionarioInput> | ContratoCreateWithoutFuncionarioInput[] | ContratoUncheckedCreateWithoutFuncionarioInput[]
     connectOrCreate?: ContratoCreateOrConnectWithoutFuncionarioInput | ContratoCreateOrConnectWithoutFuncionarioInput[]
@@ -48797,6 +50198,13 @@ export namespace Prisma {
     connectOrCreate?: DocumentoCreateOrConnectWithoutFuncionarioInput | DocumentoCreateOrConnectWithoutFuncionarioInput[]
     createMany?: DocumentoCreateManyFuncionarioInputEnvelope
     connect?: DocumentoWhereUniqueInput | DocumentoWhereUniqueInput[]
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput = {
+    create?: XOR<FuncionarioStatusHistoricoCreateWithoutFuncionarioInput, FuncionarioStatusHistoricoUncheckedCreateWithoutFuncionarioInput> | FuncionarioStatusHistoricoCreateWithoutFuncionarioInput[] | FuncionarioStatusHistoricoUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: FuncionarioStatusHistoricoCreateOrConnectWithoutFuncionarioInput | FuncionarioStatusHistoricoCreateOrConnectWithoutFuncionarioInput[]
+    createMany?: FuncionarioStatusHistoricoCreateManyFuncionarioInputEnvelope
+    connect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
   }
 
   export type CargoUpdateOneWithoutFuncionariosNestedInput = {
@@ -48927,6 +50335,20 @@ export namespace Prisma {
     deleteMany?: DocumentoScalarWhereInput | DocumentoScalarWhereInput[]
   }
 
+  export type FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput = {
+    create?: XOR<FuncionarioStatusHistoricoCreateWithoutFuncionarioInput, FuncionarioStatusHistoricoUncheckedCreateWithoutFuncionarioInput> | FuncionarioStatusHistoricoCreateWithoutFuncionarioInput[] | FuncionarioStatusHistoricoUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: FuncionarioStatusHistoricoCreateOrConnectWithoutFuncionarioInput | FuncionarioStatusHistoricoCreateOrConnectWithoutFuncionarioInput[]
+    upsert?: FuncionarioStatusHistoricoUpsertWithWhereUniqueWithoutFuncionarioInput | FuncionarioStatusHistoricoUpsertWithWhereUniqueWithoutFuncionarioInput[]
+    createMany?: FuncionarioStatusHistoricoCreateManyFuncionarioInputEnvelope
+    set?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    disconnect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    delete?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    connect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    update?: FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutFuncionarioInput | FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutFuncionarioInput[]
+    updateMany?: FuncionarioStatusHistoricoUpdateManyWithWhereWithoutFuncionarioInput | FuncionarioStatusHistoricoUpdateManyWithWhereWithoutFuncionarioInput[]
+    deleteMany?: FuncionarioStatusHistoricoScalarWhereInput | FuncionarioStatusHistoricoScalarWhereInput[]
+  }
+
   export type ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput = {
     create?: XOR<ContratoCreateWithoutFuncionarioInput, ContratoUncheckedCreateWithoutFuncionarioInput> | ContratoCreateWithoutFuncionarioInput[] | ContratoUncheckedCreateWithoutFuncionarioInput[]
     connectOrCreate?: ContratoCreateOrConnectWithoutFuncionarioInput | ContratoCreateOrConnectWithoutFuncionarioInput[]
@@ -49023,6 +50445,50 @@ export namespace Prisma {
     update?: DocumentoUpdateWithWhereUniqueWithoutFuncionarioInput | DocumentoUpdateWithWhereUniqueWithoutFuncionarioInput[]
     updateMany?: DocumentoUpdateManyWithWhereWithoutFuncionarioInput | DocumentoUpdateManyWithWhereWithoutFuncionarioInput[]
     deleteMany?: DocumentoScalarWhereInput | DocumentoScalarWhereInput[]
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput = {
+    create?: XOR<FuncionarioStatusHistoricoCreateWithoutFuncionarioInput, FuncionarioStatusHistoricoUncheckedCreateWithoutFuncionarioInput> | FuncionarioStatusHistoricoCreateWithoutFuncionarioInput[] | FuncionarioStatusHistoricoUncheckedCreateWithoutFuncionarioInput[]
+    connectOrCreate?: FuncionarioStatusHistoricoCreateOrConnectWithoutFuncionarioInput | FuncionarioStatusHistoricoCreateOrConnectWithoutFuncionarioInput[]
+    upsert?: FuncionarioStatusHistoricoUpsertWithWhereUniqueWithoutFuncionarioInput | FuncionarioStatusHistoricoUpsertWithWhereUniqueWithoutFuncionarioInput[]
+    createMany?: FuncionarioStatusHistoricoCreateManyFuncionarioInputEnvelope
+    set?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    disconnect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    delete?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    connect?: FuncionarioStatusHistoricoWhereUniqueInput | FuncionarioStatusHistoricoWhereUniqueInput[]
+    update?: FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutFuncionarioInput | FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutFuncionarioInput[]
+    updateMany?: FuncionarioStatusHistoricoUpdateManyWithWhereWithoutFuncionarioInput | FuncionarioStatusHistoricoUpdateManyWithWhereWithoutFuncionarioInput[]
+    deleteMany?: FuncionarioStatusHistoricoScalarWhereInput | FuncionarioStatusHistoricoScalarWhereInput[]
+  }
+
+  export type FuncionarioCreateNestedOneWithoutStatusHistoricoInput = {
+    create?: XOR<FuncionarioCreateWithoutStatusHistoricoInput, FuncionarioUncheckedCreateWithoutStatusHistoricoInput>
+    connectOrCreate?: FuncionarioCreateOrConnectWithoutStatusHistoricoInput
+    connect?: FuncionarioWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutStatusHistoricoInput = {
+    create?: XOR<UserCreateWithoutStatusHistoricoInput, UserUncheckedCreateWithoutStatusHistoricoInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStatusHistoricoInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type FuncionarioUpdateOneRequiredWithoutStatusHistoricoNestedInput = {
+    create?: XOR<FuncionarioCreateWithoutStatusHistoricoInput, FuncionarioUncheckedCreateWithoutStatusHistoricoInput>
+    connectOrCreate?: FuncionarioCreateOrConnectWithoutStatusHistoricoInput
+    upsert?: FuncionarioUpsertWithoutStatusHistoricoInput
+    connect?: FuncionarioWhereUniqueInput
+    update?: XOR<XOR<FuncionarioUpdateToOneWithWhereWithoutStatusHistoricoInput, FuncionarioUpdateWithoutStatusHistoricoInput>, FuncionarioUncheckedUpdateWithoutStatusHistoricoInput>
+  }
+
+  export type UserUpdateOneWithoutStatusHistoricoNestedInput = {
+    create?: XOR<UserCreateWithoutStatusHistoricoInput, UserUncheckedCreateWithoutStatusHistoricoInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStatusHistoricoInput
+    upsert?: UserUpsertWithoutStatusHistoricoInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStatusHistoricoInput, UserUpdateWithoutStatusHistoricoInput>, UserUncheckedUpdateWithoutStatusHistoricoInput>
   }
 
   export type FuncionarioCreateNestedOneWithoutContratosInput = {
@@ -49510,6 +50976,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -49525,6 +50992,7 @@ export namespace Prisma {
     profile?: ProfileCreateNestedOneWithoutUsersInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutAlunosInput = {
@@ -49533,6 +51001,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -49548,6 +51017,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutAlunosInput = {
@@ -49695,6 +51165,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49710,6 +51181,7 @@ export namespace Prisma {
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAlunosInput = {
@@ -49718,6 +51190,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49733,6 +51206,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type EmpresaClienteUpsertWithoutAlunosInput = {
@@ -49984,6 +51458,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     cargo?: CargoCreateNestedOneWithoutFuncionariosInput
     departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
     user?: UserCreateNestedOneWithoutFuncionarioInput
@@ -49993,6 +51468,7 @@ export namespace Prisma {
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutDocumentosInput = {
@@ -50016,12 +51492,14 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutDocumentosInput = {
@@ -50109,6 +51587,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
     departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
     user?: UserUpdateOneWithoutFuncionarioNestedInput
@@ -50118,6 +51597,7 @@ export namespace Prisma {
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutDocumentosInput = {
@@ -50141,12 +51621,14 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type CertificateTemplateCreateWithoutCursosInput = {
@@ -50220,6 +51702,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -50235,6 +51718,7 @@ export namespace Prisma {
     profile?: ProfileCreateNestedOneWithoutUsersInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutCursosInput = {
@@ -50243,6 +51727,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -50258,6 +51743,7 @@ export namespace Prisma {
     turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutCursosInput = {
@@ -50346,6 +51832,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50361,6 +51848,7 @@ export namespace Prisma {
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCursosInput = {
@@ -50369,6 +51857,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50384,6 +51873,7 @@ export namespace Prisma {
     turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type TurmaCreateWithoutInstrutorInput = {
@@ -50658,6 +52148,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -50673,6 +52164,7 @@ export namespace Prisma {
     profile?: ProfileCreateNestedOneWithoutUsersInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutTurmasInput = {
@@ -50681,6 +52173,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -50696,6 +52189,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutTurmasInput = {
@@ -50843,6 +52337,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50858,6 +52353,7 @@ export namespace Prisma {
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTurmasInput = {
@@ -50866,6 +52362,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50881,6 +52378,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type AlunoCreateWithoutMatriculasInput = {
@@ -51058,6 +52556,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -51073,6 +52572,7 @@ export namespace Prisma {
     profile?: ProfileCreateNestedOneWithoutUsersInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutMatriculasInput = {
@@ -51081,6 +52581,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -51096,6 +52597,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutMatriculasInput = {
@@ -51320,6 +52822,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51335,6 +52838,7 @@ export namespace Prisma {
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMatriculasInput = {
@@ -51343,6 +52847,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51358,6 +52863,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type EmpresaClienteUpsertWithoutMatriculasInput = {
@@ -51444,6 +52950,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -51459,6 +52966,7 @@ export namespace Prisma {
     profile?: ProfileCreateNestedOneWithoutUsersInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutPagamentosInput = {
@@ -51467,6 +52975,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -51482,6 +52991,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutPagamentosInput = {
@@ -51553,6 +53063,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51568,6 +53079,7 @@ export namespace Prisma {
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPagamentosInput = {
@@ -51576,6 +53088,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51591,6 +53104,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type FuncionarioCreateWithoutUserInput = {
@@ -51611,6 +53125,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     cargo?: CargoCreateNestedOneWithoutFuncionariosInput
     departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
     contratos?: ContratoCreateNestedManyWithoutFuncionarioInput
@@ -51620,6 +53135,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutUserInput = {
@@ -51642,6 +53158,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
@@ -51649,6 +53166,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutUserInput = {
@@ -51971,6 +53489,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FuncionarioStatusHistoricoCreateWithoutAlteradoPorInput = {
+    id?: string
+    statusAnterior: string
+    novoStatus: string
+    motivo: string
+    descricao?: string | null
+    createdAt?: Date | string
+    funcionario: FuncionarioCreateNestedOneWithoutStatusHistoricoInput
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedCreateWithoutAlteradoPorInput = {
+    id?: string
+    funcionarioId: string
+    statusAnterior: string
+    novoStatus: string
+    motivo: string
+    descricao?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FuncionarioStatusHistoricoCreateOrConnectWithoutAlteradoPorInput = {
+    where: FuncionarioStatusHistoricoWhereUniqueInput
+    create: XOR<FuncionarioStatusHistoricoCreateWithoutAlteradoPorInput, FuncionarioStatusHistoricoUncheckedCreateWithoutAlteradoPorInput>
+  }
+
+  export type FuncionarioStatusHistoricoCreateManyAlteradoPorInputEnvelope = {
+    data: FuncionarioStatusHistoricoCreateManyAlteradoPorInput | FuncionarioStatusHistoricoCreateManyAlteradoPorInput[]
+    skipDuplicates?: boolean
+  }
+
   export type FuncionarioUpsertWithoutUserInput = {
     update: XOR<FuncionarioUpdateWithoutUserInput, FuncionarioUncheckedUpdateWithoutUserInput>
     create: XOR<FuncionarioCreateWithoutUserInput, FuncionarioUncheckedCreateWithoutUserInput>
@@ -52000,6 +53548,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
     departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
     contratos?: ContratoUpdateManyWithoutFuncionarioNestedInput
@@ -52009,6 +53558,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutUserInput = {
@@ -52031,6 +53581,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
@@ -52038,6 +53589,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type AlunoUpsertWithWhereUniqueWithoutUserInput = {
@@ -52256,6 +53808,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"UserItemPermission"> | Date | string
   }
 
+  export type FuncionarioStatusHistoricoUpsertWithWhereUniqueWithoutAlteradoPorInput = {
+    where: FuncionarioStatusHistoricoWhereUniqueInput
+    update: XOR<FuncionarioStatusHistoricoUpdateWithoutAlteradoPorInput, FuncionarioStatusHistoricoUncheckedUpdateWithoutAlteradoPorInput>
+    create: XOR<FuncionarioStatusHistoricoCreateWithoutAlteradoPorInput, FuncionarioStatusHistoricoUncheckedCreateWithoutAlteradoPorInput>
+  }
+
+  export type FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutAlteradoPorInput = {
+    where: FuncionarioStatusHistoricoWhereUniqueInput
+    data: XOR<FuncionarioStatusHistoricoUpdateWithoutAlteradoPorInput, FuncionarioStatusHistoricoUncheckedUpdateWithoutAlteradoPorInput>
+  }
+
+  export type FuncionarioStatusHistoricoUpdateManyWithWhereWithoutAlteradoPorInput = {
+    where: FuncionarioStatusHistoricoScalarWhereInput
+    data: XOR<FuncionarioStatusHistoricoUpdateManyMutationInput, FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorInput>
+  }
+
+  export type FuncionarioStatusHistoricoScalarWhereInput = {
+    AND?: FuncionarioStatusHistoricoScalarWhereInput | FuncionarioStatusHistoricoScalarWhereInput[]
+    OR?: FuncionarioStatusHistoricoScalarWhereInput[]
+    NOT?: FuncionarioStatusHistoricoScalarWhereInput | FuncionarioStatusHistoricoScalarWhereInput[]
+    id?: StringFilter<"FuncionarioStatusHistorico"> | string
+    funcionarioId?: StringFilter<"FuncionarioStatusHistorico"> | string
+    statusAnterior?: StringFilter<"FuncionarioStatusHistorico"> | string
+    novoStatus?: StringFilter<"FuncionarioStatusHistorico"> | string
+    motivo?: StringFilter<"FuncionarioStatusHistorico"> | string
+    descricao?: StringNullableFilter<"FuncionarioStatusHistorico"> | string | null
+    alteradoPorId?: StringNullableFilter<"FuncionarioStatusHistorico"> | string | null
+    createdAt?: DateTimeFilter<"FuncionarioStatusHistorico"> | Date | string
+  }
+
   export type ProfilePermissionCreateWithoutProfileInput = {
     id?: string
     canRead?: boolean
@@ -52318,6 +53900,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -52333,6 +53916,7 @@ export namespace Prisma {
     cursos?: CursoCreateNestedManyWithoutUserInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutProfileInput = {
@@ -52341,6 +53925,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -52356,6 +53941,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutProfileInput = {
@@ -52451,6 +54037,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
+    isSystemRoot?: BoolFilter<"User"> | boolean
     language?: StringFilter<"User"> | string
     theme?: StringFilter<"User"> | string
     resetToken?: StringNullableFilter<"User"> | string | null
@@ -52731,6 +54318,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -52746,6 +54334,7 @@ export namespace Prisma {
     cursos?: CursoCreateNestedManyWithoutUserInput
     profile?: ProfileCreateNestedOneWithoutUsersInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutPermissionsInput = {
@@ -52754,6 +54343,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -52769,6 +54359,7 @@ export namespace Prisma {
     turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutPermissionsInput = {
@@ -52820,6 +54411,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52835,6 +54427,7 @@ export namespace Prisma {
     cursos?: CursoUpdateManyWithoutUserNestedInput
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPermissionsInput = {
@@ -52843,6 +54436,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52858,6 +54452,7 @@ export namespace Prisma {
     turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type ModuleUpsertWithoutUserPermissionsInput = {
@@ -53163,6 +54758,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -53178,6 +54774,7 @@ export namespace Prisma {
     cursos?: CursoCreateNestedManyWithoutUserInput
     profile?: ProfileCreateNestedOneWithoutUsersInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutItemPermissionsInput = {
@@ -53186,6 +54783,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -53201,6 +54799,7 @@ export namespace Prisma {
     turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutItemPermissionsInput = {
@@ -53252,6 +54851,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53267,6 +54867,7 @@ export namespace Prisma {
     cursos?: CursoUpdateManyWithoutUserNestedInput
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutItemPermissionsInput = {
@@ -53275,6 +54876,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53290,6 +54892,7 @@ export namespace Prisma {
     turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type ModuleItemUpsertWithoutUserItemPermissionsInput = {
@@ -53426,6 +55029,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -53441,6 +55045,7 @@ export namespace Prisma {
     profile?: ProfileCreateNestedOneWithoutUsersInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutCertificadosInput = {
@@ -53449,6 +55054,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -53464,6 +55070,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutCertificadosInput = {
@@ -53535,6 +55142,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53550,6 +55158,7 @@ export namespace Prisma {
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCertificadosInput = {
@@ -53558,6 +55167,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53573,6 +55183,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type TurmaCreateWithoutAulasInput = {
@@ -54137,6 +55748,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     cargo?: CargoCreateNestedOneWithoutFuncionariosInput
     user?: UserCreateNestedOneWithoutFuncionarioInput
     contratos?: ContratoCreateNestedManyWithoutFuncionarioInput
@@ -54146,6 +55758,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutDepartamentoInput = {
@@ -54168,6 +55781,7 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
@@ -54175,6 +55789,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutDepartamentoInput = {
@@ -54257,6 +55872,7 @@ export namespace Prisma {
     userId?: StringNullableFilter<"Funcionario"> | string | null
     createdAt?: DateTimeFilter<"Funcionario"> | Date | string
     updatedAt?: DateTimeFilter<"Funcionario"> | Date | string
+    dataStatusAtual?: DateTimeNullableFilter<"Funcionario"> | Date | string | null
   }
 
   export type CargoUpsertWithWhereUniqueWithoutDepartamentoInput = {
@@ -54306,6 +55922,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
     user?: UserCreateNestedOneWithoutFuncionarioInput
     contratos?: ContratoCreateNestedManyWithoutFuncionarioInput
@@ -54315,6 +55932,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutCargoInput = {
@@ -54337,6 +55955,7 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
@@ -54344,6 +55963,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutCargoInput = {
@@ -54478,6 +56098,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -54493,6 +56114,7 @@ export namespace Prisma {
     profile?: ProfileCreateNestedOneWithoutUsersInput
     permissions?: UserPermissionCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserUncheckedCreateWithoutFuncionarioInput = {
@@ -54501,6 +56123,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -54516,6 +56139,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
     permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
     itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutAlteradoPorInput
   }
 
   export type UserCreateOrConnectWithoutFuncionarioInput = {
@@ -54801,6 +56425,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FuncionarioStatusHistoricoCreateWithoutFuncionarioInput = {
+    id?: string
+    statusAnterior: string
+    novoStatus: string
+    motivo: string
+    descricao?: string | null
+    createdAt?: Date | string
+    alteradoPor?: UserCreateNestedOneWithoutStatusHistoricoInput
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedCreateWithoutFuncionarioInput = {
+    id?: string
+    statusAnterior: string
+    novoStatus: string
+    motivo: string
+    descricao?: string | null
+    alteradoPorId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type FuncionarioStatusHistoricoCreateOrConnectWithoutFuncionarioInput = {
+    where: FuncionarioStatusHistoricoWhereUniqueInput
+    create: XOR<FuncionarioStatusHistoricoCreateWithoutFuncionarioInput, FuncionarioStatusHistoricoUncheckedCreateWithoutFuncionarioInput>
+  }
+
+  export type FuncionarioStatusHistoricoCreateManyFuncionarioInputEnvelope = {
+    data: FuncionarioStatusHistoricoCreateManyFuncionarioInput | FuncionarioStatusHistoricoCreateManyFuncionarioInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CargoUpsertWithoutFuncionariosInput = {
     update: XOR<CargoUpdateWithoutFuncionariosInput, CargoUncheckedUpdateWithoutFuncionariosInput>
     create: XOR<CargoCreateWithoutFuncionariosInput, CargoUncheckedCreateWithoutFuncionariosInput>
@@ -54878,6 +56532,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54893,6 +56548,7 @@ export namespace Prisma {
     profile?: ProfileUpdateOneWithoutUsersNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFuncionarioInput = {
@@ -54901,6 +56557,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54916,6 +56573,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type ContratoUpsertWithWhereUniqueWithoutFuncionarioInput = {
@@ -55149,6 +56807,278 @@ export namespace Prisma {
     data: XOR<DocumentoUpdateManyMutationInput, DocumentoUncheckedUpdateManyWithoutFuncionarioInput>
   }
 
+  export type FuncionarioStatusHistoricoUpsertWithWhereUniqueWithoutFuncionarioInput = {
+    where: FuncionarioStatusHistoricoWhereUniqueInput
+    update: XOR<FuncionarioStatusHistoricoUpdateWithoutFuncionarioInput, FuncionarioStatusHistoricoUncheckedUpdateWithoutFuncionarioInput>
+    create: XOR<FuncionarioStatusHistoricoCreateWithoutFuncionarioInput, FuncionarioStatusHistoricoUncheckedCreateWithoutFuncionarioInput>
+  }
+
+  export type FuncionarioStatusHistoricoUpdateWithWhereUniqueWithoutFuncionarioInput = {
+    where: FuncionarioStatusHistoricoWhereUniqueInput
+    data: XOR<FuncionarioStatusHistoricoUpdateWithoutFuncionarioInput, FuncionarioStatusHistoricoUncheckedUpdateWithoutFuncionarioInput>
+  }
+
+  export type FuncionarioStatusHistoricoUpdateManyWithWhereWithoutFuncionarioInput = {
+    where: FuncionarioStatusHistoricoScalarWhereInput
+    data: XOR<FuncionarioStatusHistoricoUpdateManyMutationInput, FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioInput>
+  }
+
+  export type FuncionarioCreateWithoutStatusHistoricoInput = {
+    id?: string
+    nome: string
+    bi_documento: string
+    email?: string | null
+    telefone?: string | null
+    data_nascimento?: Date | string | null
+    genero?: string | null
+    nif?: string | null
+    iban?: string | null
+    numero_inss?: string | null
+    hora_entrada?: string | null
+    hora_saida?: string | null
+    dias_trabalho?: string | null
+    data_admissao: Date | string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
+    cargo?: CargoCreateNestedOneWithoutFuncionariosInput
+    departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
+    user?: UserCreateNestedOneWithoutFuncionarioInput
+    contratos?: ContratoCreateNestedManyWithoutFuncionarioInput
+    presencas?: PresencaHRCreateNestedManyWithoutFuncionarioInput
+    folhas?: FolhaPagamentoCreateNestedManyWithoutFuncionarioInput
+    ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
+    documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+  }
+
+  export type FuncionarioUncheckedCreateWithoutStatusHistoricoInput = {
+    id?: string
+    nome: string
+    bi_documento: string
+    email?: string | null
+    telefone?: string | null
+    data_nascimento?: Date | string | null
+    genero?: string | null
+    nif?: string | null
+    iban?: string | null
+    numero_inss?: string | null
+    hora_entrada?: string | null
+    hora_saida?: string | null
+    dias_trabalho?: string | null
+    cargoId?: string | null
+    departamentoId?: string | null
+    data_admissao: Date | string
+    status?: string
+    userId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
+    contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
+    presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
+    folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
+    adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
+    descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
+    documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+  }
+
+  export type FuncionarioCreateOrConnectWithoutStatusHistoricoInput = {
+    where: FuncionarioWhereUniqueInput
+    create: XOR<FuncionarioCreateWithoutStatusHistoricoInput, FuncionarioUncheckedCreateWithoutStatusHistoricoInput>
+  }
+
+  export type UserCreateWithoutStatusHistoricoInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: string
+    isSystemRoot?: boolean
+    language?: string
+    theme?: string
+    resetToken?: string | null
+    resetTokenExpires?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    funcionario?: FuncionarioCreateNestedOneWithoutUserInput
+    alunos?: AlunoCreateNestedManyWithoutUserInput
+    matriculas?: MatriculaCreateNestedManyWithoutUserInput
+    pagamentos?: PagamentoCreateNestedManyWithoutUserInput
+    certificados?: CertificateCreateNestedManyWithoutUserInput
+    turmas?: TurmaCreateNestedManyWithoutUserInput
+    cursos?: CursoCreateNestedManyWithoutUserInput
+    profile?: ProfileCreateNestedOneWithoutUsersInput
+    permissions?: UserPermissionCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutStatusHistoricoInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: string
+    isSystemRoot?: boolean
+    language?: string
+    theme?: string
+    resetToken?: string | null
+    resetTokenExpires?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    profileId?: string | null
+    funcionario?: FuncionarioUncheckedCreateNestedOneWithoutUserInput
+    alunos?: AlunoUncheckedCreateNestedManyWithoutUserInput
+    matriculas?: MatriculaUncheckedCreateNestedManyWithoutUserInput
+    pagamentos?: PagamentoUncheckedCreateNestedManyWithoutUserInput
+    certificados?: CertificateUncheckedCreateNestedManyWithoutUserInput
+    turmas?: TurmaUncheckedCreateNestedManyWithoutUserInput
+    cursos?: CursoUncheckedCreateNestedManyWithoutUserInput
+    permissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    itemPermissions?: UserItemPermissionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutStatusHistoricoInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutStatusHistoricoInput, UserUncheckedCreateWithoutStatusHistoricoInput>
+  }
+
+  export type FuncionarioUpsertWithoutStatusHistoricoInput = {
+    update: XOR<FuncionarioUpdateWithoutStatusHistoricoInput, FuncionarioUncheckedUpdateWithoutStatusHistoricoInput>
+    create: XOR<FuncionarioCreateWithoutStatusHistoricoInput, FuncionarioUncheckedCreateWithoutStatusHistoricoInput>
+    where?: FuncionarioWhereInput
+  }
+
+  export type FuncionarioUpdateToOneWithWhereWithoutStatusHistoricoInput = {
+    where?: FuncionarioWhereInput
+    data: XOR<FuncionarioUpdateWithoutStatusHistoricoInput, FuncionarioUncheckedUpdateWithoutStatusHistoricoInput>
+  }
+
+  export type FuncionarioUpdateWithoutStatusHistoricoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    bi_documento?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    data_nascimento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    genero?: NullableStringFieldUpdateOperationsInput | string | null
+    nif?: NullableStringFieldUpdateOperationsInput | string | null
+    iban?: NullableStringFieldUpdateOperationsInput | string | null
+    numero_inss?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_entrada?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_saida?: NullableStringFieldUpdateOperationsInput | string | null
+    dias_trabalho?: NullableStringFieldUpdateOperationsInput | string | null
+    data_admissao?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
+    departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
+    user?: UserUpdateOneWithoutFuncionarioNestedInput
+    contratos?: ContratoUpdateManyWithoutFuncionarioNestedInput
+    presencas?: PresencaHRUpdateManyWithoutFuncionarioNestedInput
+    folhas?: FolhaPagamentoUpdateManyWithoutFuncionarioNestedInput
+    ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
+    documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+  }
+
+  export type FuncionarioUncheckedUpdateWithoutStatusHistoricoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    bi_documento?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone?: NullableStringFieldUpdateOperationsInput | string | null
+    data_nascimento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    genero?: NullableStringFieldUpdateOperationsInput | string | null
+    nif?: NullableStringFieldUpdateOperationsInput | string | null
+    iban?: NullableStringFieldUpdateOperationsInput | string | null
+    numero_inss?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_entrada?: NullableStringFieldUpdateOperationsInput | string | null
+    hora_saida?: NullableStringFieldUpdateOperationsInput | string | null
+    dias_trabalho?: NullableStringFieldUpdateOperationsInput | string | null
+    cargoId?: NullableStringFieldUpdateOperationsInput | string | null
+    departamentoId?: NullableStringFieldUpdateOperationsInput | string | null
+    data_admissao?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
+    folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
+    descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+  }
+
+  export type UserUpsertWithoutStatusHistoricoInput = {
+    update: XOR<UserUpdateWithoutStatusHistoricoInput, UserUncheckedUpdateWithoutStatusHistoricoInput>
+    create: XOR<UserCreateWithoutStatusHistoricoInput, UserUncheckedCreateWithoutStatusHistoricoInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutStatusHistoricoInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutStatusHistoricoInput, UserUncheckedUpdateWithoutStatusHistoricoInput>
+  }
+
+  export type UserUpdateWithoutStatusHistoricoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
+    language?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    funcionario?: FuncionarioUpdateOneWithoutUserNestedInput
+    alunos?: AlunoUpdateManyWithoutUserNestedInput
+    matriculas?: MatriculaUpdateManyWithoutUserNestedInput
+    pagamentos?: PagamentoUpdateManyWithoutUserNestedInput
+    certificados?: CertificateUpdateManyWithoutUserNestedInput
+    turmas?: TurmaUpdateManyWithoutUserNestedInput
+    cursos?: CursoUpdateManyWithoutUserNestedInput
+    profile?: ProfileUpdateOneWithoutUsersNestedInput
+    permissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutStatusHistoricoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
+    language?: StringFieldUpdateOperationsInput | string
+    theme?: StringFieldUpdateOperationsInput | string
+    resetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
+    funcionario?: FuncionarioUncheckedUpdateOneWithoutUserNestedInput
+    alunos?: AlunoUncheckedUpdateManyWithoutUserNestedInput
+    matriculas?: MatriculaUncheckedUpdateManyWithoutUserNestedInput
+    pagamentos?: PagamentoUncheckedUpdateManyWithoutUserNestedInput
+    certificados?: CertificateUncheckedUpdateManyWithoutUserNestedInput
+    turmas?: TurmaUncheckedUpdateManyWithoutUserNestedInput
+    cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
+    permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type FuncionarioCreateWithoutContratosInput = {
     id?: string
     nome: string
@@ -55167,6 +57097,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     cargo?: CargoCreateNestedOneWithoutFuncionariosInput
     departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
     user?: UserCreateNestedOneWithoutFuncionarioInput
@@ -55176,6 +57107,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutContratosInput = {
@@ -55199,12 +57131,14 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutContratosInput = {
@@ -55241,6 +57175,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
     departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
     user?: UserUpdateOneWithoutFuncionarioNestedInput
@@ -55250,6 +57185,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutContratosInput = {
@@ -55273,12 +57209,14 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioCreateWithoutPresencasInput = {
@@ -55299,6 +57237,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     cargo?: CargoCreateNestedOneWithoutFuncionariosInput
     departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
     user?: UserCreateNestedOneWithoutFuncionarioInput
@@ -55308,6 +57247,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutPresencasInput = {
@@ -55331,12 +57271,14 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutPresencasInput = {
@@ -55373,6 +57315,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
     departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
     user?: UserUpdateOneWithoutFuncionarioNestedInput
@@ -55382,6 +57325,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutPresencasInput = {
@@ -55405,12 +57349,14 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioCreateWithoutFolhasInput = {
@@ -55431,6 +57377,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     cargo?: CargoCreateNestedOneWithoutFuncionariosInput
     departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
     user?: UserCreateNestedOneWithoutFuncionarioInput
@@ -55440,6 +57387,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutFolhasInput = {
@@ -55463,12 +57411,14 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutFolhasInput = {
@@ -55505,6 +57455,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
     departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
     user?: UserUpdateOneWithoutFuncionarioNestedInput
@@ -55514,6 +57465,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutFolhasInput = {
@@ -55537,12 +57489,14 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioCreateWithoutFeriasInput = {
@@ -55563,6 +57517,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     cargo?: CargoCreateNestedOneWithoutFuncionariosInput
     departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
     user?: UserCreateNestedOneWithoutFuncionarioInput
@@ -55572,6 +57527,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutFeriasInput = {
@@ -55595,12 +57551,14 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutFeriasInput = {
@@ -55637,6 +57595,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
     departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
     user?: UserUpdateOneWithoutFuncionarioNestedInput
@@ -55646,6 +57605,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutFeriasInput = {
@@ -55669,12 +57629,14 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioCreateWithoutAdiantamentosInput = {
@@ -55695,6 +57657,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     cargo?: CargoCreateNestedOneWithoutFuncionariosInput
     departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
     user?: UserCreateNestedOneWithoutFuncionarioInput
@@ -55704,6 +57667,7 @@ export namespace Prisma {
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutAdiantamentosInput = {
@@ -55727,12 +57691,14 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     descontos?: DescontoUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutAdiantamentosInput = {
@@ -55769,6 +57735,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
     departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
     user?: UserUpdateOneWithoutFuncionarioNestedInput
@@ -55778,6 +57745,7 @@ export namespace Prisma {
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutAdiantamentosInput = {
@@ -55801,12 +57769,14 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioCreateWithoutDescontosInput = {
@@ -55827,6 +57797,7 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     cargo?: CargoCreateNestedOneWithoutFuncionariosInput
     departamento?: DepartamentoCreateNestedOneWithoutFuncionariosInput
     user?: UserCreateNestedOneWithoutFuncionarioInput
@@ -55836,6 +57807,7 @@ export namespace Prisma {
     ferias?: FeriasSolicitacaoCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioUncheckedCreateWithoutDescontosInput = {
@@ -55859,12 +57831,14 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
     contratos?: ContratoUncheckedCreateNestedManyWithoutFuncionarioInput
     presencas?: PresencaHRUncheckedCreateNestedManyWithoutFuncionarioInput
     folhas?: FolhaPagamentoUncheckedCreateNestedManyWithoutFuncionarioInput
     ferias?: FeriasSolicitacaoUncheckedCreateNestedManyWithoutFuncionarioInput
     adiantamentos?: AdiantamentoSalarioUncheckedCreateNestedManyWithoutFuncionarioInput
     documentos?: DocumentoUncheckedCreateNestedManyWithoutFuncionarioInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedCreateNestedManyWithoutFuncionarioInput
   }
 
   export type FuncionarioCreateOrConnectWithoutDescontosInput = {
@@ -55901,6 +57875,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
     departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
     user?: UserUpdateOneWithoutFuncionarioNestedInput
@@ -55910,6 +57885,7 @@ export namespace Prisma {
     ferias?: FeriasSolicitacaoUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutDescontosInput = {
@@ -55933,12 +57909,14 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
     ferias?: FeriasSolicitacaoUncheckedUpdateManyWithoutFuncionarioNestedInput
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type MatriculaCreateManyAlunoInput = {
@@ -56665,6 +58643,16 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type FuncionarioStatusHistoricoCreateManyAlteradoPorInput = {
+    id?: string
+    funcionarioId: string
+    statusAnterior: string
+    novoStatus: string
+    motivo: string
+    descricao?: string | null
+    createdAt?: Date | string
+  }
+
   export type AlunoUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     nome_completo?: StringFieldUpdateOperationsInput | string
@@ -56971,6 +58959,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FuncionarioStatusHistoricoUpdateWithoutAlteradoPorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    statusAnterior?: StringFieldUpdateOperationsInput | string
+    novoStatus?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    funcionario?: FuncionarioUpdateOneRequiredWithoutStatusHistoricoNestedInput
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedUpdateWithoutAlteradoPorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    funcionarioId?: StringFieldUpdateOperationsInput | string
+    statusAnterior?: StringFieldUpdateOperationsInput | string
+    novoStatus?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    funcionarioId?: StringFieldUpdateOperationsInput | string
+    statusAnterior?: StringFieldUpdateOperationsInput | string
+    novoStatus?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ProfilePermissionCreateManyProfileInput = {
     id?: string
     moduleId: string
@@ -56995,6 +59013,7 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
+    isSystemRoot?: boolean
     language?: string
     theme?: string
     resetToken?: string | null
@@ -57063,6 +59082,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57078,6 +59098,7 @@ export namespace Prisma {
     cursos?: CursoUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfileInput = {
@@ -57086,6 +59107,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57101,6 +59123,7 @@ export namespace Prisma {
     cursos?: CursoUncheckedUpdateManyWithoutUserNestedInput
     permissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
     itemPermissions?: UserItemPermissionUncheckedUpdateManyWithoutUserNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutAlteradoPorNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutProfileInput = {
@@ -57109,6 +59132,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    isSystemRoot?: BoolFieldUpdateOperationsInput | boolean
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57455,6 +59479,7 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
   }
 
   export type CargoCreateManyDepartamentoInput = {
@@ -57484,6 +59509,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargo?: CargoUpdateOneWithoutFuncionariosNestedInput
     user?: UserUpdateOneWithoutFuncionarioNestedInput
     contratos?: ContratoUpdateManyWithoutFuncionarioNestedInput
@@ -57493,6 +59519,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutDepartamentoInput = {
@@ -57515,6 +59542,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
@@ -57522,6 +59550,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateManyWithoutDepartamentoInput = {
@@ -57544,6 +59573,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type CargoUpdateWithoutDepartamentoInput = {
@@ -57595,6 +59625,7 @@ export namespace Prisma {
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    dataStatusAtual?: Date | string | null
   }
 
   export type FuncionarioUpdateWithoutCargoInput = {
@@ -57615,6 +59646,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     departamento?: DepartamentoUpdateOneWithoutFuncionariosNestedInput
     user?: UserUpdateOneWithoutFuncionarioNestedInput
     contratos?: ContratoUpdateManyWithoutFuncionarioNestedInput
@@ -57624,6 +59656,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateWithoutCargoInput = {
@@ -57646,6 +59679,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     contratos?: ContratoUncheckedUpdateManyWithoutFuncionarioNestedInput
     presencas?: PresencaHRUncheckedUpdateManyWithoutFuncionarioNestedInput
     folhas?: FolhaPagamentoUncheckedUpdateManyWithoutFuncionarioNestedInput
@@ -57653,6 +59687,7 @@ export namespace Prisma {
     adiantamentos?: AdiantamentoSalarioUncheckedUpdateManyWithoutFuncionarioNestedInput
     descontos?: DescontoUncheckedUpdateManyWithoutFuncionarioNestedInput
     documentos?: DocumentoUncheckedUpdateManyWithoutFuncionarioNestedInput
+    statusHistorico?: FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioNestedInput
   }
 
   export type FuncionarioUncheckedUpdateManyWithoutCargoInput = {
@@ -57675,6 +59710,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataStatusAtual?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ContratoCreateManyFuncionarioInput = {
@@ -57778,6 +59814,16 @@ export namespace Prisma {
     tipo: string
     url: string
     nome: string
+    createdAt?: Date | string
+  }
+
+  export type FuncionarioStatusHistoricoCreateManyFuncionarioInput = {
+    id?: string
+    statusAnterior: string
+    novoStatus: string
+    motivo: string
+    descricao?: string | null
+    alteradoPorId?: string | null
     createdAt?: Date | string
   }
 
@@ -58093,6 +60139,36 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FuncionarioStatusHistoricoUpdateWithoutFuncionarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    statusAnterior?: StringFieldUpdateOperationsInput | string
+    novoStatus?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    alteradoPor?: UserUpdateOneWithoutStatusHistoricoNestedInput
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedUpdateWithoutFuncionarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    statusAnterior?: StringFieldUpdateOperationsInput | string
+    novoStatus?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    alteradoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FuncionarioStatusHistoricoUncheckedUpdateManyWithoutFuncionarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    statusAnterior?: StringFieldUpdateOperationsInput | string
+    novoStatus?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    alteradoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -58258,6 +60334,10 @@ export namespace Prisma {
      * @deprecated Use FuncionarioDefaultArgs instead
      */
     export type FuncionarioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FuncionarioDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use FuncionarioStatusHistoricoDefaultArgs instead
+     */
+    export type FuncionarioStatusHistoricoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FuncionarioStatusHistoricoDefaultArgs<ExtArgs>
     /**
      * @deprecated Use ContratoDefaultArgs instead
      */

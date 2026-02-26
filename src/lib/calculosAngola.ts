@@ -149,3 +149,61 @@ export function processarSalarioMensal(dados: {
         liquido
     };
 }
+
+export function calcularBrutoPorLiquido(params: {
+    liquidoDesejado: number;
+    subsidiosTributaveis?: number;
+    subsidiosIsentos?: number;
+    outrosDescontos?: number;
+    totalAdiantamentos?: number;
+}) {
+    const {
+        liquidoDesejado,
+        subsidiosTributaveis = 0,
+        subsidiosIsentos = 0,
+        outrosDescontos = 0,
+        totalAdiantamentos = 0
+    } = params;
+
+    // Estimação inicial conservadora
+    let brutoEstimado = Math.max(0, (liquidoDesejado - subsidiosIsentos + outrosDescontos + totalAdiantamentos) / 0.9);
+    let tolerancia = 1; // diferença aceitável em Kz
+    let maxIteracoes = 50;
+    let ultimoProcessamento: ResultadoProcessamento | null = null;
+
+    for (let i = 0; i < maxIteracoes; i++) {
+        const processamento = processarSalarioMensal({
+            salarioBase: brutoEstimado,
+            subsidiosTributaveis,
+            subsidiosIsentos,
+            totalAdiantamentos,
+            outrosDescontos
+        });
+
+        ultimoProcessamento = processamento;
+        const diferenca = liquidoDesejado - processamento.liquido;
+
+        if (Math.abs(diferenca) <= tolerancia) {
+            break;
+        }
+
+        // Ajuste inteligente: o impacto do IRT + INSS é entre 0% e ~30%
+        // Usamos um fator de ajuste baseado na derivada aproximada para acelerar convergência
+        brutoEstimado += diferenca * 1.15;
+
+        if (brutoEstimado < 0) brutoEstimado = 0;
+    }
+
+    if (!ultimoProcessamento) {
+        throw new Error("Falha ao calcular salário bruto");
+    }
+
+    return {
+        brutoCalculado: Math.round(brutoEstimado * 100) / 100,
+        liquidoObtido: ultimoProcessamento.liquido,
+        inssTrabalhador: ultimoProcessamento.inssTrabalhador,
+        irt: ultimoProcessamento.irt,
+        baseIrt: ultimoProcessamento.baseIrt,
+        rendimentoBruto: ultimoProcessamento.rendimentoBruto
+    };
+}
